@@ -1,12 +1,48 @@
 Package: affectOU
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Title: Simulate Affect Dynamics with Ornstein-Uhlenbeck Processes
+Version: 0.0.0.9001
+Authors@R: c(
+    person("Kyra Caitlin", "Evers", , "kyra.c.evers@gmail.com", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0001-6890-3482")),
+    person("Niels", "Vanhasbroeck", , "niels.vanhasbroeck@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0002-0056-3183"))
+  )
+Description: Simulate a multivariate Ornstein-Uhlenbeck (OU) process to
+    model psychological affect dynamics. The OU process is a
+    continuous-time stochastic process simulated using Euler-Maruyama
+    discretization. It models affect as a self-regulating system with
+    three psychologically meaningful parameters: theta quantifies emotion
+    regulation capacity (how quickly affect returns to baseline; lower
+    values indicate emotional inertia or rumination); mu represents a
+    person's affective set point or typical mood state; and gamma captures
+    emotional reactivity (how strongly affect responds to ongoing
+    fluctuations). The OU can be visualised using time trajectories,
+    histograms, autocorrelation functions, and phase plots. The package
+    supports fitting univariate OU models to data, and also provides
+    theoretical properties of the OU. References: Uhlenbeck & Ornstein
+    (1930) <doi:10.1103/PhysRev.36.823>; Oravecz, Tuerlinckx &
+    Vandekerckhove (2009) <doi:10.1007/s11336-008-9106-8>; Kuppens, Allen
+    & Sheeber (2010) <doi:10.1177/0956797610372634>; Kuppens, Oravecz &
+    Tuerlinckx (2010) <doi:10.1037/a0020962>.
 License: MIT + file LICENSE
+URL: https://github.com/KCEvers/affectOU, https://kcevers.github.io/affectOU/
+BugReports: https://github.com/KCEvers/affectOU/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-URL: https://github.com/KCEvers/affectOU
-BugReports: https://github.com/KCEvers/affectOU/issues
+Imports: 
+    cli,
+    expm (>= 1.0.0),
+    generics,
+    graphics
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    vdiffr,
+    withr (>= 2.5.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Depends: 
+    R (>= 3.5)
+LazyData: true
