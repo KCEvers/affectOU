@@ -36,9 +36,6 @@ library(affectOU)
 
 For a univariate affect process, the stochastic differential equation of the OU process is:
 
-<!-- For some reason, the equation does not render when it is not duplicated? -->
-$$d{X}(t) = {\theta}({\mu} - {X}(t))dt + {\gamma} \, d{W}(t)$$
-
 $$d{X}(t) = {\theta}({\mu} - {X}(t))dt + {\gamma} \, d{W}(t)$$
 
 
