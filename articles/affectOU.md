@@ -26,8 +26,6 @@ the OU process is:
 
 $$dX(t) = \theta\left( \mu - X(t) \right)dt + \gamma\, dW(t)$$
 
-$$dX(t) = \theta\left( \mu - X(t) \right)dt + \gamma\, dW(t)$$
-
 Here, the parameters represent:
 
 - **θ (theta)**: Attractor strength—how quickly affect returns to
