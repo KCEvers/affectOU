@@ -11,9 +11,9 @@ coverage](https://codecov.io/gh/KCEvers/affectOU/graph/badge.svg)](https://app.c
 <!-- badges: end -->
 
 The aim of `affectOU` is to provide tools for simulating and analyzing
-the Ornstein-Uhlenbeck (OU) process in R. The OU process models how one
-or more variables change over time while being influenced by random
-fluctuations. It is widely used to model affect dynamics in psychology,
+the Ornstein-Uhlenbeck (OU) process in R. The OU process models how
+variables change over time while being influenced by random
+perturbations. It is widely used to model affect dynamics in psychology,
 formulating three core psychological mechanisms (assuming a
 unidimensional process for simplicity):
 
@@ -89,6 +89,15 @@ plot(sim)
 ```
 
 <img src="man/figures/README-sim-1.png" alt="" width="100%" />
+
+## Tutorials
+
+For more detailed examples and visual demonstrations of the model’s
+characteristics, see the vignettes:
+
+  - [Get Started with affectOU](articles/affectOU.html)
+  - [Affect Characteristics Implied by the OU
+    Process](articles/characteristics.html)
 
 ## References
 
