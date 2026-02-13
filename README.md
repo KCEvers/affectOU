@@ -95,9 +95,10 @@ plot(sim)
 For more detailed examples and visual demonstrations of the model’s
 characteristics, see the vignettes:
 
-  - [Get Started with affectOU](articles/affectOU.html)
+  - [Get Started with
+    affectOU](https://kcevers.github.io/affectOU/articles/affectOU.html)
   - [Affect Characteristics Implied by the OU
-    Process](articles/characteristics.html)
+    Process](https://kcevers.github.io/affectOU/articles/characteristics.html)
 
 ## References
 
