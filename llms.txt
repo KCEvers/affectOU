@@ -86,9 +86,9 @@ For more detailed examples and visual demonstrations of the model’s
 characteristics, see the vignettes:
 
 - [Get Started with
-  affectOU](https://kcevers.github.io/affectOU/articles/affectOU.md)
+  affectOU](https://kcevers.github.io/affectOU/articles/affectOU.html)
 - [Affect Characteristics Implied by the OU
-  Process](https://kcevers.github.io/affectOU/articles/characteristics.md)
+  Process](https://kcevers.github.io/affectOU/articles/characteristics.html)
 
 ## References
 
