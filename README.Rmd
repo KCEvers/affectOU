@@ -9,47 +9,80 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  dpi = 300,
+  fig.retina = 3
 )
 ```
 
-# affectOU
+# affectOU: Simulate Affect Dynamics with Ornstein-Uhlenbeck Processes
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/KCEvers/affectOU/graph/badge.svg)](https://app.codecov.io/gh/KCEvers/affectOU)
+[![R-CMD-check](https://github.com/KCEvers/affectOU/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KCEvers/affectOU/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of affectOU is to ...
+The aim of `affectOU` is to provide tools for simulating and analyzing the Ornstein-Uhlenbeck (OU) process in R. The OU process models how variables change over time while being influenced by random perturbations. It is widely used to model affect dynamics in psychology, formulating three core psychological mechanisms (assuming a unidimensional process for simplicity):
+
+- **θ (theta): emotion regulation capacity**  
+
+  Governs the rate at which affect returns to baseline. Low θ indicates *emotional inertia* or *rumination*; high θ indicates rapid regulation.
+
+- **μ (mu): affective set point**  
+
+  The long-term average level of affect that the system tends to return to. This could represent an individual's baseline mood or emotional equilibrium. 
+
+- **γ (gamma): emotional reactivity**  
+
+  Controls the magnitude of short-term fluctuations or noise in the affective system. This can be interpreted as an individual's sensitivity to environmental perturbations.
+
+`affectOU` serves as a demonstration of how to package computational models, as detailed in Evers & Vanhasbroeck (2026), "Sharing Computational Models as Reproducible and User-Friendly Packages: A Tutorial in R" (forthcoming).
+
+
 
 ## Installation
 
-You can install the development version of affectOU from [GitHub](https://github.com/) with:
+The development version of affectOU can be installed from [GitHub](https://github.com/KCEvers/affectOU) with:
 
 ``` r
 # install.packages("pak")
 pak::pak("KCEvers/affectOU")
 ```
 
-## Example
+## Quick Start
 
-This is a basic example which shows you how to solve a common problem:
+```{r library}
+library(affectOU)
+```
 
 ```{r example}
-library(affectOU)
-## basic example code
+# Create two-dimensional OU
+model <- affectOU(ndim = 2)
+model
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
+```{r sim, fig.height=5, fig.width=11}
+# Run three simulations
+sim <- simulate(model, nsim = 3)
+plot(sim)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+## Tutorials
 
-You can also embed plots, for example:
+For more detailed examples and visual demonstrations of the model's characteristics, see the vignettes:
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
+* [Get Started with affectOU](articles/affectOU.html)
+* [Affect Characteristics Implied by the OU Process](articles/characteristics.html)
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+
+## References
+
+Uhlenbeck & Ornstein (1930) [doi:10.1103/PhysRev.36.823](https://libkey.io/libraries/1691/10.1103/PhysRev.36.823)
+
+Oravecz, Tuerlinckx & Vandekerckhove (2009) [doi:10.1007/s11336-008-9106-8](https://libkey.io/libraries/1691/10.1007/s11336-008-9106-8)
+
+Kuppens, Allen & Sheeber (2010) [doi:10.1177/0956797610372634](https://libkey.io/libraries/1691/10.1177/0956797610372634)
+
+Kuppens, Oravecz & Tuerlinckx (2010) [doi:10.1037/a0020962](https://libkey.io/libraries/1691/10.1037/a0020962)
+
