@@ -1,0 +1,209 @@
+# affectOU: Simulate Affect Dynamics with Ornstein-Uhlenbeck Processes
+
+The aim of `affectOU` is to provide tools for simulating and analyzing
+the Ornstein-Uhlenbeck (OU) process in R. The OU process models how
+variables change over time while being influenced by random
+perturbations. It is widely used to model affect dynamics in psychology,
+formulating three core psychological mechanisms (assuming a
+unidimensional process for simplicity):
+
+- **θ (theta): emotion regulation capacity**
+
+  Governs the rate at which affect returns to baseline. Low θ indicates
+  *emotional inertia* or *rumination*; high θ indicates rapid
+  regulation.
+
+- **μ (mu): affective set point**
+
+  The long-term average level of affect that the system tends to return
+  to. This could represent an individual’s baseline mood or emotional
+  equilibrium.
+
+- **γ (gamma): emotional reactivity**
+
+  Controls the magnitude of short-term fluctuations or noise in the
+  affective system. This can be interpreted as an individual’s
+  sensitivity to environmental perturbations.
+
+`affectOU` serves as a demonstration of how to package computational
+models, as detailed in Evers & Vanhasbroeck (2026), “Sharing
+Computational Models as Reproducible and User-Friendly Packages: A
+Tutorial in R” (forthcoming).
+
+## Installation
+
+The development version of affectOU can be installed from
+[GitHub](https://github.com/KCEvers/affectOU) with:
+
+``` r
+# install.packages("pak")
+pak::pak("KCEvers/affectOU")
+```
+
+## Quick Start
+
+``` r
+library(affectOU)
+```
+
+``` r
+# Create two-dimensional OU
+model <- affectOU(ndim = 2)
+model
+#> 
+#> ── 2D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────
+#> dX(t) = Θ(μ − X(t))dt + Γ dW(t)
+#> 
+#> μ = [0.000, 0.000]
+#> 
+#> Θ:
+#>      [,1] [,2]
+#> [1,]  0.5  0.0
+#> [2,]  0.0  0.5
+#> 
+#> Γ:
+#>      [,1] [,2]
+#> [1,]    1    0
+#> [2,]    0    1
+#> 
+#> Σ = ΓΓᵀ:
+#>      [,1] [,2]
+#> [1,]    1    0
+#> [2,]    0    1
+```
+
+``` r
+# Run three simulations
+sim <- simulate(model, nsim = 3)
+plot(sim)
+```
+
+![](reference/figures/README-sim-1.png)
+
+## Tutorials
+
+For more detailed examples and visual demonstrations of the model’s
+characteristics, see the vignettes:
+
+- [Get Started with
+  affectOU](https://kcevers.github.io/affectOU/articles/affectOU.md)
+- [Affect Characteristics Implied by the OU
+  Process](https://kcevers.github.io/affectOU/articles/characteristics.md)
+
+## References
+
+Uhlenbeck & Ornstein (1930)
+[doi:10.1103/PhysRev.36.823](https://libkey.io/libraries/1691/10.1103/PhysRev.36.823)
+
+Oravecz, Tuerlinckx & Vandekerckhove (2009)
+[doi:10.1007/s11336-008-9106-8](https://libkey.io/libraries/1691/10.1007/s11336-008-9106-8)
+
+Kuppens, Allen & Sheeber (2010)
+[doi:10.1177/0956797610372634](https://libkey.io/libraries/1691/10.1177/0956797610372634)
+
+Kuppens, Oravecz & Tuerlinckx (2010)
+[doi:10.1037/a0020962](https://libkey.io/libraries/1691/10.1037/a0020962)
+
+# Package index
+
+## All functions
+
+- [`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md)
+  : Create Ornstein-Uhlenbeck affect model
+- [`as.array(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/as.array.simulate_affectOU.md)
+  : Convert simulation results to array
+- [`as.data.frame(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/as.data.frame.simulate_affectOU.md)
+  : Convert simulation results to data frame
+- [`as.list(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/as.list.simulate_affectOU.md)
+  : Convert simulation results to list
+- [`as.matrix(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/as.matrix.simulate_affectOU.md)
+  : Convert simulation results to matrix
+- [`coef(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/coef.affectOU.md)
+  : Extract model coefficients
+- [`coef(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/coef.fit_affectOU.md)
+  : Extract coefficients from fitted OU affect model
+- [`confint(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/confint.fit_affectOU.md)
+  : Confidence intervals for fitted OU affect model
+- [`dim(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/dim.affectOU.md)
+  : Get dimensionality of affect OU model
+- [`equation(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/equation.affectOU.md)
+  : Extract model equations
+- [`fit(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md)
+  : Fit Ornstein–Uhlenbeck model to data
+- [`head(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/head.simulate_affectOU.md)
+  : Head of simulation results
+- [`logLik(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/logLik.fit_affectOU.md)
+  : Extract log-likelihood from fitted OU affect model
+- [`ou_plot_acf()`](https://kcevers.github.io/affectOU/reference/ou_plot_acf.md)
+  : Plot autocorrelation and cross-correlation functions
+- [`ou_plot_fit_acf()`](https://kcevers.github.io/affectOU/reference/ou_plot_fit_acf.md)
+  : Plot ACF of residuals
+- [`ou_plot_fit_qq()`](https://kcevers.github.io/affectOU/reference/ou_plot_fit_qq.md)
+  : QQ plot of residuals
+- [`ou_plot_fit_residuals()`](https://kcevers.github.io/affectOU/reference/ou_plot_fit_residuals.md)
+  : Plot residuals over time
+- [`ou_plot_fit_time()`](https://kcevers.github.io/affectOU/reference/ou_plot_fit_time.md)
+  : Plot observed vs fitted trajectory
+- [`ou_plot_histogram()`](https://kcevers.github.io/affectOU/reference/ou_plot_histogram.md)
+  : Plot simulation histogram
+- [`ou_plot_phase()`](https://kcevers.github.io/affectOU/reference/ou_plot_phase.md)
+  : Plot phase portrait
+- [`ou_plot_time()`](https://kcevers.github.io/affectOU/reference/ou_plot_time.md)
+  : Plot simulation trajectory
+- [`plot(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/plot.fit_affectOU.md)
+  : Plot fitted model diagnostics
+- [`plot(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.md)
+  : Plot OU simulation
+- [`print(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.affectOU.md)
+  : Print affect OU model
+- [`print(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.fit_affectOU.md)
+  : Print fitted OU affect model
+- [`print(`*`<relaxation_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.relaxation_affectOU.md)
+  : Print relaxation time
+- [`print(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.simulate_affectOU.md)
+  : Print simulation object
+- [`print(`*`<stability_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.stability_affectOU.md)
+  : Print stability analysis
+- [`print(`*`<stationary_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.stationary_affectOU.md)
+  : Print stationary distribution
+- [`print(`*`<summary_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.summary_affectOU.md)
+  : Print summary of affectOU model
+- [`print(`*`<summary_fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.summary_fit_affectOU.md)
+  : Print summary of fitted OU affect model
+- [`print(`*`<summary_simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.summary_simulate_affectOU.md)
+  : Print summary of simulation results
+- [`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.md)
+  : Compute relaxation time
+- [`relaxation(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
+  : Compute relaxation time for OU model
+- [`simpaper`](https://kcevers.github.io/affectOU/reference/simpaper.md)
+  : Simulation in Evers & Vanhasbroeck (2026)
+- [`simulate(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/simulate.affectOU.md)
+  : Simulate from Ornstein-Uhlenbeck process
+- [`stability()`](https://kcevers.github.io/affectOU/reference/stability.md)
+  : Assess stability
+- [`stability(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
+  : Assess stability of an Ornstein-Uhlenbeck model
+- [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.md)
+  : Compute stationary distribution
+- [`stationary(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
+  : Compute stationary distribution for Ornstein-Uhlenbeck model
+- [`summary(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
+  : Summarize an Ornstein-Uhlenbeck affect model
+- [`summary(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/summary.fit_affectOU.md)
+  : Summarize fitted OU affect model
+- [`summary(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/summary.simulate_affectOU.md)
+  : Summarize simulation results
+- [`tail(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/tail.simulate_affectOU.md)
+  : Tail of simulation results
+- [`update(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/update.affectOU.md)
+  : Update model configuration
+
+# Articles
+
+### All vignettes
+
+- [Get Started with
+  affectOU](https://kcevers.github.io/affectOU/articles/affectOU.md):
+- [Affect Characteristics Implied by the OU
+  Process](https://kcevers.github.io/affectOU/articles/characteristics.md):

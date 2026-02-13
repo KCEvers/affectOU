@@ -1,0 +1,42 @@
+# affectOU: Simulate Affect Dynamics with Ornstein-Uhlenbeck Processes
+
+Simulate a multivariate Ornstein-Uhlenbeck (OU) process to model
+psychological affect dynamics. The OU process is a continuous-time
+stochastic process simulated using Euler-Maruyama discretization. It
+models affect as a self-regulating system with three psychologically
+meaningful parameters: theta quantifies emotion regulation capacity (how
+quickly affect returns to baseline; lower values indicate emotional
+inertia or rumination); mu represents a person's affective set point or
+typical mood state; and gamma captures emotional reactivity (how
+strongly affect responds to ongoing fluctuations). The OU can be
+visualised using time trajectories, histograms, autocorrelation
+functions, and phase plots. The package supports fitting univariate OU
+models to data, and also provides theoretical properties of the OU.
+References: Uhlenbeck & Ornstein (1930)
+[doi:10.1103/PhysRev.36.823](https://doi.org/10.1103/PhysRev.36.823) ;
+Oravecz, Tuerlinckx & Vandekerckhove (2009)
+[doi:10.1007/s11336-008-9106-8](https://doi.org/10.1007/s11336-008-9106-8)
+; Kuppens, Allen & Sheeber (2010)
+[doi:10.1177/0956797610372634](https://doi.org/10.1177/0956797610372634)
+; Kuppens, Oravecz & Tuerlinckx (2010)
+[doi:10.1037/a0020962](https://doi.org/10.1037/a0020962) .
+
+## See also
+
+Useful links:
+
+- <https://github.com/KCEvers/affectOU>
+
+- <https://kcevers.github.io/affectOU/>
+
+- Report bugs at <https://github.com/KCEvers/affectOU/issues>
+
+## Author
+
+**Maintainer**: Kyra Caitlin Evers <kyra.c.evers@gmail.com>
+([ORCID](https://orcid.org/0000-0001-6890-3482)) \[copyright holder\]
+
+Authors:
+
+- Niels Vanhasbroeck <niels.vanhasbroeck@gmail.com>
+  ([ORCID](https://orcid.org/0000-0002-0056-3183))
