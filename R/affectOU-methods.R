@@ -3,7 +3,9 @@ plot.affectOU <- function(x, ...) {
   cli::cli_abort("Plotting an {.cls affectOU} model is not supported. Simulate data with {.fn simulate} and plot the result.")
 }
 
-#' Get dimensionality of affect OU model
+#' Extract dimensionality
+#' 
+#' Extract the number of dimensions of an affect Ornstein-Uhlenbeck (OU) model.
 #'
 #' @param x An object of class `affectOU`
 #' @return Integer, the dimensionality of the process.
@@ -78,15 +80,18 @@ print.affectOU <- function(x, digits = 3, max_dim = 20, ...) {
   invisible(x)
 }
 
-#' Extract model coefficients
+#' Extract model parameters
 #'
-#' Extract the parameters of an affect OU model as a list.
+#' Extract the parameters of an affect Ornstein-Uhlenbeck (OU) model as a list.
 #'
-#' @param object An object of class `affectOU`
-#' @param ... Additional arguments (unused)
-#' @return A list containing the model parameters: `theta`, `mu`, `gamma`, and `sigma`. For 1D models, these are returned as numeric scalars. For multivariate models, they are returned as matrices.
+#' @param object An object of class `affectOU`.
+#' @param ... Additional arguments (unused).
+#' @return A list containing the model parameters: `theta`, `mu`, `gamma`, and
+#' `sigma`. For 1D models, these are returned as numeric scalars. For
+#' multivariate models, they are returned as matrices.
 #'
 #' @export
+#' @seealso [affectOU()] to create an OU model and [update()][update.affectOU()] to modify model parameters.
 #' @examples
 #' model <- affectOU(ndim = 2)
 #' coef(model)

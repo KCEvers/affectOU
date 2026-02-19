@@ -163,9 +163,9 @@ test_that("equation() works for multivariate models with inline = FALSE", {
 
   # LaTeX should have symbolic notation
   eq_latex <- equation(model, "latex", inline = FALSE)
-  expect_match(eq_latex, "\\\\boldsymbol\\{\\\\Theta\\}")
-  expect_match(eq_latex, "\\\\boldsymbol\\{\\\\mu\\}")
-  expect_match(eq_latex, "\\\\boldsymbol\\{\\\\Gamma\\}")
+  expect_match(eq_latex, "\\\\mathbf\\{\\\\Theta\\}")
+  expect_match(eq_latex, "\\\\mathbf\\{\\\\mu\\}")
+  expect_match(eq_latex, "\\\\mathbf\\{\\\\Gamma\\}")
   expect_match(eq_latex, "text\\{where:\\}")
   expect_match(eq_latex, "align")
 

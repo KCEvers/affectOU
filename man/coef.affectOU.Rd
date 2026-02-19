@@ -2,22 +2,27 @@
 % Please edit documentation in R/affectOU-methods.R
 \name{coef.affectOU}
 \alias{coef.affectOU}
-\title{Extract model coefficients}
+\title{Extract model parameters}
 \usage{
 \method{coef}{affectOU}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{affectOU}}
+\item{object}{An object of class \code{affectOU}.}
 
-\item{...}{Additional arguments (unused)}
+\item{...}{Additional arguments (unused).}
 }
 \value{
-A list containing the model parameters: \code{theta}, \code{mu}, \code{gamma}, and \code{sigma}. For 1D models, these are returned as numeric scalars. For multivariate models, they are returned as matrices.
+A list containing the model parameters: \code{theta}, \code{mu}, \code{gamma}, and
+\code{sigma}. For 1D models, these are returned as numeric scalars. For
+multivariate models, they are returned as matrices.
 }
 \description{
-Extract the parameters of an affect OU model as a list.
+Extract the parameters of an affect Ornstein-Uhlenbeck (OU) model as a list.
 }
 \examples{
 model <- affectOU(ndim = 2)
 coef(model)
+}
+\seealso{
+\code{\link[=affectOU]{affectOU()}} to create an OU model and \link[=update.affectOU]{update()} to modify model parameters.
 }
