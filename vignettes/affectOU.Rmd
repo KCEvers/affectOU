@@ -63,9 +63,9 @@ model
 
 The OU framework extends naturally to multiple affect dimensions (e.g., valence and arousal). For a d-dimensional process:
 
-$$d\mathbf{X}(t) = \boldsymbol{\Theta}(\boldsymbol{\mu} - \mathbf{X}(t))dt + \boldsymbol{\Gamma} \, d\mathbf{W}(t)$$
+$$d\mathbf{X}(t) = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} \, d\mathbf{W}(t)$$
 
-The default is a 2D model with uncoupled dynamics (diagonal $\boldsymbol{\Theta}$ and $\boldsymbol{\Gamma}$) and identical parameters across dimensions:
+The default is a 2D model with uncoupled dynamics (diagonal $\mathbf{\Theta}$ and $\mathbf{\Gamma}$) and identical parameters across dimensions:
 
 ```{r create-2d-default}
 model_2d <- affectOU(ndim = 2)
@@ -82,7 +82,7 @@ model_2d <- update(model_2d,
 )
 ```
 
-Above, we use [`update()`](../reference/update.affectOU.html) to modify an existing model without recreating it from scratch. For coupled dynamics where dimensions influence each other, use a non-diagonal $\boldsymbol{\Theta}$ matrix:
+Above, we use [`update()`](../reference/update.affectOU.html) to modify an existing model without recreating it from scratch. For coupled dynamics where dimensions influence each other, use a non-diagonal $\mathbf{\Theta}$ matrix:
 
 ```{r create-2d-coupled}
 theta_coupled <- matrix(c(
@@ -228,7 +228,7 @@ cat(equation(model, inline = TRUE))
  
 ```{r fit}
 # Generate data from known parameters
-true_model <- affectOU(theta = 0.5, mu = 0, sigma = 1)
+true_model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 sim <- simulate(true_model, dt = 0.01, stop = 500, save_at = 0.1)
 
 # Extract the simulated data

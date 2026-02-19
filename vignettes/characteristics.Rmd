@@ -144,10 +144,10 @@ plot(sim,
 
 ### Multivariate
 
-For multiple dimensions, stability depends on the eigenvalues of $\boldsymbol{\Theta}$. Three cases arise:
+For multiple dimensions, stability depends on the eigenvalues of $\mathbf{\Theta}$. Three cases arise:
 
-- **Real positive eigenvalues**: Smooth exponential decay toward $\boldsymbol{\mu}$. All dimensions settle without oscillation.
-- **Complex eigenvalues with positive real parts**: Damped oscillations. Dimensions rotate around $\boldsymbol{\mu}$ in the phase space, spiralling inward. This can represent cyclical affect patterns.
+- **Real positive eigenvalues**: Smooth exponential decay toward $\mathbf{\mu}$. All dimensions settle without oscillation.
+- **Complex eigenvalues with positive real parts**: Damped oscillations. Dimensions rotate around $\mathbf{\mu}$ in the phase space, spiralling inward. This can represent cyclical affect patterns.
 - **Any eigenvalue with zero or negative real part**: The system is non-stationary. Affect diverges over time -- either drifting monotonically or oscillating with growing amplitude, depending on whether the eigenvalues are real or complex.
 
 <details>
@@ -188,9 +188,9 @@ The oscillatory case shows rotation in the phase space, reflecting the imaginary
 
 ## 5. Multivariate Coupling
 
-In multivariate models, off-diagonal elements of $\boldsymbol{\Theta}$ capture cross-regulation between dimensions.
+In multivariate models, off-diagonal elements of $\mathbf{\Theta}$ capture cross-regulation between dimensions.
 
-$$\boldsymbol{\Theta} = \begin{bmatrix}
+$$\mathbf{\Theta} = \begin{bmatrix}
 \theta_{11} & \theta_{12} \\
 \theta_{21} & \theta_{22}
 \end{bmatrix} = \begin{bmatrix}
@@ -229,7 +229,7 @@ The positive entry $\theta_{21}$ means that when dimension 1 deviates from its a
 
 ## 6. Noise Coupling
 
-Off-diagonal elements of $\boldsymbol{\Gamma}$ create correlated noise between dimensions. This can lead to synchronized fluctuations even in uncoupled systems.
+Off-diagonal elements of $\mathbf{\Gamma}$ create correlated noise between dimensions. This can lead to synchronized fluctuations even in uncoupled systems.
 
 
 
@@ -267,6 +267,6 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 | Mean reversion | $\theta$ | Rate of return to baseline |
 | Perturbation persistence | $\theta$ | Half-life of perturbations |
 | Reactivity | $\gamma$ | Magnitude of fluctuations |
-| Stability | sign($\theta$) / eigenvalues of $\boldsymbol{\Theta}$ | Stationary vs divergent |
-| Cross-coupling | off-diagonal $\boldsymbol{\Theta}$ | Interdimensional dynamics |
-| Noise coupling | off-diagonal $\boldsymbol{\Gamma}$ | Interdimensional dynamics |
+| Stability | sign($\theta$) / eigenvalues of $\mathbf{\Theta}$ | Stationary vs divergent |
+| Cross-coupling | off-diagonal $\mathbf{\Theta}$ | Interdimensional dynamics |
+| Noise coupling | off-diagonal $\mathbf{\Gamma}$ | Interdimensional dynamics |
