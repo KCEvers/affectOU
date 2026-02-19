@@ -32,9 +32,9 @@ affectOU(
 
 - mu:
 
-  Attractor location (baseline affect / set point). For 1D: scalar. For
+  Attractor location (baseline affect or set point). For 1D: scalar. For
   multidimensional: vector. For non-stationary models: when \\\theta \<
-  0\\, the process is pushed *away* from \\\mu\\ rather than toward it;
+  0\\, the process is pushed away from \\\mu\\ rather than toward it;
   when \\\theta \approx 0\\, \\\mu\\ has no meaningful influence on the
   trajectory.
 
@@ -62,8 +62,8 @@ affectOU(
 ## Value
 
 An object of class `affectOU`, representing a univariate or multivariate
-Ornstein–Uhlenbeck (OU) affect regulation model. The object is a list
-with the following components:
+Ornstein–Uhlenbeck affect regulation model. The object is a list with
+the following components:
 
 - `parameters`:
 
@@ -71,43 +71,43 @@ with the following components:
 
   `theta`
 
-  :   Numeric matrix. Mean reversion / regulation strength.
+  :   Numeric matrix.
 
   `mu`
 
-  :   Numeric vector. Attractor location / affective set point.
+  :   Numeric vector.
 
   `gamma`
 
-  :   Numeric matrix. Diffusion coefficient (multiplies dW(t)).
+  :   Numeric matrix.
 
   `sigma`
 
-  :   Numeric matrix. Noise covariance (\\\Sigma = \Gamma\Gamma'\\).
+  :   Numeric matrix.
 
 - `initial_state`:
 
-  Numeric vector indicating the starting value of the affect process
-  used for simulation.
+  Numeric vector.
 
 - `ndim`:
 
-  Integer indicating the dimensionality of the process.
+  Integer.
 
 ## Details
 
-Continuous-time stochastic differential equation model for affect
-regulation. The OU process models affect as a mean-reverting process
-with: \$\$dX(t) = \theta(\mu - X(t))dt + \gamma dW(t)\$\$ for the 1D
-case, or \$\$dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)\$\$ for the
+The OU is a continuous-time stochastic differential equation model:
+\$\$dX(t) = \theta(\mu - X(t))dt + \gamma dW(t)\$\$ for the 1D case, or
+\$\$dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)\$\$ for the
 multidimensional case.
 
 where:
 
-- \\\theta / \Theta\\ (theta): attractor strength / regulation speed
+- \\X(t)\\: affect state at time \\t\\
+
+- \\\theta / \Theta\\ (theta): attractor strength or regulation speed
   (scalar or matrix)
 
-- \\\mu\\ (mu): attractor location / set point (scalar or vector)
+- \\\mu\\ (mu): attractor location or set point (scalar or vector)
 
 - \\\gamma / \Gamma\\ (gamma): diffusion coefficient that multiplies
   dW(t)
@@ -115,9 +115,7 @@ where:
 - \\\sigma / \Sigma\\ (sigma): noise covariance matrix, computed as
   \\\Sigma = \Gamma\Gamma'\\
 
-Different \\\Gamma\\ matrices that yield the same \\\Sigma\\ produce
-statistically identical processes, so \\\Sigma\\ (not \\\Gamma\\)
-determines the model's behaviour.
+- \\dW(t)\\: increments of a Wiener process (Brownian motion)
 
 In the multidimensional case, the element \\\Theta\_{ij}\\ (row \\i\\,
 column \\j\\) represents the influence of dimension \\j\\ on dimension
@@ -155,8 +153,8 @@ and
 [coef()](https://kcevers.github.io/affectOU/reference/coef.affectOU.md),
 can be simulated over time with
 [simulate()](https://kcevers.github.io/affectOU/reference/simulate.affectOU.md),
-and fitted to data with
-[fit()](https://kcevers.github.io/affectOU/reference/fit.affectOU.md)
+and fitted to univariate data with
+[fit()](https://kcevers.github.io/affectOU/reference/fit.affectOU.md).
 
 ## Examples
 
@@ -193,7 +191,7 @@ coef(model_1d)
 
 # 2D model (uncoupled)
 model_2d <- affectOU(
-  ndim = 2, theta = diag(c(0.5, 0.3)), mu = 0,
+  theta = diag(c(0.5, 0.3)), mu = 0,
   gamma = 1
 )
 summary(model_2d)
@@ -228,7 +226,7 @@ theta_3d <- matrix(c(
   0, 0.05, 0.4
 ), nrow = 3)
 model_3d <- affectOU(
-  ndim = 3, theta = theta_3d,
+  theta = theta_3d,
   mu = 0, gamma = 1
 )
 summary(model_3d)
@@ -254,6 +252,6 @@ summary(model_3d)
 
 # Simulate trajectory
 sim_3d <- simulate(model_3d, stop = 100, save_at = 0.1)
-plot(sim_3d)
+plot(sim_3d, by_dim = FALSE)
 
 ```

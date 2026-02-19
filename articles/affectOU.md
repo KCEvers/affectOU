@@ -24,7 +24,7 @@ library(affectOU)
 For a univariate affect process, the stochastic differential equation of
 the OU process is:
 
-$$dX(t) = \theta\left( \mu - X(t) \right)dt + \gamma\, dW(t)$$
+\\d{X}(t) = {\theta}({\mu} - {X}(t))dt + {\gamma} \\ d{W}(t)\\
 
 Here, the parameters represent:
 
@@ -47,8 +47,8 @@ model
 ```
 
 Specify custom parameters to represent, for example, a process with
-moderate mean-reversion ($\theta$ = 0.5), positive baseline ($\mu$ = 1),
-and unit diffusion ($\gamma$ = 1):
+moderate mean-reversion (\\\theta\\ = 0.5), positive baseline (\\\mu\\ =
+1), and unit diffusion (\\\gamma\\ = 1):
 
 ``` r
 model <- affectOU(theta = 0.5, mu = 1, gamma = 1)
@@ -65,11 +65,12 @@ model
 The OU framework extends naturally to multiple affect dimensions (e.g.,
 valence and arousal). For a d-dimensional process:
 
-$$d\mathbf{X}(t) = \mathbf{\Theta}\left( {\mathbf{μ}} - \mathbf{X}(t) \right)dt + \mathbf{\Gamma}\, d\mathbf{W}(t)$$
+\\d\mathbf{X}(t) = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt +
+\mathbf{\Gamma} \\ d\mathbf{W}(t)\\
 
 The default is a 2D model with uncoupled dynamics (diagonal
-$\mathbf{\Theta}$ and $\mathbf{\Gamma}$) and identical parameters across
-dimensions:
+\\\mathbf{\Theta}\\ and \\\mathbf{\Gamma}\\) and identical parameters
+across dimensions:
 
 ``` r
 model_2d <- affectOU(ndim = 2)
@@ -111,7 +112,7 @@ Above, we use
 [`update()`](https://kcevers.github.io/affectOU/reference/update.affectOU.md)
 to modify an existing model without recreating it from scratch. For
 coupled dynamics where dimensions influence each other, use a
-non-diagonal $\mathbf{\Theta}$ matrix:
+non-diagonal \\\mathbf{\Theta}\\ matrix:
 
 ``` r
 theta_coupled <- matrix(c(
@@ -267,8 +268,8 @@ Each can also be called independently for more detail:
   system exhibit?
 - **Stationary distribution**: Long-run mean, SD, and (for multivariate
   models) covariance
-- **Relaxation time**: Time constant of perturbation decay
-  ($\tau = 1/\theta$)
+- **Relaxation time**: Time constant of perturbation decay (\\\tau =
+  1/\theta\\)
 
 For multidimensional models, the model summary also includes coupling
 indicators:
@@ -327,7 +328,7 @@ likelihood:
 
 ``` r
 # Generate data from known parameters
-true_model <- affectOU(theta = 0.5, mu = 0, sigma = 1)
+true_model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 sim <- simulate(true_model, dt = 0.01, stop = 500, save_at = 0.1)
 
 # Extract the simulated data

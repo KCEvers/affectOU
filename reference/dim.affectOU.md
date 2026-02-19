@@ -1,6 +1,7 @@
-# Get dimensionality of affect OU model
+# Extract dimensionality
 
-Get dimensionality of affect OU model
+Extract the number of dimensions of an affect Ornstein-Uhlenbeck (OU)
+model.
 
 ## Usage
 

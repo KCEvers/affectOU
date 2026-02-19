@@ -6,7 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Affect Characteristics Implied by the OU Process • affectOU</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
+  window.MathJax = {
+    chtml: {
+      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
+    }
+  };
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -76,14 +82,9 @@ and <a href="../reference/relaxation.affectOU.html"><code>relaxation()</code></a
 <div class="section level2">
 <h2 id="mean-reversion">1. Mean Reversion<a class="anchor" aria-label="anchor" href="#mean-reversion"></a>
 </h2>
-<p>After perturbations, affect returns toward its baseline
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>
-at a rate determined by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
-(for stable, unidimensional systems). High
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
-indicates rapid regulation; low
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
+<p>After perturbations, affect returns toward its baseline <span class="math inline">\(\mu\)</span> at a rate determined by <span class="math inline">\(\theta\)</span> (for stable, unidimensional
+systems). High <span class="math inline">\(\theta\)</span> indicates
+rapid regulation; low <span class="math inline">\(\theta\)</span>
 indicates emotional inertia.</p>
 <details><summary>
 Show code
@@ -101,18 +102,10 @@ Show code
 <div class="section level2">
 <h2 id="perturbation-persistence">2. Perturbation Persistence<a class="anchor" aria-label="anchor" href="#perturbation-persistence"></a>
 </h2>
-<p>The relaxation time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mn>1</mn><mi>/</mi><mi>θ</mi></mrow><annotation encoding="application/x-tex">\tau = 1/\theta</annotation></semantics></math>
-is the characteristic time scale of the OU process—the time for the
-expected deviation to shrink to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>e</mi><mo>≈</mo><mn>36.8</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">1/e \approx 36.8\%</annotation></semantics></math>.
-The half-life
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow></msub><mo>=</mo><mo>ln</mo><mn>2</mn><mo>⋅</mo><mi>τ</mi></mrow><annotation encoding="application/x-tex">t_{1/2} = \ln 2 \cdot \tau</annotation></semantics></math>
-marks the 50% point. Effects decay exponentially: at two
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>,
-about 13.5% remains; at three
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>,
-about 5%.</p>
+<p>The relaxation time <span class="math inline">\(\tau =
+1/\theta\)</span> is the characteristic time scale of the OU process—the
+time for the expected deviation to shrink to <span class="math inline">\(1/e \approx 36.8\%\)</span>. The half-life <span class="math inline">\(t_{1/2} = \ln 2 \cdot \tau\)</span> marks the 50%
+point. Effects decay exponentially: at two <span class="math inline">\(\tau\)</span>, about 13.5% remains; at three <span class="math inline">\(\tau\)</span>, about 5%.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/relaxation.html">relaxation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
@@ -133,20 +126,17 @@ Show code
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, type <span class="op">=</span> <span class="st">"acf"</span>, lag.max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p><img src="characteristics_files/figure-html/persistence-plot-1.png" class="r-plt" alt="" width="672"></p>
 </details><p><img src="characteristics_files/figure-html/persistence-plot-show-1.png" class="r-plt" alt="" width="672"></p>
-<p>The ACF equals
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">1/e</annotation></semantics></math>
-at the relaxation time and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.5</mn><annotation encoding="application/x-tex">0.5</annotation></semantics></math>
-at the half-life. Slow regulation means longer persistence and higher
+<p>The ACF equals <span class="math inline">\(1/e\)</span> at the
+relaxation time and <span class="math inline">\(0.5\)</span> at the
+half-life. Slow regulation means longer persistence and higher
 autocorrelation. See <a href="../reference/relaxation.affectOU.html"><code>relaxation()</code></a>
 for more details on this concept and its interpretations.</p>
 </div>
 <div class="section level2">
 <h2 id="reactivity">3. Reactivity<a class="anchor" aria-label="anchor" href="#reactivity"></a>
 </h2>
-<p>The parameter
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
-controls the magnitude of random perturbations—emotional reactivity to
+<p>The parameter <span class="math inline">\(\gamma\)</span> controls
+the magnitude of random perturbations—emotional reactivity to
 environmental fluctuations.</p>
 <details><summary>
 Show code
@@ -160,9 +150,8 @@ Show code
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="characteristics_files/figure-html/reactivity-1.png" class="r-plt" alt="" width="672"></p>
 </details><p><img src="characteristics_files/figure-html/reactivity-plot-1.png" class="r-plt" alt="" width="672"></p>
-<p>Higher
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
-produces larger fluctuations around the attractor.</p>
+<p>Higher <span class="math inline">\(\gamma\)</span> produces larger
+fluctuations around the attractor.</p>
 </div>
 <div class="section level2">
 <h2 id="stability-regimes">4. Stability Regimes<a class="anchor" aria-label="anchor" href="#stability-regimes"></a>
@@ -170,24 +159,20 @@ produces larger fluctuations around the attractor.</p>
 <div class="section level3">
 <h3 id="univariate">Univariate<a class="anchor" aria-label="anchor" href="#univariate"></a>
 </h3>
-<p>The sign of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
-determines qualitative behaviour:</p>
+<p>The sign of <span class="math inline">\(\theta\)</span> determines
+qualitative behaviour:</p>
 <ul>
 <li>
-<strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\theta &gt; 0</annotation></semantics></math></strong>:
-Stable. Mean-reverting around
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>.
+<strong><span class="math inline">\(\theta &gt; 0\)</span></strong>:
+Stable. Mean-reverting around <span class="math inline">\(\mu\)</span>.
 Affect fluctuates within a bounded range.</li>
 <li>
-<strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>≈</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\theta \approx 0</annotation></semantics></math></strong>:
-Random walk. No attractor; variance grows over time. Affect drifts
-without returning.</li>
+<strong><span class="math inline">\(\theta \approx
+0\)</span></strong>: Random walk. No attractor; variance grows over
+time. Affect drifts without returning.</li>
 <li>
-<strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\theta &lt; 0</annotation></semantics></math></strong>:
-Unstable. Exponential divergence from
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>.
-Small perturbations amplify.</li>
+<strong><span class="math inline">\(\theta &lt; 0\)</span></strong>:
+Unstable. Exponential divergence from <span class="math inline">\(\mu\)</span>. Small perturbations amplify.</li>
 </ul>
 <details><summary>
 Show code
@@ -206,20 +191,17 @@ Show code
 <h3 id="multivariate">Multivariate<a class="anchor" aria-label="anchor" href="#multivariate"></a>
 </h3>
 <p>For multiple dimensions, stability depends on the eigenvalues of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝚯</mi><annotation encoding="application/x-tex">\boldsymbol{\Theta}</annotation></semantics></math>.
-Three cases arise:</p>
+<span class="math inline">\(\mathbf{\Theta}\)</span>. Three cases
+arise:</p>
 <ul>
 <li>
 <strong>Real positive eigenvalues</strong>: Smooth exponential decay
-toward
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝛍</mi><annotation encoding="application/x-tex">\boldsymbol{\mu}</annotation></semantics></math>.
-All dimensions settle without oscillation.</li>
+toward <span class="math inline">\(\mathbf{\mu}\)</span>. All dimensions
+settle without oscillation.</li>
 <li>
 <strong>Complex eigenvalues with positive real parts</strong>:
-Damped oscillations. Dimensions rotate around
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝛍</mi><annotation encoding="application/x-tex">\boldsymbol{\mu}</annotation></semantics></math>
-in the phase space, spiralling inward. This can represent cyclical
-affect patterns.</li>
+Damped oscillations. Dimensions rotate around <span class="math inline">\(\mathbf{\mu}\)</span> in the phase space,
+spiralling inward. This can represent cyclical affect patterns.</li>
 <li>
 <strong>Any eigenvalue with zero or negative real part</strong>: The
 system is non-stationary. Affect diverges over time – either drifting
@@ -263,16 +245,16 @@ and arousal cycling together).</p>
 <div class="section level2">
 <h2 id="multivariate-coupling">5. Multivariate Coupling<a class="anchor" aria-label="anchor" href="#multivariate-coupling"></a>
 </h2>
-<p>In multivariate models, off-diagonal elements of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝚯</mi><annotation encoding="application/x-tex">\boldsymbol{\Theta}</annotation></semantics></math>
-capture cross-regulation between dimensions.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝚯</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>θ</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>θ</mi><mn>12</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>θ</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>θ</mi><mn>22</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="normal">self-regulation of dim 1</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="normal">influence of dim 2 on dim 1</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="normal">influence of dim 1 on dim 2</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="normal">self-regulation of dim 2</mtext></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\boldsymbol{\Theta} = \begin{bmatrix}
+<p>In multivariate models, off-diagonal elements of <span class="math inline">\(\mathbf{\Theta}\)</span> capture cross-regulation
+between dimensions.</p>
+<p><span class="math display">\[\mathbf{\Theta} = \begin{bmatrix}
 \theta_{11} &amp; \theta_{12} \\
 \theta_{21} &amp; \theta_{22}
 \end{bmatrix} = \begin{bmatrix}
-\text{self-regulation of dim 1} &amp; \text{influence of dim 2 on dim 1} \\
+\text{self-regulation of dim 1} &amp; \text{influence of dim 2 on dim 1}
+\\
 \text{influence of dim 1 on dim 2} &amp; \text{self-regulation of dim 2}
-\end{bmatrix}</annotation></semantics></math></p>
+\end{bmatrix}\]</span></p>
 <details><summary>
 Show code
 </summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -291,8 +273,7 @@ Show code
 <p><img src="characteristics_files/figure-html/multivariate-2.png" class="r-plt" alt="" width="672"></p>
 </details><p><img src="characteristics_files/figure-html/multivariate-plot-1.png" class="r-plt" alt="" width="672"></p>
 <p><img src="characteristics_files/figure-html/multivariate-plot2-1.png" class="r-plt" alt="" width="672"></p>
-<p>The positive entry
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>21</mn></msub><annotation encoding="application/x-tex">\theta_{21}</annotation></semantics></math>
+<p>The positive entry <span class="math inline">\(\theta_{21}\)</span>
 means that when dimension 1 deviates from its attractor, it pushes
 dimension 2 in the opposite direction: if dimension 1 is above baseline,
 dimension 2 is pushed down, and vice versa. This creates interdependent
@@ -301,10 +282,9 @@ dynamics visible in the phase portrait.</p>
 <div class="section level2">
 <h2 id="noise-coupling">6. Noise Coupling<a class="anchor" aria-label="anchor" href="#noise-coupling"></a>
 </h2>
-<p>Off-diagonal elements of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝚪</mi><annotation encoding="application/x-tex">\boldsymbol{\Gamma}</annotation></semantics></math>
-create correlated noise between dimensions. This can lead to
-synchronized fluctuations even in uncoupled systems.</p>
+<p>Off-diagonal elements of <span class="math inline">\(\mathbf{\Gamma}\)</span> create correlated noise
+between dimensions. This can lead to synchronized fluctuations even in
+uncoupled systems.</p>
 <details><summary>
 Show code
 </summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -341,38 +321,35 @@ Show code
 <tbody>
 <tr class="odd">
 <td>Mean reversion</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math></td>
+<td><span class="math inline">\(\theta\)</span></td>
 <td>Rate of return to baseline</td>
 </tr>
 <tr class="even">
 <td>Perturbation persistence</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math></td>
+<td><span class="math inline">\(\theta\)</span></td>
 <td>Half-life of perturbations</td>
 </tr>
 <tr class="odd">
 <td>Reactivity</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math></td>
+<td><span class="math inline">\(\gamma\)</span></td>
 <td>Magnitude of fluctuations</td>
 </tr>
 <tr class="even">
 <td>Stability</td>
-<td>sign(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>)
-/ eigenvalues of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝚯</mi><annotation encoding="application/x-tex">\boldsymbol{\Theta}</annotation></semantics></math>
+<td>sign(<span class="math inline">\(\theta\)</span>) / eigenvalues of
+<span class="math inline">\(\mathbf{\Theta}\)</span>
 </td>
 <td>Stationary vs divergent</td>
 </tr>
 <tr class="odd">
 <td>Cross-coupling</td>
-<td>off-diagonal
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝚯</mi><annotation encoding="application/x-tex">\boldsymbol{\Theta}</annotation></semantics></math>
+<td>off-diagonal <span class="math inline">\(\mathbf{\Theta}\)</span>
 </td>
 <td>Interdimensional dynamics</td>
 </tr>
 <tr class="even">
 <td>Noise coupling</td>
-<td>off-diagonal
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝚪</mi><annotation encoding="application/x-tex">\boldsymbol{\Gamma}</annotation></semantics></math>
+<td>off-diagonal <span class="math inline">\(\mathbf{\Gamma}\)</span>
 </td>
 <td>Interdimensional dynamics</td>
 </tr>

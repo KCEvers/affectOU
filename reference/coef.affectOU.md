@@ -1,6 +1,7 @@
-# Extract model coefficients
+# Extract model parameters
 
-Extract the parameters of an affect OU model as a list.
+Extract the parameters of an affect Ornstein-Uhlenbeck (OU) model as a
+list.
 
 ## Usage
 
@@ -13,17 +14,24 @@ coef(object, ...)
 
 - object:
 
-  An object of class `affectOU`
+  An object of class `affectOU`.
 
 - ...:
 
-  Additional arguments (unused)
+  Additional arguments (unused).
 
 ## Value
 
 A list containing the model parameters: `theta`, `mu`, `gamma`, and
 `sigma`. For 1D models, these are returned as numeric scalars. For
 multivariate models, they are returned as matrices.
+
+## See also
+
+[`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md)
+to create an OU model and
+[update()](https://kcevers.github.io/affectOU/reference/update.affectOU.md)
+to modify model parameters.
 
 ## Examples
 

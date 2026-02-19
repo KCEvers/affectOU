@@ -13,13 +13,13 @@
 - [`as.matrix(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/as.matrix.simulate_affectOU.md)
   : Convert simulation results to matrix
 - [`coef(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/coef.affectOU.md)
-  : Extract model coefficients
+  : Extract model parameters
 - [`coef(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/coef.fit_affectOU.md)
   : Extract coefficients from fitted OU affect model
 - [`confint(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/confint.fit_affectOU.md)
   : Confidence intervals for fitted OU affect model
 - [`dim(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/dim.affectOU.md)
-  : Get dimensionality of affect OU model
+  : Extract dimensionality
 - [`equation(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/equation.affectOU.md)
   : Extract model equations
 - [`fit(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md)

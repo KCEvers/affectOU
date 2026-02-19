@@ -15,10 +15,10 @@ and
 
 ## 1. Mean Reversion
 
-After perturbations, affect returns toward its baseline $\mu$ at a rate
-determined by $\theta$ (for stable, unidimensional systems). High
-$\theta$ indicates rapid regulation; low $\theta$ indicates emotional
-inertia.
+After perturbations, affect returns toward its baseline \\\mu\\ at a
+rate determined by \\\theta\\ (for stable, unidimensional systems). High
+\\\theta\\ indicates rapid regulation; low \\\theta\\ indicates
+emotional inertia.
 
 Show code
 
@@ -38,11 +38,11 @@ plot(sim,
 
 ## 2. Perturbation Persistence
 
-The relaxation time $\tau = 1/\theta$ is the characteristic time scale
-of the OU process—the time for the expected deviation to shrink to
-$1/e \approx 36.8\%$. The half-life $t_{1/2} = \ln 2 \cdot \tau$ marks
-the 50% point. Effects decay exponentially: at two $\tau$, about 13.5%
-remains; at three $\tau$, about 5%.
+The relaxation time \\\tau = 1/\theta\\ is the characteristic time scale
+of the OU process—the time for the expected deviation to shrink to \\1/e
+\approx 36.8\\\\. The half-life \\t\_{1/2} = \ln 2 \cdot \tau\\ marks
+the 50% point. Effects decay exponentially: at two \\\tau\\, about 13.5%
+remains; at three \\\tau\\, about 5%.
 
 ``` r
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
@@ -70,14 +70,15 @@ plot(sim, type = "acf", lag.max = 10)
 
 ![](characteristics_files/figure-html/persistence-plot-show-1.png)
 
-The ACF equals $1/e$ at the relaxation time and $0.5$ at the half-life.
-Slow regulation means longer persistence and higher autocorrelation. See
+The ACF equals \\1/e\\ at the relaxation time and \\0.5\\ at the
+half-life. Slow regulation means longer persistence and higher
+autocorrelation. See
 [`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
 for more details on this concept and its interpretations.
 
 ## 3. Reactivity
 
-The parameter $\gamma$ controls the magnitude of random
+The parameter \\\gamma\\ controls the magnitude of random
 perturbations—emotional reactivity to environmental fluctuations.
 
 Show code
@@ -96,20 +97,20 @@ plot(sim,
 
 ![](characteristics_files/figure-html/reactivity-plot-1.png)
 
-Higher $\gamma$ produces larger fluctuations around the attractor.
+Higher \\\gamma\\ produces larger fluctuations around the attractor.
 
 ## 4. Stability Regimes
 
 ### Univariate
 
-The sign of $\theta$ determines qualitative behaviour:
+The sign of \\\theta\\ determines qualitative behaviour:
 
-- **$\theta > 0$**: Stable. Mean-reverting around $\mu$. Affect
+- **\\\theta \> 0\\**: Stable. Mean-reverting around \\\mu\\. Affect
   fluctuates within a bounded range.
-- **$\theta \approx 0$**: Random walk. No attractor; variance grows over
-  time. Affect drifts without returning.
-- **$\theta < 0$**: Unstable. Exponential divergence from $\mu$. Small
-  perturbations amplify.
+- **\\\theta \approx 0\\**: Random walk. No attractor; variance grows
+  over time. Affect drifts without returning.
+- **\\\theta \< 0\\**: Unstable. Exponential divergence from \\\mu\\.
+  Small perturbations amplify.
 
 Show code
 
@@ -130,13 +131,13 @@ plot(sim,
 ### Multivariate
 
 For multiple dimensions, stability depends on the eigenvalues of
-$\mathbf{\Theta}$. Three cases arise:
+\\\mathbf{\Theta}\\. Three cases arise:
 
 - **Real positive eigenvalues**: Smooth exponential decay toward
-  $\mathbf{μ}$. All dimensions settle without oscillation.
+  \\\mathbf{\mu}\\. All dimensions settle without oscillation.
 - **Complex eigenvalues with positive real parts**: Damped oscillations.
-  Dimensions rotate around $\mathbf{μ}$ in the phase space, spiralling
-  inward. This can represent cyclical affect patterns.
+  Dimensions rotate around \\\mathbf{\mu}\\ in the phase space,
+  spiralling inward. This can represent cyclical affect patterns.
 - **Any eigenvalue with zero or negative real part**: The system is
   non-stationary. Affect diverges over time – either drifting
   monotonically or oscillating with growing amplitude, depending on
@@ -186,16 +187,14 @@ arousal cycling together).
 
 ## 5. Multivariate Coupling
 
-In multivariate models, off-diagonal elements of $\mathbf{\Theta}$
+In multivariate models, off-diagonal elements of \\\mathbf{\Theta}\\
 capture cross-regulation between dimensions.
 
-$$\mathbf{\Theta} = \begin{bmatrix}
-\theta_{11} & \theta_{12} \\
-\theta_{21} & \theta_{22}
-\end{bmatrix} = \begin{bmatrix}
+\\\mathbf{\Theta} = \begin{bmatrix} \theta\_{11} & \theta\_{12} \\
+\theta\_{21} & \theta\_{22} \end{bmatrix} = \begin{bmatrix}
 \text{self-regulation of dim 1} & \text{influence of dim 2 on dim 1} \\
 \text{influence of dim 1 on dim 2} & \text{self-regulation of dim 2}
-\end{bmatrix}$$
+\end{bmatrix}\\
 
 Show code
 
@@ -223,7 +222,7 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 
 ![](characteristics_files/figure-html/multivariate-plot2-1.png)
 
-The positive entry $\theta_{21}$ means that when dimension 1 deviates
+The positive entry \\\theta\_{21}\\ means that when dimension 1 deviates
 from its attractor, it pushes dimension 2 in the opposite direction: if
 dimension 1 is above baseline, dimension 2 is pushed down, and vice
 versa. This creates interdependent dynamics visible in the phase
@@ -231,7 +230,7 @@ portrait.
 
 ## 6. Noise Coupling
 
-Off-diagonal elements of $\mathbf{\Gamma}$ create correlated noise
+Off-diagonal elements of \\\mathbf{\Gamma}\\ create correlated noise
 between dimensions. This can lead to synchronized fluctuations even in
 uncoupled systems.
 
@@ -263,11 +262,11 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 
 ## Summary
 
-| Feature                  | Parameter                                         | Effect                     |
-|--------------------------|---------------------------------------------------|----------------------------|
-| Mean reversion           | $\theta$                                          | Rate of return to baseline |
-| Perturbation persistence | $\theta$                                          | Half-life of perturbations |
-| Reactivity               | $\gamma$                                          | Magnitude of fluctuations  |
-| Stability                | sign($\theta$) / eigenvalues of $\mathbf{\Theta}$ | Stationary vs divergent    |
-| Cross-coupling           | off-diagonal $\mathbf{\Theta}$                    | Interdimensional dynamics  |
-| Noise coupling           | off-diagonal $\mathbf{\Gamma}$                    | Interdimensional dynamics  |
+| Feature                  | Parameter                                             | Effect                     |
+|--------------------------|-------------------------------------------------------|----------------------------|
+| Mean reversion           | \\\theta\\                                            | Rate of return to baseline |
+| Perturbation persistence | \\\theta\\                                            | Half-life of perturbations |
+| Reactivity               | \\\gamma\\                                            | Magnitude of fluctuations  |
+| Stability                | sign(\\\theta\\) / eigenvalues of \\\mathbf{\Theta}\\ | Stationary vs divergent    |
+| Cross-coupling           | off-diagonal \\\mathbf{\Theta}\\                      | Interdimensional dynamics  |
+| Noise coupling           | off-diagonal \\\mathbf{\Gamma}\\                      | Interdimensional dynamics  |
