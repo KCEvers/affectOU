@@ -2,7 +2,7 @@
 % Please edit documentation in R/affectOU-methods.R
 \name{dim.affectOU}
 \alias{dim.affectOU}
-\title{Get dimensionality of affect OU model}
+\title{Extract dimensionality}
 \usage{
 \method{dim}{affectOU}(x)
 }
@@ -13,7 +13,7 @@
 Integer, the dimensionality of the process.
 }
 \description{
-Get dimensionality of affect OU model
+Extract the number of dimensions of an affect Ornstein-Uhlenbeck (OU) model.
 }
 \examples{
 model <- affectOU()

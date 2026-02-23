@@ -147,7 +147,7 @@ stability.affectOU <- function(object, tol = 1e-10, ...) {
 #' Print stability analysis
 #'
 #' @param x A `stability_affectOU` object from [stability()][stability.affectOU()]
-#' 
+#'
 #' @param digits Number of digits to display
 #' @param ... Additional arguments (unused)
 #'

@@ -283,7 +283,6 @@ test_that("unstable OU models run", {
 })
 
 
-
 test_that("affectOU rejects Inf parameters (2D)", {
   ndim <- 2
   theta <- diag(2)

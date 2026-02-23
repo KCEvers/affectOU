@@ -177,15 +177,15 @@ equation_ou_nd_latex <- function(theta, mu, gamma, sigma, inline) {
     )
   } else {
     paste0(
-      "d\\mathbf{X}(t) = \\boldsymbol{\\Theta} ",
-      "\\left( \\boldsymbol{\\mu} - \\mathbf{X}(t) \\right) dt + ",
-      "\\boldsymbol{\\Gamma} \\, d\\mathbf{W}(t)\n\n",
+      "d\\mathbf{X}(t) = \\mathbf{\\Theta} ",
+      "\\left( \\mathbf{\\mu} - \\mathbf{X}(t) \\right) dt + ",
+      "\\mathbf{\\Gamma} \\, d\\mathbf{W}(t)\n\n",
       "\\text{where:}\n",
       "\\begin{align*}\n",
-      "  \\boldsymbol{\\Theta} &= ", format_matrix_latex(theta), " \\\\\n",
-      "  \\boldsymbol{\\mu} &= ", format_vector_latex(mu), " \\\\\n",
-      "  \\boldsymbol{\\Gamma} &= ", format_matrix_latex(gamma), " \\\\\n",
-      "  \\boldsymbol{\\Sigma} &= ", format_matrix_latex(sigma), "\n",
+      "  \\mathbf{\\Theta} &= ", format_matrix_latex(theta), " \\\\\n",
+      "  \\mathbf{\\mu} &= ", format_vector_latex(mu), " \\\\\n",
+      "  \\mathbf{\\Gamma} &= ", format_matrix_latex(gamma), " \\\\\n",
+      "  \\mathbf{\\Sigma} &= ", format_matrix_latex(sigma), "\n",
       "\\end{align*}\n"
     )
   }
