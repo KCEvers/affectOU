@@ -16,7 +16,7 @@ ou_plot_phase(
   which_sim = NULL,
   share_xaxis = TRUE,
   share_yaxis = TRUE,
-  palette = "Temps",
+  palette = "Dark 3",
   col_theory = "grey30",
   alpha = 1,
   main = "Phase Portrait",
@@ -89,7 +89,7 @@ ou_plot_phase(
 
   Position of legend (one of `"bottomright"`, `"bottom"`,
   `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`,
-  `"right"`, `"center"`)
+  `"right"`, `"center"`, `"none"`). Set to `"none"` to hide legend.
 
 - ...:
 

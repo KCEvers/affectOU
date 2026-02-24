@@ -25,6 +25,10 @@ Plot parameter documentation
 
   Alpha transparency for colors (0 = transparent, 1 = opaque)
 
+- lwd:
+
+  Line width
+
 - share_xaxis:
 
   Logical; use same x-axis limits for all panels?
@@ -67,7 +71,7 @@ Plot parameter documentation
 
   Position of legend (one of `"bottomright"`, `"bottom"`,
   `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`,
-  `"right"`, `"center"`)
+  `"right"`, `"center"`, `"none"`). Set to `"none"` to hide legend.
 
 - ...:
 

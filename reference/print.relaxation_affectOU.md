@@ -14,7 +14,7 @@ print(x, digits = 3, ...)
 - x:
 
   A `relaxation_affectOU` object from
-  [relaxation()](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
+  [`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
 
 - digits:
 

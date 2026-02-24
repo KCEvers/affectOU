@@ -126,7 +126,7 @@ column \\j\\) represents the influence of dimension \\j\\ on dimension
   dimension \\i\\ returns to its own attractor \\\mu_i\\). Positive
   values are necessary for self-regulation, but strong cross-regulation
   can override this and destabilise the system (see
-  [summary()](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
+  [`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
   for system-level stability checks).
 
 - Off-diagonal elements \\\Theta\_{ij}\\ where \\i \neq j\\:
@@ -145,16 +145,16 @@ Psychological Methods, 16(4), 468-490.
 ## See also
 
 The returned object can be inspected with
-[print()](https://kcevers.github.io/affectOU/reference/print.affectOU.md),
-[summary()](https://kcevers.github.io/affectOU/reference/summary.affectOU.md),
-[stability()](https://kcevers.github.io/affectOU/reference/stability.affectOU.md),
-[stationary()](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md),
+[`print()`](https://kcevers.github.io/affectOU/reference/print.affectOU.md),
+[`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md),
+[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md),
+[`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md),
 and
-[coef()](https://kcevers.github.io/affectOU/reference/coef.affectOU.md),
+[`coef()`](https://kcevers.github.io/affectOU/reference/coef.affectOU.md),
 can be simulated over time with
-[simulate()](https://kcevers.github.io/affectOU/reference/simulate.affectOU.md),
+[`simulate()`](https://kcevers.github.io/affectOU/reference/simulate.affectOU.md),
 and fitted to univariate data with
-[fit()](https://kcevers.github.io/affectOU/reference/fit.affectOU.md).
+[`fit()`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md).
 
 ## Examples
 

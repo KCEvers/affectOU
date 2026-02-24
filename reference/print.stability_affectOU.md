@@ -14,7 +14,7 @@ print(x, digits = 3, ...)
 - x:
 
   A `stability_affectOU` object from
-  [stability()](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
+  [`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
 
 - digits:
 

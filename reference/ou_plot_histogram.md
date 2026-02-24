@@ -12,7 +12,7 @@ ou_plot_histogram(
   which_dim = NULL,
   which_sim = NULL,
   by_dim = TRUE,
-  palette = "Temps",
+  palette = "Dark 3",
   col_theory = "grey30",
   alpha = 1,
   share_xaxis = TRUE,
@@ -101,7 +101,7 @@ ou_plot_histogram(
 
   Position of legend (one of `"bottomright"`, `"bottom"`,
   `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`,
-  `"right"`, `"center"`)
+  `"right"`, `"center"`, `"none"`). Set to `"none"` to hide legend.
 
 - ...:
 

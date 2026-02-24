@@ -16,7 +16,7 @@ ou_plot_acf(
   which_dim = NULL,
   which_sim = 1,
   share_yaxis = FALSE,
-  palette = "Temps",
+  palette = "Dark 3",
   alpha = 1,
   col_theory = "grey30",
   main = ifelse(x[["model"]][["ndim"]] == 1, "Autocorrelation Function",
@@ -93,7 +93,7 @@ ou_plot_acf(
 
   Position of legend (one of `"bottomright"`, `"bottom"`,
   `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`,
-  `"right"`, `"center"`)
+  `"right"`, `"center"`, `"none"`). Set to `"none"` to hide legend.
 
 - ...:
 

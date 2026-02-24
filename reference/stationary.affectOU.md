@@ -52,7 +52,7 @@ A list of class `stationary_affectOU` containing:
 ## Details
 
 A stationary distribution exists only when the system is stable (see
-[stability()](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)).
+[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)).
 For non-stable systems, the function returns `is_stable = FALSE` with
 `NULL` distribution properties.
 
@@ -94,11 +94,11 @@ distributions but differ in dynamics, or vice versa.
 
 ## See also
 
-[stability()](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
+[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
 for stability assessment,
-[relaxation()](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
+[`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
 for perturbation persistence,
-[summary()](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
+[`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
 for the full model summary
 
 ## Examples

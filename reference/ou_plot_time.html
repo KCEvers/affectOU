@@ -60,11 +60,21 @@ multiple simulations overlaid within each panel.</p>
 <span>  which_dim <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  which_sim <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  by_dim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  palette <span class="op">=</span> <span class="st">"Temps"</span>,</span>
+<span>  palette <span class="op">=</span> <span class="st">"Dark 3"</span>,</span>
 <span>  col_theory <span class="op">=</span> <span class="st">"grey30"</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  lwd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="st">"nsim"</span><span class="op">]</span><span class="op">]</span> <span class="op">&gt;</span> <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  share_yaxis <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  main <span class="op">=</span> <span class="st">"Affect Dynamics"</span>,</span>
+<span>  main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Affect Dynamics"</span>, <span class="kw">if</span> <span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="st">"nsim"</span><span class="op">]</span><span class="op">]</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">" ("</span>, <span class="kw">if</span></span>
+<span>    <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">which_sim</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">x</span><span class="op">[[</span><span class="st">"nsim"</span><span class="op">]</span><span class="op">]</span></span>
+<span>     <span class="op">}</span></span>
+<span>     <span class="kw">else</span> <span class="op">{</span></span>
+<span>        </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">which_sim</span><span class="op">)</span></span>
+<span>     <span class="op">}</span>, <span class="st">" simulations)"</span><span class="op">)</span></span>
+<span> <span class="op">}</span><span class="op">)</span>,</span>
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Dimension"</span>, <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">which_dim</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq.int</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="st">"model"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"ndim"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
@@ -110,6 +120,10 @@ multiple simulations overlaid within each panel.</p>
 <dd><p>Alpha transparency for colors (0 = transparent, 1 = opaque)</p></dd>
 
 
+<dt id="arg-lwd">lwd<a class="anchor" aria-label="anchor" href="#arg-lwd"></a></dt>
+<dd><p>Line width</p></dd>
+
+
 <dt id="arg-share-yaxis">share_yaxis<a class="anchor" aria-label="anchor" href="#arg-share-yaxis"></a></dt>
 <dd><p>Logical; use same y-axis limits for all panels?</p></dd>
 
@@ -131,7 +145,7 @@ multiple simulations overlaid within each panel.</p>
 
 
 <dt id="arg-legend-position">legend_position<a class="anchor" aria-label="anchor" href="#arg-legend-position"></a></dt>
-<dd><p>Position of legend (one of <code>"bottomright"</code>, <code>"bottom"</code>, <code>"bottomleft"</code>, <code>"left"</code>, <code>"topleft"</code>, <code>"top"</code>, <code>"topright"</code>, <code>"right"</code>, <code>"center"</code>)</p></dd>
+<dd><p>Position of legend (one of <code>"bottomright"</code>, <code>"bottom"</code>, <code>"bottomleft"</code>, <code>"left"</code>, <code>"topleft"</code>, <code>"top"</code>, <code>"topright"</code>, <code>"right"</code>, <code>"center"</code>, <code>"none"</code>). Set to <code>"none"</code> to hide legend.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

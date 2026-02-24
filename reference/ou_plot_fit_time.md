@@ -9,7 +9,7 @@ data.
 ``` r
 ou_plot_fit_time(
   fit,
-  palette = "Temps",
+  palette = "Dark 3",
   alpha = 0.5,
   main = "Observed and Fitted Trajectory",
   xlab = "Time",
@@ -50,7 +50,7 @@ ou_plot_fit_time(
 
   Position of legend (one of `"bottomright"`, `"bottom"`,
   `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`,
-  `"right"`, `"center"`)
+  `"right"`, `"center"`, `"none"`). Set to `"none"` to hide legend.
 
 - ...:
 

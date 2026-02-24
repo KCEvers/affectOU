@@ -28,10 +28,10 @@ multivariate models, they are returned as matrices.
 
 ## See also
 
+Model parameters are explained in
 [`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md)
-to create an OU model and
-[update()](https://kcevers.github.io/affectOU/reference/update.affectOU.md)
-to modify model parameters.
+and can be modified using
+[`update()`](https://kcevers.github.io/affectOU/reference/update.affectOU.md).
 
 ## Examples
 

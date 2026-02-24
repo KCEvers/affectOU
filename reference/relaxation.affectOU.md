@@ -110,11 +110,11 @@ because the stationary covariance \\\Sigma\_\infty\\ (which depends on
 
 ## See also
 
-[stability()](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
+[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
 for stability assessment,
-[stationary()](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
+[`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
 for the equilibrium distribution,
-[summary()](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
+[`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
 for the full model summary
 
 ## Examples

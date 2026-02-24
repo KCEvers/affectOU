@@ -4,10 +4,10 @@ Summarize the dynamics, stationary distribution, and relaxation
 properties of an Ornstein-Uhlenbeck affect model. In the case of
 multi-dimensional models, additional information about coupling and
 noise structure is provided. For more details, see
-[stability()](https://kcevers.github.io/affectOU/reference/stability.affectOU.md),
-[stationary()](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md),
+[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md),
+[`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md),
 and
-[relaxation()](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md).
+[`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md).
 
 ## Usage
 
@@ -37,17 +37,17 @@ An object of class `summary_affectOU` containing:
 - stability:
 
   A `stability_affectOU` object (see
-  [stability()](https://kcevers.github.io/affectOU/reference/stability.affectOU.md))
+  [`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md))
 
 - stationary:
 
   A `stationary_affectOU` object (see
-  [stationary()](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md))
+  [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md))
 
 - relaxation:
 
   Data frame with relaxation time and half-life for each dimension (see
-  [relaxation()](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md))
+  [`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md))
 
 - coupling:
 
@@ -63,11 +63,11 @@ An object of class `summary_affectOU` containing:
 
 ## See also
 
-[stability()](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
+[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
 for dynamics classification,
-[stationary()](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
+[`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
 for the equilibrium distribution,
-[relaxation()](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
+[`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
 for perturbation persistence,
 [`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md)
 for model construction,

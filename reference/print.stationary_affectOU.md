@@ -14,7 +14,7 @@ print(x, digits = 3, ...)
 - x:
 
   A `stationary_affectOU` object from
-  [stationary()](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
+  [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
 
 - digits:
 

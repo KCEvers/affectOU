@@ -12,11 +12,21 @@ ou_plot_time(
   which_dim = NULL,
   which_sim = NULL,
   by_dim = TRUE,
-  palette = "Temps",
+  palette = "Dark 3",
   col_theory = "grey30",
   alpha = 1,
+  lwd = ifelse(x[["nsim"]] > 1, 1, 2),
   share_yaxis = TRUE,
-  main = "Affect Dynamics",
+  main = paste0("Affect Dynamics", if (x[["nsim"]] > 1) {
+     paste0(" (", if
+    (is.null(which_sim)) {
+x[["nsim"]]
+     }
+     else {
+        
+    length(which_sim)
+     }, " simulations)")
+ }),
   sub = paste("Dimension", if (is.null(which_dim)) {
     
     seq.int(x[["model"]][["ndim"]])
@@ -62,6 +72,10 @@ ou_plot_time(
 
   Alpha transparency for colors (0 = transparent, 1 = opaque)
 
+- lwd:
+
+  Line width
+
 - share_yaxis:
 
   Logical; use same y-axis limits for all panels?
@@ -86,7 +100,7 @@ ou_plot_time(
 
   Position of legend (one of `"bottomright"`, `"bottom"`,
   `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`,
-  `"right"`, `"center"`)
+  `"right"`, `"center"`, `"none"`). Set to `"none"` to hide legend.
 
 - ...:
 
