@@ -206,11 +206,11 @@ $$\mathbf{\Theta} = \begin{bmatrix}
 # Dimension 1's deviations from baseline push dimension 2 in the opposite direction
 theta_2d <- matrix(c(
   0.5, 0.0,
-  2, 0.5
+  -2, 0.5
 ), nrow = 2, byrow = TRUE)
 
 model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
-sim_2d <- simulate(model_2d, seed = 102)
+sim_2d <- simulate(model_2d, seed = 105)
 plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
@@ -225,7 +225,9 @@ plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
-The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait.
+<!-- The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait. -->
+
+The negative entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the same direction: if dimension 1 is above baseline, dimension 2 is pushed up, and vice versa. This creates interdependent dynamics visible in the phase portrait.
 
 ## 6. Noise Coupling
 
@@ -244,9 +246,8 @@ gamma_2d <- matrix(c(
 ), nrow = 2, byrow = TRUE)
 
 model_2d <- affectOU(theta = 0.5, mu = 0, gamma = gamma_2d)
-sim_2d <- simulate(model_2d, seed = 102)
+sim_2d <- simulate(model_2d, seed = 105)
 plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
-plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
 </details>
@@ -254,11 +255,6 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```{r noise-plot, echo = FALSE, fig.height = 5}
 plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
 ```
-
-```{r noise-plot2, echo = FALSE, fig.height = 6}
-plot(sim_2d, type = "phase", main = "Phase Portrait")
-```
-
 
 ## Summary
 

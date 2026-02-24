@@ -84,7 +84,7 @@ model
 
 ``` r
 # Run three simulations
-sim <- simulate(model, nsim = 3)
+sim <- simulate(model)
 plot(sim)
 ```
 
