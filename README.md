@@ -42,7 +42,7 @@ Tutorial in R” (forthcoming).
 
 ## Installation
 
-The development version of affectOU can be installed from
+`affectOU` can be installed from
 [GitHub](https://github.com/KCEvers/affectOU) with:
 
 ``` r
@@ -83,22 +83,30 @@ model
 ```
 
 ``` r
-# Run three simulations
+# Simulate timeseries
 sim <- simulate(model)
 plot(sim)
 ```
 
-<img src="man/figures/README-sim-1.png" alt="" width="100%" />
+<img src="man/figures/README-sim-img-1.svg" alt="" width="100%" />
 
-## Tutorials
+## Explore the OU Process
 
 For more detailed examples and visual demonstrations of the model’s
 characteristics, see the vignettes:
 
-  - [Get Started with
+  - [Get started with
     affectOU](https://kcevers.github.io/affectOU/articles/affectOU.html)
   - [Affect Characteristics Implied by the OU
     Process](https://kcevers.github.io/affectOU/articles/characteristics.html)
+
+Theoretical properties of the OU process are explained in
+[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.html),
+[`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.html),
+and
+[`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.html).
+For fitting unidimensional OU models to data, see
+[`fit()`](https://kcevers.github.io/affectOU/reference/fit.affectOU.html).
 
 ## References
 

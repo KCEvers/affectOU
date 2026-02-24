@@ -8,11 +8,11 @@ ou_plot_time(
   x,
   which_dim = NULL,
   which_sim = NULL,
-  by_dim = TRUE,
+  by_dim = FALSE,
   palette = "Dark 3",
   col_theory = "grey30",
   alpha = 1,
-  lwd = ifelse(x[["nsim"]] > 1, 1, 2),
+  lwd = ifelse(x[["nsim"]] > 1, 1, 1.25),
   share_yaxis = TRUE,
   main = paste0("Affect Dynamics", if (x[["nsim"]] > 1) {
      paste0(" (", if

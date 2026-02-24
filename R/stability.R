@@ -12,7 +12,7 @@ stability <- function(object, ...) {
 }
 
 
-#' Assess stability of an Ornstein-Uhlenbeck model
+#' Assess stability for Ornstein-Uhlenbeck model
 #'
 #' Classify the dynamics and stability of an Ornstein-Uhlenbeck model
 #' based on eigenvalue analysis of the drift matrix \eqn{\Theta}.
@@ -78,7 +78,7 @@ stability <- function(object, ...) {
 #'
 #' @seealso [`stationary()`][stationary.affectOU()] for the equilibrium
 #'   distribution, [`relaxation()`][relaxation.affectOU()] for perturbation
-#'   persistence, [`summary()`][summary.affectOU()] for the full model summary
+#'   persistence, [`summary()`][summary.affectOU()] for the full model summary.
 #'
 #' @export
 #' @examples
@@ -92,7 +92,6 @@ stability <- function(object, ...) {
 #'
 #' # Positive diagonals with oscillatory coupling: stable
 #' theta_osc <- matrix(c(0.5, -0.4, 0.4, 0.5), nrow = 2)
-#' eigen(theta_osc)$values # complex with positive real part
 #' stability(affectOU(theta = theta_osc, mu = 0, gamma = 1))
 #'
 #' # Strong coupling still stable if real parts stay positive
@@ -105,7 +104,7 @@ stability <- function(object, ...) {
 #'
 #' # One negative diagonal element makes the system non-stationary
 #' theta_unstable <- matrix(c(0.5, 0, 0, -0.3), nrow = 2)
-#' stability(affectOU(theta = theta_unstable, mu = 0, gamma = 1))$is_stable
+#' stability(affectOU(theta = theta_unstable, mu = 0, gamma = 1))
 #'
 stability.affectOU <- function(object, tol = 1e-10, ...) {
   ndim <- object[["ndim"]]
@@ -206,6 +205,30 @@ print.stability_affectOU <- function(x, digits = 3, ...) {
     }
     cli::cli_end()
   }
+
+  # Eigenvalues
+  format_eigenvalue <- function(ev, digits) {
+    re <- round(Re(ev), digits)
+    im <- round(Im(ev), digits)
+    if (im == 0) {
+      as.character(re)
+    } else if (im > 0) {
+      paste0(re, " + ", im, "i")
+    } else {
+      paste0(re, " - ", abs(im), "i")
+    }
+  }
+
+  has_complex <- any(abs(Im(x$eigenvalues)) > .Machine$double.eps^0.5)
+  ev_note <- if (has_complex) "complex" else "all real"
+
+  cli::cli_text("")
+  cli::cli_text("Eigenvalues ({ev_note}):")
+  cli::cli_ul()
+  for (k in seq_along(x$eigenvalues)) {
+    cli::cli_li("\u03bb{k}: {format_eigenvalue(x$eigenvalues[k], digits)}")
+  }
+  cli::cli_end()
 
   invisible(x)
 }

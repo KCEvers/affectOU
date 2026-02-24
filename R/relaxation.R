@@ -13,7 +13,7 @@ relaxation <- function(object, ...) {
 }
 
 
-#' Compute relaxation time for OU model
+#' Compute relaxation time for Ornstein-Uhlenbeck model
 #'
 #' The relaxation time \eqn{\tau = 1/\theta_{ii}} is the characteristic time
 #' scale of an OU process.  It measures how quickly the process "forgets" its
@@ -77,7 +77,7 @@ relaxation <- function(object, ...) {
 #'
 #' @seealso [`stability()`][stability.affectOU()] for stability assessment,
 #'   [`stationary()`][stationary.affectOU()] for the equilibrium distribution,
-#'   [`summary()`][summary.affectOU()] for the full model summary
+#'   [`summary()`][summary.affectOU()] for the full model summary.
 #'
 #' @export
 #' @examples

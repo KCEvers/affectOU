@@ -71,7 +71,7 @@ stationary <- function(object, ...) {
 #'
 #' @seealso [`stability()`][stability.affectOU()] for stability assessment,
 #'   [`relaxation()`][relaxation.affectOU()] for perturbation persistence,
-#'   [`summary()`][summary.affectOU()] for the full model summary
+#'   [`summary()`][summary.affectOU()] for the full model summary.
 #'
 #' @export
 #' @examples
@@ -182,6 +182,16 @@ print.stationary_affectOU <- function(x, digits = 3, ...) {
   } else {
     cli::cli_text("Mean: [{paste(round(x$mean, digits), collapse = ', ')}]")
     cli::cli_text("SD: [{paste(round(x$sd, digits), collapse = ', ')}]")
+
+    cli::cli_text("")
+    cli::cli_text("95% intervals:")
+    cli::cli_ul()
+    for (i in seq_len(ndim)) {
+      lo <- round(x$mean[i] - 2 * x$sd[i], digits)
+      hi <- round(x$mean[i] + 2 * x$sd[i], digits)
+      cli::cli_li("Dim. {i}: [{lo}, {hi}]")
+    }
+    cli::cli_end()
 
     if (!is.null(x$cor)) {
       # Report off-diagonal correlations

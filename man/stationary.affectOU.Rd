@@ -100,5 +100,5 @@ stationary(model_2d)$cor # non-zero off-diagonal
 \seealso{
 \code{\link[=stability.affectOU]{stability()}} for stability assessment,
 \code{\link[=relaxation.affectOU]{relaxation()}} for perturbation persistence,
-\code{\link[=summary.affectOU]{summary()}} for the full model summary
+\code{\link[=summary.affectOU]{summary()}} for the full model summary.
 }
