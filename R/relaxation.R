@@ -75,9 +75,9 @@ relaxation <- function(object, ...) {
 #'   If multiple dimensions are requested, a data frame with columns:
 #'   `dimension`, `relaxation_time`, `half_life`, `theta_ii`, `method`, `ndim`.
 #'
-#' @seealso [stability()][stability.affectOU()] for stability assessment,
-#'   [stationary()][stationary.affectOU()] for the equilibrium distribution,
-#'   [summary()][summary.affectOU()] for the full model summary
+#' @seealso [`stability()`][stability.affectOU()] for stability assessment,
+#'   [`stationary()`][stationary.affectOU()] for the equilibrium distribution,
+#'   [`summary()`][summary.affectOU()] for the full model summary
 #'
 #' @export
 #' @examples
@@ -289,7 +289,7 @@ compute_relaxation_single <- function(theta, sigma_inf, i, method, is_diagonal) 
 
 #' Print relaxation time
 #'
-#' @param x A `relaxation_affectOU` object from [relaxation()][relaxation.affectOU()]
+#' @param x A `relaxation_affectOU` object from [`relaxation()`][relaxation.affectOU()]
 #' @param digits Number of digits to display
 #' @param ... Additional arguments (unused)
 #'

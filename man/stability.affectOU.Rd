@@ -108,7 +108,7 @@ stability(affectOU(theta = theta_unstable, mu = 0, gamma = 1))$is_stable
 
 }
 \seealso{
-\link[=stationary.affectOU]{stationary()} for the equilibrium
-distribution, \link[=relaxation.affectOU]{relaxation()} for perturbation
-persistence, \link[=summary.affectOU]{summary()} for the full model summary
+\code{\link[=stationary.affectOU]{stationary()}} for the equilibrium
+distribution, \code{\link[=relaxation.affectOU]{relaxation()}} for perturbation
+persistence, \code{\link[=summary.affectOU]{summary()}} for the full model summary
 }

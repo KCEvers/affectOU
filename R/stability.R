@@ -76,9 +76,9 @@ stability <- function(object, ...) {
 #'     \item{ndim}{Dimensionality of the process}
 #'   }
 #'
-#' @seealso [stationary()][stationary.affectOU()] for the equilibrium
-#'   distribution, [relaxation()][relaxation.affectOU()] for perturbation
-#'   persistence, [summary()][summary.affectOU()] for the full model summary
+#' @seealso [`stationary()`][stationary.affectOU()] for the equilibrium
+#'   distribution, [`relaxation()`][relaxation.affectOU()] for perturbation
+#'   persistence, [`summary()`][summary.affectOU()] for the full model summary
 #'
 #' @export
 #' @examples
@@ -146,7 +146,7 @@ stability.affectOU <- function(object, tol = 1e-10, ...) {
 
 #' Print stability analysis
 #'
-#' @param x A `stability_affectOU` object from [stability()][stability.affectOU()]
+#' @param x A `stability_affectOU` object from [`stability()`][stability.affectOU()]
 #'
 #' @param digits Number of digits to display
 #' @param ... Additional arguments (unused)

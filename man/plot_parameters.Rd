@@ -14,6 +14,8 @@
 
 \item{alpha}{Alpha transparency for colors (0 = transparent, 1 = opaque)}
 
+\item{lwd}{Line width}
+
 \item{share_xaxis}{Logical; use same x-axis limits for all panels?}
 
 \item{share_yaxis}{Logical; use same y-axis limits for all panels?}
@@ -32,7 +34,7 @@
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"})}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }

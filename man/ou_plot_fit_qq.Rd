@@ -6,7 +6,7 @@
 \usage{
 ou_plot_fit_qq(
   fit,
-  palette = "Temps",
+  palette = "Dark 3",
   main = "Normal Q-Q Plot of Residuals",
   xlab = "Theoretical Quantiles",
   ylab = "Sample Quantiles",

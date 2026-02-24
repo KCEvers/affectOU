@@ -5,6 +5,7 @@
 #' @param by_dim Logical; plot each dimension in separate panel?
 #' @param palette Color palette. Should be one [grDevices::hcl.pals()].
 #' @param alpha Alpha transparency for colors (0 = transparent, 1 = opaque)
+#' @param lwd Line width
 #' @param share_xaxis Logical; use same x-axis limits for all panels?
 #' @param share_yaxis Logical; use same y-axis limits for all panels?
 #' @param freq Logical; plot frequency instead of density?
@@ -14,7 +15,7 @@
 #' @param sub Subtitle for panels
 #' @param xlab X-axis label
 #' @param ylab Y-axis label
-#' @param legend_position Position of legend (one of `"bottomright"`, `"bottom"`, `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`, `"right"`, `"center"`)
+#' @param legend_position Position of legend (one of `"bottomright"`, `"bottom"`, `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`, `"right"`, `"center"`, `"none"`). Set to `"none"` to hide legend.
 #' @param ... Additional graphical parameters
 #'
 #' @name plot_parameters
@@ -103,11 +104,22 @@ ou_plot_time <- function(x,
                          which_dim = NULL,
                          which_sim = NULL,
                          by_dim = TRUE,
-                         palette = "Temps",
+                         palette = "Dark 3",
                          col_theory = "grey30",
                          alpha = 1,
+                         lwd = ifelse(x[["nsim"]] > 1, 1, 2),
                          share_yaxis = TRUE,
-                         main = "Affect Dynamics",
+                         main = paste0(
+                           "Affect Dynamics",
+                           if (x[["nsim"]] > 1) {
+                            paste0(" (",
+                            if (is.null(which_sim)) {
+                              x[["nsim"]]
+                            } else {
+                              length(which_sim)
+                            }, " simulations)")
+                           }
+                         ),
                          sub = paste(
                            "Dimension",
                            if (is.null(which_dim)) {
@@ -136,6 +148,7 @@ ou_plot_time <- function(x,
   if (is.null(which_sim)) {
     which_sim <- seq_len(nsim)
   }
+  which_sim <- sort(unique(which_sim))
 
   # Prepare sim object
   x <- prep_sim(x, which_dim, which_sim)
@@ -177,6 +190,9 @@ ou_plot_time <- function(x,
   # Colours
   cols <- grDevices::hcl.colors(ndim, palette = palette, alpha = alpha)
 
+  # Line types: assign simulations to contiguous groups (one group per lty)
+  lty_sim <- assign_sim_lty(nsim)
+
   # Plot each dimension
   for (i in seq_len(ndim)) {
     dim_name <- which_dim[i]
@@ -204,11 +220,10 @@ ou_plot_time <- function(x,
       cols[i]
     }
 
-    # Also works in case nsim == 1
+    # lty (0=blank, 1=solid (default), 2=dashed, 3=dotted, 4=dotdash, 5=longdash, 6=twodash)
     matlines(times, dim_data,
-      # lty (0=blank, 1=solid (default), 2=dashed, 3=dotted, 4=dotdash, 5=longdash, 6=twodash)
-      lty = 1:5,
-      lwd = 2, col = col_sim
+      lty = lty_sim,
+      lwd = P[["lwd"]], col = col_sim
     )
   }
 
@@ -219,9 +234,26 @@ ou_plot_time <- function(x,
     ylab = P[["ylab"]]
   )
 
+  # Simulation legend entries (NULL when nsim <= 1)
+  col_sim_leg <- if (nsim > 1) {
+    generate_shades(
+      if (by_dim) cols[layout$ncol] else cols[1L],
+      nsim, min_alpha = alpha / 2, max_alpha = alpha
+    )
+  } else {
+    cols[1L]
+  }
+  sim_leg <- sim_legend_entries(nsim, lty_sim, col_sim_leg, lwd = P[["lwd"]],
+                                sim_ids = which_sim)
+  if (!is.null(sim_leg) && ndim > 1) {
+    sim_leg$col <- rep("black", length(sim_leg$col))
+  }
+
   if (by_dim) {
-    # Add legend inside top-right panel for mu
-    legend_text <- expression(Attractor ~ mu)
+    legend_text <- c(expression(Attractor ~ mu), if (!is.null(sim_leg)) sim_leg$text)
+    legend_cols <- c(col_theory,                 if (!is.null(sim_leg)) sim_leg$col)
+    legend_lty  <- c(1L,                         if (!is.null(sim_leg)) sim_leg$lty)
+    legend_lwd  <- c(2,                          if (!is.null(sim_leg)) sim_leg$lwd)
     add_panel_legend(
       position = P[["legend_position"]],
       xlim = xlim,
@@ -229,21 +261,20 @@ ou_plot_time <- function(x,
       panel_row = 1,
       panel_col = layout$ncol,
       legend = legend_text,
-      col = col_theory,
-      lty = 1, lwd = 2, bty = "o", bg = "white"
+      col = legend_cols,
+      lty = legend_lty,
+      lwd = legend_lwd,
+      bty = "o", bg = "white"
     )
   } else {
-    # Add legend for mu and each dimension inside single panel
-    legend_text <- c(
-      expression(Attractor ~ mu),
-      P[["sub"]]
-    )
-    legend_cols <- c(
-      col_theory,
-      cols
-    )
-    legend_lty <- c(1, rep(1, ndim))
-    legend_lwd <- c(2, rep(2, ndim))
+    legend_text <- c(expression(Attractor ~ mu), P[["sub"]],
+                     if (!is.null(sim_leg)) sim_leg$text)
+    legend_cols <- c(col_theory, cols,
+                     if (!is.null(sim_leg)) sim_leg$col)
+    legend_lty  <- c(1L, rep(1L, ndim),
+                     if (!is.null(sim_leg)) sim_leg$lty)
+    legend_lwd  <- c(2, rep(P[["lwd"]], ndim),
+                     if (!is.null(sim_leg)) sim_leg$lwd)
     add_panel_legend(
       position = P[["legend_position"]],
       xlim = xlim,
@@ -308,7 +339,7 @@ ou_plot_histogram <- function(x,
                               which_dim = NULL,
                               which_sim = NULL,
                               by_dim = TRUE,
-                              palette = "Temps",
+                              palette = "Dark 3",
                               col_theory = "grey30",
                               alpha = 1,
                               share_xaxis = TRUE,
@@ -578,7 +609,7 @@ ou_plot_acf <- function(x,
                         which_dim = NULL,
                         which_sim = 1,
                         share_yaxis = FALSE,
-                        palette = "Temps",
+                        palette = "Dark 3",
                         alpha = 1,
                         col_theory = "grey30",
                         main = ifelse(x[["model"]][["ndim"]] == 1, "Autocorrelation Function",
@@ -601,7 +632,7 @@ ou_plot_acf <- function(x,
     cli::cli_abort("{.arg lag.max} must be a positive numeric value.")
   }
 
-  # lag.max is interpreted in terms of time
+  # lag.max is interpreted in terms of time, so we need to convert it to number of lags based on save_at
   lag.max_nr <- round(lag.max / x[["save_at"]])
 
   # Parse arguments
@@ -821,7 +852,7 @@ ou_plot_phase <- function(x,
                           which_sim = NULL,
                           share_xaxis = TRUE,
                           share_yaxis = TRUE,
-                          palette = "Temps",
+                          palette = "Dark 3",
                           col_theory = "grey30",
                           alpha = 1,
                           main = "Phase Portrait",
@@ -853,6 +884,7 @@ ou_plot_phase <- function(x,
   if (is.null(which_sim)) {
     which_sim <- seq_len(nsim)
   }
+  which_sim <- sort(unique(which_sim))
 
   # Prepare sim object
   x <- prep_sim(x, which_dim, which_sim)
@@ -893,6 +925,9 @@ ou_plot_phase <- function(x,
     palette = palette,
     alpha = alpha
   )
+
+  # Line types: assign simulations to contiguous groups (one group per lty)
+  lty_sim <- assign_sim_lty(nsim)
 
   # Set axis limits
   xlims <- get_lims(data, ndim, nsim, P[["xlim"]], share_xaxis, include = mu)
@@ -962,9 +997,9 @@ ou_plot_phase <- function(x,
         temp2 <- temp2[-1, , , drop = FALSE]
       }
 
-      # Plot each simulation trajectory
-      matlines(temp1, temp2,
-        lty = 1:5,
+      # Plot each simulation trajectory (drop middle dimension for matlines)
+      matlines(temp1[, 1, ], temp2[, 1, ],
+        lty = lty_sim,
         lwd = 1, col = col_sim
       )
 
@@ -988,11 +1023,29 @@ ou_plot_phase <- function(x,
     ylab = P[["ylab"]]
   )
 
+  # Simulation legend entries for phase portrait
+  col_sim_leg_pp <- if (nsim > 1) {
+    generate_shades(cols[ndim], nsim, min_alpha = alpha / 2, max_alpha = alpha)
+  } else {
+    cols[ndim]
+  }
+  sim_leg_pp <- sim_legend_entries(nsim, lty_sim, col_sim_leg_pp, lwd = 1,
+                                   sim_ids = which_sim)
+  if (!is.null(sim_leg_pp) && ndim > 1) {
+    sim_leg_pp$col <- rep("black", length(sim_leg_pp$col))
+  }
+
   # Add legend inside top-right panel
-  legend_text <- c("Theoretical", expression(Attractor ~ mu))
-  legend_lty <- c(2, NA)
-  legend_pch <- c(NA, 8)
-  legend_col <- c(col_theory, col_theory)
+  legend_text <- c("Theoretical", expression(Attractor ~ mu),
+                   if (!is.null(sim_leg_pp)) sim_leg_pp$text)
+  legend_lty  <- c(2L, NA,
+                   if (!is.null(sim_leg_pp)) sim_leg_pp$lty)
+  legend_pch  <- c(NA, 8L,
+                   if (!is.null(sim_leg_pp)) rep(NA_integer_, length(sim_leg_pp$text)))
+  legend_col  <- c(col_theory, col_theory,
+                   if (!is.null(sim_leg_pp)) sim_leg_pp$col)
+  legend_lwd  <- c(2, 2,
+                   if (!is.null(sim_leg_pp)) sim_leg_pp$lwd)
   add_panel_legend(
     position = P[["legend_position"]],
     xlim = xlims[[ndim]],
@@ -1003,7 +1056,7 @@ ou_plot_phase <- function(x,
     col = legend_col,
     lty = legend_lty,
     pch = legend_pch,
-    lwd = 2,
+    lwd = legend_lwd,
     bty = "o", bg = "white"
   )
 

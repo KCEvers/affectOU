@@ -93,7 +93,7 @@ column \eqn{j}) represents the influence of dimension \eqn{j} on dimension
 \item Diagonal elements \eqn{\Theta_{ii}}: self-regulation (how fast dimension
 \eqn{i} returns to its own attractor \eqn{\mu_i}). Positive values are
 necessary for self-regulation, but strong cross-regulation can override
-this and destabilise the system (see \link[=summary.affectOU]{summary()} for
+this and destabilise the system (see \code{\link[=summary.affectOU]{summary()}} for
 system-level stability checks).
 \item Off-diagonal elements \eqn{\Theta_{ij}} where \eqn{i \neq j}:
 cross-regulation (how dimension \eqn{j} influences dimension \eqn{i}).
@@ -143,8 +143,8 @@ A hierarchical latent stochastic differential equation model for
 affective dynamics. Psychological Methods, 16(4), 468-490.
 }
 \seealso{
-The returned object can be inspected with \link[=print.affectOU]{print()}, \link[=summary.affectOU]{summary()},
-\link[=stability.affectOU]{stability()}, \link[=stationary.affectOU]{stationary()}, and
-\link[=coef.affectOU]{coef()}, can be simulated over time with \link[=simulate.affectOU]{simulate()}, and fitted to univariate data
-with \link[=fit.affectOU]{fit()}.
+The returned object can be inspected with \code{\link[=print.affectOU]{print()}}, \code{\link[=summary.affectOU]{summary()}},
+\code{\link[=stability.affectOU]{stability()}}, \code{\link[=stationary.affectOU]{stationary()}}, and
+\code{\link[=coef.affectOU]{coef()}}, can be simulated over time with \code{\link[=simulate.affectOU]{simulate()}}, and fitted to univariate data
+with \code{\link[=fit.affectOU]{fit()}}.
 }
