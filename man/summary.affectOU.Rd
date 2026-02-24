@@ -15,10 +15,10 @@
 An object of class \code{summary_affectOU} containing:
 \describe{
 \item{ndim}{Dimensionality of the process}
-\item{stability}{A \code{stability_affectOU} object (see \link[=stability.affectOU]{stability()})}
-\item{stationary}{A \code{stationary_affectOU} object (see \link[=stationary.affectOU]{stationary()})}
+\item{stability}{A \code{stability_affectOU} object (see \code{\link[=stability.affectOU]{stability()}})}
+\item{stationary}{A \code{stationary_affectOU} object (see \code{\link[=stationary.affectOU]{stationary()}})}
 \item{relaxation}{Data frame with relaxation time and half-life for
-each dimension (see \link[=relaxation.affectOU]{relaxation()})}
+each dimension (see \code{\link[=relaxation.affectOU]{relaxation()}})}
 \item{coupling}{Coupling structure: \code{NA} for 1D, \code{NULL} if uncoupled, or
 data frame with columns \code{from}, \code{to}, \code{value}, \code{sign} showing
 cross-regulation between dimensions}
@@ -28,9 +28,9 @@ showing correlated noise pairs}
 }
 }
 \description{
-Summarize the dynamics, stationary distribution, and relaxation properties of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see \link[=stability.affectOU]{stability()},
-\link[=stationary.affectOU]{stationary()}, and
-\link[=relaxation.affectOU]{relaxation()}.
+Summarize the dynamics, stationary distribution, and relaxation properties of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see \code{\link[=stability.affectOU]{stability()}},
+\code{\link[=stationary.affectOU]{stationary()}}, and
+\code{\link[=relaxation.affectOU]{relaxation()}}.
 }
 \examples{
 # --- Simple 1D ---
@@ -48,9 +48,9 @@ model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
 summary(model_2d)
 }
 \seealso{
-\link[=stability.affectOU]{stability()} for dynamics classification,
-\link[=stationary.affectOU]{stationary()} for the equilibrium distribution,
-\link[=relaxation.affectOU]{relaxation()} for perturbation persistence,
+\code{\link[=stability.affectOU]{stability()}} for dynamics classification,
+\code{\link[=stationary.affectOU]{stationary()}} for the equilibrium distribution,
+\code{\link[=relaxation.affectOU]{relaxation()}} for perturbation persistence,
 \code{\link[=affectOU]{affectOU()}} for model construction,
 \code{vignette("characteristics")} for applied interpretation of stability regimes
 }

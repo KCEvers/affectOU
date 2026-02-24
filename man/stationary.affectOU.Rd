@@ -32,7 +32,7 @@ structure.
 }
 \details{
 A stationary distribution exists only when the system is stable
-(see \link[=stability.affectOU]{stability()}). For non-stable systems,
+(see \code{\link[=stability.affectOU]{stability()}}). For non-stable systems,
 the function returns \code{is_stable = FALSE} with \code{NULL} distribution
 properties.
 }
@@ -98,7 +98,7 @@ stationary(model_2d)$cor # non-zero off-diagonal
 
 }
 \seealso{
-\link[=stability.affectOU]{stability()} for stability assessment,
-\link[=relaxation.affectOU]{relaxation()} for perturbation persistence,
-\link[=summary.affectOU]{summary()} for the full model summary
+\code{\link[=stability.affectOU]{stability()}} for stability assessment,
+\code{\link[=relaxation.affectOU]{relaxation()}} for perturbation persistence,
+\code{\link[=summary.affectOU]{summary()}} for the full model summary
 }

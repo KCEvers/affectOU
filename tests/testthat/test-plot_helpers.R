@@ -343,6 +343,52 @@ test_that("prep_sim preserves theta, gamma, and mu subsetting", {
   expect_equal(result$model$parameters$mu, expected_mu)
 })
 
+test_that("prep_sim sorts and deduplicates which_sim", {
+  model <- affectOU(ndim = 1)
+  sim <- simulate(model, dt = 0.1, nsim = 5, seed = 1)
+
+  r_sorted <- prep_sim(sim, which_dim = 1, which_sim = c(1, 3, 5))
+  r_dup    <- prep_sim(sim, which_dim = 1, which_sim = c(5, 1, 3, 1))
+
+  expect_equal(r_sorted[["data"]], r_dup[["data"]])
+  expect_equal(r_sorted[["nsim"]], 3L)
+  expect_equal(r_dup[["nsim"]], 3L)
+})
+
+
+# ==============================================================================
+# Test: assign_sim_lty / sim_legend_entries
+# ==============================================================================
+
+test_that("sim_legend_entries labels use sim_ids", {
+  lty_vec <- affectOU:::assign_sim_lty(3)
+  col_sim <- generate_shades("blue", 3)
+
+  # Default: sequential positions
+  leg <- affectOU:::sim_legend_entries(3, lty_vec, col_sim)
+  expect_equal(leg$text, c("Sim 1", "Sim 2", "Sim 3"))
+
+  # With original indices preserved
+  leg_ids <- affectOU:::sim_legend_entries(3, lty_vec, col_sim,
+                                           sim_ids = c(1L, 5L, 11L))
+  expect_equal(leg_ids$text, c("Sim 1", "Sim 5", "Sim 11"))
+})
+
+test_that("sim_legend_entries shows range when grouped", {
+  lty_vec <- affectOU:::assign_sim_lty(10)
+  col_sim <- generate_shades("blue", 10)
+
+  leg <- affectOU:::sim_legend_entries(10, lty_vec, col_sim)
+  expect_true(grepl("\u2013", leg$text[1]))
+  expect_equal(leg$text[1], "Sim 1\u20132")
+})
+
+test_that("sim_legend_entries returns NULL for nsim <= 1", {
+  lty_vec <- affectOU:::assign_sim_lty(1)
+  col_sim <- generate_shades("blue", 1)
+  expect_null(affectOU:::sim_legend_entries(1, lty_vec, col_sim))
+})
+
 
 # ==============================================================================
 # Test: apply_par

@@ -10,7 +10,7 @@ ou_plot_phase(
   which_sim = NULL,
   share_xaxis = TRUE,
   share_yaxis = TRUE,
-  palette = "Temps",
+  palette = "Dark 3",
   col_theory = "grey30",
   alpha = 1,
   main = "Phase Portrait",
@@ -51,7 +51,7 @@ ou_plot_phase(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"})}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }

@@ -107,7 +107,7 @@ relaxation(model_coupled)$relaxation_time
 
 }
 \seealso{
-\link[=stability.affectOU]{stability()} for stability assessment,
-\link[=stationary.affectOU]{stationary()} for the equilibrium distribution,
-\link[=summary.affectOU]{summary()} for the full model summary
+\code{\link[=stability.affectOU]{stability()}} for stability assessment,
+\code{\link[=stationary.affectOU]{stationary()}} for the equilibrium distribution,
+\code{\link[=summary.affectOU]{summary()}} for the full model summary
 }

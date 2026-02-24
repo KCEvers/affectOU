@@ -91,7 +91,7 @@ print.affectOU <- function(x, digits = 3, max_dim = 20, ...) {
 #' multivariate models, they are returned as matrices.
 #'
 #' @export
-#' @seealso [affectOU()] to create an OU model and [update()][update.affectOU()] to modify model parameters.
+#' @seealso Model parameters are explained in [affectOU()] and can be modified using [`update()`][update.affectOU()].
 #' @examples
 #' model <- affectOU(ndim = 2)
 #' coef(model)
@@ -235,9 +235,9 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 
 #' Summarize an Ornstein-Uhlenbeck affect model
 #'
-#' Summarize the dynamics, stationary distribution, and relaxation properties of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see [stability()][stability.affectOU()],
-#' [stationary()][stationary.affectOU()], and
-#' [relaxation()][relaxation.affectOU()].
+#' Summarize the dynamics, stationary distribution, and relaxation properties of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see [`stability()`][stability.affectOU()],
+#' [`stationary()`][stationary.affectOU()], and
+#' [`relaxation()`][relaxation.affectOU()].
 #'
 #' @param object An `affectOU` model object
 #' @param ... Additional arguments (unused)
@@ -245,10 +245,10 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 #' @return An object of class `summary_affectOU` containing:
 #'   \describe{
 #'     \item{ndim}{Dimensionality of the process}
-#'     \item{stability}{A `stability_affectOU` object (see [stability()][stability.affectOU()])}
-#'     \item{stationary}{A `stationary_affectOU` object (see [stationary()][stationary.affectOU()])}
+#'     \item{stability}{A `stability_affectOU` object (see [`stability()`][stability.affectOU()])}
+#'     \item{stationary}{A `stationary_affectOU` object (see [`stationary()`][stationary.affectOU()])}
 #'     \item{relaxation}{Data frame with relaxation time and half-life for
-#'       each dimension (see [relaxation()][relaxation.affectOU()])}
+#'       each dimension (see [`relaxation()`][relaxation.affectOU()])}
 #'     \item{coupling}{Coupling structure: `NA` for 1D, `NULL` if uncoupled, or
 #'       data frame with columns `from`, `to`, `value`, `sign` showing
 #'       cross-regulation between dimensions}
@@ -257,10 +257,10 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 #'       showing correlated noise pairs}
 #' }
 #'
-#' @seealso [stability()][stability.affectOU()] for dynamics classification,
-#'   [stationary()][stationary.affectOU()] for the equilibrium distribution,
-#'   [relaxation()][relaxation.affectOU()] for perturbation persistence,
-#'   [affectOU()] for model construction,
+#' @seealso [`stability()`][stability.affectOU()] for dynamics classification,
+#'   [`stationary()`][stationary.affectOU()] for the equilibrium distribution,
+#'   [`relaxation()`][relaxation.affectOU()] for perturbation persistence,
+#'   [`affectOU()`][affectOU()] for model construction,
 #'   `vignette("characteristics")` for applied interpretation of stability regimes
 #'
 #' @export

@@ -6,7 +6,7 @@
 \usage{
 ou_plot_fit_residuals(
   fit,
-  palette = "Temps",
+  palette = "Dark 3",
   main = "Residuals over Time",
   xlab = "Time",
   ylab = "Residual",

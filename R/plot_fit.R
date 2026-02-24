@@ -57,7 +57,7 @@ plot.fit_affectOU <- function(x,
 #' fitted <- fit(model, data = data$value, times = data$time)
 #' ou_plot_fit_time(fitted)
 ou_plot_fit_time <- function(fit,
-                             palette = "Temps",
+                             palette = "Dark 3",
                              alpha = 0.5,
                              main = "Observed and Fitted Trajectory",
                              xlab = "Time",
@@ -135,7 +135,7 @@ ou_plot_fit_time <- function(fit,
 #' fitted <- fit(model, data = data$value, times = data$time)
 #' ou_plot_fit_residuals(fitted)
 ou_plot_fit_residuals <- function(fit,
-                                  palette = "Temps",
+                                  palette = "Dark 3",
                                   main = "Residuals over Time",
                                   xlab = "Time",
                                   ylab = "Residual",
@@ -197,7 +197,7 @@ ou_plot_fit_residuals <- function(fit,
 #' ou_plot_fit_acf(fitted)
 ou_plot_fit_acf <- function(fit,
                             lag.max = 30,
-                            palette = "Temps",
+                            palette = "Dark 3",
                             main = "ACF of Residuals",
                             xlab = "Lag",
                             ylab = "ACF",
@@ -276,7 +276,7 @@ ou_plot_fit_acf <- function(fit,
 #' fitted <- fit(model, data = data$value, times = data$time)
 #' ou_plot_fit_qq(fitted)
 ou_plot_fit_qq <- function(fit,
-                           palette = "Temps",
+                           palette = "Dark 3",
                            main = "Normal Q-Q Plot of Residuals",
                            xlab = "Theoretical Quantiles",
                            ylab = "Sample Quantiles",

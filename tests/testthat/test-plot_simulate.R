@@ -47,7 +47,7 @@ test_that("ou_plot_time handles 1D simulation", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 1, nsim = 1)
+  sim <- quick_sim(ndim = 1)
 
   type <- "time"
   subtype <- "1D"
@@ -63,7 +63,7 @@ test_that("ou_plot_time handles 1D simulation", {
 test_that("ou_plot_time handles multi-dimensional simulation", {
   # Suppress graphics output
   withr::local_pdf(NULL)
-  sim <- quick_sim(ndim = 3, nsim = 1)
+  sim <- quick_sim(ndim = 3)
 
   type <- "time"
   subtype <- "dd"
@@ -76,11 +76,29 @@ test_that("ou_plot_time handles multi-dimensional simulation", {
   vdiffr::expect_doppelganger(filename, f)
 })
 
-test_that("ou_plot_time handles multiple simulations", {
+test_that("ou_plot_time handles multiple simulations (1D)", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 2, nsim = 5)
+  sim <- quick_sim(ndim = 1, nsim = 16)
+
+  type <- "time"
+  subtype <- "1d_nsim"
+  f <- function() plot(sim, type = type)
+  expect_silent(f())
+
+  # Skip due to minor rendering differences on Mac OS
+  skip_on_os("mac")
+  filename <- paste0(type, "_", subtype)
+  vdiffr::expect_doppelganger(filename, f)
+})
+
+
+test_that("ou_plot_time handles multiple dimensions and simulations", {
+  # Suppress graphics output
+  withr::local_pdf(NULL)
+
+  sim <- quick_sim(ndim = 3, nsim = 16)
 
   type <- "time"
   subtype <- "dd_nsim"
@@ -93,11 +111,29 @@ test_that("ou_plot_time handles multiple simulations", {
   vdiffr::expect_doppelganger(filename, f)
 })
 
+
+test_that("ou_plot_time handles multiple simulations with which_sim", {
+  # Suppress graphics output
+  withr::local_pdf(NULL)
+
+  sim <- quick_sim(ndim = 2, nsim = 11)
+
+  type <- "time"
+  subtype <- "dd_which_sim_nsim"
+  f <- function() plot(sim, type = type, which_sim = c(1, 11, 5))
+  expect_silent(f())
+
+  # Skip due to minor rendering differences on Mac OS
+  skip_on_os("mac")
+  filename <- paste0(type, "_", subtype)
+  vdiffr::expect_doppelganger(filename, f)
+})
+
 test_that("ou_plot_time respects which_dim argument", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 4, nsim = 1)
+  sim <- quick_sim(ndim = 4)
 
   type <- "time"
   subtype <- "dd_which_dim"
@@ -114,7 +150,7 @@ test_that("ou_plot_time respects by_dim argument", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(model = affectOU(ndim = 4, mu = c(1, 2, 3, 4)), nsim = 1)
+  sim <- quick_sim(model = affectOU(ndim = 4, mu = c(1, 2, 3, 4)))
 
   type <- "time"
   subtype <- "dd_by_dim"
@@ -131,7 +167,7 @@ test_that("ou_plot_histogram handles 1D simulation", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 1, nsim = 1)
+  sim <- quick_sim(ndim = 1)
 
   type <- "histogram"
   subtype <- "1D"
@@ -148,7 +184,7 @@ test_that("ou_plot_histogram handles multi-dimensional simulation", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 4, nsim = 1)
+  sim <- quick_sim(ndim = 4)
 
   type <- "histogram"
   subtype <- "dd"
@@ -238,7 +274,7 @@ test_that("ou_plot_histogram handles freq parameter", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 2, nsim = 1)
+  sim <- quick_sim(ndim = 2)
 
   type <- "histogram"
   subtype <- "1D_freq"
@@ -255,7 +291,7 @@ test_that("ou_plot_phase handles 1D simulation", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 1, nsim = 1)
+  sim <- quick_sim(ndim = 1)
 
   type <- "phase"
   subtype <- "1D"
@@ -272,7 +308,7 @@ test_that("ou_plot_phase handles 2D simulation", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 2, nsim = 1)
+  sim <- quick_sim(ndim = 2)
 
   type <- "phase"
   subtype <- "dd"
@@ -285,11 +321,28 @@ test_that("ou_plot_phase handles 2D simulation", {
   vdiffr::expect_doppelganger(filename, f)
 })
 
-test_that("ou_plot_phase handles multiple simulations", {
+test_that("ou_plot_phase handles multiple simulations (1D)", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 2, nsim = 3)
+  sim <- quick_sim(ndim = 1, nsim = 16)
+
+  type <- "phase"
+  subtype <- "1d_nsim"
+  f <- function() plot(sim, type = type)
+  expect_silent(f())
+
+  # Skip due to minor rendering differences on Mac OS
+  skip_on_os("mac")
+  filename <- paste0(type, "_", subtype)
+  vdiffr::expect_doppelganger(filename, f)
+})
+
+test_that("ou_plot_phase handles multiple dimensions and simulations", {
+  # Suppress graphics output
+  withr::local_pdf(NULL)
+
+  sim <- quick_sim(ndim = 3, nsim = 16)
 
   type <- "phase"
   subtype <- "dd_nsim"
@@ -302,11 +355,45 @@ test_that("ou_plot_phase handles multiple simulations", {
   vdiffr::expect_doppelganger(filename, f)
 })
 
+test_that("ou_plot_time handles unsorted and duplicate which_sim", {
+  # Suppress graphics output
+  withr::local_pdf(NULL)
+
+  sim <- quick_sim(ndim = 2, nsim = 16)
+
+  type <- "time"
+  subtype <- "dd_which_sim_dedup"
+  f <- function() plot(sim, type = type, which_sim = c(11, 1, 5, 1))
+  expect_silent(f())
+
+  # Skip due to minor rendering differences on Mac OS
+  skip_on_os("mac")
+  filename <- paste0(type, "_", subtype)
+  vdiffr::expect_doppelganger(filename, f)
+})
+
+test_that("ou_plot_phase handles multiple simulations with which_sim", {
+  # Suppress graphics output
+  withr::local_pdf(NULL)
+
+  sim <- quick_sim(ndim = 2, nsim = 11)
+
+  type <- "phase"
+  subtype <- "dd_which_sim_nsim"
+  f <- function() plot(sim, type = type, which_sim = c(1, 11, 5, 11))
+  expect_silent(f())
+
+  # Skip due to minor rendering differences on Mac OS
+  skip_on_os("mac")
+  filename <- paste0(type, "_", subtype)
+  vdiffr::expect_doppelganger(filename, f)
+})
+
 test_that("ou_plot_acf handles 1D simulation", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 1, nsim = 1)
+  sim <- quick_sim(ndim = 1)
 
   type <- "acf"
   subtype <- "1D"
@@ -323,7 +410,7 @@ test_that("ou_plot_acf handles multi-dimensional simulation", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(ndim = 2, nsim = 1)
+  sim <- quick_sim(ndim = 2)
 
   type <- "acf"
   subtype <- "dd"
@@ -337,7 +424,7 @@ test_that("ou_plot_acf handles multi-dimensional simulation", {
 })
 
 test_that("ou_plot_acf rejects vector which_sim", {
-  sim <- quick_sim(ndim = 2, nsim = 1)
+  sim <- quick_sim(ndim = 2)
 
   expect_error(
     plot(sim, type = "acf", which_sim = c(1, 2)),
@@ -354,7 +441,7 @@ test_that("ou_plot_acf rejects vector which_sim", {
 
 
 test_that("ou_plot_acf validates lag.max argument", {
-  sim <- quick_sim(ndim = 2, nsim = 1)
+  sim <- quick_sim(ndim = 2)
 
   expect_error(
     ou_plot_acf(sim, lag.max = -5),

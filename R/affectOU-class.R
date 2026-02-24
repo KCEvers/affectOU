@@ -25,7 +25,7 @@
 #' - Diagonal elements \eqn{\Theta_{ii}}: self-regulation (how fast dimension
 #'   \eqn{i} returns to its own attractor \eqn{\mu_i}). Positive values are
 #'   necessary for self-regulation, but strong cross-regulation can override
-#'   this and destabilise the system (see [summary()][summary.affectOU()] for
+#'   this and destabilise the system (see [`summary()`][summary.affectOU()] for
 #'   system-level stability checks).
 #' - Off-diagonal elements \eqn{\Theta_{ij}} where \eqn{i \neq j}:
 #'   cross-regulation (how dimension \eqn{j} influences dimension \eqn{i}).
@@ -85,10 +85,10 @@
 #'
 #' }
 #'
-#' @seealso The returned object can be inspected with [print()][print.affectOU()], [summary()][summary.affectOU()],
-#' [stability()][stability.affectOU()], [stationary()][stationary.affectOU()], and
-#' [coef()][coef.affectOU()], can be simulated over time with [simulate()][simulate.affectOU()], and fitted to univariate data
-#' with [fit()][fit.affectOU()].
+#' @seealso The returned object can be inspected with [`print()`][print.affectOU()], [`summary()`][summary.affectOU()],
+#' [`stability()`][stability.affectOU()], [`stationary()`][stationary.affectOU()], and
+#' [`coef()`][coef.affectOU()], can be simulated over time with [`simulate()`][simulate.affectOU()], and fitted to univariate data
+#' with [`fit()`][fit.affectOU()].
 #'
 #' @export
 #'

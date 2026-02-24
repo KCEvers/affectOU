@@ -9,11 +9,21 @@ ou_plot_time(
   which_dim = NULL,
   which_sim = NULL,
   by_dim = TRUE,
-  palette = "Temps",
+  palette = "Dark 3",
   col_theory = "grey30",
   alpha = 1,
+  lwd = ifelse(x[["nsim"]] > 1, 1, 2),
   share_yaxis = TRUE,
-  main = "Affect Dynamics",
+  main = paste0("Affect Dynamics", if (x[["nsim"]] > 1) {
+     paste0(" (", if
+    (is.null(which_sim)) {
+         x[["nsim"]]
+     }
+     else {
+        
+    length(which_sim)
+     }, " simulations)")
+ }),
   sub = paste("Dimension", if (is.null(which_dim)) {
     
     seq.int(x[["model"]][["ndim"]])
@@ -41,6 +51,8 @@ ou_plot_time(
 
 \item{alpha}{Alpha transparency for colors (0 = transparent, 1 = opaque)}
 
+\item{lwd}{Line width}
+
 \item{share_yaxis}{Logical; use same y-axis limits for all panels?}
 
 \item{main}{Main title}
@@ -51,7 +63,7 @@ ou_plot_time(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"})}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }
