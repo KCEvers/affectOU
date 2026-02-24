@@ -1,4 +1,4 @@
-# Get Started with affectOU
+# Get started with affectOU
 
 `affectOU` provides tools for modeling affect dynamics using the
 Ornstein-Uhlenbeck (OU) process – a continuous-time stochastic model
@@ -165,7 +165,7 @@ plot(sim, type = "acf")
 plot(sim, type = "phase")
 ```
 
-![](affectOU_files/figure-html/plot-sim-1.png)![](affectOU_files/figure-html/plot-sim-2.png)![](affectOU_files/figure-html/plot-sim-3.png)![](affectOU_files/figure-html/plot-sim-4.png)
+![](affectOU_files/figure-html/plot-sim-1.svg)![](affectOU_files/figure-html/plot-sim-2.svg)![](affectOU_files/figure-html/plot-sim-3.svg)![](affectOU_files/figure-html/plot-sim-4.svg)
 
 ### Multiple Simulations
 
@@ -176,7 +176,7 @@ sim <- simulate(model, nsim = 3)
 plot(sim, type = "time")
 ```
 
-![](affectOU_files/figure-html/simulate-multiple-1.png)
+![](affectOU_files/figure-html/simulate-multiple-1.svg)
 
 ### Extracting Simulation Data
 
@@ -350,7 +350,7 @@ fitted
 plot(fitted, type = "residuals")
 ```
 
-![](affectOU_files/figure-html/plot-fit-residuals-1.png)
+![](affectOU_files/figure-html/plot-fit-residuals-1.svg)
 
 See
 [`plot()`](https://kcevers.github.io/affectOU/reference/plot.fit.affectOU.md)

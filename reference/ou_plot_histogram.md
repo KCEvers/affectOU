@@ -11,7 +11,7 @@ ou_plot_histogram(
   x,
   which_dim = NULL,
   which_sim = NULL,
-  by_dim = TRUE,
+  by_dim = FALSE,
   palette = "Dark 3",
   col_theory = "grey30",
   alpha = 1,

@@ -1,4 +1,4 @@
-# Fit Ornstein–Uhlenbeck model to data
+# Fit Ornstein-Uhlenbeck model to data
 
 Estimates OU parameters using the exact discrete-time transition density
 via maximum likelihood. Currently limited to univariate (1D) models.

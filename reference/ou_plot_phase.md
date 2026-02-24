@@ -18,6 +18,7 @@ ou_plot_phase(
   share_yaxis = TRUE,
   palette = "Dark 3",
   col_theory = "grey30",
+  lwd = ifelse(x[["nsim"]] > 1, 1, 1.25),
   alpha = 1,
   main = "Phase Portrait",
   sub = paste("Dimension", if (is.null(which_dim)) {
@@ -64,6 +65,10 @@ ou_plot_phase(
 - col_theory:
 
   Color for theoretical relationship line
+
+- lwd:
+
+  Line width
 
 - alpha:
 

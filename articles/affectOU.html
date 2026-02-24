@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Get Started with affectOU • affectOU</title>
+<title>Get started with affectOU • affectOU</title>
 <!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
   window.MathJax = {
     chtml: {
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Get Started with affectOU">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Get started with affectOU">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -62,7 +62,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Get Started with affectOU</h1>
+      <h1>Get started with affectOU</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/KCEvers/affectOU/blob/main/vignettes/affectOU.Rmd" class="external-link"><code>vignettes/affectOU.Rmd</code></a></small>
@@ -217,7 +217,7 @@ generates trajectories using Euler-Maruyama discretization:</p>
 <span></span>
 <span><span class="co"># Phase portrait (lag-1 relationship)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, type <span class="op">=</span> <span class="st">"phase"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/plot-sim-1.png" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-2.png" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-3.png" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-4.png" class="r-plt" alt="" width="50%"></p>
+<p><img src="affectOU_files/figure-html/plot-sim-1.svg" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-2.svg" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-3.svg" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-4.svg" class="r-plt" alt="" width="50%"></p>
 </div>
 <div class="section level3">
 <h3 id="multiple-simulations">Multiple Simulations<a class="anchor" aria-label="anchor" href="#multiple-simulations"></a>
@@ -227,7 +227,7 @@ generates trajectories using Euler-Maruyama discretization:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, nsim <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, type <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/simulate-multiple-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="affectOU_files/figure-html/simulate-multiple-1.svg" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="extracting-simulation-data">Extracting Simulation Data<a class="anchor" aria-label="anchor" href="#extracting-simulation-data"></a>
@@ -381,7 +381,7 @@ likelihood:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Residuals over time</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fitted</span>, type <span class="op">=</span> <span class="st">"residuals"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/plot-fit-residuals-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="affectOU_files/figure-html/plot-fit-residuals-1.svg" class="r-plt" alt="" width="672"></p>
 <p>See <a href="../reference/plot.fit.affectOU.html"><code>plot()</code></a> for
 more details on available diagnostics and their interpretations.</p>
 </div>

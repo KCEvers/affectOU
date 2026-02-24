@@ -37,4 +37,7 @@ print(stability(model))
 #> ── Stability analysis of 1D Ornstein-Uhlenbeck Model ──
 #> 
 #> Stable (node). Deviations from the attractor decay exponentially.
+#> 
+#> Eigenvalues (all real):
+#> • λ1: 0.5
 ```

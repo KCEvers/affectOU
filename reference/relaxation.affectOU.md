@@ -1,4 +1,4 @@
-# Compute relaxation time for OU model
+# Compute relaxation time for Ornstein-Uhlenbeck model
 
 The relaxation time \\\tau = 1/\theta\_{ii}\\ is the characteristic time
 scale of an OU process. It measures how quickly the process "forgets"
@@ -115,7 +115,7 @@ for stability assessment,
 [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
 for the equilibrium distribution,
 [`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
-for the full model summary
+for the full model summary.
 
 ## Examples
 

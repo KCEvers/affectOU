@@ -1,6 +1,7 @@
 # Simulation in Evers & Vanhasbroeck (2026)
 
-A two-dimensional Ornstein-Uhlenbeck process simulated with `affectOU`.
+An uncoupled two-dimensional Ornstein-Uhlenbeck process simulated with
+`affectOU`.
 
 ## Usage
 
@@ -21,8 +22,8 @@ The process is defined by the stochastic differential equation:
 
 where:
 
-- \\\mathbf{\Theta} = \begin{pmatrix} 0.7 & 0 \\ 0 & 0.3 \end{pmatrix}\\
-  is the drift matrix
+- \\\mathbf{\Theta} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}\\ is
+  the drift matrix
 
 - \\\mathbf{\mu} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\\ is the
   equilibrium mean vector

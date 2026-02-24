@@ -32,9 +32,7 @@ plot(sim,
 )
 ```
 
-![](characteristics_files/figure-html/mean-reversion-1.png)
-
-![](characteristics_files/figure-html/mean-reversion-plot-1.png)
+![](characteristics_files/figure-html/mean-reversion-plot-1.svg)
 
 ## 2. Perturbation Persistence
 
@@ -66,9 +64,7 @@ sim <- simulate(model, stop = 10000, dt = 0.01, save_at = 0.01)
 plot(sim, type = "acf", lag.max = 10)
 ```
 
-![](characteristics_files/figure-html/persistence-plot-1.png)
-
-![](characteristics_files/figure-html/persistence-plot-show-1.png)
+![](characteristics_files/figure-html/persistence-plot-show-1.svg)
 
 The ACF equals \\1/e\\ at the relaxation time and \\0.5\\ at the
 half-life. Slow regulation means longer persistence and higher
@@ -93,9 +89,7 @@ plot(sim,
 )
 ```
 
-![](characteristics_files/figure-html/reactivity-1.png)
-
-![](characteristics_files/figure-html/reactivity-plot-1.png)
+![](characteristics_files/figure-html/reactivity-plot-1.svg)
 
 Higher \\\gamma\\ produces larger fluctuations around the attractor.
 
@@ -124,9 +118,7 @@ plot(sim,
 )
 ```
 
-![](characteristics_files/figure-html/regimes-1.png)
-
-![](characteristics_files/figure-html/regimes-plot-1.png)
+![](characteristics_files/figure-html/regimes-plot-1.svg)
 
 ### Multivariate
 
@@ -143,47 +135,41 @@ For multiple dimensions, stability depends on the eigenvalues of
   monotonically or oscillating with growing amplitude, depending on
   whether the eigenvalues are real or complex.
 
+Below, we set perturbations to zero to better show the dynamics implied
+by the eigenvalues.
+
 Show code
 
 ``` r
 # Real eigenvalues: smooth decay
-theta_real <- matrix(c(0.5, 0.1, 0.1, 0.5), 2, byrow = TRUE)
+theta_real <- matrix(c(0.2, 0.1, 0.1, 0.2), 2, byrow = TRUE)
 eigen(theta_real)$values
-#> [1] 0.6 0.4
+#> [1] 0.3 0.1
 
 # Complex eigenvalues: oscillatory decay
-theta_complex <- matrix(c(0.5, -0.4, 0.4, 0.5), 2)
+theta_complex <- matrix(c(0.2, -1, 1, 0.2), 2, byrow = TRUE)
 eigen(theta_complex)$values
-#> [1] 0.5+0.4i 0.5-0.4i
+#> [1] 0.2+1i 0.2-1i
 ```
 
 ``` r
 seed <- 123
 sim_real <- simulate(
-  affectOU(theta = theta_real, mu = 0, sigma = .1),
+  affectOU(theta = theta_real, mu = 0, sigma = 0, initial_state = c(-3, 3)),
   stop = 50, seed = seed
 )
 sim_complex <- simulate(
-  affectOU(theta = theta_complex, mu = 0, sigma = .1),
+  affectOU(theta = theta_complex, mu = 0, sigma = 0, initial_state = c(-3, 3)),
   stop = 50, seed = seed
 )
-plot(sim_real, type = "phase", main = "Real eigenvalues")
+plot(sim_real, main = "Real eigenvalues")
+plot(sim_complex, main = "Complex eigenvalues")
 ```
 
-![](characteristics_files/figure-html/regimes-2d-sim-1.png)
+![](characteristics_files/figure-html/regimes-2d-plot-1.svg)![](characteristics_files/figure-html/regimes-2d-plot-2.svg)
 
-``` r
-plot(sim_complex, type = "phase", main = "Complex eigenvalues")
-```
-
-![](characteristics_files/figure-html/regimes-2d-sim-2.png)
-
-![](characteristics_files/figure-html/regimes-2d-plot-1.png)![](characteristics_files/figure-html/regimes-2d-plot-2.png)
-
-The oscillatory case shows rotation in the phase space, reflecting the
-imaginary component of the eigenvalues. For affect dynamics, this could
-represent alternating patterns between dimensions (e.g., valence and
-arousal cycling together).
+The oscillatory case shows damped oscillations, reflecting the imaginary
+component of the eigenvalues.
 
 ## 5. Multivariate Coupling
 
@@ -202,31 +188,23 @@ Show code
 # Dimension 1's deviations from baseline push dimension 2 in the opposite direction
 theta_2d <- matrix(c(
   0.5, 0.0,
-  2, 0.5
+  -2, 0.5
 ), nrow = 2, byrow = TRUE)
 
 model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
-sim_2d <- simulate(model_2d, seed = 102)
+sim_2d <- simulate(model_2d, seed = 105)
 plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
-```
-
-![](characteristics_files/figure-html/multivariate-1.png)
-
-``` r
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
-![](characteristics_files/figure-html/multivariate-2.png)
+![](characteristics_files/figure-html/multivariate-plot-1.svg)
 
-![](characteristics_files/figure-html/multivariate-plot-1.png)
+![](characteristics_files/figure-html/multivariate-plot2-1.svg)
 
-![](characteristics_files/figure-html/multivariate-plot2-1.png)
-
-The positive entry \\\theta\_{21}\\ means that when dimension 1 deviates
-from its attractor, it pushes dimension 2 in the opposite direction: if
-dimension 1 is above baseline, dimension 2 is pushed down, and vice
-versa. This creates interdependent dynamics visible in the phase
-portrait.
+The negative entry \\\theta\_{21}\\ means that when dimension 1 deviates
+from its attractor, it pushes dimension 2 in the same direction: if
+dimension 1 is above baseline, dimension 2 is pushed up, and vice versa.
+This creates interdependent dynamics visible in the phase portrait.
 
 ## 6. Noise Coupling
 
@@ -244,21 +222,11 @@ gamma_2d <- matrix(c(
 ), nrow = 2, byrow = TRUE)
 
 model_2d <- affectOU(theta = 0.5, mu = 0, gamma = gamma_2d)
-sim_2d <- simulate(model_2d, seed = 102)
+sim_2d <- simulate(model_2d, seed = 105)
 plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
 ```
 
-![](characteristics_files/figure-html/noise-1.png)
-
-``` r
-plot(sim_2d, type = "phase", main = "Phase Portrait")
-```
-
-![](characteristics_files/figure-html/noise-2.png)
-
-![](characteristics_files/figure-html/noise-plot-1.png)
-
-![](characteristics_files/figure-html/noise-plot2-1.png)
+![](characteristics_files/figure-html/noise-plot-1.svg)
 
 ## Summary
 

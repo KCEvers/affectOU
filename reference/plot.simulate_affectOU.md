@@ -1,4 +1,4 @@
-# Plot OU simulation
+# Plot simulation
 
 Visualise an Ornstein-Uhlenbeck affect simulation using different types
 of plots. See specific plotting functions for allowed arguments and

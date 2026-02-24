@@ -1,4 +1,4 @@
-# Assess stability of an Ornstein-Uhlenbeck model
+# Assess stability for Ornstein-Uhlenbeck model
 
 Classify the dynamics and stability of an Ornstein-Uhlenbeck model based
 on eigenvalue analysis of the drift matrix \\\Theta\\.
@@ -110,7 +110,7 @@ for the equilibrium distribution,
 [`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
 for perturbation persistence,
 [`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
-for the full model summary
+for the full model summary.
 
 ## Examples
 
@@ -122,6 +122,9 @@ stability(model)
 #> ── Stability analysis of 1D Ornstein-Uhlenbeck Model ──
 #> 
 #> Stable (node). Deviations from the attractor decay exponentially.
+#> 
+#> Eigenvalues (all real):
+#> • λ1: 0.5
 
 # 1D random walk (not stable)
 model_rw <- affectOU(theta = 0)
@@ -130,17 +133,22 @@ stability(model_rw)
 #> ── Stability analysis of 1D Ornstein-Uhlenbeck Model ──
 #> 
 #> Not stable (random walk). No attractor; the process drifts freely.
+#> 
+#> Eigenvalues (all real):
+#> • λ1: 0
 
 # Positive diagonals with oscillatory coupling: stable
 theta_osc <- matrix(c(0.5, -0.4, 0.4, 0.5), nrow = 2)
-eigen(theta_osc)$values # complex with positive real part
-#> [1] 0.5+0.4i 0.5-0.4i
 stability(affectOU(theta = theta_osc, mu = 0, gamma = 1))
 #> 
 #> ── Stability analysis of 2D Ornstein-Uhlenbeck Model ──
 #> 
 #> Stable (spiral). The system spirals toward the attractor with damped
 #> oscillations.
+#> 
+#> Eigenvalues (complex):
+#> • λ1: 0.5 + 0.4i
+#> • λ2: 0.5 - 0.4i
 
 # Strong coupling still stable if real parts stay positive
 theta_strong <- matrix(c(0.5, -1.5, 1.5, 0.5), nrow = 2)
@@ -150,6 +158,10 @@ stability(affectOU(theta = theta_strong, mu = 0, gamma = 1))
 #> 
 #> Stable (spiral). The system spirals toward the attractor with damped
 #> oscillations.
+#> 
+#> Eigenvalues (complex):
+#> • λ1: 0.5 + 1.5i
+#> • λ2: 0.5 - 1.5i
 
 # All diagonals positive, but coupling destabilises the system
 theta_destab <- matrix(c(0.5, 1.0, 1.0, 0.5), nrow = 2)
@@ -158,9 +170,23 @@ stability(affectOU(theta = theta_destab, mu = 0, gamma = 1))
 #> ── Stability analysis of 2D Ornstein-Uhlenbeck Model ──
 #> 
 #> Not stable (saddle point). Some directions converge while others diverge.
+#> 
+#> Eigenvalues (all real):
+#> • λ1: 1.5
+#> • λ2: -0.5
 
 # One negative diagonal element makes the system non-stationary
 theta_unstable <- matrix(c(0.5, 0, 0, -0.3), nrow = 2)
-stability(affectOU(theta = theta_unstable, mu = 0, gamma = 1))$is_stable
-#> [1] FALSE
+stability(affectOU(theta = theta_unstable, mu = 0, gamma = 1))
+#> 
+#> ── Stability analysis of 2D Ornstein-Uhlenbeck Model ──
+#> 
+#> Not stable (saddle point). Some directions converge while others diverge.
+#> 
+#> • Dim. 1: stable node
+#> • Dim. 2: unstable node
+#> 
+#> Eigenvalues (all real):
+#>   • λ1: 0.5
+#>   • λ2: -0.3
 ```

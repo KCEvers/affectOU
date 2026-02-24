@@ -17,6 +17,7 @@ ou_plot_acf(
   which_sim = 1,
   share_yaxis = FALSE,
   palette = "Dark 3",
+  lwd = 1.25,
   alpha = 1,
   col_theory = "grey30",
   main = ifelse(x[["model"]][["ndim"]] == 1, "Autocorrelation Function",
@@ -64,6 +65,10 @@ ou_plot_acf(
 
   Color palette. Should be one
   [`grDevices::hcl.pals()`](https://rdrr.io/r/grDevices/palettes.html).
+
+- lwd:
+
+  Line width
 
 - alpha:
 

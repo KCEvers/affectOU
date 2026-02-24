@@ -23,7 +23,7 @@
 - [`equation(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/equation.affectOU.md)
   : Extract model equations
 - [`fit(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md)
-  : Fit Ornstein–Uhlenbeck model to data
+  : Fit Ornstein-Uhlenbeck model to data
 - [`head(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/head.simulate_affectOU.md)
   : Head of simulation results
 - [`logLik(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/logLik.fit_affectOU.md)
@@ -47,7 +47,7 @@
 - [`plot(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/plot.fit_affectOU.md)
   : Plot fitted model diagnostics
 - [`plot(`*`<simulate_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.md)
-  : Plot OU simulation
+  : Plot simulation
 - [`print(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.affectOU.md)
   : Print affect OU model
 - [`print(`*`<fit_affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/print.fit_affectOU.md)
@@ -69,7 +69,7 @@
 - [`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.md)
   : Compute relaxation time
 - [`relaxation(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
-  : Compute relaxation time for OU model
+  : Compute relaxation time for Ornstein-Uhlenbeck model
 - [`simpaper`](https://kcevers.github.io/affectOU/reference/simpaper.md)
   : Simulation in Evers & Vanhasbroeck (2026)
 - [`simulate(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/simulate.affectOU.md)
@@ -77,7 +77,7 @@
 - [`stability()`](https://kcevers.github.io/affectOU/reference/stability.md)
   : Assess stability
 - [`stability(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
-  : Assess stability of an Ornstein-Uhlenbeck model
+  : Assess stability for Ornstein-Uhlenbeck model
 - [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.md)
   : Compute stationary distribution
 - [`stationary(`*`<affectOU>`*`)`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
