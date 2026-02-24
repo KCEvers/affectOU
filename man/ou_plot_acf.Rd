@@ -11,6 +11,7 @@ ou_plot_acf(
   which_sim = 1,
   share_yaxis = FALSE,
   palette = "Dark 3",
+  lwd = 1.25,
   alpha = 1,
   col_theory = "grey30",
   main = ifelse(x[["model"]][["ndim"]] == 1, "Autocorrelation Function",
@@ -39,6 +40,8 @@ ou_plot_acf(
 \item{share_yaxis}{Logical; use same y-axis limits for all panels?}
 
 \item{palette}{Color palette. Should be one \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
+
+\item{lwd}{Line width}
 
 \item{alpha}{Alpha transparency for colors (0 = transparent, 1 = opaque)}
 

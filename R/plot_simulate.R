@@ -23,7 +23,7 @@
 NULL
 
 
-#' Plot OU simulation
+#' Plot simulation
 #'
 #' Visualise an Ornstein-Uhlenbeck affect simulation using different types of plots. See specific plotting functions for allowed arguments and details.
 #'
@@ -103,11 +103,11 @@ plot.simulate_affectOU <- function(x,
 ou_plot_time <- function(x,
                          which_dim = NULL,
                          which_sim = NULL,
-                         by_dim = TRUE,
+                         by_dim = FALSE,
                          palette = "Dark 3",
                          col_theory = "grey30",
                          alpha = 1,
-                         lwd = ifelse(x[["nsim"]] > 1, 1, 2),
+                         lwd = ifelse(x[["nsim"]] > 1, 1, 1.25),
                          share_yaxis = TRUE,
                          main = paste0(
                            "Affect Dynamics",
@@ -338,7 +338,7 @@ ou_plot_time <- function(x,
 ou_plot_histogram <- function(x,
                               which_dim = NULL,
                               which_sim = NULL,
-                              by_dim = TRUE,
+                              by_dim = FALSE,
                               palette = "Dark 3",
                               col_theory = "grey30",
                               alpha = 1,
@@ -610,6 +610,7 @@ ou_plot_acf <- function(x,
                         which_sim = 1,
                         share_yaxis = FALSE,
                         palette = "Dark 3",
+                        lwd = 1.25,
                         alpha = 1,
                         col_theory = "grey30",
                         main = ifelse(x[["model"]][["ndim"]] == 1, "Autocorrelation Function",
@@ -765,7 +766,7 @@ ou_plot_acf <- function(x,
         x1 = X[[k]],
         y1 = Y[[k]],
         col = cols[k],
-        lwd = 2
+        lwd = P[["lwd"]]
       )
 
       # Plot theoretical ACF/CCF
@@ -854,6 +855,7 @@ ou_plot_phase <- function(x,
                           share_yaxis = TRUE,
                           palette = "Dark 3",
                           col_theory = "grey30",
+                          lwd = ifelse(x[["nsim"]] > 1, 1, 1.25),
                           alpha = 1,
                           main = "Phase Portrait",
                           sub = paste(
@@ -1000,7 +1002,7 @@ ou_plot_phase <- function(x,
       # Plot each simulation trajectory (drop middle dimension for matlines)
       matlines(temp1[, 1, ], temp2[, 1, ],
         lty = lty_sim,
-        lwd = 1, col = col_sim
+        lwd = P[["lwd"]], col = col_sim
       )
 
       # Add theoretical relationship
@@ -1029,7 +1031,7 @@ ou_plot_phase <- function(x,
   } else {
     cols[ndim]
   }
-  sim_leg_pp <- sim_legend_entries(nsim, lty_sim, col_sim_leg_pp, lwd = 1,
+  sim_leg_pp <- sim_legend_entries(nsim, lty_sim, col_sim_leg_pp, lwd = P[["lwd"]],
                                    sim_ids = which_sim)
   if (!is.null(sim_leg_pp) && ndim > 1) {
     sim_leg_pp$col <- rep("black", length(sim_leg_pp$col))
@@ -1059,7 +1061,6 @@ ou_plot_phase <- function(x,
     lwd = legend_lwd,
     bty = "o", bg = "white"
   )
-
 
   invisible(NULL)
 }

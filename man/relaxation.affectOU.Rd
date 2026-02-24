@@ -2,7 +2,7 @@
 % Please edit documentation in R/relaxation.R
 \name{relaxation.affectOU}
 \alias{relaxation.affectOU}
-\title{Compute relaxation time for OU model}
+\title{Compute relaxation time for Ornstein-Uhlenbeck model}
 \usage{
 \method{relaxation}{affectOU}(
   object,
@@ -109,5 +109,5 @@ relaxation(model_coupled)$relaxation_time
 \seealso{
 \code{\link[=stability.affectOU]{stability()}} for stability assessment,
 \code{\link[=stationary.affectOU]{stationary()}} for the equilibrium distribution,
-\code{\link[=summary.affectOU]{summary()}} for the full model summary
+\code{\link[=summary.affectOU]{summary()}} for the full model summary.
 }

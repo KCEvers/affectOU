@@ -12,6 +12,7 @@ ou_plot_phase(
   share_yaxis = TRUE,
   palette = "Dark 3",
   col_theory = "grey30",
+  lwd = ifelse(x[["nsim"]] > 1, 1, 1.25),
   alpha = 1,
   main = "Phase Portrait",
   sub = paste("Dimension", if (is.null(which_dim)) {
@@ -40,6 +41,8 @@ ou_plot_phase(
 \item{palette}{Color palette. Should be one \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
 
 \item{col_theory}{Color for theoretical relationship line}
+
+\item{lwd}{Line width}
 
 \item{alpha}{Alpha transparency for colors (0 = transparent, 1 = opaque)}
 

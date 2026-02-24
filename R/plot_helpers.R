@@ -15,16 +15,14 @@ get_plot_params <- function(specific = list(), user = list()) {
     # bottom, left, top, right
     # oma = outer margins (for outer labels), mar = inner margins (for axes)
     oma = c(2.25, 2, 3, 2),
-    # oma = c(0, 0, 0, 0),
-    # mar = c(3, 4, 3, 4),
-    mar = c(3, 3, 2.25, 3),
+    mar = c(3, 3.1, 2.25, 3),
     # mgp = distance of the axis labels or titles from the axes; distance of the tick mark labels from the axes; distance of the tick mark symbols from the axes
     mgp = c(2, 0.5, 0),
     # Text sizing
-    cex.main = 1.5,
-    cex.lab = 1.2,
+    cex.main = 2,
+    cex.lab = 1.5,
     cex.axis = 0.95,
-    cex.sub = 1.0,
+    cex.sub = 1.5,
 
     # Style
     las = 0,
@@ -218,7 +216,7 @@ setup_panel <- function(xlim, ylim, P, main = NULL, xlab = NULL, ylab = NULL) {
 
   if (!is.null(main)) {
     title(
-      main = main, cex.main = par("cex.lab"),
+      main = main, cex.main = par("cex.sub"),
       font.main = 1
     )
   }
@@ -251,13 +249,13 @@ add_outer_labels <- function(P, main = NULL, xlab = NULL, ylab = NULL) {
   if (!is.null(xlab)) {
     mtext(
       text = xlab, side = 1, outer = TRUE, line = 0.7,
-      cex = par("cex.main")
+      cex = par("cex.lab")
     )
   }
   if (!is.null(ylab)) {
     mtext(
       text = ylab, side = 2, outer = TRUE, line = 0.7,
-      cex = par("cex.main")
+      cex = par("cex.lab")
     )
   }
   invisible(NULL)

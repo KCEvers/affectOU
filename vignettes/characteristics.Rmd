@@ -32,7 +32,7 @@ After perturbations, affect returns toward its baseline $\mu$ at a rate determin
 <details>
 <summary>Show code</summary>
 
-```{r mean-reversion, results = "hide"}
+```{r mean-reversion, results = "hide", fig.show='hide'}
 model <- affectOU(theta = diag(c(5.0, 0.5)), initial_state = 3)
 sim <- simulate(model, seed = 123, stop = 20)
 plot(sim,
@@ -65,7 +65,7 @@ relaxation(model)
 <details>
 <summary>Show code</summary>
 
-```{r persistence-plot, results="hide"}
+```{r persistence-plot, results="hide", fig.show='hide'}
 # Simulate with more time points for accurate ACF
 sim <- simulate(model, stop = 10000, dt = 0.01, save_at = 0.01)
 plot(sim, type = "acf", lag.max = 10)
@@ -86,7 +86,7 @@ The parameter $\gamma$ controls the magnitude of random perturbations—emotiona
 <details>
 <summary>Show code</summary>
 
-```{r reactivity, results="hide"}
+```{r reactivity, results="hide", fig.show='hide'}
 model <- affectOU(theta = 0.5, mu = 0, gamma = diag(c(0.3, 1.5)))
 sim <- simulate(model, seed = 456, stop = 20)
 plot(sim,
@@ -121,7 +121,7 @@ The sign of $\theta$ determines qualitative behaviour:
 <details>
 <summary>Show code</summary>
 
-```{r regimes, results = "hide"}
+```{r regimes, results = "hide", fig.show='hide'}
 model <- affectOU(theta = diag(c(0.5, 0.01, -0.3)))
 sim <- simulate(model, stop = 100, seed = 43)
 plot(sim,
@@ -150,41 +150,43 @@ For multiple dimensions, stability depends on the eigenvalues of $\mathbf{\Theta
 - **Complex eigenvalues with positive real parts**: Damped oscillations. Dimensions rotate around $\mathbf{\mu}$ in the phase space, spiralling inward. This can represent cyclical affect patterns.
 - **Any eigenvalue with zero or negative real part**: The system is non-stationary. Affect diverges over time -- either drifting monotonically or oscillating with growing amplitude, depending on whether the eigenvalues are real or complex.
 
+Below, we set perturbations to zero to better show the dynamics implied by the eigenvalues. 
+
 <details>
 <summary>Show code</summary>
 
 ```{r regimes-2d}
 # Real eigenvalues: smooth decay
-theta_real <- matrix(c(0.5, 0.1, 0.1, 0.5), 2, byrow = TRUE)
+theta_real <- matrix(c(0.2, 0.1, 0.1, 0.2), 2, byrow = TRUE)
 eigen(theta_real)$values
 
 # Complex eigenvalues: oscillatory decay
-theta_complex <- matrix(c(0.5, -0.4, 0.4, 0.5), 2)
+theta_complex <- matrix(c(0.2, -1, 1, 0.2), 2, byrow = TRUE)
 eigen(theta_complex)$values
 ```
 
-```{r regimes-2d-sim, results="hide"}
+```{r regimes-2d-sim, results="hide", fig.show='hide'}
 seed <- 123
 sim_real <- simulate(
-  affectOU(theta = theta_real, mu = 0, sigma = .1),
+  affectOU(theta = theta_real, mu = 0, sigma = 0, initial_state = c(-3, 3)),
   stop = 50, seed = seed
 )
 sim_complex <- simulate(
-  affectOU(theta = theta_complex, mu = 0, sigma = .1),
+  affectOU(theta = theta_complex, mu = 0, sigma = 0, initial_state = c(-3, 3)),
   stop = 50, seed = seed
 )
-plot(sim_real, type = "phase", main = "Real eigenvalues")
-plot(sim_complex, type = "phase", main = "Complex eigenvalues")
+plot(sim_real, main = "Real eigenvalues")
+plot(sim_complex, main = "Complex eigenvalues")
 ```
 
 </details>
 
-```{r regimes-2d-plot, echo = FALSE, fig.height = 5, fig.show = 'hold'}
-plot(sim_real, type = "phase", main = "Real eigenvalues")
-plot(sim_complex, type = "phase", main = "Complex eigenvalues")
+```{r regimes-2d-plot, echo = FALSE, fig.height = 5, fig.show = 'hold', out.width = '50%'}
+plot(sim_real, main = "Real eigenvalues")
+plot(sim_complex, main = "Complex eigenvalues")
 ```
 
-The oscillatory case shows rotation in the phase space, reflecting the imaginary component of the eigenvalues. For affect dynamics, this could represent alternating patterns between dimensions (e.g., valence and arousal cycling together).
+The oscillatory case shows damped oscillations, reflecting the imaginary component of the eigenvalues.
 
 ## 5. Multivariate Coupling
 
@@ -202,22 +204,22 @@ $$\mathbf{\Theta} = \begin{bmatrix}
 <details>
 <summary>Show code</summary>
 
-```{r multivariate, results="hide"}
+```{r multivariate, results="hide", fig.show='hide'}
 # Dimension 1's deviations from baseline push dimension 2 in the opposite direction
 theta_2d <- matrix(c(
   0.5, 0.0,
-  2, 0.5
+  -2, 0.5
 ), nrow = 2, byrow = TRUE)
 
 model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
-sim_2d <- simulate(model_2d, seed = 102)
+sim_2d <- simulate(model_2d, seed = 105)
 plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
 </details>
 
-```{r multivariate-plot, echo = FALSE, fig.height = 5}
+```{r multivariate-plot, echo = FALSE, fig.height = 5, }
 plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
 ```
 
@@ -225,7 +227,9 @@ plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
-The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait.
+<!-- The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait. -->
+
+The negative entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the same direction: if dimension 1 is above baseline, dimension 2 is pushed up, and vice versa. This creates interdependent dynamics visible in the phase portrait.
 
 ## 6. Noise Coupling
 
@@ -236,7 +240,7 @@ Off-diagonal elements of $\mathbf{\Gamma}$ create correlated noise between dimen
 <details>
 <summary>Show code</summary>
 
-```{r noise, results="hide"}
+```{r noise, results="hide", fig.show='hide'}
 # Correlated noise with no cross-regulation
 gamma_2d <- matrix(c(
   1, 0.5,
@@ -244,9 +248,8 @@ gamma_2d <- matrix(c(
 ), nrow = 2, byrow = TRUE)
 
 model_2d <- affectOU(theta = 0.5, mu = 0, gamma = gamma_2d)
-sim_2d <- simulate(model_2d, seed = 102)
+sim_2d <- simulate(model_2d, seed = 105)
 plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
-plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
 </details>
@@ -254,11 +257,6 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```{r noise-plot, echo = FALSE, fig.height = 5}
 plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
 ```
-
-```{r noise-plot2, echo = FALSE, fig.height = 6}
-plot(sim_2d, type = "phase", main = "Phase Portrait")
-```
-
 
 ## Summary
 

@@ -2,3 +2,8 @@ url: https://kcevers.github.io/affectOU/
 template:
   bootstrap: 5
   math-rendering: mathjax
+figures:
+  dev: grDevices::svg
+  fig.ext: svg
+
+

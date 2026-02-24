@@ -1,8 +1,8 @@
 ---
-title: "Get Started with affectOU"
+title: "Get started with affectOU"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Get Started with affectOU}
+  %\VignetteIndexEntry{Get started with affectOU}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

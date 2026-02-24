@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_simulate.R
 \name{plot.simulate_affectOU}
 \alias{plot.simulate_affectOU}
-\title{Plot OU simulation}
+\title{Plot simulation}
 \usage{
 \method{plot}{simulate_affectOU}(x, type = c("time", "histogram", "acf", "phase"), ...)
 }

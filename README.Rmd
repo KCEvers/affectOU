@@ -9,6 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
+  dev = c("svglite", "cairo_pdf"),
   out.width = "100%",
   dpi = 300,
   fig.retina = 3
@@ -42,7 +43,7 @@ The aim of `affectOU` is to provide tools for simulating and analyzing the Ornst
 
 ## Installation
 
-The development version of affectOU can be installed from [GitHub](https://github.com/KCEvers/affectOU) with:
+`affectOU` can be installed from [GitHub](https://github.com/KCEvers/affectOU) with:
 
 ``` r
 # install.packages("pak")
@@ -61,19 +62,30 @@ model <- affectOU(ndim = 2)
 model
 ```
 
+```{r seed, echo=FALSE}
+# Set seed for reproducibility
+set.seed(123, kind = "Mersenne-Twister", normal.kind = "Inversion", sample.kind = "Rejection")
+```
 
-```{r sim, fig.height=5, fig.width=11}
-# Run three simulations
-sim <- simulate(model, nsim = 3)
+```{r sim, echo = TRUE, results='hide', fig.show='hide', fig.height=5, fig.width=11}
+# Simulate timeseries
+sim <- simulate(model)
 plot(sim)
 ```
 
-## Tutorials
+```{r sim-img, echo = FALSE, fig.height=6, fig.width=11}
+plot(sim, main = "Ornstein-Uhlenbeck Affect Dynamics")
+```
+
+## Explore the OU Process
 
 For more detailed examples and visual demonstrations of the model's characteristics, see the vignettes:
 
-* [Get Started with affectOU](https://kcevers.github.io/affectOU/articles/affectOU.html)
+* [Get started with affectOU](https://kcevers.github.io/affectOU/articles/affectOU.html)
 * [Affect Characteristics Implied by the OU Process](https://kcevers.github.io/affectOU/articles/characteristics.html)
+
+Theoretical properties of the OU process are explained in [`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.html), [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.html), and [`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.html). For fitting unidimensional OU models to data, see [`fit()`](https://kcevers.github.io/affectOU/reference/fit.affectOU.html).
+
 
 
 ## References
