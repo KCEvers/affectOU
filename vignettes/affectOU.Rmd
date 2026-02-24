@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 `affectOU` provides tools for modeling affect dynamics using the Ornstein-Uhlenbeck (OU) process -- a continuous-time stochastic model that captures how emotions fluctuate around a baseline and return to equilibrium over time.
 
-This vignette walks through the package's core functionality: simulating the OU process, computing theoretical quantities, and fitting unidimensional models to data. See [Affect Characteristics Implied by the OU Process](characteristics.html) for visual demonstrations of the model's qualitative behaviours and their psychological interpretations.
+This vignette walks you through the package's core functionality: simulating the OU process, computing theoretical quantities, and fitting the unidimensional OU to data. See the vignette [_Affect Characteristics Implied by the OU Process_](characteristics.html) for visual demonstrations of the model's qualitative behaviours and their psychological interpretations.
 
 
 <!-- ## Setup -->
@@ -29,100 +29,166 @@ This vignette walks through the package's core functionality: simulating the OU 
 library(affectOU)
 ```
 
-## Creating an affectOU Model
+## Creating a Model
 
 
 ### One-Dimensional Model
 
-For a univariate affect process, the stochastic differential equation of the OU process is:
+For a univariate affective process, the stochastic differential equation of the OU is:
 
 $$d{X}(t) = {\theta}({\mu} - {X}(t))dt + {\gamma} \, d{W}(t)$$
 
 
 Here, the parameters represent:
 
-* **θ (theta)**: Attractor strength—how quickly affect returns to baseline
+<!-- * **θ (theta)**: Attractor strength—how quickly affect returns to baseline
 * **μ (mu)**: Attractor location—the baseline or "set point" of affect
-* **γ (gamma)**: Diffusion coefficient—the intensity of random perturbations
+* **γ (gamma)**: Diffusion coefficient—the intensity of random perturbations -->
+* $\mu$ (`mu`): Attractor location, or the baseline and "set point" of affect;
+* $\theta$ (`theta`): Attractor strength, or how quickly affect returns to the baseline; 
+* $\gamma$ (`gamma`): Diffusion coefficient, or the scale of the random perturbations.
 
-Create a simple one-dimensional model with default parameters:
+
+You can create a simple one-dimensional model through calling the `affectOU` constructor using the default parameters:
 
 ```{r create-1d}
 model <- affectOU()
 model
 ```
 
-Specify custom parameters to represent, for example, a process with moderate mean-reversion ($\theta$ = 0.5), positive baseline ($\mu$ = 1), and unit diffusion ($\gamma$ = 1):
+Alternatively, you can specify custom parameters to represent, for example, a process with a stronger mean-reversion ($\theta = 1$), positive baseline ($\mu = 1$), and smaller amount of random perturbations ($\gamma = 0.5$):
  
 ```{r create-1d-custom}
-model <- affectOU(theta = 0.5, mu = 1, gamma = 1)
+model <- affectOU(theta = 1, mu = 1, gamma = 0.5)
 model
 ```
 
 ### Multidimensional Models
 
-The OU framework extends naturally to multiple affect dimensions (e.g., valence and arousal). For a d-dimensional process:
+The OU framework extends naturally to multiple affect dimensions (e.g., valence and arousal). For a d-dimensional process, the OU looks like:
 
 $$d\mathbf{X}(t) = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} \, d\mathbf{W}(t)$$
 
-The default is a 2D model with uncoupled dynamics (diagonal $\mathbf{\Theta}$ and $\mathbf{\Gamma}$) and identical parameters across dimensions:
+Within `affectOU`, the default multidimensional model is one with uncoupled dynamics (diagonal $\mathbf{\Theta}$ and $\mathbf{\Gamma}$) and identical parameters across all dimensions. For example, for a 2D model, we get:
 
 ```{r create-2d-default}
 model_2d <- affectOU(ndim = 2)
 model_2d
 ```
 
-Create an uncoupled 2D model with different parameters for each dimension:
+One can use the [`update()`](../reference/update.affectOU.html) function to modify an existing model without recreating it from scratch, for example:
 
 ```{r create-2d}
-model_2d <- update(model_2d,
+model_2d <- update(
+  model_2d,
   theta = diag(c(0.5, 0.3)), # Different regulation speeds
-  mu = c(0, 1), # Different baselines
-  gamma = diag(c(1, 0.8)) # Different diffusion levels
+  mu = c(0, 1),              # Different baselines
+  gamma = diag(c(1, 0.8))    # Different diffusion levels
 )
+
+model_2d
 ```
 
-Above, we use [`update()`](../reference/update.affectOU.html) to modify an existing model without recreating it from scratch. For coupled dynamics where dimensions influence each other, use a non-diagonal $\mathbf{\Theta}$ matrix:
+For coupled dynamics in which all variables evolve together over time, one should specify a non-diagonal $\mathbf{\Theta}$ matrix and update the model:
 
 ```{r create-2d-coupled}
-theta_coupled <- matrix(c(
+theta_coupled <- c(
   0.5, 0.1,
   0.2, 0.3
-), nrow = 2, byrow = TRUE)
+) |>
+  matrix(nrow = 2, ncol = 2, byrow = TRUE)
 
-model_coupled <- update(model_2d,
+model_coupled <- update(
+  model_2d,
   theta = theta_coupled
 )
+
+model_coupled
 ```
 
+## Theoretical Quantities
 
+### Model Summary
+
+Key theoretical properties can be computed with [`summary()`](../reference/summary.affectOU.html):
+
+```{r summary}
+summary(model)
+```
+
+This summary displays the following key theoretical information:
+
+- **Stability**: Check for whether the system is stable and what type of dynamics it displays; 
+- **Stationary distribution**: Long-run means and (co)variances of the process;
+- **Relaxation time**: Time needed for the system to return to equilibrium. For a one-dimensional system, this is equal to $\tau = \theta^{-1}$. For a multidimensional system, this is equal to $\tau = \lambda_\text{min}^{-1}$ where $\lambda_\text{min}$ is the smallest eigenvalue of the matrix $\Theta$.
+
+Note that each of these individual parts can be extracted through the functions [`stability()`](../reference/stability.affectOU.html), [`stationary()`](../reference/stationary.affectOU.html), and [`relaxation()`](../reference/relaxation.affectOU.html). Each can also be called independently for more detail:
+
+For multidimensional models, the model summary also includes coupling indicators:
+
+```{r summary-coupled}
+summary(model_coupled)
+```
 
 ## Simulating Trajectories
 
-[`simulate()`](../reference/simulate.affectOU.html) generates trajectories using Euler-Maruyama discretization:
+You can simulate data from the specified model through the [`simulate()`](../reference/simulate.affectOU.html) function:
 
 ```{r simulate-basic}
 sim <- simulate(model)
 ```
 
-Simulation settings can be customized:
+This function generates trajectories using the Euler-Maruyama discretization, which for the OU amounts to updating the variables $\mathbf{X}$ after a discrete time-step $\Delta t$ according to the following equation:
+
+\begin{equation}
+\begin{split}
+  \mathbf{X}_{t + \Delta t} &= \mathbf{X}_t + \mathbf{\Theta} (\mathbf{\mu} - \mathbf{X}_t) \Delta t + \mathbf{\epsilon}_t \\
+  \mathbf{\epsilon}_t &\sim N(\mathbf{0}, \mathbf{\Sigma})
+\end{split}
+\end{equation}
+
+where 
+
+\begin{equation}
+  \mathbf{\Sigma} = \mathbf{\Theta} \mathbf{\Gamma} \mathbf{\Gamma}^T \mathbf{\Theta}^T
+\end{equation}
+
+where $Delta t$ is sufficiently small to ensure sensible results.
+
+Simulations can be customized to fit one's needs, specifically by changing the arguments:
+
+* `nsim`: Number of replications or simulations to run; 
+* `dt`: The (discretized) time step to use within the Euler-Maruyama approximation;
+* `stop`: Total number of discrete time steps to run for each simulation;
+* `save_at`: Time interval between saved simulation values;
+* `seed`: Seed to use for the simulation.
+
+For example, we can specify the following simulation to simulate data from our model:
 
 ```{r simulate-advanced}
 sim <- simulate(
   model,
-  nsim = 1, # Number of replications
-  dt = 0.01, # Integration time step
-  stop = 100, # Total simulation time
-  save_at = 0.1, # Output sampling interval
-  seed = 42 # For reproducibility
+  nsim = 1, 
+  dt = 0.01, 
+  stop = 100, 
+  save_at = 0.1, 
+  seed = 42
 )
+
+print(sim)
 ```
+
+In what remains, we will explain how to understand the content of these simulations.
 
 ### Visualizing Simulations
 
-Simulated data can be explored in various ways:
+A first way to explore the simulated data is by plotting it. `affectOU` provides the `plot` function with several different types of plots to visualize the simulated data, namely:
 
-```{r plot-sim, fig.show="hold", fig.height=5, out.width = '50%'}
+```{r plot-sim}
+#| fig.show = "hold",
+#| fig.height = 5,
+#| out.width = "50%",
+#| fig.alt = "Four plots are shown in a two by two fashion. In order, the plots contain (a) the time series of the simulated data, (b) the distribution of its values, (c) a visualization of the autocorrelations per lag in time, and (d) the phase portrait of how affect changed over time. All plots use the default visualization specifications, meaning the default titles explaining the content of the simulations ('Affect Dynamics', 'Affect Distribution', 'Autocorrelation Function', and 'Phase Portrait' respectively) and using the default colors of the package (using the 'Temps' palette of the package `grDevices`)."
 # Time series trajectory (default)
 plot(sim)
 
@@ -136,91 +202,94 @@ plot(sim, type = "acf")
 plot(sim, type = "phase")
 ```
 
-### Multiple Simulations
+By default, the `plot` function will create a time-series plot (`type = "time"`), showing the simulated values of affect contained within the simulation object. However, one can also visualize the distribution of simulated affect values (`type = "histogram"`), the value of the autocorrelation between simulated values at particular lags apart (`type = "acf"`), and the phase plot showing how affect at time $t$ relates to the value of affect at time $t + \Delta t$. Each of these provides us with some crucial information on the expected behavior of the OU as a model of affect dynamics, as we detail in the vignette on [_Affect Characteristics Implied by the OU Process_](characteristics.html).
 
-Generate multiple independent realizations by setting `nsim` > 1:
+#### Multiple Simulations
+
+As explained before, one can run multiple independent simulations by setting `nsim` > 1. In this case, the code still looks the same as before, where all simulations are plotted within one singular plot:
 
 ```{r simulate-multiple}
+#| fig.show = "hold",
+#| fig.height = 5,
+#| out.width = "50%",
+#| fig.alt = "Shown is a time-series plot containing all three of the simulations overlayed on top of each other."
 sim <- simulate(model, nsim = 3)
 plot(sim, type = "time")
 ```
 
-### Extracting Simulation Data
+#### Multiple dimensions 
 
-Simulated data can be extracted in different formats:
+Visualizing the characteristics of the multidimensional OU can be achieved in the same way as before. For example:
 
-```{r extract-data}
-# Directly from the simulation object
-data <- sim$data # 3D array (time × dimension × simulation)
+```{r simulate-md}
+#| fig.show = "hold",
+#| fig.height = 5,
+#| out.width = "50%",
+#| fig.alt = "Four plots containing the same information as before, but this time divided into subplots containing information for one or the other dimension (time-series and histogram) or for the temporal relations between all potential combination of variables (autocorrelation plot and phase plot)."
+# Create an affectOU model with two dimensions
+model_2D <- affectOU(ndim = 2)
+
+# Simulate 5 time-series from this model and visualize them
+sim <- simulate(
+  model_2D, 
+  nsim = 5
+)
+
+# Create all four types of plots
+plot(sim, type = "time")
+plot(sim, type = "histogram")
+plot(sim, type = "acf")
+plot(sim, type = "phase")
 ```
 
+### Extracting Simulation Data
+
+One can visualize the first `n` observations contained within this `"data"` slot of the simulation object through the function `head` directly, for example:
 ```{r extract-data-head}
 # Using head() or tail()
 head(sim, n = 3)
 ```
 
+To extract the simulated data, one can use one of several ways. First, one can extract the data directly from the simulation object, for example:
+
+```{r extract-data}
+# Directly from the simulation object
+data <- sim$data # 3D array (time × dimension × simulation)
+
+head(data, n = 3)
+```
+
+Alternatively, one can transform the simulation object to another class that will contain the data in an alternative way. Supported transformations are the transformation to a list (`as.list`), a `data.frame` (`as.data.frame`), an array (`as.array`, output will be 3-dimensional), and a matrix (`as.matrix`, output will be 2-dimensional). For each of these transformations, we show an example: 
+
 ```{r extract-data-list}
 # As a list of data frames (one per simulation)
 sim_list <- as.list(sim)
-head(sim_list[[1]], n = 3)
+data <- sim_list[[1]]
+
+head(data, n = 3)
 ```
 
 ```{r extract-data-df}
 # As a data frame (long or wide format)
 sim_df <- as.data.frame(sim)
+
 head(sim_df, n = 3)
 ```
 
 ```{r extract-data-array}
 # As a 3D array (time × dimension × simulation)
 sim_array <- as.array(sim)
+
 dim(sim_array)
+sim_array[1:3, , ]
 ```
 
 ```{r extract-data-matrix}
 # As a matrix (time × dimension)
 sim_matrix <- as.matrix(sim)
+
 head(sim_matrix, n = 3)
 ```
-
-## Theoretical Quantities
-
-### Model Summary
-
-Key theoretical properties can be computed with [`summary()`](../reference/summary.affectOU.html):
-
-```{r summary}
-summary(model)
-```
-
-The summary aggregates results from [`stability()`](../reference/stability.affectOU.html), [`stationary()`](../reference/stationary.affectOU.html), and [`relaxation()`](../reference/relaxation.affectOU.html). Each can also be called independently for more detail:
-
-- **Stability**: Is the system stable? What type of dynamics does the system exhibit? 
-- **Stationary distribution**: Long-run mean, SD, and (for multivariate models) covariance
-- **Relaxation time**: Time constant of perturbation decay ($\tau = 1/\theta$)
-
-For multidimensional models, the model summary also includes coupling indicators:
-
-```{r summary-coupled}
-summary(model_coupled)
-```
-
-
-
-## Extract Equation
-
-[`equation()`](../reference/equation.affectOU.html) renders the model's stochastic differential equation in multiple formats, offering plain text, LaTeX, R expression, or code output.
-
-```{r equation-plain}
-cat(equation(model))
-```
-
-With evaluated parameters:
-
-```{r equation-plain-inline}
-cat(equation(model, inline = TRUE))
-```
-
 
 ## Fitting Models to Data
 
@@ -247,7 +316,25 @@ plot(fitted, type = "residuals")
 
 See [`plot()`](../reference/plot.fit.affectOU.html) for more details on available diagnostics and their interpretations.
 
+## Extract Equation
+
+To ease the process of writing down the necessary equations, `affectOU` includes an [`equation()`](../reference/equation.affectOU.html) function which renders the model's stochastic differential equation in multiple formats, offering plain text, LaTeX, R expression, or code output.
+
+```{r equation-plain}
+equation(model)
+
+equation(model, type = "latex")
+```
+
+By default, this function will output the general equation and define the values of the parameters afterwards. If you wish to include the values of the parameters in the equation directly, you can specify the argument `inline = TRUE`:  
+
+```{r equation-plain-inline}
+equation(model, inline = TRUE)
+```
+
 ## Summary
 
-The typical workflow starts with [`affectOU()`](../reference/affectOU.html) to define a model (1D or multidimensional), optionally adjusting parameters via [`update()`](../reference/update.affectOU.html). Trajectories are generated with [`simulate()`](../reference/simulate.affectOU.html) and visualized with [`plot()`](../reference/plot.simulate_affectOU.html). Theoretical properties -- stability, stationary distribution, and relaxation time -- are available through [`summary()`](../reference/summary.affectOU.html) and its component functions. The model's SDE can be rendered in several formats via [`equation()`](../reference/equation.affectOU.html). For empirical data, [`fit()`](../reference/fit.affectOU.html) estimates parameters from univariate time series using maximum likelihood.
+The typical workflow starts with the specification of an OU model of the [`affectOU()`](../reference/affectOU.html) class, optionally adjusting its parameters via its arguments or through the [`update()`](../reference/update.affectOU.html) method. One should then inspect the theoretical properties of the model -- that is, stability, stationary distribution, and relaxation time --, which are available through the [`summary()`](../reference/summary.affectOU.html) method and its component functions. Once the model has been inspected, one can generate trajectories according to the specified OU with the [`simulate()`](../reference/simulate.affectOU.html) method and visualize these trajectories through [`plot()`](../reference/plot.simulate_affectOU.html). 
+
+Alternatively, one can estimate the OU using empirical data through the [`fit()`](../reference/fit.affectOU.html) method. To report the results, one can use the [`equation()`](../reference/equation.affectOU.html) method to output the stochastic differential equation in the format of choice. 
 
