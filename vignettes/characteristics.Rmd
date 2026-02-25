@@ -19,23 +19,66 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+#| echo = FALSE
 library(affectOU)
 ```
 
-Modelling affect with the Ornstein-Uhlenbeck (OU) process implies affect dynamics are characterized by several distinct features. This vignette demonstrates each feature visually. For mathematical definitions of the quantities shown here, see [`stability()`](../reference/stability.affectOU.html), [`stationary()`](../reference/stationary.affectOU.html), and [`relaxation()`](../reference/relaxation.affectOU.html).
+Modelling affect with the Ornstein-Uhlenbeck (OU) process implies that affect dynamics behave in a certain way. This vignette demonstrates each distinct feature of this time evolution visually. For mathematical definitions of the quantities shown here, see the documentation of the functions [`stability()`](../reference/stability.affectOU.html), [`stationary()`](../reference/stationary.affectOU.html), and [`relaxation()`](../reference/relaxation.affectOU.html).
+
+For reference, the multivariate OU process is defined as:
+
+$$d\mathbf{X}(t) = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} \, d\mathbf{W}(t)$$
+
+where $\mathbf{\mu}$ defines the location of the affective baseline, $\mathbf{\Theta}$ defines the regulation towards this baseline (for stable systems), and $\mathbf{\Gamma}$ defines the stochasticity of the system. 
 
 
-## 1. Mean Reversion
 
-After perturbations, affect returns toward its baseline $\mu$ at a rate determined by $\theta$ (for stable, unidimensional systems). High $\theta$ indicates rapid regulation; low $\theta$ indicates emotional inertia.
+## Mean Reversion
+
+The first main feature of the OU as a model of affect dynamics concerns its mean reversion. For stable systems (see later), affect returns toward its baseline $\mathbf{\mu}$ in a way determined by $\mathbf{\Theta}$ after perturbations.It can be proven that this regulation is captured by a matrix exponential so that, after a time step $\Delta t$, the deterministic drift of the system can be described by the following equation:
+
+\begin{equation}
+  \mathbf{X}_{t + \Delta t} = (\mathbf{I}_d - e^{-\mathbf{\Theta} \Delta t}) \mathbf{\mu} + e^{-\mathbf{\Theta} \Delta t} \mathbf{X}_t
+\end{equation}
+
+The rate of this regulation is determined by the eigenvalues of $\mathbf{\Theta}$. Decomposing:
+
+\begin{equation}
+  \mathbf{\Theta} = \mathbf{\Omega} \mathbf{\Lambda} \mathbf{\Omega}^{-1}
+\end{equation}
+
+where $\mathbf{\Omega}$ contains the eigenvectors and $\mathbf{\Lambda}$ contains the eigenvalues of the drift matrix $\mathbf{\Theta}$, then the drift can itself be decomposed as:
+
+\begin{equation}
+\begin{split}
+  e^{\mathbf{\Theta} \Delta t} &= e^{\mathbf{\Omega} \mathbf{\Lambda} \mathbf{\Omega}^{-1} \Delta t} \\
+  &= \mathbf{\Omega} e^{\mathbf{\Lambda} \Delta t} \mathbf{\Omega}^{-1}
+\end{split}
+\end{equation}
+
+This derivation shows that the rate of the regulation is determined by the eigenvalues $\mathbf{\Lambda}$ while the directionality of the regulation is determined by the eigenvectors $\mathbf{\Omega}$. For stable systems with positive real parts to the eigenvalues, higher values of $\lambda_i \in \mathbf{\Lambda}$ will lead to a more rapid regulation while lower values of $\lambda_i$ indicate slower regulation.
+
+This property is shown in the following figure in which we simulate two independent OU processes with $\theta_1 = 5.0$ (red) and $\theta_2 = 0.5$ (green). starting at an initial condition of $3$, the two processes are then allowed to return to the attractor $\mathbf{\mu} = \mathbf{0}$, around which they continue to fluctuate. Importantly, the process with the higher value for $\theta$ (1; red) has a higher regulation towards this attractor compared to the other process (2; green). In emotion terms, the second process displays greater affective inertia than the second process.
 
 <details>
 <summary>Show code</summary>
 
 ```{r mean-reversion, results = "hide", fig.show='hide'}
-model <- affectOU(theta = diag(c(5.0, 0.5)), initial_state = 3)
-sim <- simulate(model, seed = 123, stop = 20)
-plot(sim,
+# Create a 2D OU with two independent processes and an initial condition 3
+model <- affectOU(
+  theta = diag(c(5.0, 0.5)), 
+  initial_state = 3
+)
+
+# Simulate data for this model and plot the result
+sim <- simulate(
+  model, 
+  seed = 123, 
+  stop = 20
+)
+
+plot(
+  sim,
   by_dim = FALSE,
   main = "Mean Reversion Depends on θ",
   sub = c("Fast Regulation (θ = 5.0)", "Slow Regulation (θ = 0.5)")
@@ -45,87 +88,50 @@ plot(sim,
 </details>
 
 ```{r mean-reversion-plot, echo = FALSE, fig.height=5}
-plot(sim,
+#| fig.alt = "Time series plot with two lines, one for each process that is displayed. The fast-regulating process (red) is shown to fluctuate closely around the attractor, typically remaining within the bounds [-1, 1]. The slow-regulating process, however, fluctuates more widely around the attractor, with small perturbations building up to large fluctuations around the attractor state."
+plot(
+  sim,
   by_dim = FALSE,
   main = "Mean Reversion Depends on θ",
   sub = c("Fast Regulation (θ = 5.0)", "Slow Regulation (θ = 0.5)")
 )
 ```
 
-## 2. Perturbation Persistence
+Note that in this example, $\Theta$ is diagonal, meaning that its values are equal to the eigenvalues (i.e., $\mathbf{\Theta} = \mathbf{\Lambda}$). 
 
-The relaxation time $\tau = 1/\theta$ is the characteristic time scale of the OU process—the time for the expected deviation to shrink to $1/e \approx 36.8\%$. The half-life $t_{1/2} = \ln 2 \cdot \tau$ marks the 50\% point. Effects decay exponentially: at two $\tau$, about 13.5\% remains; at three $\tau$, about 5\%.
+### Stability Regimes
 
-```{r persistence}
-model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
-relaxation(model)
-```
+The OU is typically used to describe stable patterns of regulation in affect. In this section, we will explain the qualitative behaviour expected by the OU under different specifications of $\mathbf{\Theta}$. Note that in what follows, the elements $\theta_i$ of $\mathbf{\Theta}$ are all assumed to be real, or in symbols: $\theta_i \in \mathbb{R}$.
 
+#### Univariate models
 
-<details>
-<summary>Show code</summary>
+In univariate OUs, the sign of $\theta$ determines the model's qualitative behaviour:
 
-```{r persistence-plot, results="hide", fig.show='hide'}
-# Simulate with more time points for accurate ACF
-sim <- simulate(model, stop = 10000, dt = 0.01, save_at = 0.01)
-plot(sim, type = "acf", lag.max = 10)
-```
+- **$\theta > 0$**: Stable, mean-reverting around $\mu$;
+- **$\theta \approx 0$**: Random walk without clear attractor, meaning the process drifts without returning to its baseline;
+- **$\theta < 0$**: Unstable process that diverges from $\mu$.
 
-</details>
-
-```{r persistence-plot-show, echo = FALSE, fig.height = 5}
-plot(sim, type = "acf", lag.max = 10)
-```
-
-The ACF equals $1/e$ at the relaxation time and $0.5$ at the half-life. Slow regulation means longer persistence and higher autocorrelation. See [`relaxation()`](../reference/relaxation.affectOU.html) for more details on this concept and its interpretations.
-
-## 3. Reactivity
-
-The parameter $\gamma$ controls the magnitude of random perturbations—emotional reactivity to environmental fluctuations.
-
-<details>
-<summary>Show code</summary>
-
-```{r reactivity, results="hide", fig.show='hide'}
-model <- affectOU(theta = 0.5, mu = 0, gamma = diag(c(0.3, 1.5)))
-sim <- simulate(model, seed = 456, stop = 20)
-plot(sim,
-  by_dim = FALSE,
-  sub = c("Low Reactivity (γ = 0.3)", "High Reactivity (γ = 1.5)"),
-  main = "Effect of Reactivity on Fluctuation Magnitude", ylim = c(-4, 4)
-)
-```
-
-</details>
-
-```{r reactivity-plot, echo = FALSE, fig.height = 5}
-plot(sim,
-  by_dim = FALSE,
-  sub = c("Low Reactivity (γ = 0.3)", "High Reactivity (γ = 1.5)"),
-  main = "Effect of Reactivity on Fluctuation Magnitude", ylim = c(-4, 4)
-)
-```
-
-Higher $\gamma$ produces larger fluctuations around the attractor.
-
-## 4. Stability Regimes
-
-### Univariate
-
-The sign of $\theta$ determines qualitative behaviour:
-
-- **$\theta > 0$**: Stable. Mean-reverting around $\mu$. Affect fluctuates within a bounded range.
-- **$\theta \approx 0$**: Random walk. No attractor; variance grows over time. Affect drifts without returning.
-- **$\theta < 0$**: Unstable. Exponential divergence from $\mu$. Small perturbations amplify.
+Each of these behaviours is visualized in the following figures. 
 
 <details>
 <summary>Show code</summary>
 
 ```{r regimes, results = "hide", fig.show='hide'}
+# Create a 3D OU with independent processes, each displaying different expected
+# behavior
 model <- affectOU(theta = diag(c(0.5, 0.01, -0.3)))
-sim <- simulate(model, stop = 100, seed = 43)
-plot(sim,
-  ylim = c(-10, 10), by_dim = FALSE,
+
+# Perform the simulation and visualize the results
+sim <- simulate(
+  model, 
+  stop = 100, 
+  seed = 43
+)
+
+plot(
+  sim,
+  ylim = c(-10, 10), 
+  by_dim = FALSE,
   main = "Affect Dynamics of Different Stability Regimes",
   sub = c("θ > 0 (stable)", "θ ≈ 0 (random walk)", "θ < 0 (unstable)")
 )
@@ -134,47 +140,77 @@ plot(sim,
 </details>
 
 ```{r regimes-plot, echo = FALSE, fig.height = 5}
-plot(sim,
-  ylim = c(-10, 10), by_dim = FALSE,
+#| fig.alt = "Time series plot with three lines, one for each type of behavior that is expected. The stable process fluctuates around the mean with fluctuations remaining close to the value of the attractor. The random walk process shows non-systematic drift around the attractor state, without any clear regulatory properties. The unstable process explodes right from the start, falling of the chart after less than 10 iterations."
+plot(
+  sim,
+  ylim = c(-10, 10), 
+  by_dim = FALSE,
   main = "Affect Dynamics of Different Stability Regimes",
   sub = c("θ > 0 (stable)", "θ ≈ 0 (random walk)", "θ < 0 (unstable)")
 )
 ```
 
 
-### Multivariate
+#### Multivariate models
 
-For multiple dimensions, stability depends on the eigenvalues of $\mathbf{\Theta}$. Three cases arise:
+For multiple dimensions, stability depends on the eigenvalues of $\mathbf{\Theta}$. We distinguish three cases: 
 
-- **Real positive eigenvalues**: Smooth exponential decay toward $\mathbf{\mu}$. All dimensions settle without oscillation.
-- **Complex eigenvalues with positive real parts**: Damped oscillations. Dimensions rotate around $\mathbf{\mu}$ in the phase space, spiralling inward. This can represent cyclical affect patterns.
-- **Any eigenvalue with zero or negative real part**: The system is non-stationary. Affect diverges over time -- either drifting monotonically or oscillating with growing amplitude, depending on whether the eigenvalues are real or complex.
+- **Real positive eigenvalues:** In this case, the OU expects smooth exponential decay toward the attractor $\mathbf{\mu}$ for all variables; 
+- **Complex eigenvalues with positive real parts**: In this case, the OU will create damped linear oscillations around the attractor $\mathbf{\mu}$ for all variables, representing cyclical affect patterns;
+- **Eigenvalue with zero or negative real part**: In this case, the OU is non-stationary, meaning that affect will diverge over time -- either drifting monotonically or oscillating with growing amplitude, depending on whether the eigenvalues are real or complex. This type of behaviour is typically not expected and, thus, not of theoretical interest.
 
-Below, we set perturbations to zero to better show the dynamics implied by the eigenvalues. 
+In the next set of plots, we visualize the expected behavior of the OU for the first two cases. In this set of visualizations, we set the perturbations to zero to better show the dynamics implied by the eigenvalues. 
 
 <details>
 <summary>Show code</summary>
 
 ```{r regimes-2d}
-# Real eigenvalues: smooth decay
-theta_real <- matrix(c(0.2, 0.1, 0.1, 0.2), 2, byrow = TRUE)
+# Real eigenvalues: Smooth decay
+theta_real <- matrix(
+  c(0.2, 0.1, 0.1, 0.2), 
+  nrow = 2
+)
+
 eigen(theta_real)$values
 
-# Complex eigenvalues: oscillatory decay
-theta_complex <- matrix(c(0.2, -1, 1, 0.2), 2, byrow = TRUE)
+# Complex eigenvalues: Oscillatory decay
+theta_complex <- matrix(
+  c(0.2, -1, 1, 0.2), 
+  nrow = 2
+)
+
 eigen(theta_complex)$values
 ```
 
 ```{r regimes-2d-sim, results="hide", fig.show='hide'}
+# Define the two models
+model_real <- affectOU(
+  theta = theta_real,
+  sigma = 0,
+  initial_state = c(-3, 3)
+)
+
+model_complex <- affectOU(
+  theta = theta_complex,
+  sigma = 0, 
+  initial_state = c(-3, 3)
+)
+
+# Perform simulations for both systems
 seed <- 123
 sim_real <- simulate(
-  affectOU(theta = theta_real, mu = 0, sigma = 0, initial_state = c(-3, 3)),
-  stop = 50, seed = seed
+  model_real,
+  stop = 50, 
+  seed = seed
 )
+
 sim_complex <- simulate(
-  affectOU(theta = theta_complex, mu = 0, sigma = 0, initial_state = c(-3, 3)),
-  stop = 50, seed = seed
+  model_complex,
+  stop = 50, 
+  seed = seed
 )
+
+# Plot the resulting time-series
 plot(sim_real, main = "Real eigenvalues")
 plot(sim_complex, main = "Complex eigenvalues")
 ```
@@ -182,60 +218,154 @@ plot(sim_complex, main = "Complex eigenvalues")
 </details>
 
 ```{r regimes-2d-plot, echo = FALSE, fig.height = 5, fig.show = 'hold', out.width = '50%'}
+#| fig.alt = "Visualization of the two types of behavior expected in two separate plot panes. Each plot consists of two smooth lines displaying the expected behavior according to the model. In the left plot, the two lines start out at the intercepts [-3, 3] and then decay exponentially towards the attractor $\\mu = (0, 0)$. In the right plot, the two lines start at at the same intercepts [-3, 3] but then oscillate around the attractor $\\mu = (0, 0)$. These oscillations are damped so that they initially start out big, but die down after a while."
 plot(sim_real, main = "Real eigenvalues")
 plot(sim_complex, main = "Complex eigenvalues")
 ```
 
-The oscillatory case shows damped oscillations, reflecting the imaginary component of the eigenvalues.
+Note that the behaviour of the OU may also represent a mix of these two types of behavior, combining exponential decay with oscillatory patterns. This is for example the case in the following figure, in which the oscillatory behavior and exponential decay merge the following dynamics:
 
-## 5. Multivariate Coupling
+<details>
+<summary>Show code</summary>
 
-In multivariate models, off-diagonal elements of $\mathbf{\Theta}$ capture cross-regulation between dimensions.
+```{r regimes-3d}
+# Both complex and real eigenvalues: Combination of smooth and oscillatory 
+# dynamics
+theta <- matrix(
+  c(0.2, 1, 0, 1, 0.2, -1, 0, 1, 0.2), 
+  nrow = 3
+)
+
+eigen(theta)$values
+```
+
+```{r regimes-3d-sim, results="hide", fig.show='hide'}
+# Define the the model
+model <- affectOU(
+  theta = theta,
+  sigma = 0,
+  initial_state = c(-3, 3, 4)
+)
+
+# Perform simulations for the system
+seed <- 123
+sim <- simulate(
+  model,
+  stop = 50, 
+  seed = seed
+)
+
+# Plot the resulting time-series
+plot(sim, main = "Real and complex eigenvalues")
+```
+
+</details>
+
+```{r regimes-3d-plot, echo = FALSE, fig.height = 7, fig.show = 'hold', out.width = '75%', fig.align = "center"}
+#| fig.alt = "Visualization of an OU process with real and complex eigenvalues. All dimensions show an initial overshoot of the attractor state $\\mu$, but then relax in an exponential way."
+plot(sim, main = "Real and complex eigenvalues")
+```
+
+
+
+### Coupling 
+
+In multivariate models, the off-diagonal elements of the drift matrix $\mathbf{\Theta}$ and the diffusion matrix $\mathbf{\Gamma}$ allow the different variables of the model to evolve in a _coupled_ way, creating interesting types of dynamics. 
+
+In the drift matrix $\mathbf{\Theta}$, the off-diagonal elements allow for coupling in the dynamics between the different dimensions of the model. This coupling is captured through the eigenvectors $\mathbf{\Omega}$, which shape the direction along which the system moves towards its attractor $\mathbf{\mu}$ (in case of a stable system). This is easiest shown through an example. Take a two-dimensional system in which:
 
 $$\mathbf{\Theta} = \begin{bmatrix}
-\theta_{11} & \theta_{12} \\
-\theta_{21} & \theta_{22}
-\end{bmatrix} = \begin{bmatrix}
-\text{self-regulation of dim 1} & \text{influence of dim 2 on dim 1} \\
-\text{influence of dim 1 on dim 2} & \text{self-regulation of dim 2}
+  0.5 & 0.0 \\
+  -2.0 & 0.5
 \end{bmatrix}$$
 
+Then we can simulate and visualize one potential trajectory of this model as follows: 
 
 <details>
 <summary>Show code</summary>
 
 ```{r multivariate, results="hide", fig.show='hide'}
-# Dimension 1's deviations from baseline push dimension 2 in the opposite direction
-theta_2d <- matrix(c(
-  0.5, 0.0,
-  -2, 0.5
-), nrow = 2, byrow = TRUE)
+# Dimension 1's deviations from baseline push dimension 2 in the opposite 
+# direction
+theta_2d <- matrix(
+  c(
+    0.5, 0.0,
+    -2, 0.5
+  ), 
+  nrow = 2, 
+  byrow = TRUE
+)
 
-model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
-sim_2d <- simulate(model_2d, seed = 105)
-plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
-plot(sim_2d, type = "phase", main = "Phase Portrait")
+# Create the model, simulate from it, and visualize the trajectory
+model_2d <- affectOU(
+  theta = theta_2d, 
+  mu = 0, 
+  gamma = 1
+)
+
+sim_2d <- simulate(
+  model_2d, 
+  seed = 105
+)
+
+plot(
+  sim_2d, 
+  by_dim = FALSE, 
+  main = "Coupled Trajectories", 
+  xlim = c(0, 20)
+)
 ```
 
 </details>
 
-```{r multivariate-plot, echo = FALSE, fig.height = 5, }
-plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
+```{r multivariate-plot, echo = FALSE, fig.height = 5}
+#| fig.alt = "Visualization of time-series of two coupled dimensions. The simulated time-series look very similar across the two dimensions."
+plot(
+  sim_2d, 
+  by_dim = FALSE, 
+  main = "Coupled Trajectories", 
+  xlim = c(0, 20)
+)
 ```
 
+Another way of visualizing these dynamics is through its phase portrait, shown below:
+
+<details>
+<summary>Show code</summary>
+
+```{r multivariate-phase, results="hide", fig.show='hide'}
+plot(
+  sim_2d, 
+  type = "phase", 
+  main = "Phase Portrait"
+)
+```
+
+</details>
+
 ```{r multivariate-plot2, echo = FALSE, fig.height = 6}
-plot(sim_2d, type = "phase", main = "Phase Portrait")
+#| fig.alt = "Visualization of the phase portrait for the two coupled dimensions. It shows the relationship between the two dimensions at a particular moment in time as well as the temporal relationship across time for the two dimensions involved."
+plot(
+  sim_2d, 
+  type = "phase", 
+  main = "Phase Portrait"
+)
 ```
 
 <!-- The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait. -->
 
-The negative entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the same direction: if dimension 1 is above baseline, dimension 2 is pushed up, and vice versa. This creates interdependent dynamics visible in the phase portrait.
+The negative entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the same direction: If dimension 1 is above baseline, dimension 2 is pushed up, and vice versa. This creates interdependent dynamics visible in the phase portrait.
 
-## 6. Noise Coupling
+Importantly, one can see this through an inspection of the eigenvectors as well. In this case, the eigenvectors of $\mathbf{\Theta}$ are:
 
-Off-diagonal elements of $\mathbf{\Gamma}$ create correlated noise between dimensions. This can lead to synchronized fluctuations even in uncoupled systems.
+$$\mathbf{\Omega} \approx \begin{bmatrix}
+  0 & 0 \\
+  1 & 1
+\end{bmatrix}$$
 
+which means that the two dimensions are closely coupled together, essentially falling on one dimension rather than two. This behavior is similarly visible in the time-series plot, where both dimensions evolve in an almost identical way over time. 
 
+For the noise matrix $\mathbf{\Gamma}$, the lower-triangular elements create correlated noise between the dimensions. This can lead to synchronized fluctuations even in uncoupled systems, as visualized below
 
 <details>
 <summary>Show code</summary>
@@ -255,16 +385,96 @@ plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
 </details>
 
 ```{r noise-plot, echo = FALSE, fig.height = 5}
+#| fig.alt = "Visualization of coupled noise. One can see a time-series with two dimensions, each showing a different process yet a very similar noise structure, or very similar perturbations to the system."
 plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
 ```
+
+
+
+## Perturbation Persistence
+
+For stable OUs, one can define the characteristic relaxation time $\tau$, defining the time for which the expected deviation from the attractor $\mathbf{\mu}$ to shrink to $\frac{1}{e} \approx \frac{1}{2.7183} \approx 0.3679$. The half-life $t_{1/2} = \ln 2 \cdot \tau$ marks the 50\% point. Effects decay exponentially: at two $\tau$, about 13.5\% remains; at three $\tau$, about 5\%.
+
+```{r persistence}
+model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
+relaxation(model)
+```
+
+
+<details>
+<summary>Show code</summary>
+
+```{r persistence-plot, results="hide", fig.show='hide'}
+#| fig.alt = "Visualization of the autocorrelation function and how it decays as a function of the time between two observations. Decay is exponential in nature."
+# Simulate with more time points for accurate ACF
+sim <- simulate(model, stop = 10000, dt = 0.01, save_at = 0.01)
+plot(sim, type = "acf", lag.max = 10)
+```
+
+</details>
+
+```{r persistence-plot-show, echo = FALSE, fig.height = 5}
+plot(sim, type = "acf", lag.max = 10)
+```
+
+The ACF equals $1/e$ at the relaxation time and $0.5$ at the half-life. Slow regulation means longer persistence and higher autocorrelation. See [`relaxation()`](../reference/relaxation.affectOU.html) for more details on this concept and its interpretations.
+
+## Reactivity and Stochasticity
+
+The lower-triangular matrix $\mathbf{\Gamma}$ controls the magnitude of random perturbations in the system, which can be interpreted as emotional reactivity to environmental demands that are not directly measured in a study. Increasing the values in $\mathbf{\Gamma}$ will increase the stochastic fluctuations in the system, as it directly increases the covariance matrix $\mathbf{\Sigma}$ through its mathematical relation:
+
+\begin{equation}
+  \mathbf{\Sigma} = \mathbf{\Gamma} \mathbf{\Gamma}^T
+\end{equation}
+
+This can also be visualized: In the following figure, we simulated two independent processes, one with a low variance($\sigma_1^2 = \gamma_1^2 = 0.3^2$) and another with a big variance ($\sigma_2^2 = \gamma_2^2 = 1.5^2$). As one can see, the dynamics don't change, but rather the size of the perturbations to the system do.
+
+<details>
+<summary>Show code</summary>
+
+```{r reactivity, results="hide", fig.show='hide'}
+# Create two independent OU processes, one with high and the other with low 
+# variability
+model <- affectOU(theta = 0.5, mu = 0, gamma = diag(c(0.3, 1.5)))
+
+# Simulate from these processes and create a time-series plot
+sim <- simulate(
+  model, 
+  seed = 456, 
+  stop = 20
+)
+
+plot(
+  sim,
+  by_dim = FALSE,
+  sub = c("Low Reactivity (γ = 0.3)", "High Reactivity (γ = 1.5)"),
+  main = "Effect of Reactivity on Fluctuation Magnitude", 
+  ylim = c(-4, 4)
+)
+```
+
+</details>
+
+```{r reactivity-plot, echo = FALSE, fig.height = 5}
+#| fig.alt = "Visualization of time-series for an OU with high and low variability. One can see similar types of fluctuations around the mean for both processes, but in one process, the perturbations are bigger than for the other."
+plot(
+  sim,
+  by_dim = FALSE,
+  sub = c("Low Reactivity (γ = 0.3)", "High Reactivity (γ = 1.5)"),
+  main = "Effect of Reactivity on Fluctuation Magnitude", 
+  ylim = c(-4, 4)
+)
+```
+
+
 
 ## Summary
 
 | Feature | Parameter | Effect |
 |------------|-----------|--------|
-| Mean reversion | $\theta$ | Rate of return to baseline |
-| Perturbation persistence | $\theta$ | Half-life of perturbations |
-| Reactivity | $\gamma$ | Magnitude of fluctuations |
-| Stability | sign($\theta$) / eigenvalues of $\mathbf{\Theta}$ | Stationary vs divergent |
-| Cross-coupling | off-diagonal $\mathbf{\Theta}$ | Interdimensional dynamics |
-| Noise coupling | off-diagonal $\mathbf{\Gamma}$ | Interdimensional dynamics |
+| Mean reversion | $\mathbf{\Theta}$ | Rate and direction of return to baseline |
+| Stability | Eigenvalues of $\mathbf{\Theta}$ | Stationary vs divergent |
+| Coupling | Eigenvectors of $\mathbf{\Theta}$ | Coupled dynamics |
+|  | Off-diagonal element of $\mathbf{\Gamma}$ | Coupled noise |
+| Relaxation | $\mathbf{\Theta}$ | Half-life of perturbations |
+| Reactivity | $\mathbf{\Gamma}$ | Magnitude of fluctuations |
