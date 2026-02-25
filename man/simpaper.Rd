@@ -11,7 +11,7 @@ An object of class \code{simulate_affectOU} containing simulated trajectories fr
 simpaper
 }
 \description{
-A two-dimensional Ornstein-Uhlenbeck process simulated with \code{affectOU}.
+An uncoupled two-dimensional Ornstein-Uhlenbeck process simulated with \code{affectOU}.
 }
 \details{
 The process is defined by the stochastic differential equation:
@@ -19,7 +19,7 @@ The process is defined by the stochastic differential equation:
 
 where:
 \itemize{
-\item \eqn{\mathbf{\Theta} = \begin{pmatrix} 0.7 & 0 \\ 0 & 0.3 \end{pmatrix}} is the drift matrix
+\item \eqn{\mathbf{\Theta} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}} is the drift matrix
 \item \eqn{\mathbf{\mu} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}} is the equilibrium mean vector
 \item \eqn{\mathbf{\Gamma} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}} is the diffusion matrix
 \item \eqn{\mathbf{W}_t} is a two-dimensional Wiener process

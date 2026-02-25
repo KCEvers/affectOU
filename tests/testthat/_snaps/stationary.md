@@ -53,8 +53,12 @@
       Mean: [0, 0]
       SD: [1.035, 1.336]
       
+      95% intervals:
+      * Dim. 1: [-2.07, 2.07]
+      * Dim. 2: [-2.673, 2.673]
+      
       Stationary correlations:
-      * Dims 1 & 2: -0.258
+        * Dims 1 & 2: -0.258
 
 # stationary print shows 2D model [ansi]
 
@@ -67,6 +71,10 @@
       Mean: [0, 0]
       SD: [1.035, 1.336]
       
+      95% intervals:
+      * Dim. 1: [-2.07, 2.07]
+      * Dim. 2: [-2.673, 2.673]
+      
       Stationary correlations:
-      * Dims 1 & 2: -0.258
+        * Dims 1 & 2: -0.258
 

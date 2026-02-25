@@ -10,7 +10,8 @@ ou_plot_acf(
   which_dim = NULL,
   which_sim = 1,
   share_yaxis = FALSE,
-  palette = "Temps",
+  palette = "Dark 3",
+  lwd = 1.25,
   alpha = 1,
   col_theory = "grey30",
   main = ifelse(x[["model"]][["ndim"]] == 1, "Autocorrelation Function",
@@ -40,6 +41,8 @@ ou_plot_acf(
 
 \item{palette}{Color palette. Should be one \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
 
+\item{lwd}{Line width}
+
 \item{alpha}{Alpha transparency for colors (0 = transparent, 1 = opaque)}
 
 \item{col_theory}{Color for theoretical ACF/CCF line}
@@ -52,7 +55,7 @@ ou_plot_acf(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"})}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }

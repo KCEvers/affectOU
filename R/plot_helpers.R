@@ -15,16 +15,14 @@ get_plot_params <- function(specific = list(), user = list()) {
     # bottom, left, top, right
     # oma = outer margins (for outer labels), mar = inner margins (for axes)
     oma = c(2.25, 2, 3, 2),
-    # oma = c(0, 0, 0, 0),
-    # mar = c(3, 4, 3, 4),
-    mar = c(3, 3, 2.25, 3),
+    mar = c(3, 3.1, 2.25, 3),
     # mgp = distance of the axis labels or titles from the axes; distance of the tick mark labels from the axes; distance of the tick mark symbols from the axes
     mgp = c(2, 0.5, 0),
     # Text sizing
-    cex.main = 1.5,
-    cex.lab = 1.2,
+    cex.main = 2,
+    cex.lab = 1.5,
     cex.axis = 0.95,
-    cex.sub = 1.0,
+    cex.sub = 1.5,
 
     # Style
     las = 0,
@@ -89,6 +87,9 @@ prep_sim <- function(sim, which_dim, which_sim,
   if (!is.numeric(which_sim)) {
     cli::cli_abort("{.arg which_sim} must be a numeric vector of simulation indices.")
   }
+
+  # Sort and deduplicate (so max_nsim reflects distinct sims)
+  which_sim <- sort(unique(which_sim))
 
   if (!is.null(max_nsim) && length(which_sim) > max_nsim) {
     cli::cli_abort("Number of selected simulations ({length(which_sim)}) exceeds maximum allowed ({max_nsim}).")
@@ -215,7 +216,7 @@ setup_panel <- function(xlim, ylim, P, main = NULL, xlab = NULL, ylab = NULL) {
 
   if (!is.null(main)) {
     title(
-      main = main, cex.main = par("cex.lab"),
+      main = main, cex.main = par("cex.sub"),
       font.main = 1
     )
   }
@@ -248,13 +249,13 @@ add_outer_labels <- function(P, main = NULL, xlab = NULL, ylab = NULL) {
   if (!is.null(xlab)) {
     mtext(
       text = xlab, side = 1, outer = TRUE, line = 0.7,
-      cex = par("cex.main")
+      cex = par("cex.lab")
     )
   }
   if (!is.null(ylab)) {
     mtext(
       text = ylab, side = 2, outer = TRUE, line = 0.7,
-      cex = par("cex.main")
+      cex = par("cex.lab")
     )
   }
   invisible(NULL)
@@ -389,6 +390,59 @@ generate_shades <- function(color, n, min_alpha = 0.3, max_alpha = 1) {
   vapply(alpha_seq, function(a) {
     grDevices::adjustcolor(color, alpha.f = a)
   }, FUN.VALUE = character(1))
+}
+
+#' Assign line types to simulations in contiguous groups
+#'
+#' Divides \code{nsim} simulations into up to \code{n_lty} equal-sized
+#' contiguous blocks and returns a vector of line-type indices (integers 1 to
+#' \code{n_lty}) of length \code{nsim}. When \code{nsim <= n_lty} each
+#' simulation gets its own unique line type.
+#'
+#' @param nsim  Number of simulations.
+#' @param n_lty Number of distinct line types available (default 5).
+#' @return Integer vector of length \code{nsim}.
+#' @keywords internal
+assign_sim_lty <- function(nsim, n_lty = 5L) {
+  if (nsim <= n_lty) return(seq_len(nsim))
+  group_size <- ceiling(nsim / n_lty)
+  pmin(ceiling(seq_len(nsim) / group_size), n_lty)
+}
+
+#' Build legend entries for multiple simulations
+#'
+#' Uses the lty assignment from \code{assign_sim_lty()} to produce one legend
+#' entry per occupied line-type group, labelled with the simulation range
+#' (e.g. "Sim 1-4", "Sim 5-8").
+#'
+#' @param nsim    Number of simulations.
+#' @param lty_vec Integer vector of length nsim from \code{assign_sim_lty()}.
+#' @param col_sim Character vector of colours (length nsim) from
+#'   \code{generate_shades()}.
+#' @param lwd     Line width for legend entries.
+#' @return Named list with \code{text}, \code{lty}, \code{lwd}, \code{col}, or
+#'   \code{NULL} when \code{nsim <= 1}.
+#' @keywords internal
+sim_legend_entries <- function(nsim, lty_vec, col_sim, lwd = 2,
+                               sim_ids = seq_len(nsim)) {
+  if (nsim <= 1L) return(NULL)
+  groups <- sort(unique(lty_vec))
+  labels <- vapply(groups, function(k) {
+    pos <- which(lty_vec == k)
+    ids <- sim_ids[pos]
+    if (length(ids) == 1L) paste0("Sim ", ids)
+    else                    paste0("Sim ", min(ids), "\u2013", max(ids))
+  }, character(1L))
+  # Representative colour: most opaque (last) sim in each group
+  rep_cols <- vapply(groups, function(k) {
+    col_sim[max(which(lty_vec == k))]
+  }, character(1L))
+  list(
+    text = labels,
+    lty  = groups,
+    lwd  = rep(lwd, length(groups)),
+    col  = rep_cols
+  )
 }
 
 #' Replace NA values in a vector with a specified replacement

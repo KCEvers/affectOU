@@ -20,7 +20,7 @@ stationary <- function(object, ...) {
 #' structure.
 #'
 #' A stationary distribution exists only when the system is stable
-#' (see [stability()][stability.affectOU()]). For non-stable systems,
+#' (see [`stability()`][stability.affectOU()]). For non-stable systems,
 #' the function returns `is_stable = FALSE` with `NULL` distribution
 #' properties.
 #'
@@ -69,9 +69,9 @@ stationary <- function(object, ...) {
 #'     \item{ndim}{Dimensionality of the process}
 #'   }
 #'
-#' @seealso [stability()][stability.affectOU()] for stability assessment,
-#'   [relaxation()][relaxation.affectOU()] for perturbation persistence,
-#'   [summary()][summary.affectOU()] for the full model summary
+#' @seealso [`stability()`][stability.affectOU()] for stability assessment,
+#'   [`relaxation()`][relaxation.affectOU()] for perturbation persistence,
+#'   [`summary()`][summary.affectOU()] for the full model summary.
 #'
 #' @export
 #' @examples
@@ -154,7 +154,7 @@ stationary.affectOU <- function(object, ...) {
 
 #' Print stationary distribution
 #'
-#' @param x A `stationary_affectOU` object from [stationary()][stationary.affectOU()]
+#' @param x A `stationary_affectOU` object from [`stationary()`][stationary.affectOU()]
 #' @param digits Number of digits to display
 #' @param ... Additional arguments (unused)
 #'
@@ -182,6 +182,16 @@ print.stationary_affectOU <- function(x, digits = 3, ...) {
   } else {
     cli::cli_text("Mean: [{paste(round(x$mean, digits), collapse = ', ')}]")
     cli::cli_text("SD: [{paste(round(x$sd, digits), collapse = ', ')}]")
+
+    cli::cli_text("")
+    cli::cli_text("95% intervals:")
+    cli::cli_ul()
+    for (i in seq_len(ndim)) {
+      lo <- round(x$mean[i] - 2 * x$sd[i], digits)
+      hi <- round(x$mean[i] + 2 * x$sd[i], digits)
+      cli::cli_li("Dim. {i}: [{lo}, {hi}]")
+    }
+    cli::cli_end()
 
     if (!is.null(x$cor)) {
       # Report off-diagonal correlations

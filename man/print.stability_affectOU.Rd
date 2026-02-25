@@ -7,7 +7,7 @@
 \method{print}{stability_affectOU}(x, digits = 3, ...)
 }
 \arguments{
-\item{x}{A \code{stability_affectOU} object from \link[=stability.affectOU]{stability()}}
+\item{x}{A \code{stability_affectOU} object from \code{\link[=stability.affectOU]{stability()}}}
 
 \item{digits}{Number of digits to display}
 

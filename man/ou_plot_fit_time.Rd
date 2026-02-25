@@ -6,7 +6,7 @@
 \usage{
 ou_plot_fit_time(
   fit,
-  palette = "Temps",
+  palette = "Dark 3",
   alpha = 0.5,
   main = "Observed and Fitted Trajectory",
   xlab = "Time",
@@ -28,7 +28,7 @@ ou_plot_fit_time(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"})}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }

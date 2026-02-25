@@ -1,9 +1,8 @@
 withr::with_seed(
   seed = 123,
   code = {
-    theta_2d <- matrix(c(0.7, 0, 0, 0.3), nrow = 2)
-    model <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
-    simpaper <- simulate(model, seed = 123)
+    model <- affectOU(ndim = 2, theta = 1, mu = 0, gamma = 1)
+    simpaper <- simulate(model)
     usethis::use_data(simpaper, overwrite = TRUE)
   },
   .rng_kind = "Mersenne-Twister",

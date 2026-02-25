@@ -7,7 +7,7 @@
 ou_plot_fit_acf(
   fit,
   lag.max = 30,
-  palette = "Temps",
+  palette = "Dark 3",
   main = "ACF of Residuals",
   xlab = "Lag",
   ylab = "ACF",

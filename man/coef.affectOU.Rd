@@ -24,5 +24,5 @@ model <- affectOU(ndim = 2)
 coef(model)
 }
 \seealso{
-\code{\link[=affectOU]{affectOU()}} to create an OU model and \link[=update.affectOU]{update()} to modify model parameters.
+Model parameters are explained in \code{\link[=affectOU]{affectOU()}} and can be modified using \code{\link[=update.affectOU]{update()}}.
 }

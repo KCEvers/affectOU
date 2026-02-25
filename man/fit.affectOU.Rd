@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit.R
 \name{fit.affectOU}
 \alias{fit.affectOU}
-\title{Fit Ornstein–Uhlenbeck model to data}
+\title{Fit Ornstein-Uhlenbeck model to data}
 \usage{
 \method{fit}{affectOU}(object, data, times = NULL, method = "mle", start = NULL, ...)
 }

@@ -10,8 +10,9 @@ ou_plot_phase(
   which_sim = NULL,
   share_xaxis = TRUE,
   share_yaxis = TRUE,
-  palette = "Temps",
+  palette = "Dark 3",
   col_theory = "grey30",
+  lwd = ifelse(x[["nsim"]] > 1, 1, 1.25),
   alpha = 1,
   main = "Phase Portrait",
   sub = paste("Dimension", if (is.null(which_dim)) {
@@ -41,6 +42,8 @@ ou_plot_phase(
 
 \item{col_theory}{Color for theoretical relationship line}
 
+\item{lwd}{Line width}
+
 \item{alpha}{Alpha transparency for colors (0 = transparent, 1 = opaque)}
 
 \item{main}{Main title}
@@ -51,7 +54,7 @@ ou_plot_phase(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"})}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }

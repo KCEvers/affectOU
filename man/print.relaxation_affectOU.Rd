@@ -7,7 +7,7 @@
 \method{print}{relaxation_affectOU}(x, digits = 3, ...)
 }
 \arguments{
-\item{x}{A \code{relaxation_affectOU} object from \link[=relaxation.affectOU]{relaxation()}}
+\item{x}{A \code{relaxation_affectOU} object from \code{\link[=relaxation.affectOU]{relaxation()}}}
 
 \item{digits}{Number of digits to display}
 

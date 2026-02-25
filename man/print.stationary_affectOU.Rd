@@ -7,7 +7,7 @@
 \method{print}{stationary_affectOU}(x, digits = 3, ...)
 }
 \arguments{
-\item{x}{A \code{stationary_affectOU} object from \link[=stationary.affectOU]{stationary()}}
+\item{x}{A \code{stationary_affectOU} object from \code{\link[=stationary.affectOU]{stationary()}}}
 
 \item{digits}{Number of digits to display}
 

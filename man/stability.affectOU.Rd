@@ -2,7 +2,7 @@
 % Please edit documentation in R/stability.R
 \name{stability.affectOU}
 \alias{stability.affectOU}
-\title{Assess stability of an Ornstein-Uhlenbeck model}
+\title{Assess stability for Ornstein-Uhlenbeck model}
 \usage{
 \method{stability}{affectOU}(object, tol = 1e-10, ...)
 }
@@ -91,7 +91,6 @@ stability(model_rw)
 
 # Positive diagonals with oscillatory coupling: stable
 theta_osc <- matrix(c(0.5, -0.4, 0.4, 0.5), nrow = 2)
-eigen(theta_osc)$values # complex with positive real part
 stability(affectOU(theta = theta_osc, mu = 0, gamma = 1))
 
 # Strong coupling still stable if real parts stay positive
@@ -104,11 +103,11 @@ stability(affectOU(theta = theta_destab, mu = 0, gamma = 1))
 
 # One negative diagonal element makes the system non-stationary
 theta_unstable <- matrix(c(0.5, 0, 0, -0.3), nrow = 2)
-stability(affectOU(theta = theta_unstable, mu = 0, gamma = 1))$is_stable
+stability(affectOU(theta = theta_unstable, mu = 0, gamma = 1))
 
 }
 \seealso{
-\link[=stationary.affectOU]{stationary()} for the equilibrium
-distribution, \link[=relaxation.affectOU]{relaxation()} for perturbation
-persistence, \link[=summary.affectOU]{summary()} for the full model summary
+\code{\link[=stationary.affectOU]{stationary()}} for the equilibrium
+distribution, \code{\link[=relaxation.affectOU]{relaxation()}} for perturbation
+persistence, \code{\link[=summary.affectOU]{summary()}} for the full model summary.
 }
