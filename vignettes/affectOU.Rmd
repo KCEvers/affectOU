@@ -311,6 +311,7 @@ fitted
 
 
 ```{r plot-fit-residuals}
+#| fig.alt = "Visualization of the residuals left in the data after fitting the OU to them as a typical diagonistic plot used for linear regression models."
 # Residuals over time
 plot(fitted, type = "residuals")
 ```
