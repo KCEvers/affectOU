@@ -20,8 +20,8 @@ unidimensional process for simplicity):
   - **θ (theta): emotion regulation capacity**
     
     Governs the rate at which affect returns to baseline. Low θ
-    indicates *emotional inertia* or *rumination*; high θ indicates
-    rapid regulation.
+    indicates emotional inertia or rumination; high θ indicates rapid
+    regulation.
 
   - **μ (mu): affective set point**
     

@@ -27,7 +27,7 @@ The aim of `affectOU` is to provide tools for simulating and analyzing the Ornst
 
 - **θ (theta): emotion regulation capacity**  
 
-  Governs the rate at which affect returns to baseline. Low θ indicates *emotional inertia* or *rumination*; high θ indicates rapid regulation.
+  Governs the rate at which affect returns to baseline. Low θ indicates emotional inertia or rumination; high θ indicates rapid regulation.
 
 - **μ (mu): affective set point**  
 

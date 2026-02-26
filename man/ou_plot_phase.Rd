@@ -59,7 +59,7 @@ ou_plot_phase(
 \item{...}{Additional graphical parameters}
 }
 \value{
-NULL (invisibly), called for side effects only
+\code{NULL} (invisibly), called for side effects only.
 }
 \description{
 Visualise the phase portrait of an OU affect simulation. In the case of a 1D

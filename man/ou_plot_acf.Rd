@@ -60,7 +60,7 @@ ou_plot_acf(
 \item{...}{Additional graphical parameters}
 }
 \value{
-NULL (invisibly)
+\code{NULL} (invisibly), called for side effects only.
 }
 \description{
 Visualise the empirical and theoretical autocorrelation functions (ACF) and

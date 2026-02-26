@@ -13,5 +13,5 @@
 #'   \item \eqn{\mathbf{W}_t} is a two-dimensional Wiener process
 #' }
 #'
-#' @format An object of class `simulate_affectOU` containing simulated trajectories from the specified Ornstein-Uhlenbeck process.
+#' @format An object of class [`simulate_affectOU`][simulate.affectOU()] containing simulated trajectories from the specified Ornstein-Uhlenbeck process.
 "simpaper"

@@ -61,11 +61,11 @@ model
 
 ### Multidimensional Models
 
-The OU framework extends naturally to multiple affect dimensions (e.g., valence and arousal). For a d-dimensional process:
+The OU framework extends naturally to model multiple affect dimensions (e.g., valence and arousal). For a d-dimensional process:
 
 $$d\mathbf{X}(t) = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} \, d\mathbf{W}(t)$$
 
-The default is a 2D model with uncoupled dynamics (diagonal $\mathbf{\Theta}$ and $\mathbf{\Gamma}$) and identical parameters across dimensions:
+By default, `affectOU()` creates a model with uncoupled dynamics (diagonal $\mathbf{\Theta}$ and $\mathbf{\Gamma}$) and identical parameters across dimensions:
 
 ```{r create-2d-default}
 model_2d <- affectOU(ndim = 2)

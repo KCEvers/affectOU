@@ -14,7 +14,7 @@
 \item{...}{Additional parameters passed to specific plotting functions}
 }
 \value{
-NULL (invisibly), called for side effects only
+\code{NULL} (invisibly), called for side effects only.
 }
 \description{
 Visualise an Ornstein-Uhlenbeck affect simulation using different types of plots. See specific plotting functions for allowed arguments and details.
@@ -39,4 +39,13 @@ plot(sim, type = "histogram")
 plot(sim, type = "acf")
 plot(sim, type = "phase")
 
+}
+\seealso{
+Detailed documentation for each plot type:
+\itemize{
+\item \code{\link[=ou_plot_time]{ou_plot_time()}} — time series with attractor line
+\item \code{\link[=ou_plot_histogram]{ou_plot_histogram()}} — distribution with theoretical overlay
+\item \code{\link[=ou_plot_acf]{ou_plot_acf()}} — empirical vs. theoretical autocorrelation
+\item \code{\link[=ou_plot_phase]{ou_plot_phase()}} — phase portrait with mean reversion line
+}
 }

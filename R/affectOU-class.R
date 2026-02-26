@@ -60,8 +60,7 @@
 #'
 #' @return
 #' An object of class [`affectOU`], representing a univariate or multivariate
-#' Ornstein–Uhlenbeck affect regulation model.
-#' The object is a list with the following components:
+#' Ornstein–Uhlenbeck affect regulation model. The object is a list with the following components:
 #'
 #' \describe{
 #'
@@ -85,10 +84,14 @@
 #'
 #' }
 #'
-#' @seealso The returned object can be inspected with [`print()`][print.affectOU()], [`summary()`][summary.affectOU()],
-#' [`stability()`][stability.affectOU()], [`stationary()`][stationary.affectOU()], and
-#' [`coef()`][coef.affectOU()], can be simulated over time with [`simulate()`][simulate.affectOU()], and fitted to univariate data
-#' with [`fit()`][fit.affectOU()].
+#' @seealso
+#' * [simulate.affectOU()] to generate trajectories.
+#' * [plot.simulate_affectOU()] to visualize simulations
+#'   (`type = "time"`, `"histogram"`, `"acf"`, `"phase"`).
+#' * [summary.affectOU()] for stability, stationary distribution, and
+#'   relaxation time.
+#' * [fit.affectOU()] to estimate parameters from observed data.
+#' * [update.affectOU()] to modify parameters without recreating the model.
 #'
 #' @export
 #'
@@ -123,7 +126,7 @@
 #'
 #' # Simulate trajectory
 #' sim_3d <- simulate(model_3d, stop = 100, save_at = 0.1)
-#' plot(sim_3d, by_dim = FALSE)
+#' plot(sim_3d)
 #'
 affectOU <- function(ndim = 1,
                      theta = 0.5,

@@ -40,8 +40,7 @@ For 1D: scalar. For multidimensional: vector. Defaults to \code{mu}.}
 }
 \value{
 An object of class \code{\link{affectOU}}, representing a univariate or multivariate
-Ornstein–Uhlenbeck affect regulation model.
-The object is a list with the following components:
+Ornstein–Uhlenbeck affect regulation model. The object is a list with the following components:
 
 \describe{
 
@@ -134,7 +133,7 @@ summary(model_3d)
 
 # Simulate trajectory
 sim_3d <- simulate(model_3d, stop = 100, save_at = 0.1)
-plot(sim_3d, by_dim = FALSE)
+plot(sim_3d)
 
 }
 \references{
@@ -143,8 +142,13 @@ A hierarchical latent stochastic differential equation model for
 affective dynamics. Psychological Methods, 16(4), 468-490.
 }
 \seealso{
-The returned object can be inspected with \code{\link[=print.affectOU]{print()}}, \code{\link[=summary.affectOU]{summary()}},
-\code{\link[=stability.affectOU]{stability()}}, \code{\link[=stationary.affectOU]{stationary()}}, and
-\code{\link[=coef.affectOU]{coef()}}, can be simulated over time with \code{\link[=simulate.affectOU]{simulate()}}, and fitted to univariate data
-with \code{\link[=fit.affectOU]{fit()}}.
+\itemize{
+\item \code{\link[=simulate.affectOU]{simulate.affectOU()}} to generate trajectories.
+\item \code{\link[=plot.simulate_affectOU]{plot.simulate_affectOU()}} to visualize simulations
+(\code{type = "time"}, \code{"histogram"}, \code{"acf"}, \code{"phase"}).
+\item \code{\link[=summary.affectOU]{summary.affectOU()}} for stability, stationary distribution, and
+relaxation time.
+\item \code{\link[=fit.affectOU]{fit.affectOU()}} to estimate parameters from observed data.
+\item \code{\link[=update.affectOU]{update.affectOU()}} to modify parameters without recreating the model.
+}
 }
