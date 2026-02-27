@@ -4,84 +4,102 @@
 \alias{relaxation.affectOU}
 \title{Compute relaxation time for Ornstein-Uhlenbeck model}
 \usage{
-\method{relaxation}{affectOU}(
-  object,
-  which_dim = NULL,
-  method = c("auto", "analytic", "numeric"),
-  ...
-)
+\method{relaxation}{affectOU}(object, ...)
 }
 \arguments{
 \item{object}{An \code{affectOU} model object.}
 
-\item{which_dim}{Dimension index or indices to compute relaxation time for.
-Default is \code{NULL}, which computes it for all dimensions.}
-
-\item{method}{Method to compute relaxation time: \code{"analytic"} (uses
-\eqn{1/\theta_{ii}}, only valid for diagonal theta), \code{"numeric"} (finds
-root of \eqn{\mathrm{ACF} - 1/e}), or \code{"auto"} (uses analytic if theta
-is diagonal, otherwise numeric).  Default is \code{"auto"}.}
-
 \item{...}{Additional arguments (unused).}
 }
 \value{
-An object of class \code{relaxation_affectOU}.
-
-If a single dimension is requested, a list with:
-\item{relaxation_time}{The relaxation time \eqn{\tau} (\code{NA} if dimension
-is not stable)}
-\item{half_life}{The half-life \eqn{t_{1/2}} (\code{NA} if dimension is not
-stable)}
-\item{dimension}{The dimension index}
-\item{method}{Method used (\code{"analytic"}, \code{"numeric"}, or \code{NA})}
-\item{theta_ii}{Diagonal element of theta for this dimension}
-\item{ndim}{Dimensionality of the process}
-
-If multiple dimensions are requested, a data frame with columns:
-\code{dimension}, \code{relaxation_time}, \code{half_life}, \code{theta_ii}, \code{method}, \code{ndim}.
+A data frame of class \code{relaxation_affectOU} with one row per
+eigenmode.  Complex conjugate pairs are collapsed to a single oscillatory
+mode.  Columns:
+\describe{
+\item{\code{mode}}{Integer mode index}
+\item{\code{relaxation_time}}{Relaxation time \eqn{\tau_k = 1/\mathrm{Re}(\lambda_k)},
+or \code{NA} if \eqn{\mathrm{Re}(\lambda_k) \le 0} (unstable mode)}
+\item{\code{half_life}}{Half-life \eqn{t_{1/2} = \ln 2 \cdot \tau_k}, or \code{NA}}
+\item{\code{oscillation_period}}{Period \eqn{T_k = 2\pi/|\mathrm{Im}(\lambda_k)|}
+for oscillatory modes, \code{NA} for real eigenvalues}
+\item{\code{eigenvalue_re}}{Real part of eigenvalue \eqn{\mathrm{Re}(\lambda_k)}}
+\item{\code{eigenvalue_im}}{Imaginary part magnitude \eqn{|\mathrm{Im}(\lambda_k)|}
+(0 for real eigenvalues)}
+\item{\code{is_oscillatory}}{\code{TRUE} for complex eigenvalue pairs}
+}
+Attributes:
+\describe{
+\item{\code{tau_max}}{Slowest mode: \eqn{1/\min_k \mathrm{Re}(\lambda_k)} over
+stable modes}
+\item{\code{tau_min}}{Fastest mode: \eqn{1/\max_k \mathrm{Re}(\lambda_k)} over
+stable modes}
+\item{\code{half_life_max}}{\eqn{\ln 2 \cdot \tau_{\max}}}
+\item{\code{half_life_min}}{\eqn{\ln 2 \cdot \tau_{\min}}}
+\item{\code{ndim}}{Dimensionality of the process}
+}
 }
 \description{
-The relaxation time \eqn{\tau = 1/\theta_{ii}} is the characteristic time
-scale of an OU process.  It measures how quickly the process "forgets" its
-current state and returns toward equilibrium. The half-life
-\eqn{t_{1/2} = \ln 2 \cdot \tau} is reported alongside. Relaxation time is only defined for stable dimensions
-(\eqn{\theta_{ii} > 0}). Dimensions with \eqn{\theta_{ii} \le 0}
-(random walk or unstable node) return \code{NA}.
+The relaxation time \eqn{\tau_k = 1/\mathrm{Re}(\lambda_k)} is the
+characteristic time scale of eigenmode \eqn{k} of the OU process.  It
+measures how quickly deviations from equilibrium decay.  For oscillatory
+modes (complex eigenvalues) the oscillation period
+\eqn{T_k = 2\pi / |\mathrm{Im}(\lambda_k)|} is also reported alongside.
 }
 \section{Exponential decay}{
 
-Starting from \eqn{x_0}, the expected trajectory of the 1D OU process is:
+For a stable 1D OU process starting from \eqn{x_0}, the expected trajectory
+is:
 \deqn{E[X(t)] = \mu + (x_0 - \mu)\,e^{-\theta t}}
-The deviation from baseline decays exponentially.  The relaxation time is
-the point at which the fraction \eqn{1/e \approx 36.8\%} of the initial
-deviation remains:
+The deviation from baseline decays exponentially.  The relaxation time
+(also called \emph{decorrelation time}) is the e-folding time:
 \deqn{\tau = \frac{1}{\theta}}
-The half-life is the point at which 50\\% remains:
-\deqn{t_{1/2} = \ln 2 \cdot \tau = \frac{\ln 2}{\theta}
-  \approx \frac{0.693}{\theta}}
+At lag \eqn{\tau}, the autocorrelation function \eqn{\mathrm{ACF}(\tau) =
+e^{-\theta\tau} = 1/e \approx 0.368}, which is exactly the decorrelation
+time.  The half-life is the lag at which 50\\% remains:
+\deqn{t_{1/2} = \ln 2 \cdot \tau = \frac{\ln 2}{\theta} \approx
+  \frac{0.693}{\theta}}
 }
 
-\section{Multivariate relaxation time}{
+\section{Eigenvalue-based relaxation time (multivariate)}{
 
-For diagonal \eqn{\Theta} (uncoupled dimensions), each dimension has its
-own analytic relaxation time \eqn{1/\theta_{ii}}.
+For a multivariate OU process, the expected trajectory from perturbation
+\eqn{x_0} is:
+\deqn{E[X(t) \mid X(0) = x_0] = \mu + e^{-\Theta t}(x_0 - \mu)}
+where \eqn{e^{-\Theta t}} is the matrix exponential.  Via the
+eigendecomposition \eqn{\Theta = P \Lambda P^{-1}}:
+\deqn{e^{-\Theta t} = P\,\mathrm{diag}(e^{-\lambda_1 t},\ldots,
+  e^{-\lambda_n t})\,P^{-1}}
 
-For non-diagonal \eqn{\Theta}, coupling between dimensions
-alters the effective relaxation rate. The relaxation time is then computed
-numerically by finding when the theoretical autocorrelation function
-crosses \eqn{1/e} (and \eqn{0.5} for the half-life). Coupling can either
-speed up or slow down relaxation compared to the uncoupled case.
+Each eigenmode \eqn{k} decays with time constant
+\eqn{\tau_k = 1/\mathrm{Re}(\lambda_k)} (defined only when
+\eqn{\mathrm{Re}(\lambda_k) > 0}).  Key summary timescales:
+\itemize{
+\item \strong{Slowest mode}: \eqn{\tau_{\max} = 1/\min_k
+    \mathrm{Re}(\lambda_k)} — dominates long-lag behaviour and is often
+the most psychologically interpretable timescale (emotional inertia).
+\item \strong{Fastest mode}: \eqn{\tau_{\min} = 1/\max_k
+    \mathrm{Re}(\lambda_k)} — governs the fastest transient dynamics.
+}
 }
 
-\section{Role of the diffusion parameter}{
+\section{Decorrelation time}{
 
-For uncoupled systems (diagonal \eqn{\Theta}), \eqn{\gamma} affects only the amplitude of
-fluctuations (the stationary variance), not the relaxation time scale.
-In the ACF \eqn{e^{-\theta_{ii}\tau}}, the stationary variance cancels.
+The relaxation time \eqn{\tau = 1/\mathrm{Re}(\lambda)} is also the
+\emph{decorrelation time}: the e-folding lag of the autocorrelation
+function.  For the 1D case, \eqn{\mathrm{ACF}(\tau) = e^{-\theta\tau} =
+1/e} exactly.  For coupled multivariate systems, the long-lag ACF of every
+dimension is dominated by the slowest eigenmode, so \eqn{\tau_{\max} =
+1/\mathrm{Re}(\lambda_{\min})} is the system-level decorrelation time.
+}
 
-For coupled systems, \eqn{\gamma} does influence the relaxation time
-because the stationary covariance \eqn{\Sigma_\infty} (which depends on
-\eqn{\Sigma}) enters the matrix-exponential ACF and no longer cancels.
+\section{Oscillatory modes (stable spiral)}{
+
+When \eqn{\Theta} has complex eigenvalues \eqn{\lambda_k = a \pm bi}
+(\eqn{a > 0}), the corresponding mode produces \emph{damped oscillations}:
+the perturbation decays with envelope time constant \eqn{\tau_k = 1/a}
+while oscillating with period \eqn{T_k = 2\pi/b}.  Conjugate pairs share
+the same \eqn{\tau_k} and \eqn{T_k} and are reported as a single
+oscillatory mode.
 }
 
 \examples{
@@ -89,21 +107,22 @@ because the stationary covariance \eqn{\Sigma_\infty} (which depends on
 model <- affectOU(theta = 0.5)
 relaxation(model)
 
-# 1D random walk
+# 1D random walk (no relaxation)
 model_rw <- affectOU(theta = 0)
 relaxation(model_rw)
 
-# 2D mixed: one stable node, one unstable node
-model_mixed <- affectOU(theta = diag(c(0.5, -0.3)))
-relaxation(model_mixed)$relaxation_time
+# 2D diagonal: two independent modes
+model_diag <- affectOU(theta = diag(c(0.5, 0.2)), mu = 0, gamma = 1)
+relaxation(model_diag)
 
-# Diagonal vs coupled: coupling changes relaxation times
-model_uncoupled <- affectOU(theta = diag(c(0.5, 0.2)), mu = 0, gamma = 1)
-relaxation(model_uncoupled)$relaxation_time
+# 2D stable spiral: one oscillatory mode
+theta_sp <- matrix(c(0.5, -0.4, 0.4, 0.5), nrow = 2)
+model_sp <- affectOU(theta = theta_sp, mu = 0, gamma = 1)
+relaxation(model_sp)
 
-theta_coupled <- matrix(c(0.5, 0.0, 0.3, 0.5), nrow = 2, byrow = TRUE)
-model_coupled <- update(model_uncoupled, theta = theta_coupled)
-relaxation(model_coupled)$relaxation_time
+# 2D mixed stability: one stable, one unstable mode
+model_mixed <- suppressWarnings(affectOU(theta = diag(c(0.5, -0.3))))
+relaxation(model_mixed)
 
 }
 \seealso{

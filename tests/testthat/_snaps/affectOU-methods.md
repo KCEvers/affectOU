@@ -228,7 +228,6 @@
       
       Mean: 0
       SD: 1
-      Half-life: 1.386
       Relaxation time (τ): 2
 
 # print.summary_affectOU snapshot (1D) [ansi]
@@ -247,7 +246,6 @@
       
       Mean: 0
       SD: 1
-      Half-life: 1.386
       Relaxation time (τ): 2
 
 # print.summary_affectOU snapshot (2D) [plain]
@@ -266,8 +264,7 @@
       
       Mean: [0, 0]
       SD: [1, 1.291]
-      Half-life: [1.386, 2.31]
-      Relaxation time (τ): [2, 3.333]
+      Relaxation time (τ): slowest = 3.333, fastest = 2
       
       -- Structure --
       
@@ -290,8 +287,7 @@
       
       Mean: [0, 0]
       SD: [1, 1.291]
-      Half-life: [1.386, 2.31]
-      Relaxation time (τ): [2, 3.333]
+      Relaxation time (τ): slowest = 3.333, fastest = 2
       
       -- [1m[1mStructure[1m[22m --
       
@@ -314,8 +310,7 @@
       
       Mean: [0, 0]
       SD: [1.035, 1.336]
-      Half-life: [1.527, 2.528]
-      Relaxation time (τ): [2.234, 3.673]
+      Relaxation time (τ): slowest = 3.867, fastest = 1.847
       
       -- Structure --
       
@@ -338,8 +333,7 @@
       
       Mean: [0, 0]
       SD: [1.035, 1.336]
-      Half-life: [1.527, 2.528]
-      Relaxation time (τ): [2.234, 3.673]
+      Relaxation time (τ): slowest = 3.867, fastest = 1.847
       
       -- [1m[1mStructure[1m[22m --
       

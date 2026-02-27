@@ -94,8 +94,8 @@ sim <- simulate(model, nsim = 1)
 ou_plot_histogram(sim, by_dim = TRUE)
 
 # Same stationary SD, different dynamics
-m1 <- affectOU(theta = 0.5, mu = 0, gamma = 1) # SD = 1, half-life = 1.4
-m2 <- affectOU(theta = 2.0, mu = 0, gamma = 2) # SD = 1, half-life = 0.35
+m1 <- affectOU(theta = 0.5, mu = 0, gamma = 1) # SD = 1
+m2 <- affectOU(theta = 2.0, mu = 0, gamma = 2) # SD = 1
 s1 <- simulate(m1, stop = 100)
 s2 <- simulate(m2, stop = 100)
 ou_plot_histogram(s1, main = "Slow regulation")

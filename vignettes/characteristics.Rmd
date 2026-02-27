@@ -260,7 +260,7 @@ plot(sim_2d, main = "Shared Noise Sources", xlim = c(0, 20))
 | Feature | Parameter | Effect |
 |------------|-----------|--------|
 | Mean reversion | $\theta$ | Rate of return to baseline |
-| Perturbation persistence | $\theta$ | Half-life of perturbations |
+| Perturbation persistence | $\theta$ | Relaxation time of perturbations |
 | Reactivity | $\gamma$ | Magnitude of fluctuations |
 | Stability | sign($\theta$) / eigenvalues of $\mathbf{\Theta}$ | Stationary vs divergent |
 | Cross-coupling | off-diagonal $\mathbf{\Theta}$ | Interdimensional dynamics |

@@ -333,8 +333,8 @@ ou_plot_time <- function(x,
 #' ou_plot_histogram(sim, by_dim = TRUE)
 #'
 #' # Same stationary SD, different dynamics
-#' m1 <- affectOU(theta = 0.5, mu = 0, gamma = 1) # SD = 1, half-life = 1.4
-#' m2 <- affectOU(theta = 2.0, mu = 0, gamma = 2) # SD = 1, half-life = 0.35
+#' m1 <- affectOU(theta = 0.5, mu = 0, gamma = 1) # SD = 1
+#' m2 <- affectOU(theta = 2.0, mu = 0, gamma = 2) # SD = 1
 #' s1 <- simulate(m1, stop = 100)
 #' s2 <- simulate(m2, stop = 100)
 #' ou_plot_histogram(s1, main = "Slow regulation")
@@ -607,8 +607,7 @@ ou_plot_histogram <- function(x,
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.01)
 #' ou_plot_acf(sim, lag.max = 5)
-#' abline(v = log(2) / 0.5, col = "red", lty = 2) # half-life
-#' abline(h = 0.5, col = "red", lty = 2)
+#' 
 ou_plot_acf <- function(x,
                         lag.max = 10,
                         which_dim = NULL,
