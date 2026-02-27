@@ -52,8 +52,8 @@ An object of class `summary_affectOU` containing:
 - coupling:
 
   Coupling structure: `NA` for 1D, `NULL` if uncoupled, or data frame
-  with columns `from`, `to`, `value`, `sign` showing cross-regulation
-  between dimensions
+  with columns `from`, `to`, `value`, `sign` showing coupling between
+  dimensions
 
 - noise_structure:
 
@@ -91,7 +91,6 @@ summary(model)
 #> 
 #> Mean: 0
 #> SD: 1
-#> Half-life: 1.386
 #> Relaxation time (τ): 2
 
 # --- Accessing summary components ---
@@ -116,8 +115,7 @@ summary(model_2d)
 #> 
 #> Mean: [0, 0]
 #> SD: [1, 1.086]
-#> Half-life: [1.386, 1.619]
-#> Relaxation time (τ): [2, 2.327]
+#> Relaxation time (τ): slowest = 2, fastest = 2
 #> 
 #> ── Structure ──
 #> 

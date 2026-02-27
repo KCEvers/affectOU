@@ -27,7 +27,7 @@ Euler-Maruyama discretization. Handles both univariate and multivariate models."
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/characteristics.html">Affect Characteristics Implied by the OU Process</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -57,6 +57,7 @@ Euler-Maruyama discretization. Handles both univariate and multivariate models.<
 <span>  <span class="va">object</span>,</span>
 <span>  nsim <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  initial_state <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dt <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>  stop <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  save_at <span class="op">=</span> <span class="va">dt</span>,</span>
@@ -78,6 +79,10 @@ Euler-Maruyama discretization. Handles both univariate and multivariate models.<
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
 <dd><p>Random seed for reproducibility.</p></dd>
+
+
+<dt id="arg-initial-state">initial_state<a class="anchor" aria-label="anchor" href="#arg-initial-state"></a></dt>
+<dd><p>Optional initial state vector. If <code>NULL</code>, defaults to a draw from the stationary distribution (if stable) or the attractor location <code>mu</code> (if non-stable).</p></dd>
 
 
 <dt id="arg-dt">dt<a class="anchor" aria-label="anchor" href="#arg-dt"></a></dt>
@@ -144,18 +149,18 @@ Euler-Maruyama discretization. Handles both univariate and multivariate models.<
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mean:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               dim1  dim2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulated   -0.068 0.186</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulated   -0.074 0.191</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Theoretical  0.000 0.000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> SD:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              dim1  dim2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulated   0.952 0.878</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulated   0.952 0.885</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Theoretical 1.000 1.000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Covariance (simulated):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>        [,1]   [,2]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]  0.906 -0.056</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [2,] -0.056  0.772</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]  0.907 -0.060</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [2,] -0.060  0.783</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Covariance (theoretical):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
@@ -164,21 +169,32 @@ Euler-Maruyama discretization. Handles both univariate and multivariate models.<
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Correlation (simulated):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>        [,1]   [,2]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]  1.000 -0.067</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [2,] -0.067  1.000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]  1.000 -0.072</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [2,] -0.072  1.000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Correlation (theoretical):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]    1    0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [2,]    0    1</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   time dim sim       value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00   1   1  0.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.01   1   1 -0.06688561</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.02   1   1 -0.01439262</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.03   1   1  0.01589790</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.04   1   1  0.12343404</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05   1   1  0.14706889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   time dim sim      value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00   1   1 -0.4246360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.01   1   1 -0.4696035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.02   1   1 -0.5082374</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.03   1   1 -0.4489465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.04   1   1 -0.5492815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05   1   1 -0.4983117</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Specify initial state</span></span></span>
+<span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="simulate.affectOU-2.svg" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Simulate for a longer time with coarser saving interval</span></span></span>
+<span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, stop <span class="op">=</span> <span class="fl">500</span>, save_at <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="simulate.affectOU-3.svg" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

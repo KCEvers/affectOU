@@ -12,8 +12,7 @@ affectOU(
   theta = 0.5,
   mu = 0,
   gamma = 1,
-  sigma = gamma %*% t(gamma),
-  initial_state = mu
+  sigma = gamma %*% t(gamma)
 )
 ```
 
@@ -54,11 +53,6 @@ affectOU(
   not both. If `sigma` is specified, `gamma` is computed via Cholesky
   decomposition.
 
-- initial_state:
-
-  Starting value of affect. For 1D: scalar. For multidimensional:
-  vector. Defaults to `mu`.
-
 ## Value
 
 An object of class `affectOU`, representing a univariate or multivariate
@@ -85,9 +79,12 @@ the following components:
 
   :   Numeric matrix.
 
-- `initial_state`:
+- `stationary`:
 
-  Numeric vector.
+  A named list with the stationary distribution properties, precomputed
+  at construction: `is_stable` (logical), `mean` (numeric vector, always
+  `mu`), `sd` (numeric vector or `NULL` if unstable), `cov` (matrix or
+  `NULL`), `cor` (matrix or `NULL`), `ndim` (integer).
 
 - `ndim`:
 
@@ -124,14 +121,14 @@ column \\j\\) represents the influence of dimension \\j\\ on dimension
 
 - Diagonal elements \\\Theta\_{ii}\\: self-regulation (how fast
   dimension \\i\\ returns to its own attractor \\\mu_i\\). Positive
-  values are necessary for self-regulation, but strong cross-regulation
-  can override this and destabilise the system (see
+  values are necessary for self-regulation, but strong coupling between
+  dimensions can override this and destabilise the system (see
   [`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
   for system-level stability checks).
 
-- Off-diagonal elements \\\Theta\_{ij}\\ where \\i \neq j\\:
-  cross-regulation (how dimension \\j\\ influences dimension \\i\\). If
-  \\\Theta\_{ij} \> 0\\, dimension \\j\\ below its attractor has a
+- Off-diagonal elements \\\Theta\_{ij}\\ where \\i \neq j\\: coupling
+  between dimensions (how dimension \\j\\ influences dimension \\i\\).
+  If \\\Theta\_{ij} \> 0\\, dimension \\j\\ below its attractor has a
   positive influence on dimension \\i\\ (pulls it up); if \\\Theta\_{ij}
   \< 0\\, dimension \\j\\ below its attractor has a negative influence
   on dimension \\i\\ (pushes it down).
@@ -144,17 +141,21 @@ Psychological Methods, 16(4), 468-490.
 
 ## See also
 
-The returned object can be inspected with
-[`print()`](https://kcevers.github.io/affectOU/reference/print.affectOU.md),
-[`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md),
-[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md),
-[`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md),
-and
-[`coef()`](https://kcevers.github.io/affectOU/reference/coef.affectOU.md),
-can be simulated over time with
-[`simulate()`](https://kcevers.github.io/affectOU/reference/simulate.affectOU.md),
-and fitted to univariate data with
-[`fit()`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md).
+- [`simulate.affectOU()`](https://kcevers.github.io/affectOU/reference/simulate.affectOU.md)
+  to generate trajectories.
+
+- [`plot.simulate_affectOU()`](https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.md)
+  to visualize simulations (`type = "time"`, `"histogram"`, `"acf"`,
+  `"phase"`).
+
+- [`summary.affectOU()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
+  for stability, stationary distribution, and relaxation time.
+
+- [`fit.affectOU()`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md)
+  to estimate parameters from observed data.
+
+- [`update.affectOU()`](https://kcevers.github.io/affectOU/reference/update.affectOU.md)
+  to modify parameters without recreating the model.
 
 ## Examples
 
@@ -173,7 +174,6 @@ summary(model_1d)
 #> 
 #> Mean: 0
 #> SD: 1
-#> Half-life: 1.386
 #> Relaxation time (τ): 2
 coef(model_1d)
 #> $theta
@@ -206,8 +206,7 @@ summary(model_2d)
 #> 
 #> Mean: [0, 0]
 #> SD: [1, 1.291]
-#> Half-life: [1.386, 2.31]
-#> Relaxation time (τ): [2, 3.333]
+#> Relaxation time (τ): slowest = 3.333, fastest = 2
 #> 
 #> ── Structure ──
 #> 
@@ -241,8 +240,7 @@ summary(model_3d)
 #> 
 #> Mean: [0, 0, 0]
 #> SD: [1.036, 1.351, 1.131]
-#> Half-life: [1.53, 2.605, 1.788]
-#> Relaxation time (τ): [2.24, 3.796, 2.59]
+#> Relaxation time (τ): slowest = 4.086, fastest = 1.838
 #> 
 #> ── Structure ──
 #> 
@@ -252,6 +250,6 @@ summary(model_3d)
 
 # Simulate trajectory
 sim_3d <- simulate(model_3d, stop = 100, save_at = 0.1)
-plot(sim_3d, by_dim = FALSE)
+plot(sim_3d)
 
 ```

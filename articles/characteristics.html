@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Affect Characteristics Implied by the OU Process • affectOU</title>
+<title>Affect characteristics implied by the OU Process • affectOU</title>
 <!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
   window.MathJax = {
     chtml: {
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Affect Characteristics Implied by the OU Process">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Affect characteristics implied by the OU Process">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -40,7 +40,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/characteristics.html">Affect Characteristics Implied by the OU Process</a></li>
+<li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
   </ul>
 </li>
       </ul>
@@ -62,7 +62,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Affect Characteristics Implied by the OU Process</h1>
+      <h1>Affect characteristics implied by the OU Process</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/KCEvers/affectOU/blob/main/vignettes/characteristics.Rmd" class="external-link"><code>vignettes/characteristics.Rmd</code></a></small>
@@ -89,10 +89,9 @@ indicates emotional inertia.</p>
 <details><summary>
 Show code
 </summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>, initial_state <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, seed <span class="op">=</span> <span class="fl">123</span>, stop <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, seed <span class="op">=</span> <span class="fl">123</span>, stop <span class="op">=</span> <span class="fl">20</span>, initial_state <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>,</span>
-<span>  by_dim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  main <span class="op">=</span> <span class="st">"Mean Reversion Depends on θ"</span>,</span>
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Fast Regulation (θ = 5.0)"</span>, <span class="st">"Slow Regulation (θ = 0.5)"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -111,8 +110,8 @@ point. Effects decay exponentially: at two <span class="math inline">\(\tau\)</s
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Relaxation time of 1D Ornstein-Uhlenbeck Model</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Half-life (t₁/₂): 1.386 time units</span></span>
 <span><span class="co">#&gt; Relaxation time (τ): 2 time units</span></span>
+<span><span class="co">#&gt; Half-life (t₁/₂): 1.386 time units</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Time for perturbation to decay to:</span></span>
 <span><span class="co">#&gt;      50%     37%     14%      5%      1%</span></span>
@@ -142,7 +141,6 @@ Show code
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, seed <span class="op">=</span> <span class="fl">456</span>, stop <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>,</span>
-<span>  by_dim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low Reactivity (γ = 0.3)"</span>, <span class="st">"High Reactivity (γ = 1.5)"</span><span class="op">)</span>,</span>
 <span>  main <span class="op">=</span> <span class="st">"Effect of Reactivity on Fluctuation Magnitude"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -176,8 +174,10 @@ Show code
 </summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.01</span>, <span class="op">-</span><span class="fl">0.3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, stop <span class="op">=</span> <span class="fl">100</span>, seed <span class="op">=</span> <span class="fl">43</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">!</span> System is not stable; no stationary distribution exists.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Defaulting `initial_state` to <span style="color: #00BB00;">mu</span>.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>,</span>
-<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, by_dim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span>  main <span class="op">=</span> <span class="st">"Affect Dynamics of Different Stability Regimes"</span>,</span>
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"θ &gt; 0 (stable)"</span>, <span class="st">"θ ≈ 0 (random walk)"</span>, <span class="st">"θ &lt; 0 (unstable)"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -221,12 +221,12 @@ Show code
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seed</span> <span class="op">&lt;-</span> <span class="fl">123</span></span>
 <span><span class="va">sim_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="va">theta_real</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0</span>, initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  stop <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="va">seed</span></span>
+<span>  <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="va">theta_real</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  stop <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="va">seed</span>, initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">sim_complex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="va">theta_complex</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0</span>, initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  stop <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="va">seed</span></span>
+<span>  <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="va">theta_complex</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  stop <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="va">seed</span>, initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_real</span>, main <span class="op">=</span> <span class="st">"Real eigenvalues"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_complex</span>, main <span class="op">=</span> <span class="st">"Complex eigenvalues"</span><span class="op">)</span></span></code></pre></div>
@@ -238,8 +238,8 @@ imaginary component of the eigenvalues.</p>
 <div class="section level2">
 <h2 id="multivariate-coupling">5. Multivariate Coupling<a class="anchor" aria-label="anchor" href="#multivariate-coupling"></a>
 </h2>
-<p>In multivariate models, off-diagonal elements of <span class="math inline">\(\mathbf{\Theta}\)</span> capture cross-regulation
-between dimensions.</p>
+<p>In multivariate models, off-diagonal elements of <span class="math inline">\(\mathbf{\Theta}\)</span> capture coupling between
+dimensions.</p>
 <p><span class="math display">\[\mathbf{\Theta} = \begin{bmatrix}
 \theta_{11} &amp; \theta_{12} \\
 \theta_{21} &amp; \theta_{22}
@@ -259,7 +259,7 @@ Show code
 <span></span>
 <span><span class="va">model_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="va">theta_2d</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">sim_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model_2d</span>, seed <span class="op">=</span> <span class="fl">105</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, by_dim <span class="op">=</span> <span class="cn">FALSE</span>, main <span class="op">=</span> <span class="st">"Coupled Trajectories"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, main <span class="op">=</span> <span class="st">"Coupled Trajectories"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, type <span class="op">=</span> <span class="st">"phase"</span>, main <span class="op">=</span> <span class="st">"Phase Portrait"</span><span class="op">)</span></span></code></pre></div>
 </details><p><img src="characteristics_files/figure-html/multivariate-plot-1.svg" class="r-plt" alt="" width="672"></p>
 <p><img src="characteristics_files/figure-html/multivariate-plot2-1.svg" class="r-plt" alt="" width="672"></p>
@@ -273,21 +273,26 @@ dynamics visible in the phase portrait.</p>
 <div class="section level2">
 <h2 id="noise-coupling">6. Noise Coupling<a class="anchor" aria-label="anchor" href="#noise-coupling"></a>
 </h2>
-<p>Off-diagonal elements of <span class="math inline">\(\mathbf{\Gamma}\)</span> create correlated noise
-between dimensions. This can lead to synchronized fluctuations even in
-uncoupled systems.</p>
+<p>Off-diagonal elements of <span class="math inline">\(\mathbf{\Gamma}\)</span> mean that the same random
+fluctuation drives both dimensions simultaneously — the noise sources
+are shared. This can lead to synchronized fluctuations even when there
+is no coupling in the deterministic part of the process (i.e., <span class="math inline">\(\mathbf{\Theta}\)</span> is diagonal). The
+resulting noise covariance is <span class="math inline">\(\mathbf{\Sigma} =
+\mathbf{\Gamma}\mathbf{\Gamma}'\)</span>, so the degree of
+synchronization depends on the off-diagonal structure of <span class="math inline">\(\mathbf{\Gamma}\)</span>.</p>
 <details><summary>
 Show code
 </summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Correlated noise with no cross-regulation</span></span>
+<code class="sourceCode R"><span><span class="co"># Shared noise sources (same fluctuation drives both dims), no drift coupling</span></span>
 <span><span class="va">gamma_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="fl">1</span>, <span class="fl">0.5</span>,</span>
 <span>  <span class="fl">0.5</span>, <span class="fl">1</span></span>
 <span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">gamma_2d</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">gamma_2d</span><span class="op">)</span>  <span class="co"># implied noise covariance Σ</span></span>
 <span></span>
 <span><span class="va">model_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="va">gamma_2d</span><span class="op">)</span></span>
 <span><span class="va">sim_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model_2d</span>, seed <span class="op">=</span> <span class="fl">105</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, by_dim <span class="op">=</span> <span class="cn">FALSE</span>, main <span class="op">=</span> <span class="st">"Correlated Noise"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, main <span class="op">=</span> <span class="st">"Shared Noise Sources"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </details><p><img src="characteristics_files/figure-html/noise-plot-1.svg" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
@@ -313,7 +318,7 @@ Show code
 <tr class="even">
 <td>Perturbation persistence</td>
 <td><span class="math inline">\(\theta\)</span></td>
-<td>Half-life of perturbations</td>
+<td>Relaxation time of perturbations</td>
 </tr>
 <tr class="odd">
 <td>Reactivity</td>
@@ -337,7 +342,7 @@ Show code
 <td>Noise coupling</td>
 <td>off-diagonal <span class="math inline">\(\mathbf{\Gamma}\)</span>
 </td>
-<td>Interdimensional dynamics</td>
+<td>Shared noise sources across dimensions</td>
 </tr>
 </tbody>
 </table>

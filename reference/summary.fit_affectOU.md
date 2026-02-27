@@ -73,12 +73,12 @@ summary(fitted)
 #> ── Coefficients ──
 #> 
 #>       Estimate    SE          95% CI
-#> theta    0.510 0.046  [0.419, 0.600]
-#> mu      -0.055 0.089 [-0.229, 0.119]
-#> gamma    1.012 0.010  [0.991, 1.032]
+#> theta    0.484 0.045  [0.395, 0.573]
+#> mu       0.102 0.093 [-0.081, 0.284]
+#> gamma    1.006 0.010  [0.986, 1.027]
 #> 
 #> ── Goodness of fit ──
 #> 
-#> Log-likelihood: -1269.192
-#> RMSE: 0.312
+#> Log-likelihood: -1250.582
+#> RMSE: 0.311
 ```

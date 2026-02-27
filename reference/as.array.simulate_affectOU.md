@@ -48,7 +48,7 @@ dim(arr)
 # Access first time point across all dimensions and simulations:
 arr[1, , ]
 #>       sim
-#> dim    sim1 sim2 sim3
-#>   dim1    0    0    0
-#>   dim2    0    0    0
+#> dim          sim1       sim2       sim3
+#>   dim1 -0.3719046  0.1419021 -0.6460772
+#>   dim2  0.7208423 -1.2533916 -0.2790644
 ```

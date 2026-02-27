@@ -123,8 +123,8 @@ summary(sim)
 #> ── Comparison to theoretical distribution ──
 #> 
 #>      Simulated Theoretical
-#> Mean    -0.012           0
-#> SD       0.973           1
+#> Mean    -0.017           0
+#> SD       0.975           1
 
 # With burnin to exclude initial transient
 summary(sim, burnin = 10)
@@ -140,8 +140,8 @@ summary(sim, burnin = 10)
 #> ── Comparison to theoretical distribution ──
 #> 
 #>      Simulated Theoretical
-#> Mean    -0.021           0
-#> SD       0.983           1
+#> Mean    -0.020           0
+#> SD       0.982           1
 
 # 2D stationary model
 model <- affectOU(ndim = 2, theta = diag(c(0.5, 0.3)), mu = c(1, -1))
@@ -160,18 +160,18 @@ summary(sim, burnin = 20)
 #> 
 #> Mean:
 #>              dim1   dim2
-#> Simulated   0.418 -0.131
+#> Simulated   0.422 -0.132
 #> Theoretical 1.000 -1.000
 #> 
 #> SD:
-#>              dim1  dim2
-#> Simulated   1.411 1.433
-#> Theoretical 1.000 1.291
+#>             dim1  dim2
+#> Simulated   1.41 1.434
+#> Theoretical 1.00 1.291
 #> 
 #> Covariance (simulated):
 #>        [,1]   [,2]
-#> [1,]  1.992 -0.921
-#> [2,] -0.921  2.053
+#> [1,]  1.987 -0.903
+#> [2,] -0.903  2.055
 #> 
 #> Covariance (theoretical):
 #>      [,1]  [,2]
@@ -180,8 +180,8 @@ summary(sim, burnin = 20)
 #> 
 #> Correlation (simulated):
 #>        [,1]   [,2]
-#> [1,]  1.000 -0.456
-#> [2,] -0.456  1.000
+#> [1,]  1.000 -0.447
+#> [2,] -0.447  1.000
 #> 
 #> Correlation (theoretical):
 #>      [,1] [,2]

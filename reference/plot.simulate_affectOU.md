@@ -28,7 +28,7 @@ plot(x, type = c("time", "histogram", "acf", "phase"), ...)
 
 ## Value
 
-NULL (invisibly), called for side effects only
+`NULL` (invisibly), called for side effects only.
 
 ## Details
 
@@ -45,6 +45,22 @@ Available plot types:
 
 - `"phase"`: Phase portraits produced by
   [`ou_plot_phase()`](https://kcevers.github.io/affectOU/reference/ou_plot_phase.md).
+
+## See also
+
+Detailed documentation for each plot type:
+
+- [`ou_plot_time()`](https://kcevers.github.io/affectOU/reference/ou_plot_time.md)
+  — time series with attractor line
+
+- [`ou_plot_histogram()`](https://kcevers.github.io/affectOU/reference/ou_plot_histogram.md)
+  — distribution with theoretical overlay
+
+- [`ou_plot_acf()`](https://kcevers.github.io/affectOU/reference/ou_plot_acf.md)
+  — empirical vs. theoretical autocorrelation
+
+- [`ou_plot_phase()`](https://kcevers.github.io/affectOU/reference/ou_plot_phase.md)
+  — phase portrait with mean reversion line
 
 ## Examples
 

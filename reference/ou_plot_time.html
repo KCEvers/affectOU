@@ -6,10 +6,10 @@
     }
   };
 </script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Plot simulation trajectory — ou_plot_time"><meta name="description" content="Visualise the time series trajectories of affect dimensions from an OU
-affect simulation. Each dimension is plotted in a separate panel, with
-multiple simulations overlaid within each panel."><meta property="og:description" content="Visualise the time series trajectories of affect dimensions from an OU
-affect simulation. Each dimension is plotted in a separate panel, with
-multiple simulations overlaid within each panel."></head><body>
+affect simulation. Each dimension can be plotted in a separate panel by setting
+by_dim = TRUE. Specific dimensions or simulations can be plotted with which_dim and which_sim, respectively."><meta property="og:description" content="Visualise the time series trajectories of affect dimensions from an OU
+affect simulation. Each dimension can be plotted in a separate panel by setting
+by_dim = TRUE. Specific dimensions or simulations can be plotted with which_dim and which_sim, respectively."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -29,7 +29,7 @@ multiple simulations overlaid within each panel."></head><body>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/characteristics.html">Affect Characteristics Implied by the OU Process</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -49,8 +49,8 @@ multiple simulations overlaid within each panel."></head><body>
 
     <div class="ref-description section level2">
     <p>Visualise the time series trajectories of affect dimensions from an OU
-affect simulation. Each dimension is plotted in a separate panel, with
-multiple simulations overlaid within each panel.</p>
+affect simulation. Each dimension can be plotted in a separate panel by setting
+<code>by_dim = TRUE</code>. Specific dimensions or simulations can be plotted with <code>which_dim</code> and <code>which_sim</code>, respectively.</p>
     </div>
 
     <div class="section level2">
@@ -154,7 +154,7 @@ multiple simulations overlaid within each panel.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>NULL (invisibly), called for side effects only</p>
+    <p><code>NULL</code> (invisibly), called for side effects only.</p>
     </div>
     <div class="section level2">
     <h2 id="attractor-line">Attractor Line<a class="anchor" aria-label="anchor" href="#attractor-line"></a></h2>
@@ -173,9 +173,9 @@ determines how tightly trajectories cluster around \(\mu\).</p>
 <span class="r-in"><span><span class="fu">ou_plot_time</span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ou_plot_time-1.svg" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Plot dimensions in one panel</span></span></span>
+<span class="r-in"><span><span class="co"># Plot dimensions in separate panels</span></span></span>
 <span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, nsim <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">ou_plot_time</span><span class="op">(</span><span class="va">sim</span>, by_dim <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ou_plot_time</span><span class="op">(</span><span class="va">sim</span>, by_dim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ou_plot_time-2.svg" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

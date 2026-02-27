@@ -44,8 +44,7 @@ print(summary_model)
 #> 
 #> Mean: [0, 0]
 #> SD: [1, 1]
-#> Half-life: [1.386, 1.386]
-#> Relaxation time (τ): [2, 2]
+#> Relaxation time (τ): slowest = 2, fastest = 2
 #> 
 #> ── Structure ──
 #> 

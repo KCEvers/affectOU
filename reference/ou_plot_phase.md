@@ -102,7 +102,7 @@ ou_plot_phase(
 
 ## Value
 
-NULL (invisibly), called for side effects only
+`NULL` (invisibly), called for side effects only.
 
 ## Diagonal panels (lag-1 phase portrait)
 

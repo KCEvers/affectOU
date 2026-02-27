@@ -3,6 +3,9 @@
 Visualise the distribution of affect values from an OU affect simulation
 using histograms for each dimension. In case of multiple simulations,
 the histograms aggregate data across all simulations for each dimension.
+Different dimensions can be plotted in separate panels by setting
+`by_dim = TRUE`. Specific dimensions or simulations can be plotted with
+`which_dim` and `which_sim`, respectively.
 
 ## Usage
 
@@ -109,7 +112,7 @@ ou_plot_histogram(
 
 ## Value
 
-NULL (invisibly), called for side effects only
+`NULL` (invisibly), called for side effects only.
 
 ## Stationary Distribution
 
@@ -131,14 +134,14 @@ sim <- simulate(model, nsim = 3)
 ou_plot_histogram(sim)
 
 
-# Plot dimensions in one panel
+# Plot dimensions in separate panels
 sim <- simulate(model, nsim = 1)
-ou_plot_histogram(sim, by_dim = FALSE)
+ou_plot_histogram(sim, by_dim = TRUE)
 
 
 # Same stationary SD, different dynamics
-m1 <- affectOU(theta = 0.5, mu = 0, gamma = 1) # SD = 1, half-life = 1.4
-m2 <- affectOU(theta = 2.0, mu = 0, gamma = 2) # SD = 1, half-life = 0.35
+m1 <- affectOU(theta = 0.5, mu = 0, gamma = 1) # SD = 1
+m2 <- affectOU(theta = 2.0, mu = 0, gamma = 2) # SD = 1
 s1 <- simulate(m1, stop = 100)
 s2 <- simulate(m2, stop = 100)
 ou_plot_histogram(s1, main = "Slow regulation")

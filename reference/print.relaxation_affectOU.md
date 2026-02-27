@@ -36,8 +36,8 @@ print(relaxation(model))
 #> 
 #> ── Relaxation time of 1D Ornstein-Uhlenbeck Model ──
 #> 
-#> Half-life (t₁/₂): 1.386 time units
 #> Relaxation time (τ): 2 time units
+#> Half-life (t₁/₂): 1.386 time units
 #> 
 #> Time for perturbation to decay to:
 #>      50%     37%     14%      5%      1%

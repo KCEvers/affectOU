@@ -1,7 +1,6 @@
 # Update model configuration
 
-Modify the parameters and initial state of an Ornstein-Uhlenbeck (OU)
-model.
+Modify the parameters of an Ornstein-Uhlenbeck (OU) model.
 
 ## Usage
 
@@ -14,7 +13,6 @@ update(
   mu = NULL,
   gamma = NULL,
   sigma = NULL,
-  initial_state = NULL,
   ...
 )
 ```
@@ -45,10 +43,6 @@ update(
 - sigma:
 
   Optional. New noise covariance (scalar or matrix).
-
-- initial_state:
-
-  Optional. New starting value of affect.
 
 - ...:
 

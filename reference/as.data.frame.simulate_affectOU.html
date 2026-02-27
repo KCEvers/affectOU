@@ -27,7 +27,7 @@ wide format."></head><body>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/characteristics.html">Affect Characteristics Implied by the OU Process</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -119,24 +119,24 @@ univariate or single simulations).</p>
 <span class="r-in"><span><span class="co"># Long format (default) - one row per timepoint, dimension, and simulation</span></span></span>
 <span class="r-in"><span><span class="va">df_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df_long</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   time dim sim       value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00   1   1  0.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.01   1   1 -0.12632048</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.02   1   1 -0.24281192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.03   1   1 -0.23046567</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.04   1   1 -0.04570529</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05   1   1 -0.15872705</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   time dim sim      value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00   1   1 -0.5914377</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.01   1   1 -0.6800363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.02   1   1 -0.7285889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.03   1   1 -0.7447949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.04   1   1 -0.7889493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05   1   1 -0.7532798</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Wide format - one row per time point</span></span></span>
 <span class="r-in"><span><span class="va">df_wide</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">sim</span>, direction <span class="op">=</span> <span class="st">"wide"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df_wide</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   time   dim1.sim1   dim2.sim1   dim1.sim2 dim2.sim2   dim1.sim3  dim2.sim3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00  0.00000000 0.000000000  0.00000000 0.0000000  0.00000000 0.00000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.01 -0.12632048 0.001993167 -0.12195202 0.1362198 -0.03307022 0.16951448</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.02 -0.24281192 0.048566532 -0.13139151 0.2058622 -0.03429512 0.09540621</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.03 -0.23046567 0.033155678  0.01353667 0.2416916 -0.19353501 0.15481470</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.04 -0.04570529 0.201903558  0.19025801 0.3814233 -0.11913414 0.11965166</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05 -0.15872705 0.052531116  0.27615935 0.2348255 -0.17774534 0.24242733</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   time  dim1.sim1 dim2.sim1  dim1.sim2  dim2.sim2     dim1.sim3  dim2.sim3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00 -0.5914377 0.5524307 -0.9636726 -0.7148733  0.0458320665 -0.6324440</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.01 -0.6800363 0.5015683 -1.0327679 -0.9399898 -0.0189821663 -0.4979532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.02 -0.7285889 0.4336205 -0.8400477 -0.9135680  0.0869041476 -0.5740382</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.03 -0.7447949 0.4865931 -0.7611739 -1.0446130 -0.0120263762 -0.7609862</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.04 -0.7889493 0.5326139 -0.8675570 -0.8617633 -0.2065835213 -0.7989514</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05 -0.7532798 0.3339744 -0.8590048 -0.9158483  0.0004971437 -0.7561335</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -7,7 +7,7 @@ equilibrium over time.
 
 This vignette walks through the package’s core functionality: simulating
 the OU process, computing theoretical quantities, and fitting
-unidimensional models to data. See [Affect Characteristics Implied by
+unidimensional models to data. See [Affect characteristics implied by
 the OU
 Process](https://kcevers.github.io/affectOU/articles/characteristics.md)
 for visual demonstrations of the model’s qualitative behaviours and
@@ -62,15 +62,16 @@ model
 
 ### Multidimensional Models
 
-The OU framework extends naturally to multiple affect dimensions (e.g.,
-valence and arousal). For a d-dimensional process:
+The OU framework extends naturally to model multiple affect dimensions
+(e.g., valence and arousal). For a d-dimensional process:
 
 \\d\mathbf{X}(t) = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt +
 \mathbf{\Gamma} \\ d\mathbf{W}(t)\\
 
-The default is a 2D model with uncoupled dynamics (diagonal
-\\\mathbf{\Theta}\\ and \\\mathbf{\Gamma}\\) and identical parameters
-across dimensions:
+By default,
+[`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md)
+creates a model with uncoupled dynamics (diagonal \\\mathbf{\Theta}\\
+and \\\mathbf{\Gamma}\\) and identical parameters across dimensions:
 
 ``` r
 model_2d <- affectOU(ndim = 2)
@@ -191,9 +192,9 @@ data <- sim$data # 3D array (time × dimension × simulation)
 # Using head() or tail()
 head(sim, n = 3)
 #>   time dim sim    value
-#> 1 0.00   1   1 1.000000
-#> 2 0.01   1   1 1.056281
-#> 3 0.02   1   1 1.083456
+#> 1 0.00   1   1 1.274567
+#> 2 0.01   1   1 1.069773
+#> 3 0.02   1   1 1.081224
 ```
 
 ``` r
@@ -201,9 +202,9 @@ head(sim, n = 3)
 sim_list <- as.list(sim)
 head(sim_list[[1]], n = 3)
 #>   time     dim1
-#> 1 0.00 1.000000
-#> 2 0.01 1.056281
-#> 3 0.02 1.083456
+#> 1 0.00 1.274567
+#> 2 0.01 1.069773
+#> 3 0.02 1.081224
 ```
 
 ``` r
@@ -211,9 +212,9 @@ head(sim_list[[1]], n = 3)
 sim_df <- as.data.frame(sim)
 head(sim_df, n = 3)
 #>   time dim sim    value
-#> 1 0.00   1   1 1.000000
-#> 2 0.01   1   1 1.056281
-#> 3 0.02   1   1 1.083456
+#> 1 0.00   1   1 1.274567
+#> 2 0.01   1   1 1.069773
+#> 3 0.02   1   1 1.081224
 ```
 
 ``` r
@@ -228,9 +229,9 @@ dim(sim_array)
 sim_matrix <- as.matrix(sim)
 head(sim_matrix, n = 3)
 #>      time dim sim    value
-#> [1,] 0.00   1   1 1.000000
-#> [2,] 0.01   1   1 1.056281
-#> [3,] 0.02   1   1 1.083456
+#> [1,] 0.00   1   1 1.274567
+#> [2,] 0.01   1   1 1.069773
+#> [3,] 0.02   1   1 1.081224
 ```
 
 ## Theoretical Quantities
@@ -253,7 +254,6 @@ summary(model)
 #> 
 #> Mean: 1
 #> SD: 1
-#> Half-life: 1.386
 #> Relaxation time (τ): 2
 ```
 
@@ -287,8 +287,7 @@ summary(model_coupled)
 #> 
 #> Mean: [0, 1]
 #> SD: [1.043, 1.167]
-#> Half-life: [1.585, 2.988]
-#> Relaxation time (τ): [2.347, 4.327]
+#> Relaxation time (τ): slowest = 4.409, fastest = 1.745
 #> 
 #> ── Structure ──
 #> 
@@ -340,9 +339,9 @@ fitted
 #> 
 #> ── Fitted 1D Ornstein-Uhlenbeck Model ──────────────────────────────────────────
 #> 5001 data points (dt ≈ 0.100)
-#> θ = 0.443, μ = 0.019, γ = 1.002
-#> Log-likelihood: -1237.784
-#> RMSE: 0.310
+#> θ = 0.455, μ = 0.021, γ = 1.013
+#> Log-likelihood: -1291.561
+#> RMSE: 0.313
 ```
 
 ``` r

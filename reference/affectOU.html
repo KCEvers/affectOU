@@ -25,7 +25,7 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/characteristics.html">Affect Characteristics Implied by the OU Process</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -54,8 +54,7 @@
 <span>  theta <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  mu <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  gamma <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  sigma <span class="op">=</span> <span class="va">gamma</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span>,</span>
-<span>  initial_state <span class="op">=</span> <span class="va">mu</span></span>
+<span>  sigma <span class="op">=</span> <span class="va">gamma</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -93,17 +92,11 @@ between dimensions.
 Either <code>gamma</code> or <code>sigma</code> must be specified, but not both. If <code>sigma</code>
 is specified, <code>gamma</code> is computed via Cholesky decomposition.</p></dd>
 
-
-<dt id="arg-initial-state">initial_state<a class="anchor" aria-label="anchor" href="#arg-initial-state"></a></dt>
-<dd><p>Starting value of affect.
-For 1D: scalar. For multidimensional: vector. Defaults to <code>mu</code>.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of class <code>affectOU</code>, representing a univariate or multivariate
-Ornstein–Uhlenbeck affect regulation model.
-The object is a list with the following components:</p>
+Ornstein–Uhlenbeck affect regulation model. The object is a list with the following components:</p>
 <dl><dt><code>parameters</code></dt>
 <dd><p>A named list of model parameters:</p><dl><dt><code>theta</code></dt>
 <dd><p>Numeric matrix.</p></dd>
@@ -121,8 +114,11 @@ The object is a list with the following components:</p>
 </dl></dd>
 
 
-<dt><code>initial_state</code></dt>
-<dd><p>Numeric vector.</p></dd>
+<dt><code>stationary</code></dt>
+<dd><p>A named list with the stationary distribution properties, precomputed at
+construction: <code>is_stable</code> (logical), <code>mean</code> (numeric vector, always <code>mu</code>),
+<code>sd</code> (numeric vector or <code>NULL</code> if unstable), <code>cov</code> (matrix or <code>NULL</code>),
+<code>cor</code> (matrix or <code>NULL</code>), <code>ndim</code> (integer).</p></dd>
 
 
 <dt><code>ndim</code></dt>
@@ -149,11 +145,11 @@ column \(j\)) represents the influence of dimension \(j\) on dimension
 \(i\)'s drift. Specifically, the drift for dimension \(i\) is
 \(\sum_j \Theta_{ij}(\mu_j - X_j)\):</p><ul><li><p>Diagonal elements \(\Theta_{ii}\): self-regulation (how fast dimension
 \(i\) returns to its own attractor \(\mu_i\)). Positive values are
-necessary for self-regulation, but strong cross-regulation can override
+necessary for self-regulation, but strong coupling between dimensions can override
 this and destabilise the system (see <code><a href="summary.affectOU.html">summary()</a></code> for
 system-level stability checks).</p></li>
 <li><p>Off-diagonal elements \(\Theta_{ij}\) where \(i \neq j\):
-cross-regulation (how dimension \(j\) influences dimension \(i\)).
+coupling between dimensions (how dimension \(j\) influences dimension \(i\)).
 If \(\Theta_{ij} &gt; 0\), dimension \(j\) below its attractor has a
 positive influence on dimension \(i\) (pulls it up); if
 \(\Theta_{ij} &lt; 0\), dimension \(j\) below its attractor has a
@@ -167,10 +163,15 @@ affective dynamics. Psychological Methods, 16(4), 468-490.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>The returned object can be inspected with <code><a href="print.affectOU.html">print()</a></code>, <code><a href="summary.affectOU.html">summary()</a></code>,
-<code><a href="stability.affectOU.html">stability()</a></code>, <code><a href="stationary.affectOU.html">stationary()</a></code>, and
-<code><a href="coef.affectOU.html">coef()</a></code>, can be simulated over time with <code><a href="simulate.affectOU.html">simulate()</a></code>, and fitted to univariate data
-with <code><a href="fit.affectOU.html">fit()</a></code>.</p></div>
+    <div class="dont-index">
+<ul><li><p><code><a href="simulate.affectOU.html">simulate.affectOU()</a></code> to generate trajectories.</p></li>
+<li><p><code><a href="plot.simulate_affectOU.html">plot.simulate_affectOU()</a></code> to visualize simulations
+(<code>type = "time"</code>, <code>"histogram"</code>, <code>"acf"</code>, <code>"phase"</code>).</p></li>
+<li><p><code><a href="summary.affectOU.html">summary.affectOU()</a></code> for stability, stationary distribution, and
+relaxation time.</p></li>
+<li><p><code><a href="fit.affectOU.html">fit.affectOU()</a></code> to estimate parameters from observed data.</p></li>
+<li><p><code><a href="update.affectOU.html">update.affectOU()</a></code> to modify parameters without recreating the model.</p></li>
+</ul></div>
     </div>
 
     <div class="section level2">
@@ -189,7 +190,6 @@ with <code><a href="fit.affectOU.html">fit()</a></code>.</p></div>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mean: 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> SD: 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Half-life: 1.386</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Relaxation time (τ): 2</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">model_1d</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $theta</span>
@@ -222,8 +222,7 @@ with <code><a href="fit.affectOU.html">fit()</a></code>.</p></div>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mean: [0, 0]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> SD: [1, 1.291]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Half-life: [1.386, 2.31]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Relaxation time (τ): [2, 3.333]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Relaxation time (τ): slowest = 3.333, fastest = 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Structure</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -257,8 +256,7 @@ with <code><a href="fit.affectOU.html">fit()</a></code>.</p></div>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mean: [0, 0, 0]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> SD: [1.036, 1.351, 1.131]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Half-life: [1.53, 2.605, 1.788]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Relaxation time (τ): [2.24, 3.796, 2.59]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Relaxation time (τ): slowest = 4.086, fastest = 1.838</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Structure</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -268,7 +266,7 @@ with <code><a href="fit.affectOU.html">fit()</a></code>.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Simulate trajectory</span></span></span>
 <span class="r-in"><span><span class="va">sim_3d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model_3d</span>, stop <span class="op">=</span> <span class="fl">100</span>, save_at <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_3d</span>, by_dim <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_3d</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="affectOU-2.svg" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -12,6 +12,7 @@ simulate(
   object,
   nsim = 1,
   seed = NULL,
+  initial_state = NULL,
   dt = 0.01,
   stop = 100,
   save_at = dt,
@@ -32,6 +33,12 @@ simulate(
 - seed:
 
   Random seed for reproducibility.
+
+- initial_state:
+
+  Optional initial state vector. If `NULL`, defaults to a draw from the
+  stationary distribution (if stable) or the attractor location `mu` (if
+  non-stable).
 
 - dt:
 
@@ -107,18 +114,18 @@ summary(sim)
 #> 
 #> Mean:
 #>               dim1  dim2
-#> Simulated   -0.068 0.186
+#> Simulated   -0.074 0.191
 #> Theoretical  0.000 0.000
 #> 
 #> SD:
 #>              dim1  dim2
-#> Simulated   0.952 0.878
+#> Simulated   0.952 0.885
 #> Theoretical 1.000 1.000
 #> 
 #> Covariance (simulated):
 #>        [,1]   [,2]
-#> [1,]  0.906 -0.056
-#> [2,] -0.056  0.772
+#> [1,]  0.907 -0.060
+#> [2,] -0.060  0.783
 #> 
 #> Covariance (theoretical):
 #>      [,1] [,2]
@@ -127,19 +134,29 @@ summary(sim)
 #> 
 #> Correlation (simulated):
 #>        [,1]   [,2]
-#> [1,]  1.000 -0.067
-#> [2,] -0.067  1.000
+#> [1,]  1.000 -0.072
+#> [2,] -0.072  1.000
 #> 
 #> Correlation (theoretical):
 #>      [,1] [,2]
 #> [1,]    1    0
 #> [2,]    0    1
 head(sim)
-#>   time dim sim       value
-#> 1 0.00   1   1  0.00000000
-#> 2 0.01   1   1 -0.06688561
-#> 3 0.02   1   1 -0.01439262
-#> 4 0.03   1   1  0.01589790
-#> 5 0.04   1   1  0.12343404
-#> 6 0.05   1   1  0.14706889
+#>   time dim sim      value
+#> 1 0.00   1   1 -0.4246360
+#> 2 0.01   1   1 -0.4696035
+#> 3 0.02   1   1 -0.5082374
+#> 4 0.03   1   1 -0.4489465
+#> 5 0.04   1   1 -0.5492815
+#> 6 0.05   1   1 -0.4983117
+
+# Specify initial state
+sim <- simulate(model, initial_state = c(1, -1))
+plot(sim)
+
+
+# Simulate for a longer time with coarser saving interval
+sim <- simulate(model, stop = 500, save_at = 10)
+plot(sim)
+
 ```

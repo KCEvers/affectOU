@@ -10,8 +10,7 @@ unidimensional process for simplicity):
 - **θ (theta): emotion regulation capacity**
 
   Governs the rate at which affect returns to baseline. Low θ indicates
-  *emotional inertia* or *rumination*; high θ indicates rapid
-  regulation.
+  emotional inertia or rumination; high θ indicates rapid regulation.
 
 - **μ (mu): affective set point**
 
@@ -87,7 +86,7 @@ characteristics, see the vignettes:
 
 - [Get started with
   affectOU](https://kcevers.github.io/affectOU/articles/affectOU.html)
-- [Affect Characteristics Implied by the OU
+- [Affect characteristics implied by the OU
   Process](https://kcevers.github.io/affectOU/articles/characteristics.html)
 
 Theoretical properties of the OU process are explained in
@@ -213,5 +212,5 @@ Kuppens, Oravecz & Tuerlinckx (2010)
 
 - [Get started with
   affectOU](https://kcevers.github.io/affectOU/articles/affectOU.md):
-- [Affect Characteristics Implied by the OU
+- [Affect characteristics implied by the OU
   Process](https://kcevers.github.io/affectOU/articles/characteristics.md):

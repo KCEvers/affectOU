@@ -11,8 +11,10 @@ simpaper
 
 ## Format
 
-An object of class `simulate_affectOU` containing simulated trajectories
-from the specified Ornstein-Uhlenbeck process.
+An object of class
+[`simulate_affectOU`](https://kcevers.github.io/affectOU/reference/simulate.affectOU.md)
+containing simulated trajectories from the specified Ornstein-Uhlenbeck
+process.
 
 ## Details
 

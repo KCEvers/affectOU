@@ -1,4 +1,4 @@
-# Affect Characteristics Implied by the OU Process
+# Affect characteristics implied by the OU Process
 
 ``` r
 library(affectOU)
@@ -23,10 +23,9 @@ emotional inertia.
 Show code
 
 ``` r
-model <- affectOU(theta = diag(c(5.0, 0.5)), initial_state = 3)
-sim <- simulate(model, seed = 123, stop = 20)
+model <- affectOU(theta = diag(c(5.0, 0.5)))
+sim <- simulate(model, seed = 123, stop = 20, initial_state = 3)
 plot(sim,
-  by_dim = FALSE,
   main = "Mean Reversion Depends on θ",
   sub = c("Fast Regulation (θ = 5.0)", "Slow Regulation (θ = 0.5)")
 )
@@ -48,8 +47,8 @@ relaxation(model)
 #> 
 #> ── Relaxation time of 1D Ornstein-Uhlenbeck Model ──
 #> 
-#> Half-life (t₁/₂): 1.386 time units
 #> Relaxation time (τ): 2 time units
+#> Half-life (t₁/₂): 1.386 time units
 #> 
 #> Time for perturbation to decay to:
 #>      50%     37%     14%      5%      1%
@@ -83,7 +82,6 @@ Show code
 model <- affectOU(theta = 0.5, mu = 0, gamma = diag(c(0.3, 1.5)))
 sim <- simulate(model, seed = 456, stop = 20)
 plot(sim,
-  by_dim = FALSE,
   sub = c("Low Reactivity (γ = 0.3)", "High Reactivity (γ = 1.5)"),
   main = "Effect of Reactivity on Fluctuation Magnitude", ylim = c(-4, 4)
 )
@@ -111,8 +109,10 @@ Show code
 ``` r
 model <- affectOU(theta = diag(c(0.5, 0.01, -0.3)))
 sim <- simulate(model, stop = 100, seed = 43)
+#> Warning: ! System is not stable; no stationary distribution exists.
+#> ℹ Defaulting `initial_state` to mu.
 plot(sim,
-  ylim = c(-10, 10), by_dim = FALSE,
+  ylim = c(-10, 10),
   main = "Affect Dynamics of Different Stability Regimes",
   sub = c("θ > 0 (stable)", "θ ≈ 0 (random walk)", "θ < 0 (unstable)")
 )
@@ -155,12 +155,12 @@ eigen(theta_complex)$values
 ``` r
 seed <- 123
 sim_real <- simulate(
-  affectOU(theta = theta_real, mu = 0, sigma = 0, initial_state = c(-3, 3)),
-  stop = 50, seed = seed
+  affectOU(theta = theta_real, mu = 0, sigma = 0),
+  stop = 50, seed = seed, initial_state = c(-3, 3)
 )
 sim_complex <- simulate(
-  affectOU(theta = theta_complex, mu = 0, sigma = 0, initial_state = c(-3, 3)),
-  stop = 50, seed = seed
+  affectOU(theta = theta_complex, mu = 0, sigma = 0),
+  stop = 50, seed = seed, initial_state = c(-3, 3)
 )
 plot(sim_real, main = "Real eigenvalues")
 plot(sim_complex, main = "Complex eigenvalues")
@@ -174,7 +174,7 @@ component of the eigenvalues.
 ## 5. Multivariate Coupling
 
 In multivariate models, off-diagonal elements of \\\mathbf{\Theta}\\
-capture cross-regulation between dimensions.
+capture coupling between dimensions.
 
 \\\mathbf{\Theta} = \begin{bmatrix} \theta\_{11} & \theta\_{12} \\
 \theta\_{21} & \theta\_{22} \end{bmatrix} = \begin{bmatrix}
@@ -193,7 +193,7 @@ theta_2d <- matrix(c(
 
 model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
 sim_2d <- simulate(model_2d, seed = 105)
-plot(sim_2d, by_dim = FALSE, main = "Coupled Trajectories", xlim = c(0, 20))
+plot(sim_2d, main = "Coupled Trajectories", xlim = c(0, 20))
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
@@ -208,33 +208,39 @@ This creates interdependent dynamics visible in the phase portrait.
 
 ## 6. Noise Coupling
 
-Off-diagonal elements of \\\mathbf{\Gamma}\\ create correlated noise
-between dimensions. This can lead to synchronized fluctuations even in
-uncoupled systems.
+Off-diagonal elements of \\\mathbf{\Gamma}\\ mean that the same random
+fluctuation drives both dimensions simultaneously — the noise sources
+are shared. This can lead to synchronized fluctuations even when there
+is no coupling in the deterministic part of the process (i.e.,
+\\\mathbf{\Theta}\\ is diagonal). The resulting noise covariance is
+\\\mathbf{\Sigma} = \mathbf{\Gamma}\mathbf{\Gamma}'\\, so the degree of
+synchronization depends on the off-diagonal structure of
+\\\mathbf{\Gamma}\\.
 
 Show code
 
 ``` r
-# Correlated noise with no cross-regulation
+# Shared noise sources (same fluctuation drives both dims), no drift coupling
 gamma_2d <- matrix(c(
   1, 0.5,
   0.5, 1
 ), nrow = 2, byrow = TRUE)
+gamma_2d %*% t(gamma_2d)  # implied noise covariance Σ
 
 model_2d <- affectOU(theta = 0.5, mu = 0, gamma = gamma_2d)
 sim_2d <- simulate(model_2d, seed = 105)
-plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
+plot(sim_2d, main = "Shared Noise Sources", xlim = c(0, 20))
 ```
 
 ![](characteristics_files/figure-html/noise-plot-1.svg)
 
 ## Summary
 
-| Feature                  | Parameter                                             | Effect                     |
-|--------------------------|-------------------------------------------------------|----------------------------|
-| Mean reversion           | \\\theta\\                                            | Rate of return to baseline |
-| Perturbation persistence | \\\theta\\                                            | Half-life of perturbations |
-| Reactivity               | \\\gamma\\                                            | Magnitude of fluctuations  |
-| Stability                | sign(\\\theta\\) / eigenvalues of \\\mathbf{\Theta}\\ | Stationary vs divergent    |
-| Cross-coupling           | off-diagonal \\\mathbf{\Theta}\\                      | Interdimensional dynamics  |
-| Noise coupling           | off-diagonal \\\mathbf{\Gamma}\\                      | Interdimensional dynamics  |
+| Feature                  | Parameter                                             | Effect                                 |
+|--------------------------|-------------------------------------------------------|----------------------------------------|
+| Mean reversion           | \\\theta\\                                            | Rate of return to baseline             |
+| Perturbation persistence | \\\theta\\                                            | Relaxation time of perturbations       |
+| Reactivity               | \\\gamma\\                                            | Magnitude of fluctuations              |
+| Stability                | sign(\\\theta\\) / eigenvalues of \\\mathbf{\Theta}\\ | Stationary vs divergent                |
+| Cross-coupling           | off-diagonal \\\mathbf{\Theta}\\                      | Interdimensional dynamics              |
+| Noise coupling           | off-diagonal \\\mathbf{\Gamma}\\                      | Shared noise sources across dimensions |
