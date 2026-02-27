@@ -393,53 +393,55 @@ plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
 
 ## Perturbation Persistence
 
-For stable OUs, one can define the characteristic relaxation time $\tau$ or $\mathbf{T}$ as the time needed for the system to relax to a particular point. There are several ways to go about this, but within the package, we define the relaxation time of the system as a whole, meaning that the whole system relaxes to a particular percentage of its original value. In this case, we replace the time step $\Delta t$ with the relaxation time $\mathbf{T}$ in the drift equation, so that the drift is equal to:
+For stable OUs, one can define the characteristic relaxation time $\tau$ or $\mathbf{T}$ as the time needed for the system to relax to a particular point. There are several ways to go about this, but within the package, we define the relaxation time of the system as a whole, meaning that the whole system relaxes to a particular percentage of its original value. In this case, we replace the time step $\Delta t$ with the relaxation time $\mathbf{T}$ in the drift equation, so that the deterministic drift is equal to:
 
 \begin{equation}
-  e^{-\mathbf{\Theta} \mathbf{T}}
+  e^{-\mathbf{\Theta} \mathbf{T}} \mathbf{y}(0)
 \end{equation}
+
+where $\mathbf{y}(0) represents the initial condition for which to compute the relaxation time from.
 
 Note that the relaxation times in $\mathbf{T}$ are defined at the same time unit as $\Delta t$. To get a whole-systems view of relaxation times, $\mathbf{T}$ should be defined in function of the drift matrix $\mathbf{\Theta}$, for example setting when $\mathbf{T} = \mathbf{\Theta}^{1}$ and assuming invertibility of $\mathbf{\Theta}$, then we can compute the extent of the regulation after this time as:
 
 \begin{equation}
 \begin{split}
-  e^{-\mathbf{\Theta} \mathbf{T}} &= e^{-\mathbf{\Theta} \mathbf{\Theta}^{-1}} \\
-  &= e^{-\mathbf{I}_d} \\
+  e^{-\mathbf{\Theta} \mathbf{T}} \mathbf{y}(0) &= e^{-\mathbf{\Theta} \mathbf{\Theta}^{-1}} \mathbf{y}(0) \\
+  &= e^{-\mathbf{I}_d} \mathbf{y}(0) \\
   &= \begin{bmatrix}
     e^{-1} & \cdots & 0 \\
     \vdots & \ddots & \vdots \\
     0 & \cdots & e^{-1}
-  \end{bmatrix} \\
+  \end{bmatrix} \mathbf{y}(0) \\
   &\approx \begin{bmatrix}
     0.3679 & \cdots & 0 \\
     \vdots & \ddots & \vdots \\
     0 & \cdots & 0.3679
-  \end{bmatrix}
+  \end{bmatrix} \mathbf{y}(0)
 \end{split}
 \end{equation}
 
-In other words, defining $\mathbf{T} = \mathbf{\Theta}^{-1}$, the _whole_ system relaxes to about $\pm36.79\%$ of its original value. Other specifications of $\mathbf{T}$ are also useful to take into account, for example the half-life can be defined as $\mathbf{T} = \ln(2) \mathbf{\Theta}^{-1}$. More generally, we can define the time after which $100 \frac{1}{\alpha}\%$ of the original impulse remains as $\ln(\alpha) \mathbf{\Theta}^{-1}$. This is easily proven, as:
+In other words, defining $\mathbf{T} = \mathbf{\Theta}^{-1}$, the _whole_ system relaxes to about $\pm36.79\%$ of its original value \mathbf{y}(0). Other specifications of $\mathbf{T}$ are also useful to take into account, for example the half-life can be defined as $\mathbf{T} = \ln(2) \mathbf{\Theta}^{-1}$. More generally, we can define the time after which $100 \frac{1}{\alpha}\%$ of the original impulse remains as $\ln(\alpha) \mathbf{\Theta}^{-1}$. This is easily proven, as:
 
 \begin{equation}
 \begin{split}
-  e^{-\mathbf{\Theta} \mathbf{T}} &= e^{-\mathbf{\Theta} \ln(\alpha) \mathbf{\Theta}^{-1}} \\
-  &= e^{-\ln(\alpha) \mathbf{\Theta} \mathbf{\Theta}^{-1}} \\
-  &= e^{-\ln(\alpha) \mathbf{I}_d} \\
+  e^{-\mathbf{\Theta} \mathbf{T}} \mathbf{y}(0) &= e^{-\mathbf{\Theta} \ln(\alpha) \mathbf{\Theta}^{-1}} \mathbf{y}(0) \\
+  &= e^{-\ln(\alpha) \mathbf{\Theta} \mathbf{\Theta}^{-1}} \mathbf{y}(0) \\
+  &= e^{-\ln(\alpha) \mathbf{I}_d} \mathbf{y}(0) \\
   &= \begin{bmatrix}
     e^{-ln(\alpha)} & \cdots & 0 \\
     \vdots & \ddots & \vdots \\
     0 & \cdots & e^{-ln(\alpha)}
-  \end{bmatrix} \\
+  \end{bmatrix} \mathbf{y}(0) \\
   &= \begin{bmatrix}
     \frac{1}{e^{ln(\alpha)}} & \cdots & 0 \\
     \vdots & \ddots & \vdots \\
     0 & \cdots & \frac{1}{e^{ln(\alpha)}}
-  \end{bmatrix} \\
+  \end{bmatrix} \mathbf{y}(0) \\
   &= \begin{bmatrix}
     \frac{1}{\alpha} & \cdots & 0 \\
     \vdots & \ddots & \vdots \\
     0 & \cdots & \frac{1}{\alpha}
-  \end{bmatrix}
+  \end{bmatrix} \mathbf{y}(0)
 \end{split}
 \end{equation}
 
