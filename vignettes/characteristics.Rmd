@@ -51,8 +51,8 @@ where $\mathbf{\Omega}$ contains the eigenvectors and $\mathbf{\Lambda}$ contain
 
 \begin{equation}
 \begin{split}
-  e^{\mathbf{\Theta} \Delta t} &= e^{\mathbf{\Omega} \mathbf{\Lambda} \mathbf{\Omega}^{-1} \Delta t} \\
-  &= \mathbf{\Omega} e^{\mathbf{\Lambda} \Delta t} \mathbf{\Omega}^{-1}
+  e^{-\mathbf{\Theta} \Delta t} &= e^{-\mathbf{\Omega} \mathbf{\Lambda} \mathbf{\Omega}^{-1} \Delta t} \\
+  &= \mathbf{\Omega} e^{-\mathbf{\Lambda} \Delta t} \mathbf{\Omega}^{-1}
 \end{split}
 \end{equation}
 
@@ -393,7 +393,59 @@ plot(sim_2d, by_dim = FALSE, main = "Correlated Noise", xlim = c(0, 20))
 
 ## Perturbation Persistence
 
-For stable OUs, one can define the characteristic relaxation time $\tau$, defining the time for which the expected deviation from the attractor $\mathbf{\mu}$ to shrink to $\frac{1}{e} \approx \frac{1}{2.7183} \approx 0.3679$. The half-life $t_{1/2} = \ln 2 \cdot \tau$ marks the 50\% point. Effects decay exponentially: at two $\tau$, about 13.5\% remains; at three $\tau$, about 5\%.
+For stable OUs, one can define the characteristic relaxation time $\tau$ or $\mathbf{T}$ as the time needed for the system to relax to a particular point. There are several ways to go about this, but within the package, we define the relaxation time of the system as a whole, meaning that the whole system relaxes to a particular percentage of its original value. In this case, we replace the time step $\Delta t$ with the relaxation time $\mathbf{T}$ in the drift equation, so that the drift is equal to:
+
+\begin{equation}
+  e^{-\mathbf{\Theta} \mathbf{T}}
+\end{equation}
+
+Note that the relaxation times in $\mathbf{T}$ are defined at the same time unit as $\Delta t$. To get a whole-systems view of relaxation times, $\mathbf{T}$ should be defined in function of the drift matrix $\mathbf{\Theta}$, for example setting when $\mathbf{T} = \mathbf{\Theta}^{1}$ and assuming invertibility of $\mathbf{\Theta}$, then we can compute the extent of the regulation after this time as:
+
+\begin{equation}
+\begin{split}
+  e^{-\mathbf{\Theta} \mathbf{T}} &= e^{-\mathbf{\Theta} \mathbf{\Theta}^{-1}} \\
+  &= e^{-\mathbf{I}_d} \\
+  &= \begin{bmatrix}
+    e^{-1} & \cdots & 0 \\
+    \vdots & \ddots & \vdots \\
+    0 & \cdots & e^{-1}
+  \end{bmatrix} \\
+  &\approx \begin{bmatrix}
+    0.3679 & \cdots & 0 \\
+    \vdots & \ddots & \vdots \\
+    0 & \cdots & 0.3679
+  \end{bmatrix}
+\end{split}
+\end{equation}
+
+In other words, defining $\mathbf{T} = \mathbf{\Theta}^{-1}$, the _whole_ system relaxes to about $\pm36.79\%$ of its original value. Other specifications of $\mathbf{T}$ are also useful to take into account, for example the half-life can be defined as $\mathbf{T} = \ln(2) \mathbf{\Theta}^{-1}$. More generally, we can define the time after which $100 \frac{1}{\alpha}\%$ of the original impulse remains as $\ln(\alpha) \mathbf{\Theta}^{-1}$. This is easily proven, as:
+
+\begin{equation}
+\begin{split}
+  e^{-\mathbf{\Theta} \mathbf{T}} &= e^{-\mathbf{\Theta} \ln(\alpha) \mathbf{\Theta}^{-1}} \\
+  &= e^{-\ln(\alpha) \mathbf{\Theta} \mathbf{\Theta}^{-1}} \\
+  &= e^{-\ln(\alpha) \mathbf{I}_d} \\
+  &= \begin{bmatrix}
+    e^{-ln(\alpha)} & \cdots & 0 \\
+    \vdots & \ddots & \vdots \\
+    0 & \cdots & e^{-ln(\alpha)}
+  \end{bmatrix} \\
+  &= \begin{bmatrix}
+    \frac{1}{e^{ln(\alpha)}} & \cdots & 0 \\
+    \vdots & \ddots & \vdots \\
+    0 & \cdots & \frac{1}{e^{ln(\alpha)}}
+  \end{bmatrix} \\
+  &= \begin{bmatrix}
+    \frac{1}{\alpha} & \cdots & 0 \\
+    \vdots & \ddots & \vdots \\
+    0 & \cdots & \frac{1}{\alpha}
+  \end{bmatrix}
+\end{split}
+\end{equation}
+
+Written down as such, the relaxation times $\mathbf{T}$ take into account the complete dynamics, meaning they account for the regulation of the system as a whole. Unfortunately, this definition of $\mathbf{T}$ may become difficult to interpret for large systems. One way to alleviate this difficulty is by defining $\mathbf{T}$ relative to the eigenvalues $\mathbf{\Lambda}$ rather than the full matrix $\mathbf{\Theta}$. In this case, the matrix $\mathbf{T} = \ln(\alpha) \mathbf{\Lambda}^{-1}$ displays the relaxation times per dimension, giving an indication of how long it would take for each dimension to "relax out". 
+
+Note, however, that defining the relaxation times based on the eigenvalues implies that these relaxation times exist within eigenspace. Relaxation times based on eigenvalues alone do not accounting for the dynamical rotations provided through the eigenvectors $\mathbf{\Omega}$: They thus only provide an indication of the relaxation times per dimension, but are not equal to it.
 
 ```{r persistence}
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
