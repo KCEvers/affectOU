@@ -40,7 +40,7 @@ stationary <- function(object, ...) {
 #' \eqn{\Sigma_\infty} solves the Lyapunov equation:
 #' \deqn{\Theta \Sigma_\infty + \Sigma_\infty \Theta^\top = \Sigma}
 #' where \eqn{\Sigma = \Gamma\Gamma^\top} is the noise covariance.
-#' Off-diagonal elements in \eqn{\Theta} (cross-regulation) can induce
+#' Off-diagonal elements in \eqn{\Theta} (coupling between dimensions) can induce
 #' correlation at equilibrium even when the noise is independent.
 #'
 #' @section Formula reference:
@@ -98,55 +98,7 @@ stationary <- function(object, ...) {
 #' stationary(model_2d)$cor # non-zero off-diagonal
 #'
 stationary.affectOU <- function(object, ...) {
-  ndim <- object[["ndim"]]
-  theta <- object[["parameters"]][["theta"]]
-  mu <- object[["parameters"]][["mu"]]
-  sigma <- object[["parameters"]][["sigma"]]
-
-  # Check stability
-  is_stable <- check_stability(theta)$is_stable
-
-  if (is_stable) {
-    stationary_cov <- solve_lyapunov(theta, sigma)
-    if (ndim == 1) {
-      stationary_cov <- stationary_cov[1, 1]
-    }
-    stationary_sd <- if (ndim == 1) sqrt(stationary_cov) else sqrt(diag(stationary_cov))
-
-    if (ndim > 1) {
-      d <- diag(stationary_cov)
-      if (all(d > 0)) {
-        stationary_cor <- stats::cov2cor(stationary_cov)
-      } else {
-        stationary_cor <- diag(ndim)
-        nonzero <- which(d > 0)
-        if (length(nonzero) > 1) {
-          stationary_cor[nonzero, nonzero] <- stats::cov2cor(stationary_cov[nonzero, nonzero])
-        }
-      }
-    } else {
-      stationary_cor <- NULL
-    }
-
-    out <- list(
-      is_stable = TRUE,
-      mean = mu,
-      sd = stationary_sd,
-      cov = if (ndim > 1) stationary_cov else NULL,
-      cor = stationary_cor,
-      ndim = ndim
-    )
-  } else {
-    out <- list(
-      is_stable = FALSE,
-      mean = NULL,
-      sd = NULL,
-      cov = NULL,
-      cor = NULL,
-      ndim = ndim
-    )
-  }
-
+  out <- object[["stationary"]]
   class(out) <- "stationary_affectOU"
   out
 }

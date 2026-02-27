@@ -11,7 +11,6 @@
   mu = NULL,
   gamma = NULL,
   sigma = NULL,
-  initial_state = NULL,
   ...
 )
 }
@@ -28,15 +27,13 @@
 
 \item{sigma}{Optional. New noise covariance (scalar or matrix).}
 
-\item{initial_state}{Optional. New starting value of affect.}
-
 \item{...}{Additional arguments (unused)}
 }
 \value{
 Updated \link{affectOU} object
 }
 \description{
-Modify the parameters and initial state of an Ornstein-Uhlenbeck (OU) model.
+Modify the parameters of an Ornstein-Uhlenbeck (OU) model.
 }
 \examples{
 # 1D model

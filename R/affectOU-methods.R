@@ -112,7 +112,7 @@ coef.affectOU <- function(object, ...) {
 
 #' Update model configuration
 #'
-#' Modify the parameters and initial state of an Ornstein-Uhlenbeck (OU) model.
+#' Modify the parameters of an Ornstein-Uhlenbeck (OU) model.
 #'
 #' @param object An object of class [affectOU].
 #' @param ndim Optional. New dimensionality of the affect process.
@@ -120,7 +120,6 @@ coef.affectOU <- function(object, ...) {
 #' @param mu Optional. New attractor location (scalar or vector).
 #' @param gamma Optional. New diffusion coefficient (scalar or matrix).
 #' @param sigma Optional. New noise covariance (scalar or matrix).
-#' @param initial_state Optional. New starting value of affect.
 #' @param ... Additional arguments (unused)
 #'
 #' @return Updated [affectOU] object
@@ -141,13 +140,11 @@ update.affectOU <- function(object,
                             mu = NULL,
                             gamma = NULL,
                             sigma = NULL,
-                            initial_state = NULL,
                             ...) {
   # Use existing values as defaults
   new_ndim <- if (is.null(ndim)) object$ndim else ndim
   new_theta <- if (is.null(theta)) object$parameters$theta else theta
   new_mu <- if (is.null(mu)) object$parameters$mu else mu
-  new_initial_state <- if (is.null(initial_state)) object$initial_state else initial_state
 
   # Handle gamma/sigma: prefer new values, fall back to existing gamma
   if (is.null(gamma) && is.null(sigma)) {
@@ -167,8 +164,7 @@ update.affectOU <- function(object,
     theta = new_theta,
     mu = new_mu,
     gamma = new_gamma,
-    sigma = new_sigma,
-    initial_state = new_initial_state
+    sigma = new_sigma
   )
 }
 
@@ -251,7 +247,7 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 #'       each dimension (see [`relaxation()`][relaxation.affectOU()])}
 #'     \item{coupling}{Coupling structure: `NA` for 1D, `NULL` if uncoupled, or
 #'       data frame with columns `from`, `to`, `value`, `sign` showing
-#'       cross-regulation between dimensions}
+#'       coupling between dimensions}
 #'     \item{noise_structure}{Noise correlation structure: `NA` for 1D, `NULL` if
 #'       independent, or data frame with columns `dim1`, `dim2`, `value`, `sign`
 #'       showing correlated noise pairs}

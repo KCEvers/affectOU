@@ -9,12 +9,12 @@
       Seed: 42
       
         time dim sim value
-      1  0.0   1   1 0.000
-      2  0.1   1   1 0.434
-      3  0.2   1   1 0.233
-      4  0.3   1   1 0.336
-      5  0.4   1   1 0.520
-      6  0.5   1   1 0.622
+      1  0.0   1   1 1.371
+      2  0.1   1   1 1.124
+      3  0.2   1   1 1.182
+      4  0.3   1   1 1.323
+      5  0.4   1   1 1.385
+      6  0.5   1   1 1.282
 
 # print.simulate_affectOU snapshot (1D) [ansi]
 
@@ -27,12 +27,12 @@
       Seed: 42
       
         time dim sim value
-      1  0.0   1   1 0.000
-      2  0.1   1   1 0.434
-      3  0.2   1   1 0.233
-      4  0.3   1   1 0.336
-      5  0.4   1   1 0.520
-      6  0.5   1   1 0.622
+      1  0.0   1   1 1.371
+      2  0.1   1   1 1.124
+      3  0.2   1   1 1.182
+      4  0.3   1   1 1.323
+      5  0.4   1   1 1.385
+      6  0.5   1   1 1.282
 
 # print.simulate_affectOU snapshot (2D, nsim=3) [plain]
 
@@ -45,12 +45,12 @@
       Seed: 123
       
         time dim sim  value
-      1  0.0   1   1  0.000
-      2  0.1   1   1 -0.177
-      3  0.2   1   1  0.325
-      4  0.3   1   1  0.349
-      5  0.4   1   1  0.477
-      6  0.5   1   1  0.236
+      1  0.0   1   1 -0.560
+      2  0.1   1   1 -0.040
+      3  0.2   1   1  0.003
+      4  0.3   1   1  0.149
+      5  0.4   1   1 -0.076
+      6  0.5   1   1  0.315
 
 # print.simulate_affectOU snapshot (2D, nsim=3) [ansi]
 
@@ -63,12 +63,12 @@
       Seed: 123
       
         time dim sim  value
-      1  0.0   1   1  0.000
-      2  0.1   1   1 -0.177
-      3  0.2   1   1  0.325
-      4  0.3   1   1  0.349
-      5  0.4   1   1  0.477
-      6  0.5   1   1  0.236
+      1  0.0   1   1 -0.560
+      2  0.1   1   1 -0.040
+      3  0.2   1   1  0.003
+      4  0.3   1   1  0.149
+      5  0.4   1   1 -0.076
+      6  0.5   1   1  0.315
 
 # print.summary_simulate_affectOU snapshot (1D stationary) [plain]
 
@@ -87,8 +87,8 @@
       -- Comparison to theoretical distribution --
       
            Simulated Theoretical
-      Mean    -0.003           0
-      SD       0.958           1
+      Mean    -0.002           0
+      SD       0.957           1
 
 # print.summary_simulate_affectOU snapshot (1D stationary) [ansi]
 
@@ -107,8 +107,8 @@
       -- [1m[1mComparison to theoretical distribution[1m[22m --
       
            Simulated Theoretical
-      Mean    -0.003           0
-      SD       0.958           1
+      Mean    -0.002           0
+      SD       0.957           1
 
 # print.summary_simulate_affectOU respects digits [plain]
 
@@ -167,19 +167,19 @@
       -- Comparison to theoretical distribution --
       
       Mean:
-                  dim1   dim2
-      Simulated   0.67 -0.118
-      Theoretical 1.00 -1.000
+                   dim1   dim2
+      Simulated   0.673 -0.113
+      Theoretical 1.000 -1.000
       
       SD:
                    dim1  dim2
-      Simulated   1.184 1.537
+      Simulated   1.182 1.535
       Theoretical 1.000 1.291
       
       Covariance (simulated):
              [,1]   [,2]
-      [1,]  1.402 -0.654
-      [2,] -0.654  2.362
+      [1,]  1.396 -0.657
+      [2,] -0.657  2.358
       
       Covariance (theoretical):
            [,1]  [,2]
@@ -188,8 +188,8 @@
       
       Correlation (simulated):
              [,1]   [,2]
-      [1,]  1.000 -0.359
-      [2,] -0.359  1.000
+      [1,]  1.000 -0.362
+      [2,] -0.362  1.000
       
       Correlation (theoretical):
            [,1] [,2]
@@ -213,19 +213,19 @@
       -- [1m[1mComparison to theoretical distribution[1m[22m --
       
       Mean:
-                  dim1   dim2
-      Simulated   0.67 -0.118
-      Theoretical 1.00 -1.000
+                   dim1   dim2
+      Simulated   0.673 -0.113
+      Theoretical 1.000 -1.000
       
       SD:
                    dim1  dim2
-      Simulated   1.184 1.537
+      Simulated   1.182 1.535
       Theoretical 1.000 1.291
       
       Covariance (simulated):
              [,1]   [,2]
-      [1,]  1.402 -0.654
-      [2,] -0.654  2.362
+      [1,]  1.396 -0.657
+      [2,] -0.657  2.358
       
       Covariance (theoretical):
            [,1]  [,2]
@@ -234,8 +234,8 @@
       
       Correlation (simulated):
              [,1]   [,2]
-      [1,]  1.000 -0.359
-      [2,] -0.359  1.000
+      [1,]  1.000 -0.362
+      [2,] -0.362  1.000
       
       Correlation (theoretical):
            [,1] [,2]

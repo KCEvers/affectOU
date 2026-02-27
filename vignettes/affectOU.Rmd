@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 `affectOU` provides tools for modeling affect dynamics using the Ornstein-Uhlenbeck (OU) process -- a continuous-time stochastic model that captures how emotions fluctuate around a baseline and return to equilibrium over time.
 
-This vignette walks through the package's core functionality: simulating the OU process, computing theoretical quantities, and fitting unidimensional models to data. See [Affect Characteristics Implied by the OU Process](characteristics.html) for visual demonstrations of the model's qualitative behaviours and their psychological interpretations.
+This vignette walks through the package's core functionality: simulating the OU process, computing theoretical quantities, and fitting unidimensional models to data. See [Affect characteristics implied by the OU Process](characteristics.html) for visual demonstrations of the model's qualitative behaviours and their psychological interpretations.
 
 
 <!-- ## Setup -->

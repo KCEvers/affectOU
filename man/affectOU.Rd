@@ -9,8 +9,7 @@ affectOU(
   theta = 0.5,
   mu = 0,
   gamma = 1,
-  sigma = gamma \%*\% t(gamma),
-  initial_state = mu
+  sigma = gamma \%*\% t(gamma)
 )
 }
 \arguments{
@@ -34,9 +33,6 @@ semi-definite matrix. Off-diagonal elements represent correlated noise
 between dimensions.
 Either \code{gamma} or \code{sigma} must be specified, but not both. If \code{sigma}
 is specified, \code{gamma} is computed via Cholesky decomposition.}
-
-\item{initial_state}{Starting value of affect.
-For 1D: scalar. For multidimensional: vector. Defaults to \code{mu}.}
 }
 \value{
 An object of class \code{\link{affectOU}}, representing a univariate or multivariate
@@ -54,8 +50,11 @@ A named list of model parameters:
 }
 }
 
-\item{\code{initial_state}}{
-Numeric vector.
+\item{\code{stationary}}{
+A named list with the stationary distribution properties, precomputed at
+construction: \code{is_stable} (logical), \code{mean} (numeric vector, always \code{mu}),
+\code{sd} (numeric vector or \code{NULL} if unstable), \code{cov} (matrix or \code{NULL}),
+\code{cor} (matrix or \code{NULL}), \code{ndim} (integer).
 }
 
 \item{\code{ndim}}{
@@ -91,11 +90,11 @@ column \eqn{j}) represents the influence of dimension \eqn{j} on dimension
 \itemize{
 \item Diagonal elements \eqn{\Theta_{ii}}: self-regulation (how fast dimension
 \eqn{i} returns to its own attractor \eqn{\mu_i}). Positive values are
-necessary for self-regulation, but strong cross-regulation can override
+necessary for self-regulation, but strong coupling between dimensions can override
 this and destabilise the system (see \code{\link[=summary.affectOU]{summary()}} for
 system-level stability checks).
 \item Off-diagonal elements \eqn{\Theta_{ij}} where \eqn{i \neq j}:
-cross-regulation (how dimension \eqn{j} influences dimension \eqn{i}).
+coupling between dimensions (how dimension \eqn{j} influences dimension \eqn{i}).
 If \eqn{\Theta_{ij} > 0}, dimension \eqn{j} below its attractor has a
 positive influence on dimension \eqn{i} (pulls it up); if
 \eqn{\Theta_{ij} < 0}, dimension \eqn{j} below its attractor has a

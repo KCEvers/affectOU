@@ -218,7 +218,7 @@ ou_plot_time <- function(x,
     # Plot trajectories
     col_sim <- if (nsim > 1) {
       generate_shades(cols[i], nsim,
-        min_alpha = alpha / 2,
+        min_alpha = alpha / 4,
         max_alpha = alpha
       )
     } else {
@@ -243,7 +243,7 @@ ou_plot_time <- function(x,
   col_sim_leg <- if (nsim > 1) {
     generate_shades(
       if (by_dim) cols[layout$ncol] else cols[1L],
-      nsim, min_alpha = alpha / 2, max_alpha = alpha
+      nsim, min_alpha = alpha / 4, max_alpha = alpha
     )
   } else {
     cols[1L]

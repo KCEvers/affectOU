@@ -45,14 +45,14 @@ relaxation <- function(object, ...) {
 #' For diagonal \eqn{\Theta} (uncoupled dimensions), each dimension has its
 #' own analytic relaxation time \eqn{1/\theta_{ii}}.
 #'
-#' For non-diagonal \eqn{\Theta} (coupled dimensions), cross-regulation
+#' For non-diagonal \eqn{\Theta}, coupling between dimensions 
 #' alters the effective relaxation rate. The relaxation time is then computed
 #' numerically by finding when the theoretical autocorrelation function
 #' crosses \eqn{1/e} (and \eqn{0.5} for the half-life). Coupling can either
 #' speed up or slow down relaxation compared to the uncoupled case.
 #'
 #' @section Role of the diffusion parameter:
-#' For uncoupled systems (diagonal \eqn{\Theta}), \eqn{\gamma} affects only the *amplitude* of
+#' For uncoupled systems (diagonal \eqn{\Theta}), \eqn{\gamma} affects only the amplitude of
 #' fluctuations (the stationary variance), not the relaxation time scale.
 #' In the ACF \eqn{e^{-\theta_{ii}\tau}}, the stationary variance cancels.
 #'

@@ -14,13 +14,26 @@ test_that("affectOU creates valid 1D model object", {
   expect_equal(model[["parameters"]][["mu"]], mu)
   expect_equal(model[["parameters"]][["gamma"]], as.matrix(gamma)) # should be stored as matrix
   expect_equal(model[["parameters"]][["sigma"]], as.matrix(gamma %*% t(gamma))) # should be stored as matrix
-  expect_equal(model[["initial_state"]], mu) # Should default to mu
+  expect_equal(model[["stationary"]][["mean"]], mu) # stationary mean should equal mu
   expect_equal(model[["ndim"]], 1)
 })
 
-test_that("affectOU accepts custom initial_state (1D)", {
-  model <- affectOU(mu = 0, initial_state = 5)
-  expect_equal(model[["initial_state"]], 5)
+test_that("affectOU stores stationary distribution (1D stable)", {
+  model <- affectOU(theta = 0.5, mu = 2, gamma = 1)
+  stat <- model[["stationary"]]
+  expect_true(stat[["is_stable"]])
+  expect_equal(stat[["mean"]], 2)
+  # Theoretical sd: sqrt(gamma^2 / (2*theta)) = sqrt(1 / 1) = 1
+  expect_equal(stat[["sd"]], 1, tolerance = 1e-10)
+  expect_null(stat[["cov"]]) # NULL for 1D
+})
+
+test_that("affectOU stores stationary distribution (1D unstable)", {
+  model <- affectOU(theta = -0.5, mu = 0, gamma = 1)
+  stat <- model[["stationary"]]
+  expect_false(stat[["is_stable"]])
+  expect_null(stat[["mean"]])
+  expect_null(stat[["sd"]])
 })
 
 
@@ -80,10 +93,7 @@ test_that("affectOU infers ndim if not specified", {
   model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
   expect_equal(model[["ndim"]], 1)
 
-  model <- affectOU(
-    theta = 0.5, mu = 0, gamma = 1,
-    initial_state = c(2, 3, 4)
-  )
+  model <- affectOU(theta = diag(3), mu = 0, gamma = 1)
   expect_equal(model[["ndim"]], 3)
 
   model <- affectOU(theta = diag(3), mu = 0, gamma = 1)
@@ -114,23 +124,24 @@ test_that("affectOU creates valid 2D model object", {
   expect_equal(model[["parameters"]][["theta"]], theta)
   expect_equal(model[["parameters"]][["mu"]], mu)
   expect_equal(model[["parameters"]][["gamma"]], gamma)
-  expect_equal(model[["initial_state"]], mu) # Should default to mu
+  expect_equal(model[["stationary"]][["mean"]], mu) # stationary mean should equal mu
   expect_equal(model[["ndim"]], ndim)
 })
 
-test_that("affectOU accepts custom initial_state (2D)", {
+test_that("affectOU stores stationary distribution (2D stable)", {
   ndim <- 2
   theta <- matrix(c(0.5, 0, 0, 0.3), nrow = ndim)
   mu <- c(0, 1)
   gamma <- diag(ndim)
-  initial <- c(5, -2)
 
-  model <- affectOU(
-    ndim = ndim,
-    theta = theta, mu = mu, gamma = gamma, initial_state = initial
-  )
+  model <- affectOU(ndim = ndim, theta = theta, mu = mu, gamma = gamma)
+  stat <- model[["stationary"]]
 
-  expect_equal(model[["initial_state"]], initial)
+  expect_true(stat[["is_stable"]])
+  expect_equal(stat[["mean"]], mu)
+  expect_length(stat[["sd"]], ndim)
+  expect_true(is.matrix(stat[["cov"]]))
+  expect_equal(dim(stat[["cov"]]), c(ndim, ndim))
 })
 
 test_that("affectOU validates theta, gamma, sigma dimensions (2D)", {

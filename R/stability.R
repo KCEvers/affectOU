@@ -58,7 +58,7 @@ stability <- function(object, ...) {
 #' in \eqn{\Theta} ("stable node" if positive, "random walk" if zero,
 #' "unstable node" if negative). A dimension classified as "stable node" in
 #' isolation may still belong to an unstable coupled system due to
-#' cross-regulation.
+#' coupling between dimensions.
 #'
 #' @return A list of class `stability_affectOU` containing:
 #'   \describe{

@@ -97,7 +97,7 @@ characteristics, see the vignettes:
 
   - [Get started with
     affectOU](https://kcevers.github.io/affectOU/articles/affectOU.html)
-  - [Affect Characteristics Implied by the OU
+  - [Affect characteristics implied by the OU
     Process](https://kcevers.github.io/affectOU/articles/characteristics.html)
 
 Theoretical properties of the OU process are explained in

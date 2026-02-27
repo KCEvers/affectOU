@@ -21,7 +21,7 @@ An object of class \code{summary_affectOU} containing:
 each dimension (see \code{\link[=relaxation.affectOU]{relaxation()}})}
 \item{coupling}{Coupling structure: \code{NA} for 1D, \code{NULL} if uncoupled, or
 data frame with columns \code{from}, \code{to}, \code{value}, \code{sign} showing
-cross-regulation between dimensions}
+coupling between dimensions}
 \item{noise_structure}{Noise correlation structure: \code{NA} for 1D, \code{NULL} if
 independent, or data frame with columns \code{dim1}, \code{dim2}, \code{value}, \code{sign}
 showing correlated noise pairs}
