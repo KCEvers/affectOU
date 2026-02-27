@@ -112,7 +112,7 @@ coef.affectOU <- function(object, ...) {
 
 #' Update model configuration
 #'
-#' Modify the parameters and initial state of an Ornstein-Uhlenbeck (OU) model.
+#' Modify the parameters of an Ornstein-Uhlenbeck (OU) model.
 #'
 #' @param object An object of class [affectOU].
 #' @param ndim Optional. New dimensionality of the affect process.
@@ -120,7 +120,6 @@ coef.affectOU <- function(object, ...) {
 #' @param mu Optional. New attractor location (scalar or vector).
 #' @param gamma Optional. New diffusion coefficient (scalar or matrix).
 #' @param sigma Optional. New noise covariance (scalar or matrix).
-#' @param initial_state Optional. New starting value of affect.
 #' @param ... Additional arguments (unused)
 #'
 #' @return Updated [affectOU] object
@@ -141,13 +140,11 @@ update.affectOU <- function(object,
                             mu = NULL,
                             gamma = NULL,
                             sigma = NULL,
-                            initial_state = NULL,
                             ...) {
   # Use existing values as defaults
   new_ndim <- if (is.null(ndim)) object$ndim else ndim
   new_theta <- if (is.null(theta)) object$parameters$theta else theta
   new_mu <- if (is.null(mu)) object$parameters$mu else mu
-  new_initial_state <- if (is.null(initial_state)) object$initial_state else initial_state
 
   # Handle gamma/sigma: prefer new values, fall back to existing gamma
   if (is.null(gamma) && is.null(sigma)) {
@@ -167,8 +164,7 @@ update.affectOU <- function(object,
     theta = new_theta,
     mu = new_mu,
     gamma = new_gamma,
-    sigma = new_sigma,
-    initial_state = new_initial_state
+    sigma = new_sigma
   )
 }
 
@@ -251,7 +247,7 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 #'       each dimension (see [`relaxation()`][relaxation.affectOU()])}
 #'     \item{coupling}{Coupling structure: `NA` for 1D, `NULL` if uncoupled, or
 #'       data frame with columns `from`, `to`, `value`, `sign` showing
-#'       cross-regulation between dimensions}
+#'       coupling between dimensions}
 #'     \item{noise_structure}{Noise correlation structure: `NA` for 1D, `NULL` if
 #'       independent, or data frame with columns `dim1`, `dim2`, `value`, `sign`
 #'       showing correlated noise pairs}
@@ -347,37 +343,41 @@ print.summary_affectOU <- function(x, digits = 3, max_dim = 20, ...) {
   cli::cli_h2("Stationary distribution")
 
   if (stab$is_stable) {
+    rl      <- x$relaxation
+    tau_max <- attr(rl, "tau_max")
+    hl_max  <- attr(rl, "half_life_max")
+    tau_min <- attr(rl, "tau_min")
+    hl_min  <- attr(rl, "half_life_min")
+
     if (ndim == 1) {
-      hl_val <- if (is.data.frame(x$relaxation)) x$relaxation$half_life else x$relaxation$half_life
-      tau_val <- if (is.data.frame(x$relaxation)) x$relaxation$relaxation_time else x$relaxation$relaxation_time
       cli::cli_text("Mean: {round(stat$mean, digits)}")
       cli::cli_text("SD: {round(stat$sd, digits)}")
-      cli::cli_text("Half-life: {round(hl_val, digits)}")
-      cli::cli_text("Relaxation time (\u03c4): {round(tau_val, digits)}")
+      cli::cli_text("Relaxation time (\u03c4): {round(tau_max, digits)}")
     } else if (ndim <= max_dim) {
       cli::cli_text("Mean: [{paste(round(stat$mean, digits), collapse = ', ')}]")
       cli::cli_text("SD: [{paste(round(stat$sd, digits), collapse = ', ')}]")
-      cli::cli_text("Half-life: [{paste(round(x$relaxation$half_life, digits), collapse = ', ')}]")
-      cli::cli_text("Relaxation time (\u03c4): [{paste(round(x$relaxation$relaxation_time, digits), collapse = ', ')}]")
+      cli::cli_text(
+        "Relaxation time (\u03c4): slowest = {round(tau_max, digits)}, fastest = {round(tau_min, digits)}"
+      )
     } else {
       cli::cli_text("High-dimensional model; use {.fn coef} and {.fn relaxation} to inspect.")
     }
   } else {
     cli::cli_text("Does not exist (system is not stable).")
 
-    # Show relaxation times for stable dimensions
-    if (is.data.frame(x$relaxation) && ndim > 1 && ndim <= max_dim) {
-      rl <- x$relaxation
-      valid_rl <- !is.na(rl$relaxation_time)
+    # Show relaxation times for stable modes
+    rl <- x$relaxation
+    valid_rl <- !is.na(rl$relaxation_time)
 
-      if (any(valid_rl)) {
-        cli::cli_h3("Relaxation time (stable dimensions)")
-        cli::cli_ul()
-        for (i in which(valid_rl)) {
-          cli::cli_li("Dim. {rl$dimension[i]}: \u03c4 = {round(rl$relaxation_time[i], digits)}, t\u2081/\u2082 = {round(rl$half_life[i], digits)}")
-        }
-        cli::cli_end()
+    if (any(valid_rl) && ndim <= max_dim) {
+      cli::cli_h3("Relaxation time (stable modes)")
+      cli::cli_ul()
+      for (i in which(valid_rl)) {
+        cli::cli_li(
+          "Mode {rl$mode[i]}: \u03c4 = {round(rl$relaxation_time[i], digits)}, t\u2081/\u2082 = {round(rl$half_life[i], digits)}"
+        )
       }
+      cli::cli_end()
     }
   }
 

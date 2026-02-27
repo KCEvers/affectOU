@@ -114,7 +114,7 @@ test_that("summary.affectOU coupling direction is correct (col influences row)",
   expect_equal(coupling$sign, "+")
 })
 
-test_that("summary.affectOU coupling captures asymmetric cross-regulation", {
+test_that("summary.affectOU coupling captures asymmetric coupling", {
   # Asymmetric coupling: Dim 1 inhibits Dim 2, Dim 2 excites Dim 1
   # theta_12 = 0.15 (positive): Dim 2 -> Dim 1 (+)
   # theta_21 = -0.1 (negative): Dim 1 -> Dim 2 (-)
@@ -217,13 +217,12 @@ test_that("update.affectOU works (1D)", {
   new_theta <- 0.2
   new_mu <- 4
   new_gamma <- 0.5
-  new_initial <- 2
-  model2 <- update(model, theta = new_theta, mu = new_mu, gamma = new_gamma, initial_state = new_initial)
+  model2 <- update(model, theta = new_theta, mu = new_mu, gamma = new_gamma)
 
   expect_equal(model2[["parameters"]][["theta"]], as.matrix(new_theta))
   expect_equal(model2[["parameters"]][["mu"]], new_mu)
   expect_equal(model2[["parameters"]][["gamma"]], as.matrix(new_gamma))
-  expect_equal(model2[["initial_state"]], new_initial)
+  expect_equal(model2[["stationary"]][["mean"]], new_mu)
 })
 
 test_that("update.affectOU works (2D)", {

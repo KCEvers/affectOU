@@ -8,6 +8,7 @@
   object,
   nsim = 1,
   seed = NULL,
+  initial_state = NULL,
   dt = 0.01,
   stop = 100,
   save_at = dt,
@@ -20,6 +21,8 @@
 \item{nsim}{Number of replications to simulate.}
 
 \item{seed}{Random seed for reproducibility.}
+
+\item{initial_state}{Optional initial state vector. If \code{NULL}, defaults to a draw from the stationary distribution (if stable) or the attractor location \code{mu} (if non-stable).}
 
 \item{dt}{Time step for Euler-Maruyama discretization (smaller = more accurate).}
 
@@ -52,4 +55,13 @@ sim <- simulate(model, nsim = 2)
 plot(sim)
 summary(sim)
 head(sim)
+
+# Specify initial state
+sim <- simulate(model, initial_state = c(1, -1))
+plot(sim)
+
+# Simulate for a longer time with coarser saving interval
+sim <- simulate(model, stop = 500, save_at = 10)
+plot(sim)
+
 }

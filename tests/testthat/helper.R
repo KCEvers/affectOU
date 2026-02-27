@@ -25,7 +25,12 @@ expect_working_model <- function(model, ...) {
   expect_silent(coef(model))
   expect_silent(s <- summary(model))
   expect_silent(relaxation(model))
-  expect_silent(sim <- quick_sim(model, ...))
+  is_stable <- model[["stationary"]][["is_stable"]]
+  if (is_stable) {
+    expect_silent(sim <- quick_sim(model, ...))
+  } else {
+    expect_no_error(sim <- suppressWarnings(quick_sim(model, ...)))
+  }
   expect_silent(df <- as.data.frame(sim))
   expect_true(nrow(df) > 0)
   expect_silent(plot(sim, type = "time"))

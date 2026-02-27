@@ -68,12 +68,12 @@ ou_plot_time(
 \item{...}{Additional graphical parameters}
 }
 \value{
-NULL (invisibly), called for side effects only
+\code{NULL} (invisibly), called for side effects only.
 }
 \description{
 Visualise the time series trajectories of affect dimensions from an OU
-affect simulation. Each dimension is plotted in a separate panel, with
-multiple simulations overlaid within each panel.
+affect simulation. Each dimension can be plotted in a separate panel by setting
+\code{by_dim = TRUE}. Specific dimensions or simulations can be plotted with \code{which_dim} and \code{which_sim}, respectively.
 }
 \section{Attractor Line}{
 
@@ -88,8 +88,8 @@ model <- affectOU(ndim = 2)
 sim <- simulate(model, nsim = 3)
 ou_plot_time(sim)
 
-# Plot dimensions in one panel
+# Plot dimensions in separate panels
 sim <- simulate(model, nsim = 1)
-ou_plot_time(sim, by_dim = FALSE)
+ou_plot_time(sim, by_dim = TRUE)
 
 }

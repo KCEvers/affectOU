@@ -37,8 +37,13 @@ NULL
 #' @param type Type of plot; one of `"time"`, `"histogram"`, `"acf"`, or `"phase"`
 #' @param ... Additional parameters passed to specific plotting functions
 #'
-#' @return NULL (invisibly), called for side effects only
-#'
+#' @return `NULL` (invisibly), called for side effects only.
+#' @seealso
+#' Detailed documentation for each plot type:
+#' * [ou_plot_time()] — time series with attractor line
+#' * [ou_plot_histogram()] — distribution with theoretical overlay
+#' * [ou_plot_acf()] — empirical vs. theoretical autocorrelation
+#' * [ou_plot_phase()] — phase portrait with mean reversion line
 #' @export
 #'
 #' @examples
@@ -74,8 +79,8 @@ plot.simulate_affectOU <- function(x,
 #' Plot simulation trajectory
 #'
 #' Visualise the time series trajectories of affect dimensions from an OU
-#' affect simulation. Each dimension is plotted in a separate panel, with
-#' multiple simulations overlaid within each panel.
+#' affect simulation. Each dimension can be plotted in a separate panel by setting
+#' `by_dim = TRUE`. Specific dimensions or simulations can be plotted with `which_dim` and `which_sim`, respectively.
 #'
 #' @section Attractor Line:
 #' The horizontal dashed line shows the attractor level \eqn{\mu}. Trajectories
@@ -87,7 +92,7 @@ plot.simulate_affectOU <- function(x,
 #' @inheritParams plot.simulate_affectOU
 #' @param col_theory Color for `mu` (i.e., attractor) line
 #'
-#' @return NULL (invisibly), called for side effects only
+#' @return `NULL` (invisibly), called for side effects only.
 #'
 #' @export
 #'
@@ -96,9 +101,9 @@ plot.simulate_affectOU <- function(x,
 #' sim <- simulate(model, nsim = 3)
 #' ou_plot_time(sim)
 #'
-#' # Plot dimensions in one panel
+#' # Plot dimensions in separate panels
 #' sim <- simulate(model, nsim = 1)
-#' ou_plot_time(sim, by_dim = FALSE)
+#' ou_plot_time(sim, by_dim = TRUE)
 #'
 ou_plot_time <- function(x,
                          which_dim = NULL,
@@ -213,7 +218,7 @@ ou_plot_time <- function(x,
     # Plot trajectories
     col_sim <- if (nsim > 1) {
       generate_shades(cols[i], nsim,
-        min_alpha = alpha / 2,
+        min_alpha = alpha / 4,
         max_alpha = alpha
       )
     } else {
@@ -238,7 +243,7 @@ ou_plot_time <- function(x,
   col_sim_leg <- if (nsim > 1) {
     generate_shades(
       if (by_dim) cols[layout$ncol] else cols[1L],
-      nsim, min_alpha = alpha / 2, max_alpha = alpha
+      nsim, min_alpha = alpha / 4, max_alpha = alpha
     )
   } else {
     cols[1L]
@@ -298,7 +303,7 @@ ou_plot_time <- function(x,
 #'
 #' Visualise the distribution of affect values from an OU affect simulation
 #' using histograms for each dimension. In case of multiple simulations, the
-#' histograms aggregate data across all simulations for each dimension.
+#' histograms aggregate data across all simulations for each dimension. Different dimensions can be plotted in separate panels by setting `by_dim = TRUE`. Specific dimensions or simulations can be plotted with `which_dim` and `which_sim`, respectively.
 #'
 #' @section Stationary Distribution:
 #' When the system is stable (\eqn{\theta > 0}), the stationary distribution
@@ -314,7 +319,7 @@ ou_plot_time <- function(x,
 #' @inheritParams plot.simulate_affectOU
 #' @param col_theory Color for theoretical distribution line (if stationary)
 #'
-#' @return NULL (invisibly), called for side effects only
+#' @return `NULL` (invisibly), called for side effects only.
 #'
 #' @export
 #'
@@ -323,13 +328,13 @@ ou_plot_time <- function(x,
 #' sim <- simulate(model, nsim = 3)
 #' ou_plot_histogram(sim)
 #'
-#' # Plot dimensions in one panel
+#' # Plot dimensions in separate panels
 #' sim <- simulate(model, nsim = 1)
-#' ou_plot_histogram(sim, by_dim = FALSE)
+#' ou_plot_histogram(sim, by_dim = TRUE)
 #'
 #' # Same stationary SD, different dynamics
-#' m1 <- affectOU(theta = 0.5, mu = 0, gamma = 1) # SD = 1, half-life = 1.4
-#' m2 <- affectOU(theta = 2.0, mu = 0, gamma = 2) # SD = 1, half-life = 0.35
+#' m1 <- affectOU(theta = 0.5, mu = 0, gamma = 1) # SD = 1
+#' m2 <- affectOU(theta = 2.0, mu = 0, gamma = 2) # SD = 1
 #' s1 <- simulate(m1, stop = 100)
 #' s2 <- simulate(m2, stop = 100)
 #' ou_plot_histogram(s1, main = "Slow regulation")
@@ -590,7 +595,7 @@ ou_plot_histogram <- function(x,
 #' @param which_sim Simulation index to plot (default 1). Only one simulation can be plotted at a time.
 #' @param col_theory Color for theoretical ACF/CCF line
 #'
-#' @return NULL (invisibly)
+#' @return `NULL` (invisibly), called for side effects only.
 #' @export
 #'
 #' @examples
@@ -602,8 +607,7 @@ ou_plot_histogram <- function(x,
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.01)
 #' ou_plot_acf(sim, lag.max = 5)
-#' abline(v = log(2) / 0.5, col = "red", lty = 2) # half-life
-#' abline(h = 0.5, col = "red", lty = 2)
+#' 
 ou_plot_acf <- function(x,
                         lag.max = 10,
                         which_dim = NULL,
@@ -836,7 +840,7 @@ ou_plot_acf <- function(x,
 #' @inheritParams plot.simulate_affectOU
 #' @param col_theory Color for theoretical relationship line
 #'
-#' @return NULL (invisibly), called for side effects only
+#' @return `NULL` (invisibly), called for side effects only.
 #' @export
 #'
 #' @examples

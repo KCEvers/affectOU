@@ -5,7 +5,7 @@
 \alias{simpaper}
 \title{Simulation in Evers & Vanhasbroeck (2026)}
 \format{
-An object of class \code{simulate_affectOU} containing simulated trajectories from the specified Ornstein-Uhlenbeck process.
+An object of class \code{\link[=simulate.affectOU]{simulate_affectOU}} containing simulated trajectories from the specified Ornstein-Uhlenbeck process.
 }
 \usage{
 simpaper

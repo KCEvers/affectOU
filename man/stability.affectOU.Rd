@@ -77,7 +77,7 @@ the behavior of each dimension in isolation based on its diagonal element
 in \eqn{\Theta} ("stable node" if positive, "random walk" if zero,
 "unstable node" if negative). A dimension classified as "stable node" in
 isolation may still belong to an unstable coupled system due to
-cross-regulation.
+coupling between dimensions.
 }
 
 \examples{

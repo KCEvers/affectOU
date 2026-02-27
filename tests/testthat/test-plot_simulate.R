@@ -219,7 +219,7 @@ test_that("ou_plot_histogram handles 2D unstable OU", {
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(model = affectOU(ndim = 2, theta = -5), nsim = 5)
+  sim <- suppressWarnings(quick_sim(model = affectOU(ndim = 2, theta = -5), nsim = 5))
 
   # Should not plot theoretical distribution for unstable OU
   type <- "histogram"
@@ -238,7 +238,7 @@ test_that("ou_plot_histogram handles OU with 1 stable and 1 unstable dimension",
   # Suppress graphics output
   withr::local_pdf(NULL)
 
-  sim <- quick_sim(model = affectOU(ndim = 2, theta = c(-5, 1)), nsim = 5)
+  sim <- suppressWarnings(quick_sim(model = affectOU(ndim = 2, theta = c(-5, 1)), nsim = 5))
 
   # Should not plot theoretical distribution for unstable OU
   type <- "histogram"

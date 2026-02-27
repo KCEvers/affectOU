@@ -60,7 +60,7 @@ ou_plot_acf(
 \item{...}{Additional graphical parameters}
 }
 \value{
-NULL (invisibly)
+\code{NULL} (invisibly), called for side effects only.
 }
 \description{
 Visualise the empirical and theoretical autocorrelation functions (ACF) and
@@ -95,6 +95,5 @@ ou_plot_acf(sim)
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.01)
 ou_plot_acf(sim, lag.max = 5)
-abline(v = log(2) / 0.5, col = "red", lty = 2) # half-life
-abline(h = 0.5, col = "red", lty = 2)
+
 }

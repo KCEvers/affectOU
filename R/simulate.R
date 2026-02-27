@@ -6,6 +6,7 @@
 #' @param object An `affectOU` model object.
 #' @param nsim Number of replications to simulate.
 #' @param seed Random seed for reproducibility.
+#' @param initial_state Optional initial state vector. If `NULL`, defaults to a draw from the stationary distribution (if stable) or the attractor location `mu` (if non-stable).
 #' @param dt Time step for Euler-Maruyama discretization (smaller = more accurate).
 #' @param stop Total simulation time.
 #' @param save_at Time interval at which to save simulated data; used to linearly interpolate results. Useful for reducing output size.
@@ -31,9 +32,19 @@
 #' plot(sim)
 #' summary(sim)
 #' head(sim)
+#' 
+#' # Specify initial state
+#' sim <- simulate(model, initial_state = c(1, -1))
+#' plot(sim)
+#' 
+#' # Simulate for a longer time with coarser saving interval
+#' sim <- simulate(model, stop = 500, save_at = 10)
+#' plot(sim)
+#' 
 simulate.affectOU <- function(object,
                               nsim = 1,
                               seed = NULL,
+                              initial_state = NULL,
                               dt = 0.01,
                               stop = 100,
                               save_at = dt,
@@ -93,12 +104,42 @@ simulate.affectOU <- function(object,
   theta <- object[["parameters"]][["theta"]]
   mu <- object[["parameters"]][["mu"]]
   gamma <- object[["parameters"]][["gamma"]]
-  x0 <- object[["initial_state"]]
 
   # Ensure parameters are in correct format
   if (ndim == 1) {
     theta <- as.numeric(theta)
     gamma <- as.numeric(gamma)
+  }
+
+  # Determine how to draw initial state for each simulation
+  stat <- object[["stationary"]]
+  if (is.null(initial_state)) {
+    if (!stat[["is_stable"]]) {
+      cli::cli_warn(c(
+        "!" = "System is not stable; no stationary distribution exists.",
+        "i" = "Defaulting {.arg initial_state} to {.field mu}."
+      ))
+      x0_fixed <- mu
+      draw_x0 <- function() x0_fixed
+    } else if (ndim == 1) {
+      if (stat[["sd"]] == 0) {
+        x0_fixed <- stat[["mean"]]
+        draw_x0 <- function() x0_fixed
+      } else {
+        draw_x0 <- function() stats::rnorm(1, mean = stat[["mean"]], sd = stat[["sd"]])
+      }
+    } else {
+      if (all(stat[["sd"]] == 0)) {
+        x0_fixed <- stat[["mean"]]
+        draw_x0 <- function() x0_fixed
+      } else {
+        L <- t(chol(stat[["cov"]]))
+        draw_x0 <- function() stat[["mean"]] + L %*% stats::rnorm(ndim)
+      }
+    }
+  } else {
+    initial_state <- coerce_to_vector(initial_state, ndim, "initial_state")
+    draw_x0 <- function() initial_state
   }
 
   # Time vectors
@@ -113,7 +154,7 @@ simulate.affectOU <- function(object,
   for (sim_idx in seq_len(nsim)) {
     # Initialize trajectory
     x <- matrix(0, nrow = n_steps + 1, ncol = ndim)
-    x[1, ] <- x0
+    x[1, ] <- draw_x0()
 
     # Pre-compute noise for efficiency
     if (ndim == 1) {

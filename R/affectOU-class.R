@@ -24,11 +24,11 @@
 #' \eqn{\sum_j \Theta_{ij}(\mu_j - X_j)}:
 #' - Diagonal elements \eqn{\Theta_{ii}}: self-regulation (how fast dimension
 #'   \eqn{i} returns to its own attractor \eqn{\mu_i}). Positive values are
-#'   necessary for self-regulation, but strong cross-regulation can override
+#'   necessary for self-regulation, but strong coupling between dimensions can override
 #'   this and destabilise the system (see [`summary()`][summary.affectOU()] for
 #'   system-level stability checks).
 #' - Off-diagonal elements \eqn{\Theta_{ij}} where \eqn{i \neq j}:
-#'   cross-regulation (how dimension \eqn{j} influences dimension \eqn{i}).
+#'   coupling between dimensions (how dimension \eqn{j} influences dimension \eqn{i}).
 #'   If \eqn{\Theta_{ij} > 0}, dimension \eqn{j} below its attractor has a
 #'   positive influence on dimension \eqn{i} (pulls it up); if
 #'   \eqn{\Theta_{ij} < 0}, dimension \eqn{j} below its attractor has a
@@ -55,13 +55,10 @@
 #'   between dimensions.
 #'   Either `gamma` or `sigma` must be specified, but not both. If `sigma`
 #'   is specified, `gamma` is computed via Cholesky decomposition.
-#' @param initial_state Starting value of affect.
-#'   For 1D: scalar. For multidimensional: vector. Defaults to `mu`.
 #'
 #' @return
 #' An object of class [`affectOU`], representing a univariate or multivariate
-#' Ornstein–Uhlenbeck affect regulation model.
-#' The object is a list with the following components:
+#' Ornstein–Uhlenbeck affect regulation model. The object is a list with the following components:
 #'
 #' \describe{
 #'
@@ -75,8 +72,11 @@
 #'     }
 #'   }
 #'
-#'   \item{`initial_state`}{
-#'     Numeric vector.
+#'   \item{`stationary`}{
+#'     A named list with the stationary distribution properties, precomputed at
+#'     construction: `is_stable` (logical), `mean` (numeric vector, always `mu`),
+#'     `sd` (numeric vector or `NULL` if unstable), `cov` (matrix or `NULL`),
+#'     `cor` (matrix or `NULL`), `ndim` (integer).
 #'   }
 #'
 #'   \item{`ndim`}{
@@ -85,10 +85,14 @@
 #'
 #' }
 #'
-#' @seealso The returned object can be inspected with [`print()`][print.affectOU()], [`summary()`][summary.affectOU()],
-#' [`stability()`][stability.affectOU()], [`stationary()`][stationary.affectOU()], and
-#' [`coef()`][coef.affectOU()], can be simulated over time with [`simulate()`][simulate.affectOU()], and fitted to univariate data
-#' with [`fit()`][fit.affectOU()].
+#' @seealso
+#' * [simulate.affectOU()] to generate trajectories.
+#' * [plot.simulate_affectOU()] to visualize simulations
+#'   (`type = "time"`, `"histogram"`, `"acf"`, `"phase"`).
+#' * [summary.affectOU()] for stability, stationary distribution, and
+#'   relaxation time.
+#' * [fit.affectOU()] to estimate parameters from observed data.
+#' * [update.affectOU()] to modify parameters without recreating the model.
 #'
 #' @export
 #'
@@ -123,14 +127,13 @@
 #'
 #' # Simulate trajectory
 #' sim_3d <- simulate(model_3d, stop = 100, save_at = 0.1)
-#' plot(sim_3d, by_dim = FALSE)
+#' plot(sim_3d)
 #'
 affectOU <- function(ndim = 1,
                      theta = 0.5,
                      mu = 0,
                      gamma = 1,
-                     sigma = gamma %*% t(gamma),
-                     initial_state = mu) {
+                     sigma = gamma %*% t(gamma)) {
   # --- Input validation and coercion ---
 
   # Check gamma/sigma mutual exclusivity
@@ -151,7 +154,7 @@ affectOU <- function(ndim = 1,
   if (missing(ndim) || is.null(ndim)) {
     ndim <- infer_ndim(
       theta = theta, mu = mu, gamma = gamma,
-      sigma = sigma, initial_state = initial_state
+      sigma = sigma
     )
   }
 
@@ -180,15 +183,41 @@ affectOU <- function(ndim = 1,
     gamma <- compute_gamma_from_sigma(sigma, ndim)
   }
 
-  # Set default initial_state
-  if (is.null(initial_state)) {
-    initial_state <- mu
-  } else {
-    initial_state <- coerce_to_vector(initial_state, ndim, "initial_state")
-  }
-
   # --- Check for valid sigma ---
   check_sigma_values(sigma, ndim)
+
+  # Precompute stationary distribution
+  is_stable <- check_stability(theta)$is_stable
+  if (is_stable) {
+    stat_cov <- solve_lyapunov(theta, sigma)
+    if (ndim == 1) {
+      stat_sd <- sqrt(stat_cov[1, 1])
+      stat_cov_out <- NULL
+      stat_cor <- NULL
+    } else {
+      stat_sd <- sqrt(diag(stat_cov))
+      d <- diag(stat_cov)
+      if (all(d > 0)) {
+        stat_cor <- stats::cov2cor(stat_cov)
+      } else {
+        stat_cor <- diag(ndim)
+        nonzero <- which(d > 0)
+        if (length(nonzero) > 1) {
+          stat_cor[nonzero, nonzero] <- stats::cov2cor(stat_cov[nonzero, nonzero])
+        }
+      }
+      stat_cov_out <- stat_cov
+    }
+    stationary_info <- list(
+      is_stable = TRUE, mean = mu, sd = stat_sd,
+      cov = stat_cov_out, cor = stat_cor, ndim = ndim
+    )
+  } else {
+    stationary_info <- list(
+      is_stable = FALSE, mean = NULL, sd = NULL,
+      cov = NULL, cor = NULL, ndim = ndim
+    )
+  }
 
   # Create the object
   model <- new_affectOU(
@@ -197,7 +226,7 @@ affectOU <- function(ndim = 1,
     mu = mu,
     gamma = gamma,
     sigma = sigma,
-    initial_state = initial_state
+    stationary = stationary_info
   )
 
   # Final structural validation
@@ -220,11 +249,11 @@ affectOU <- function(ndim = 1,
 #' @param mu Numeric vector. Attractor location.
 #' @param gamma Numeric matrix. Diffusion coefficient.
 #' @param sigma Numeric matrix. Noise covariance.
-#' @param initial_state Numeric vector. Starting state.
+#' @param stationary List. Precomputed stationary distribution properties.
 #'
 #' @return An object of class `affectOU`.
 #' @noRd
-new_affectOU <- function(ndim, theta, mu, gamma, sigma, initial_state) {
+new_affectOU <- function(ndim, theta, mu, gamma, sigma, stationary) {
   structure(
     list(
       parameters = list(
@@ -233,7 +262,7 @@ new_affectOU <- function(ndim, theta, mu, gamma, sigma, initial_state) {
         gamma = gamma,
         sigma = sigma
       ),
-      initial_state = initial_state,
+      stationary = stationary,
       ndim = ndim
     ),
     class = "affectOU"
@@ -258,7 +287,7 @@ validate_affectOU <- function(x) {
   }
 
   # Check top-level structure
-  required_fields <- c("parameters", "initial_state", "ndim")
+  required_fields <- c("parameters", "stationary", "ndim")
   missing_fields <- setdiff(required_fields, names(x))
   if (length(missing_fields) > 0) {
     cli::cli_abort("Missing required fields: {.field {missing_fields}}.")
@@ -291,7 +320,6 @@ validate_affectOU <- function(x) {
   mu <- x[["parameters"]][["mu"]]
   gamma <- x[["parameters"]][["gamma"]]
   sigma <- x[["parameters"]][["sigma"]]
-  initial_state <- x[["initial_state"]]
 
   # theta: numeric matrix, ndim x ndim
   if (!is.numeric(theta) || !is.matrix(theta)) {
@@ -322,12 +350,6 @@ validate_affectOU <- function(x) {
     cli::cli_abort("{.field sigma} must be a {ndim}x{ndim} matrix.")
   }
 
-  # initial_state: numeric vector, length ndim
-  if (!is.numeric(initial_state) || !is.vector(initial_state) ||
-    length(initial_state) != ndim) {
-    cli::cli_abort("{.field initial_state} must be a numeric vector of length {ndim}.")
-  }
-
   invisible(x)
 }
 
@@ -337,7 +359,7 @@ validate_affectOU <- function(x) {
 #' Infer ndim from parameters
 #' @noRd
 infer_ndim <- function(theta = NULL, mu = NULL, gamma = NULL,
-                       sigma = NULL, initial_state = NULL) {
+                       sigma = NULL) {
   # Collect dimensions from all non-NULL parameters
   dims <- c()
 
@@ -345,7 +367,6 @@ infer_ndim <- function(theta = NULL, mu = NULL, gamma = NULL,
   if (!is.null(mu)) dims <- c(dims, length(mu))
   if (!is.null(gamma)) dims <- c(dims, NROW(gamma))
   if (!is.null(sigma)) dims <- c(dims, NROW(sigma))
-  if (!is.null(initial_state)) dims <- c(dims, length(initial_state))
 
   if (length(dims) == 0) {
     return(1L)
