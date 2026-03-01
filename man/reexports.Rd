@@ -6,6 +6,7 @@
 \alias{equation}
 \alias{fit}
 \title{Objects exported from other packages}
+\concept{fit}
 \keyword{internal}
 \description{
 These objects are imported from other packages. Follow the links

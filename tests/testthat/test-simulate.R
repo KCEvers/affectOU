@@ -146,11 +146,11 @@ test_that("simulate.affectOU handles coupled dynamics (2D)", {
 })
 
 test_that("simulate.affectOU handles correlated noise (2D)", {
-  # Correlated gamma
+  # Correlated sigma
   ndim <- 2
   theta <- diag(2) * 0.5
-  gamma <- matrix(c(1, 0.5, 0.5, 1), nrow = 2)
-  model <- affectOU(ndim = ndim, theta = theta, mu = c(0, 0), gamma = gamma)
+  sigma <- matrix(c(1.25, 1, 1, 1.25), nrow = 2)
+  model <- affectOU(ndim = ndim, theta = theta, mu = c(0, 0), sigma = sigma)
 
   expect_silent(simulate(model, stop = 100, dt = .1, save_at = .1, nsim = 1))
 })
@@ -354,13 +354,13 @@ test_that("as.matrix long is default", {
 test_that("as.matrix wide column names simplify appropriately", {
   # Single dim, single sim
   sim_1_1 <- quick_sim(ndim = 1, nsim = 1)
-  expect_equal(colnames(as.matrix(sim_1_1, direction = "wide")), "value")
+  expect_equal(colnames(as.matrix(sim_1_1, direction = "wide")), "dim1")
 
   # Single dim, multiple sim
   sim_1_3 <- quick_sim(ndim = 1, nsim = 3)
   expect_equal(
     colnames(as.matrix(sim_1_3, direction = "wide")),
-    c("sim1", "sim2", "sim3")
+    c("dim1.sim1", "dim1.sim2", "dim1.sim3")
   )
 
   # Multiple dim, single sim
@@ -368,6 +368,13 @@ test_that("as.matrix wide column names simplify appropriately", {
   expect_equal(
     colnames(as.matrix(sim_2_1, direction = "wide")),
     c("dim1", "dim2")
+  )
+
+  # Multiple dim, multiple sim
+  sim_2_2 <- quick_sim(ndim = 2, nsim = 2)
+  expect_equal(
+    colnames(as.matrix(sim_2_2, direction = "wide")),
+    c("dim1.sim1", "dim2.sim1", "dim1.sim2", "dim2.sim2")
   )
 })
 

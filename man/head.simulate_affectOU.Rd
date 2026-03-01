@@ -24,3 +24,4 @@ model <- affectOU()
 sim <- simulate(model)
 head(sim)
 }
+\concept{simulate}

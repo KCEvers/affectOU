@@ -9,9 +9,9 @@
 \arguments{
 \item{x}{An object of class \code{summary_affectOU}}
 
-\item{digits}{Number of digits to display}
+\item{digits}{Number of digits to display.}
 
-\item{max_dim}{Maximum number of dimensions to display details for}
+\item{max_dim}{Maximum number of dimensions to display details for.}
 
 \item{...}{Additional arguments (unused)}
 }
@@ -23,3 +23,4 @@ model <- affectOU(ndim = 2)
 summary_model <- summary(model)
 print(summary_model)
 }
+\concept{config}

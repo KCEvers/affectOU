@@ -20,7 +20,8 @@ dimension-simulation combinations as columns.}
 For \code{direction = "long"}, a matrix with columns
 \code{time}, \code{dim}, \code{sim}, \code{value}. For \code{direction = "wide"}, a matrix with dimensions
 (ntime x ndim*nsim). Columns iterate over dimensions first, then
-simulations.
+simulations. Column names are \code{dim1}, \code{dim2}, ... when \code{nsim = 1}, or
+\code{dim1.sim1}, \code{dim2.sim1}, ..., \code{dim1.sim2}, ... when \code{nsim > 1}.
 }
 \description{
 Returns the simulation data as a 2-dimensional matrix in either long or
@@ -38,3 +39,4 @@ head(mat_long)
 mat_wide <- as.matrix(sim, direction = "wide")
 head(mat_wide)
 }
+\concept{simulate}

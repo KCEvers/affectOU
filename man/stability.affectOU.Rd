@@ -14,7 +14,7 @@
 \item{...}{Additional arguments (unused).}
 }
 \value{
-A list of class \code{stability_affectOU} containing:
+A list of class \code{\link[=stability.affectOU]{stability_affectOU}} containing:
 \describe{
 \item{is_stable}{Logical, \code{TRUE} if the system is stable (all
 eigenvalues have positive real parts)}
@@ -108,6 +108,6 @@ stability(affectOU(theta = theta_unstable, mu = 0, gamma = 1))
 }
 \seealso{
 \code{\link[=stationary.affectOU]{stationary()}} for the equilibrium
-distribution, \code{\link[=relaxation.affectOU]{relaxation()}} for perturbation
-persistence, \code{\link[=summary.affectOU]{summary()}} for the full model summary.
+distribution, \code{\link[=summary.affectOU]{summary()}} for the full model summary.
 }
+\concept{theory}

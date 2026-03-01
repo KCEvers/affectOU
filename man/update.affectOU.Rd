@@ -15,7 +15,7 @@
 )
 }
 \arguments{
-\item{object}{An object of class \link{affectOU}.}
+\item{object}{An object of class \code{\link[=affectOU]{affectOU}}.}
 
 \item{ndim}{Optional. New dimensionality of the affect process.}
 
@@ -23,9 +23,11 @@
 
 \item{mu}{Optional. New attractor location (scalar or vector).}
 
-\item{gamma}{Optional. New diffusion coefficient (scalar or matrix).}
+\item{gamma}{Optional. New diffusion coefficient (scalar or lower triangular
+matrix). Only \code{gamma} or \code{sigma} can be specified, not both. If \code{sigma} is provided, \code{gamma} is computed via Cholesky decomposition.}
 
-\item{sigma}{Optional. New noise covariance (scalar or matrix).}
+\item{sigma}{Optional. New noise covariance (scalar or positive semi-definite
+matrix). Only \code{gamma} or \code{sigma} can be specified, not both. If \code{gamma} is provided, \code{sigma} is computed as \code{gamma \%*\% t(gamma)}.}
 
 \item{...}{Additional arguments (unused)}
 }
@@ -45,3 +47,4 @@ theta <- matrix(c(0.5, 0, 0, 0.3), nrow = 2)
 model_2d <- affectOU(theta = theta, mu = 0, gamma = diag(2))
 model_2d_new <- update(model_2d, mu = c(1, -1))
 }
+\concept{config}

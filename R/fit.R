@@ -2,6 +2,7 @@
 
 #' @importFrom generics fit
 #' @export
+#' @concept fit
 generics::fit
 
 # Fit method -----------------------------------------------------------------
@@ -11,7 +12,7 @@ generics::fit
 #' Estimates OU parameters using the exact discrete-time transition density
 #' via maximum likelihood. Currently limited to univariate (1D) models.
 #'
-#' @param object An object of class `affectOU`.
+#' @param object An object of class [`affectOU`][affectOU()].
 #' @param data Numeric vector of observed affect values.
 #' @param times Numeric vector of observation times.
 #'   If `NULL`, defaults to equally spaced times: 0, 1, 2, …
@@ -26,7 +27,7 @@ generics::fit
 #'
 #' @param ... Additional arguments (unused)
 #'
-#' @return An object of class `fit_affectOU`, containing:
+#' @return An object of class [`fit_affectOU`][fit.affectOU()], containing:
 #' \describe{
 #'   \item{parameters}{Named list of fitted parameter estimates.}
 #'   \item{se}{Named list of standard errors for parameters.}
@@ -44,6 +45,7 @@ generics::fit
 #' }
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 1000, dt = 0.01, save_at = 0.01)
@@ -443,10 +445,11 @@ fit_ou_mle <- function(data, times, start) {
 
 #' Extract log-likelihood from fitted OU affect model
 #'
-#' @param object An object of class `fit_affectOU`
-#' @param ... Additional arguments (unused)
-#' @return Numeric log-likelihood value
+#' @param object An object of class [`fit_affectOU`][fit.affectOU()].
+#' @param ... Additional arguments (unused).
+#' @return Numeric log-likelihood value.
 #' @export
+#' @concept fit
 #'
 #' @importFrom stats logLik
 #'
@@ -463,11 +466,12 @@ logLik.fit_affectOU <- function(object, ...) {
 
 #' Extract coefficients from fitted OU affect model
 #'
-#' @param object An object of class `fit_affectOU`
-#' @param ... Additional arguments (unused)
-#' @return Named vector of fitted parameters
+#' @param object An object of class [`fit_affectOU`][fit.affectOU()].
+#' @param ... Additional arguments (unused).
+#' @return Named vector of fitted parameters.
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -480,14 +484,15 @@ coef.fit_affectOU <- function(object, ...) {
 
 #' Confidence intervals for fitted OU affect model
 #'
-#' @param object An object of class `fit_affectOU`
+#' @param object An object of class [`fit_affectOU`][fit.affectOU()].
 #' @param parm Optional character vector of parameter names to include.
 #'  If missing, all parameters are included.
-#' @param level Confidence level for intervals (default 0.95)
-#' @param ... Additional arguments (unused)
-#' @return Matrix of confidence intervals with columns for lower and upper bounds
+#' @param level Confidence level for intervals (default 0.95).
+#' @param ... Additional arguments (unused).
+#' @return Matrix of confidence intervals with columns for lower and upper bounds.
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -536,11 +541,11 @@ confint.fit_affectOU <- function(object, parm, level = 0.95, ...) {
 #' parameter table with estimates, standard errors, and confidence intervals,
 #' as well as goodness-of-fit statistics.
 #'
-#' @param object An object of class `fit_affectOU`
-#' @param level Confidence level for intervals (default 0.95)
-#' @param ... Additional arguments (unused)
+#' @param object An object of class [`fit_affectOU`][fit.affectOU()].
+#' @param level Confidence level for intervals (default 0.95).
+#' @param ... Additional arguments (unused).
 #'
-#' @return An object of class `summary_fit_affectOU` containing:
+#' @return An object of class [`summary_fit_affectOU`][summary.fit_affectOU()] containing:
 #'   \describe{
 #'     \item{coefficients}{Data frame with columns `estimate`, `se`, `lower`,
 #'       and `upper` for each parameter.}
@@ -553,6 +558,7 @@ confint.fit_affectOU <- function(object, parm, level = 0.95, ...) {
 #'   }
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -592,12 +598,13 @@ summary.fit_affectOU <- function(object, level = 0.95, ...) {
 
 #' Print summary of fitted OU affect model
 #'
-#' @param x An object of class `summary_fit_affectOU`
-#' @param digits Number of digits for numeric display
-#' @param ... Additional arguments (unused)
+#' @param x An object of class [`summary_fit_affectOU`][summary.fit_affectOU()].
+#' @param digits Number of digits for numeric display.
+#' @param ... Additional arguments (unused).
 #'
 #' @return Returns `x` invisibly.
 #' @export
+#' @concept fit
 #' @method print summary_fit_affectOU
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
@@ -642,16 +649,16 @@ print.summary_fit_affectOU <- function(x, digits = 3, ...) {
 
 #' Print fitted OU affect model
 #'
-#' Provides a concise overview of a `fit_affectOU` object using the same
-#' styling conventions as `print.affectOU` and `print.simulate.affectOU`.
+#' Provide a concise overview of a [`fit_affectOU`][fit.affectOU()] object.
 #'
-#' @param x An object of class `fit_affectOU`
-#' @param digits Number of digits for numeric display
-#' @param ... Additional arguments (unused)
+#' @param x An object of class [`fit_affectOU`][fit.affectOU()]
+#' @param digits Number of digits for numeric display.
+#' @param ... Additional arguments (unused).
 #'
 #' @return Returns `x` invisibly.
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)

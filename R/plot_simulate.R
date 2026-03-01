@@ -45,6 +45,7 @@ NULL
 #' * [ou_plot_acf()] — empirical vs. theoretical autocorrelation
 #' * [ou_plot_phase()] — phase portrait with mean reversion line
 #' @export
+#' @concept plot_simulate
 #'
 #' @examples
 #' # Simulate a 2-dimensional OU affect process
@@ -95,6 +96,7 @@ plot.simulate_affectOU <- function(x,
 #' @return `NULL` (invisibly), called for side effects only.
 #'
 #' @export
+#' @concept plot_simulate
 #'
 #' @examples
 #' model <- affectOU(ndim = 2)
@@ -322,6 +324,7 @@ ou_plot_time <- function(x,
 #' @return `NULL` (invisibly), called for side effects only.
 #'
 #' @export
+#' @concept plot_simulate
 #'
 #' @examples
 #' model <- affectOU(ndim = 2)
@@ -597,6 +600,7 @@ ou_plot_histogram <- function(x,
 #'
 #' @return `NULL` (invisibly), called for side effects only.
 #' @export
+#' @concept plot_simulate
 #'
 #' @examples
 #' model <- affectOU(ndim = 2)
@@ -842,6 +846,7 @@ ou_plot_acf <- function(x,
 #'
 #' @return `NULL` (invisibly), called for side effects only.
 #' @export
+#' @concept plot_simulate
 #'
 #' @examples
 #' model <- affectOU(ndim = 2)

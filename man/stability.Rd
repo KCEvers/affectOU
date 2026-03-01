@@ -16,3 +16,4 @@ Generic function to assess the stability of a dynamical system. Stability
 determines whether the system converges to an equilibrium or diverges,
 and what type of dynamics it exhibits.
 }
+\concept{theory}

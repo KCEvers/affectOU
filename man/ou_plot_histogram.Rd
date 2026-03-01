@@ -102,3 +102,4 @@ ou_plot_histogram(s1, main = "Slow regulation")
 ou_plot_histogram(s2, main = "Fast regulation")
 
 }
+\concept{plot_simulate}

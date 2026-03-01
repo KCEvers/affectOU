@@ -7,7 +7,7 @@
 \method{fit}{affectOU}(object, data, times = NULL, method = "mle", start = NULL, ...)
 }
 \arguments{
-\item{object}{An object of class \code{affectOU}.}
+\item{object}{An object of class \code{\link[=affectOU]{affectOU}}.}
 
 \item{data}{Numeric vector of observed affect values.}
 
@@ -27,7 +27,7 @@ and \code{gamma} is initialized based on the stationary variance estimate.}
 \item{...}{Additional arguments (unused)}
 }
 \value{
-An object of class \code{fit_affectOU}, containing:
+An object of class \code{\link[=fit.affectOU]{fit_affectOU}}, containing:
 \describe{
 \item{parameters}{Named list of fitted parameter estimates.}
 \item{se}{Named list of standard errors for parameters.}
@@ -56,3 +56,4 @@ fitted <- fit(model, data = data$value, times = data$time)
 print(fitted)
 plot(fitted)
 }
+\concept{fit}

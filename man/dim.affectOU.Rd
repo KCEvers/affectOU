@@ -7,7 +7,7 @@
 \method{dim}{affectOU}(x)
 }
 \arguments{
-\item{x}{An object of class \code{affectOU}}
+\item{x}{An object of class \code{\link[=affectOU]{affectOU}}.}
 }
 \value{
 Integer, the dimensionality of the process.
@@ -19,3 +19,4 @@ Extract the number of dimensions of an affect Ornstein-Uhlenbeck (OU) model.
 model <- affectOU()
 dim(model)
 }
+\concept{config}

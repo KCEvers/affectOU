@@ -45,3 +45,4 @@ model <- affectOU()
 cat(equation(model, type = "code"))
 
 }
+\concept{config}

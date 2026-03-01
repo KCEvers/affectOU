@@ -37,8 +37,8 @@ For \code{direction = "long"}, a data frame with columns:
 \item{value}{Simulated value}
 }
 For \code{direction = "wide"}, a data frame with \code{time} as the first column
-and subsequent columns named \verb{dim\{d\}.sim\{s\}} (or simplified names for
-univariate or single simulations).
+and subsequent columns named \verb{dim\{d\}} when \code{nsim = 1}, or
+\verb{dim\{d\}.sim\{s\}} when \code{nsim > 1}.
 }
 \description{
 Converts an \code{simulate_affectOU} object to a data frame in either long or
@@ -56,3 +56,4 @@ head(df_long)
 df_wide <- as.data.frame(sim, direction = "wide")
 head(df_wide)
 }
+\concept{simulate}

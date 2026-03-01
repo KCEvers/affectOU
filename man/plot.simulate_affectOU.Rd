@@ -49,3 +49,4 @@ Detailed documentation for each plot type:
 \item \code{\link[=ou_plot_phase]{ou_plot_phase()}} — phase portrait with mean reversion line
 }
 }
+\concept{plot_simulate}

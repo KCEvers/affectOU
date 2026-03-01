@@ -13,6 +13,7 @@
 #' @return NULL (invisibly), called for side effects only.
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -50,6 +51,7 @@ plot.fit_affectOU <- function(x,
 #' @return NULL (invisibly), called for side effects only.
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -128,6 +130,7 @@ ou_plot_fit_time <- function(fit,
 #' @return NULL (invisibly), called for side effects only.
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -189,6 +192,7 @@ ou_plot_fit_residuals <- function(fit,
 #' @return NULL (invisibly), called for side effects only.
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -269,6 +273,7 @@ ou_plot_fit_acf <- function(fit,
 #' @return NULL (invisibly), called for side effects only.
 #'
 #' @export
+#' @concept fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)

@@ -32,3 +32,4 @@ dim(arr)
 # Access first time point across all dimensions and simulations:
 arr[1, , ]
 }
+\concept{simulate}

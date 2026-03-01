@@ -7,11 +7,11 @@
 \method{print}{summary_fit_affectOU}(x, digits = 3, ...)
 }
 \arguments{
-\item{x}{An object of class \code{summary_fit_affectOU}}
+\item{x}{An object of class \code{\link[=summary.fit_affectOU]{summary_fit_affectOU}}.}
 
-\item{digits}{Number of digits for numeric display}
+\item{digits}{Number of digits for numeric display.}
 
-\item{...}{Additional arguments (unused)}
+\item{...}{Additional arguments (unused).}
 }
 \value{
 Returns \code{x} invisibly.
@@ -26,3 +26,4 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 print(summary(fitted))
 }
+\concept{fit}

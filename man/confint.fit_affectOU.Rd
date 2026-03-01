@@ -7,17 +7,17 @@
 \method{confint}{fit_affectOU}(object, parm, level = 0.95, ...)
 }
 \arguments{
-\item{object}{An object of class \code{fit_affectOU}}
+\item{object}{An object of class \code{\link[=fit.affectOU]{fit_affectOU}}.}
 
 \item{parm}{Optional character vector of parameter names to include.
 If missing, all parameters are included.}
 
-\item{level}{Confidence level for intervals (default 0.95)}
+\item{level}{Confidence level for intervals (default 0.95).}
 
-\item{...}{Additional arguments (unused)}
+\item{...}{Additional arguments (unused).}
 }
 \value{
-Matrix of confidence intervals with columns for lower and upper bounds
+Matrix of confidence intervals with columns for lower and upper bounds.
 }
 \description{
 Confidence intervals for fitted OU affect model
@@ -29,3 +29,4 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 confint(fitted)
 }
+\concept{fit}

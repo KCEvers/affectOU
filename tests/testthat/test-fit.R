@@ -17,9 +17,11 @@ test_that("fit.affectOU recovers parameters from simulated data (1D)", {
   )
 
   # Check parameter recovery (allow some tolerance)
-  expect_equal(fitted_model[["parameters"]][["theta"]], theta, tolerance = 0.3)
-  expect_equal(fitted_model[["parameters"]][["mu"]], mu, tolerance = 0.3)
-  expect_equal(fitted_model[["parameters"]][["gamma"]], gamma, tolerance = 0.3)
+  withr::local_seed(1234)
+  tol <- .1
+  expect_true(abs(fitted_model[["parameters"]][["theta"]] - theta) < tol)
+  expect_true(abs(fitted_model[["parameters"]][["mu"]] - mu) < tol)
+  expect_true(abs(fitted_model[["parameters"]][["gamma"]] - gamma) < tol)
 })
 
 test_that("fit.affectOU produces fitted values (1D)", {
@@ -100,12 +102,42 @@ test_that("fitted() and resid() work on fit.affectOU via defaults", {
 
 # Test edge cases ------------------------------------------------------------
 test_that("fit.affectOU handles irregular time spacing (1D)", {
-  model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
+  model <- affectOU()
   times <- c(0, 0.1, 0.3, 1, 1.5, 3, 5, 10)
 
   expect_silent(
     fitted_model <- fit(model, data = rnorm(length(times)), times = times)
   )
+})
+
+test_that("fit.affectOU is accurate with irregular time spacing (1D)", {
+  # Create model and simulate
+  theta <- 0.5
+  mu <- 1
+  gamma <- 0.5
+  true_model <- affectOU(theta = theta, mu = mu, gamma = gamma)
+  sim <- simulate(true_model,
+    stop = 500, dt = .01,
+    save_at = .01, nsim = 1, seed = 42
+  )
+  data <- as.data.frame(sim)
+
+  # Unequal time spacing
+  withr::local_seed(123)
+  idx <- sort(sample(1:nrow(data), size = 200)) # Randomly select 200 time points
+  data <- data[idx, ]
+
+  # Fit model
+  fitted_model <- fit(true_model,
+    data = data$value,
+    times = data$time
+  )
+
+  # Check parameter recovery (allow some tolerance)
+  tol <- .1
+  expect_true(abs(fitted_model[["parameters"]][["theta"]] - theta) < tol)
+  expect_true(abs(fitted_model[["parameters"]][["mu"]] - mu) < tol)
+  expect_true(abs(fitted_model[["parameters"]][["gamma"]] - gamma) < tol)
 })
 
 test_that("fit.affectOU errors on missing data (1D)", {

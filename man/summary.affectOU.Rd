@@ -17,8 +17,6 @@ An object of class \code{summary_affectOU} containing:
 \item{ndim}{Dimensionality of the process}
 \item{stability}{A \code{stability_affectOU} object (see \code{\link[=stability.affectOU]{stability()}})}
 \item{stationary}{A \code{stationary_affectOU} object (see \code{\link[=stationary.affectOU]{stationary()}})}
-\item{relaxation}{Data frame with relaxation time and half-life for
-each dimension (see \code{\link[=relaxation.affectOU]{relaxation()}})}
 \item{coupling}{Coupling structure: \code{NA} for 1D, \code{NULL} if uncoupled, or
 data frame with columns \code{from}, \code{to}, \code{value}, \code{sign} showing
 coupling between dimensions}
@@ -28,9 +26,8 @@ showing correlated noise pairs}
 }
 }
 \description{
-Summarize the dynamics, stationary distribution, and relaxation properties of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see \code{\link[=stability.affectOU]{stability()}},
-\code{\link[=stationary.affectOU]{stationary()}}, and
-\code{\link[=relaxation.affectOU]{relaxation()}}.
+Summarize the dynamics and stationary distribution of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see \code{\link[=stability.affectOU]{stability()}}, and
+\code{\link[=stationary.affectOU]{stationary()}}.
 }
 \examples{
 # --- Simple 1D ---
@@ -50,7 +47,7 @@ summary(model_2d)
 \seealso{
 \code{\link[=stability.affectOU]{stability()}} for dynamics classification,
 \code{\link[=stationary.affectOU]{stationary()}} for the equilibrium distribution,
-\code{\link[=relaxation.affectOU]{relaxation()}} for perturbation persistence,
 \code{\link[=affectOU]{affectOU()}} for model construction,
 \code{vignette("characteristics")} for applied interpretation of stability regimes
 }
+\concept{config}

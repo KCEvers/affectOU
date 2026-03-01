@@ -27,3 +27,4 @@ model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 sim <- simulate(model, nsim = 3)
 print(summary(sim))
 }
+\concept{simulate}

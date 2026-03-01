@@ -7,12 +7,12 @@
 \method{coef}{fit_affectOU}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{fit_affectOU}}
+\item{object}{An object of class \code{\link[=fit.affectOU]{fit_affectOU}}.}
 
-\item{...}{Additional arguments (unused)}
+\item{...}{Additional arguments (unused).}
 }
 \value{
-Named vector of fitted parameters
+Named vector of fitted parameters.
 }
 \description{
 Extract coefficients from fitted OU affect model
@@ -24,3 +24,4 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 coef(fitted)
 }
+\concept{fit}

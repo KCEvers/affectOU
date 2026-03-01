@@ -14,8 +14,8 @@
 #' - \eqn{X(t)}: affect state at time \eqn{t}
 #' - \eqn{\theta / \Theta} (theta): attractor strength or regulation speed (scalar or matrix)
 #' - \eqn{\mu} (mu): attractor location or set point (scalar or vector)
-#' - \eqn{\gamma / \Gamma} (gamma): diffusion coefficient that multiplies dW(t)
-#' - \eqn{\sigma / \Sigma} (sigma): noise covariance matrix, computed as \eqn{\Sigma = \Gamma\Gamma'}
+#' - \eqn{\gamma / \Gamma} (gamma): lower-triangular diffusion coefficient (Cholesky factor) that multiplies dW(t)
+#' - \eqn{\sigma / \Sigma} (sigma): noise covariance matrix, computed as \eqn{\Sigma = \Gamma\Gamma'}. This is the recommended way to specify noise for most users
 #' - \eqn{dW(t)}: increments of a Wiener process (Brownian motion)
 #'
 #' In the multidimensional case, the element \eqn{\Theta_{ij}} (row \eqn{i},
@@ -48,13 +48,16 @@
 #'   away from \eqn{\mu} rather than toward it; when \eqn{\theta \approx 0},
 #'   \eqn{\mu} has no meaningful influence on the trajectory.
 #' @param gamma Diffusion coefficient (multiplies \eqn{dW(t)} in the SDE).
-#'   For 1D: positive scalar. For multidimensional: matrix. Either `gamma` or `sigma` must be specified, but not both. If `gamma` is specified, `sigma` is computed as \eqn{\Sigma = \Gamma\Gamma^\top}.
+#'   For 1D: positive scalar. For multidimensional: lower triangular matrix
+#'   (the Cholesky factor of \eqn{\Sigma}). Specifying both `gamma` and
+#'   `sigma` is an error. Most users should prefer specifying `sigma` directly;
+#'   `gamma` is available for advanced users who want explicit control over the
+#'   Cholesky factorisation.
 #' @param sigma Noise covariance matrix (\eqn{\Sigma = \Gamma\Gamma^\top}).
 #'   For 1D: positive scalar (variance). For multidimensional: positive
 #'   semi-definite matrix. Off-diagonal elements represent correlated noise
-#'   between dimensions.
-#'   Either `gamma` or `sigma` must be specified, but not both. If `sigma`
-#'   is specified, `gamma` is computed via Cholesky decomposition.
+#'   between dimensions. This is the recommended way to specify noise
+#'   structure. Specifying both `gamma` and `sigma` is an error.
 #'
 #' @return
 #' An object of class [`affectOU`], representing a univariate or multivariate
@@ -89,23 +92,23 @@
 #' * [simulate.affectOU()] to generate trajectories.
 #' * [plot.simulate_affectOU()] to visualize simulations
 #'   (`type = "time"`, `"histogram"`, `"acf"`, `"phase"`).
-#' * [summary.affectOU()] for stability, stationary distribution, and
-#'   relaxation time.
+#' * [summary.affectOU()] for stability and the stationary distribution.
 #' * [fit.affectOU()] to estimate parameters from observed data.
 #' * [update.affectOU()] to modify parameters without recreating the model.
 #'
 #' @export
+#' @concept config
 #'
 #' @examples
 #' # 1D model
-#' model_1d <- affectOU(theta = 0.5, mu = 0, gamma = 1)
+#' model_1d <- affectOU(theta = 0.5, mu = 0, sigma = 1)
 #' summary(model_1d)
 #' coef(model_1d)
 #'
 #' # 2D model (uncoupled)
 #' model_2d <- affectOU(
 #'   theta = diag(c(0.5, 0.3)), mu = 0,
-#'   gamma = 1
+#'   sigma = 1
 #' )
 #' summary(model_2d)
 #'
@@ -121,7 +124,7 @@
 #' ), nrow = 3)
 #' model_3d <- affectOU(
 #'   theta = theta_3d,
-#'   mu = 0, gamma = 1
+#'   mu = 0, sigma = 1
 #' )
 #' summary(model_3d)
 #'
@@ -132,18 +135,18 @@
 affectOU <- function(ndim = 1,
                      theta = 0.5,
                      mu = 0,
-                     gamma = 1,
-                     sigma = gamma %*% t(gamma)) {
+                     sigma = 1,
+                     gamma = t(chol(sigma))
+                     ) {
   # --- Input validation and coercion ---
 
   # Check gamma/sigma mutual exclusivity
 
   if (!missing(sigma) && !missing(gamma) &&
     !is.null(sigma) && !is.null(gamma)) {
-    cli::cli_warn(
-      "Both {.arg gamma} and {.arg sigma} were specified. Using {.arg gamma}."
+    cli::cli_abort(
+      "Specify either {.arg gamma} or {.arg sigma}, not both."
     )
-    sigma <- NULL
   }
 
   if (missing(gamma) && !missing(sigma)) {
@@ -153,8 +156,7 @@ affectOU <- function(ndim = 1,
   # Infer ndim if not specified
   if (missing(ndim) || is.null(ndim)) {
     ndim <- infer_ndim(
-      theta = theta, mu = mu, gamma = gamma,
-      sigma = sigma
+      theta = theta, mu = mu, gamma = gamma, sigma = sigma
     )
   }
 
@@ -177,6 +179,12 @@ affectOU <- function(ndim = 1,
   # Handle gamma/sigma: infer one from the other
   if (!is.null(gamma)) {
     gamma <- coerce_to_matrix(gamma, ndim, "gamma")
+    if (!is_lower_triangular(gamma)) {
+      cli::cli_abort(c(
+        "{.arg gamma} must be a lower triangular matrix.",
+        "i" = "Consider specifying {.arg sigma} (the noise covariance matrix) instead."
+      ))
+    }
     sigma <- gamma %*% t(gamma)
   } else {
     sigma <- coerce_to_matrix(sigma, ndim, "sigma")
@@ -251,7 +259,7 @@ affectOU <- function(ndim = 1,
 #' @param sigma Numeric matrix. Noise covariance.
 #' @param stationary List. Precomputed stationary distribution properties.
 #'
-#' @return An object of class `affectOU`.
+#' @return An object of class [`affectOU`][affectOU()].
 #' @noRd
 new_affectOU <- function(ndim, theta, mu, gamma, sigma, stationary) {
   structure(
@@ -334,12 +342,15 @@ validate_affectOU <- function(x) {
     cli::cli_abort("{.field mu} must be a numeric vector of length {ndim}.")
   }
 
-  # gamma: numeric matrix, ndim x ndim
+  # gamma: numeric matrix, ndim x ndim, lower triangular
   if (!is.numeric(gamma) || !is.matrix(gamma)) {
     cli::cli_abort("{.field gamma} must be a numeric matrix.")
   }
   if (!all(dim(gamma) == c(ndim, ndim))) {
     cli::cli_abort("{.field gamma} must be a {ndim}x{ndim} matrix.")
+  }
+  if (!is_lower_triangular(gamma)) {
+    cli::cli_abort("{.field gamma} must be a lower triangular matrix.")
   }
 
   # sigma: numeric matrix, ndim x ndim
@@ -511,6 +522,15 @@ compute_gamma_from_sigma <- function(sigma, ndim) {
 
   # Return lower triangular (t(chol()) gives upper, so transpose)
   t(chol_result)
+}
+
+
+#' Check if a matrix is lower triangular
+#' @noRd
+is_lower_triangular <- function(x, tol = sqrt(.Machine$double.eps)) {
+  if (nrow(x) <= 1L) return(TRUE)
+  upper_idx <- upper.tri(x)
+  all(abs(x[upper_idx]) <= tol)
 }
 
 

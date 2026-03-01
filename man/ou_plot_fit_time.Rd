@@ -45,3 +45,4 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 ou_plot_fit_time(fitted)
 }
+\concept{fit}

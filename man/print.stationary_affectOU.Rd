@@ -23,3 +23,4 @@ Print stationary distribution
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 print(stationary(model))
 }
+\concept{theory}

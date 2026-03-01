@@ -39,3 +39,4 @@ head(lst_wide[[1]])
 lst_long <- as.list(sim, direction = "long")
 head(lst_long[[1]])
 }
+\concept{simulate}

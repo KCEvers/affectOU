@@ -24,3 +24,4 @@ model <- affectOU()
 sim <- simulate(model)
 tail(sim)
 }
+\concept{simulate}

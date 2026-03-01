@@ -93,3 +93,4 @@ sim <- simulate(model, nsim = 1)
 ou_plot_time(sim, by_dim = TRUE)
 
 }
+\concept{plot_simulate}

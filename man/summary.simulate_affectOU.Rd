@@ -64,3 +64,4 @@ model <- affectOU(ndim = 2, theta = diag(c(0.5, 0.3)), mu = c(1, -1))
 sim <- simulate(model, stop = 100, dt = 0.1, nsim = 5, seed = 456)
 summary(sim, burnin = 20)
 }
+\concept{simulate}

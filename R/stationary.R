@@ -7,6 +7,7 @@
 #' @param object A model object
 #' @param ... Additional arguments
 #' @export
+#' @concept theory
 stationary <- function(object, ...) {
   UseMethod("stationary")
 }
@@ -57,7 +58,7 @@ stationary <- function(object, ...) {
 #' temporal dynamics depend mainly on \eqn{\theta}. Two processes can share
 #' stationary distributions but differ in dynamics, or vice versa.
 #'
-#' @return A list of class `stationary_affectOU` containing:
+#' @return A list of class [`stationary_affectOU`][stationary.affectOU()] containing:
 #'   \describe{
 #'     \item{is_stable}{Logical, `TRUE` if a stationary distribution exists}
 #'     \item{mean}{Stationary (long-run) mean, or `NULL` if non-stable}
@@ -70,10 +71,10 @@ stationary <- function(object, ...) {
 #'   }
 #'
 #' @seealso [`stability()`][stability.affectOU()] for stability assessment,
-#'   [`relaxation()`][relaxation.affectOU()] for perturbation persistence,
 #'   [`summary()`][summary.affectOU()] for the full model summary.
 #'
 #' @export
+#' @concept theory
 #' @examples
 #' # 1D model
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
@@ -112,6 +113,7 @@ stationary.affectOU <- function(object, ...) {
 #'
 #' @return Returns `x` invisibly.
 #' @export
+#' @concept theory
 #' @method print stationary_affectOU
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)

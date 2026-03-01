@@ -193,11 +193,20 @@ test_that("affectOU validates gamma, sigma positive semi-definite (2D)", {
   theta <- diag(2)
   mu <- c(0, 0)
 
-  # Gamma does not need to be positive definite
-  expect_no_error(
+  # Gamma must be lower triangular
+  expect_error(
     affectOU(
       ndim = ndim,
       gamma = matrix(c(1, 2, 2, -1), nrow = 2)
+    ),
+    "`gamma` must be a lower triangular matrix"
+  )
+
+  # Lower triangular gamma with negative values is fine (does not need PD)
+  expect_no_error(
+    affectOU(
+      ndim = ndim,
+      gamma = matrix(c(1, 2, 0, -1), nrow = 2)
     )
   )
 
@@ -275,6 +284,41 @@ test_that("theta can be zero", {
 })
 
 
+test_that("converting sigma and gamma back and forth produces same sigma", {
+  # 1D
+  sigma_1d <- matrix(4)
+  gamma_1d <- t(chol(sigma_1d))
+  m1 <- affectOU(sigma = sigma_1d)
+  gamma_1d_m1 <- m1$parameters$gamma
+  expect_equal(m1$parameters$sigma, sigma_1d)
+  expect_equal(
+    gamma_1d_m1, gamma_1d
+  )
+  expect_equal(
+    gamma_1d_m1 %*% t(gamma_1d_m1),
+    sigma_1d
+  )
+  sigma_1d_rec <- gamma_1d_m1 %*% t(gamma_1d_m1)
+  expect_equal(sigma_1d_rec, sigma_1d)
+
+  # 2D with off-diagonal correlation
+  sigma_2d <- matrix(c(2, 0.5, 0.5, 3), nrow = 2)
+  gamma_2d <- t(chol(sigma_2d))
+  m2 <- affectOU(ndim = 2, sigma = sigma_2d)
+  gamma_2d_m2 <- m2$parameters$gamma
+  expect_equal(m2$parameters$sigma, sigma_2d)
+  expect_equal(
+    gamma_2d_m2, gamma_2d
+  )
+  expect_equal(
+    gamma_2d_m2 %*% t(gamma_2d_m2),
+    sigma_2d
+  )
+  sigma_2d_rec <- gamma_2d_m2 %*% t(gamma_2d_m2)
+  expect_equal(sigma_2d_rec, sigma_2d)
+})
+
+
 test_that("unstable OU models run", {
   expect_no_error(
     m <- affectOU(theta = -0.5, mu = 0, gamma = 1)
@@ -324,4 +368,89 @@ test_that("affectOU rejects Inf parameters (2D)", {
 
 test_that("affectOU rejects 0-dimensional systems", {
   expect_error(affectOU(ndim = 0), "`ndim` must be a positive integer")
+})
+
+
+# Gamma lower-triangular constraint ------------------------------------------
+
+test_that("gamma must be lower triangular for nD models", {
+  # Upper triangular: rejected
+
+  expect_error(
+    affectOU(ndim = 2, gamma = matrix(c(1, 0, 0.5, 1), nrow = 2)),
+    "`gamma` must be a lower triangular matrix"
+  )
+
+  # Symmetric (non-diagonal): rejected
+  expect_error(
+    affectOU(ndim = 2, gamma = matrix(c(1, 0.3, 0.3, 1), nrow = 2)),
+    "`gamma` must be a lower triangular matrix"
+  )
+
+  # Full matrix: rejected
+  expect_error(
+    affectOU(ndim = 2, gamma = matrix(c(1, 0.2, 0.5, 1), nrow = 2)),
+    "`gamma` must be a lower triangular matrix"
+  )
+
+  # Lower triangular: accepted
+  expect_no_error(
+    affectOU(ndim = 2, gamma = matrix(c(1, 0.3, 0, 1), nrow = 2))
+  )
+
+  # Diagonal: accepted (trivially lower triangular)
+  expect_no_error(
+    affectOU(ndim = 2, gamma = diag(c(0.5, 1.2)))
+  )
+
+  # Scalar shorthand: accepted (expanded to diagonal)
+  expect_no_error(
+    affectOU(ndim = 2, gamma = 1)
+  )
+
+  # Vector shorthand: accepted (expanded to diagonal)
+  expect_no_error(
+    affectOU(ndim = 2, gamma = c(0.5, 1.2))
+  )
+
+  # 1D scalar: always valid
+  expect_no_error(
+    affectOU(ndim = 1, gamma = 2)
+  )
+})
+
+test_that("specifying both gamma and sigma is an error", {
+  expect_error(
+    affectOU(gamma = 1, sigma = 1),
+    "Specify either.*gamma.*or.*sigma.*not both"
+  )
+
+  expect_error(
+    affectOU(ndim = 2, gamma = diag(2), sigma = diag(2)),
+    "Specify either.*gamma.*or.*sigma.*not both"
+  )
+})
+
+test_that("sigma to gamma round-trip produces same sigma", {
+  # 1D
+  sigma_1d <- matrix(4)
+  m1 <- affectOU(sigma = sigma_1d)
+  expect_equal(m1$parameters$sigma, sigma_1d)
+  expect_equal(
+    m1$parameters$gamma %*% t(m1$parameters$gamma),
+    sigma_1d
+  )
+
+  # 2D with off-diagonal correlation
+  sigma_2d <- matrix(c(2, 0.5, 0.5, 3), nrow = 2)
+  m2 <- affectOU(ndim = 2, sigma = sigma_2d)
+  expect_equal(m2$parameters$sigma, sigma_2d, tolerance = 1e-10)
+  expect_equal(
+    m2$parameters$gamma %*% t(m2$parameters$gamma),
+    sigma_2d,
+    tolerance = 1e-10
+  )
+
+  # Recovered gamma should be lower triangular
+  expect_true(all(abs(m2$parameters$gamma[upper.tri(m2$parameters$gamma)]) < 1e-10))
 })

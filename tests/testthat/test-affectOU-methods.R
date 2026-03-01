@@ -48,7 +48,7 @@ test_that("summary.affectOU contains all expected components (1D)", {
 
   expect_named(s, c(
     "ndim", "stability", "stationary",
-    "relaxation", "coupling", "noise_structure"
+    "coupling", "noise_structure"
   ))
 
   expect_equal(s$ndim, 1)
@@ -77,7 +77,6 @@ test_that("summary.affectOU delegates correctly to sub-generics", {
   expect_equal(s$stationary$mean, stationary(model)$mean)
   expect_equal(s$stationary$sd, stationary(model)$sd)
   expect_equal(s$stability$is_stable, stability(model)$is_stable)
-  expect_equal(s$relaxation$half_life, relaxation(model, interpret = FALSE)$half_life)
 })
 
 test_that("summary.affectOU detects coupling structure in theta", {
@@ -156,7 +155,7 @@ test_that("summary.affectOU detects noise correlation structure in sigma", {
   )
   model_corr <- affectOU(
     ndim = ndim, theta = 1,
-    gamma = matrix(c(1, 0.3, 0.3, 1), ndim, ndim)
+    sigma = matrix(c(1.09, 0.6, 0.6, 1.09), ndim, ndim)
   )
 
   # Diagonal sigma -> NULL noise_structure

@@ -7,18 +7,17 @@
 \method{print}{fit_affectOU}(x, digits = 3, ...)
 }
 \arguments{
-\item{x}{An object of class \code{fit_affectOU}}
+\item{x}{An object of class \code{\link[=fit.affectOU]{fit_affectOU}}}
 
-\item{digits}{Number of digits for numeric display}
+\item{digits}{Number of digits for numeric display.}
 
-\item{...}{Additional arguments (unused)}
+\item{...}{Additional arguments (unused).}
 }
 \value{
 Returns \code{x} invisibly.
 }
 \description{
-Provides a concise overview of a \code{fit_affectOU} object using the same
-styling conventions as \code{print.affectOU} and \code{print.simulate.affectOU}.
+Provide a concise overview of a \code{\link[=fit.affectOU]{fit_affectOU}} object.
 }
 \examples{
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
@@ -27,3 +26,4 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 print(fitted)
 }
+\concept{fit}

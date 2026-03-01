@@ -7,9 +7,10 @@ plot.affectOU <- function(x, ...) {
 #' 
 #' Extract the number of dimensions of an affect Ornstein-Uhlenbeck (OU) model.
 #'
-#' @param x An object of class `affectOU`
+#' @param x An object of class [`affectOU`][affectOU()].
 #' @return Integer, the dimensionality of the process.
 #' @export
+#' @concept config
 #' @examples
 #' model <- affectOU()
 #' dim(model)
@@ -19,11 +20,12 @@ dim.affectOU <- function(x) {
 
 #' Print affect OU model
 #'
-#' @param x An object of class `affectOU`
-#' @param digits Number of digits to display
-#' @param max_dim Maximum number of dimensions to display details for
-#' @param ... Additional arguments (unused)
+#' @param x An object of class [`affectOU`][affectOU()].
+#' @param digits Number of digits to display.
+#' @param max_dim Maximum number of dimensions to display details for.
+#' @param ... Additional arguments (unused).
 #' @export
+#' @concept config
 #' @examples
 #' model <- affectOU(ndim = 2)
 #' print(model)
@@ -84,13 +86,15 @@ print.affectOU <- function(x, digits = 3, max_dim = 20, ...) {
 #'
 #' Extract the parameters of an affect Ornstein-Uhlenbeck (OU) model as a list.
 #'
-#' @param object An object of class `affectOU`.
+#' @param object An object of class [`affectOU`][affectOU()].
 #' @param ... Additional arguments (unused).
 #' @return A list containing the model parameters: `theta`, `mu`, `gamma`, and
 #' `sigma`. For 1D models, these are returned as numeric scalars. For
 #' multivariate models, they are returned as matrices.
 #'
 #' @export
+#' @concept config
+#' @importFrom stats coef
 #' @seealso Model parameters are explained in [affectOU()] and can be modified using [`update()`][update.affectOU()].
 #' @examples
 #' model <- affectOU(ndim = 2)
@@ -114,16 +118,20 @@ coef.affectOU <- function(object, ...) {
 #'
 #' Modify the parameters of an Ornstein-Uhlenbeck (OU) model.
 #'
-#' @param object An object of class [affectOU].
+#' @param object An object of class [`affectOU`][affectOU()].
 #' @param ndim Optional. New dimensionality of the affect process.
 #' @param theta Optional. New attractor strength (scalar or matrix).
 #' @param mu Optional. New attractor location (scalar or vector).
-#' @param gamma Optional. New diffusion coefficient (scalar or matrix).
-#' @param sigma Optional. New noise covariance (scalar or matrix).
+#' @param gamma Optional. New diffusion coefficient (scalar or lower triangular
+#'   matrix). Only `gamma` or `sigma` can be specified, not both. If `sigma` is provided, `gamma` is computed via Cholesky decomposition.
+#' @param sigma Optional. New noise covariance (scalar or positive semi-definite
+#'   matrix). Only `gamma` or `sigma` can be specified, not both. If `gamma` is provided, `sigma` is computed as `gamma %*% t(gamma)`.
 #' @param ... Additional arguments (unused)
 #'
 #' @return Updated [affectOU] object
+#' @importFrom stats update
 #' @export
+#' @concept config
 #'
 #' @examples
 #' # 1D model
@@ -147,6 +155,10 @@ update.affectOU <- function(object,
   new_mu <- if (is.null(mu)) object$parameters$mu else mu
 
   # Handle gamma/sigma: prefer new values, fall back to existing gamma
+  if (!is.null(gamma) && !is.null(sigma)) {
+    cli::cli_abort("Specify either {.arg gamma} or {.arg sigma}, not both.")
+  }
+
   if (is.null(gamma) && is.null(sigma)) {
     new_gamma <- object$parameters$gamma
     new_sigma <- NULL
@@ -231,9 +243,8 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 
 #' Summarize an Ornstein-Uhlenbeck affect model
 #'
-#' Summarize the dynamics, stationary distribution, and relaxation properties of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see [`stability()`][stability.affectOU()],
-#' [`stationary()`][stationary.affectOU()], and
-#' [`relaxation()`][relaxation.affectOU()].
+#' Summarize the dynamics and stationary distribution of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see [`stability()`][stability.affectOU()], and
+#' [`stationary()`][stationary.affectOU()].
 #'
 #' @param object An `affectOU` model object
 #' @param ... Additional arguments (unused)
@@ -243,8 +254,6 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 #'     \item{ndim}{Dimensionality of the process}
 #'     \item{stability}{A `stability_affectOU` object (see [`stability()`][stability.affectOU()])}
 #'     \item{stationary}{A `stationary_affectOU` object (see [`stationary()`][stationary.affectOU()])}
-#'     \item{relaxation}{Data frame with relaxation time and half-life for
-#'       each dimension (see [`relaxation()`][relaxation.affectOU()])}
 #'     \item{coupling}{Coupling structure: `NA` for 1D, `NULL` if uncoupled, or
 #'       data frame with columns `from`, `to`, `value`, `sign` showing
 #'       coupling between dimensions}
@@ -255,11 +264,11 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 #'
 #' @seealso [`stability()`][stability.affectOU()] for dynamics classification,
 #'   [`stationary()`][stationary.affectOU()] for the equilibrium distribution,
-#'   [`relaxation()`][relaxation.affectOU()] for perturbation persistence,
 #'   [`affectOU()`][affectOU()] for model construction,
 #'   `vignette("characteristics")` for applied interpretation of stability regimes
 #'
 #' @export
+#' @concept config
 #'
 #' @examples
 #' # --- Simple 1D ---
@@ -283,7 +292,6 @@ summary.affectOU <- function(object, ...) {
     ndim = ndim,
     stability = stability(object),
     stationary = stationary(object),
-    relaxation = relaxation(object),
     coupling = extract_coupling(object[["parameters"]][["theta"]], tol),
     noise_structure = extract_noise_structure(object[["parameters"]][["sigma"]], tol)
   )
@@ -299,6 +307,7 @@ summary.affectOU <- function(object, ...) {
 #' @inheritParams print.affectOU
 #' @param ... Additional arguments (unused)
 #' @export
+#' @concept config
 #' @method print summary_affectOU
 #' @examples
 #' model <- affectOU(ndim = 2)
@@ -343,42 +352,19 @@ print.summary_affectOU <- function(x, digits = 3, max_dim = 20, ...) {
   cli::cli_h2("Stationary distribution")
 
   if (stab$is_stable) {
-    rl      <- x$relaxation
-    tau_max <- attr(rl, "tau_max")
-    hl_max  <- attr(rl, "half_life_max")
-    tau_min <- attr(rl, "tau_min")
-    hl_min  <- attr(rl, "half_life_min")
 
     if (ndim == 1) {
       cli::cli_text("Mean: {round(stat$mean, digits)}")
       cli::cli_text("SD: {round(stat$sd, digits)}")
-      cli::cli_text("Relaxation time (\u03c4): {round(tau_max, digits)}")
     } else if (ndim <= max_dim) {
       cli::cli_text("Mean: [{paste(round(stat$mean, digits), collapse = ', ')}]")
       cli::cli_text("SD: [{paste(round(stat$sd, digits), collapse = ', ')}]")
-      cli::cli_text(
-        "Relaxation time (\u03c4): slowest = {round(tau_max, digits)}, fastest = {round(tau_min, digits)}"
-      )
     } else {
-      cli::cli_text("High-dimensional model; use {.fn coef} and {.fn relaxation} to inspect.")
+      cli::cli_text("High-dimensional model; use {.fn coef} to inspect.")
     }
   } else {
     cli::cli_text("Does not exist (system is not stable).")
 
-    # Show relaxation times for stable modes
-    rl <- x$relaxation
-    valid_rl <- !is.na(rl$relaxation_time)
-
-    if (any(valid_rl) && ndim <= max_dim) {
-      cli::cli_h3("Relaxation time (stable modes)")
-      cli::cli_ul()
-      for (i in which(valid_rl)) {
-        cli::cli_li(
-          "Mode {rl$mode[i]}: \u03c4 = {round(rl$relaxation_time[i], digits)}, t\u2081/\u2082 = {round(rl$half_life[i], digits)}"
-        )
-      }
-      cli::cli_end()
-    }
   }
 
   # --- Structure (multivariate only) ---

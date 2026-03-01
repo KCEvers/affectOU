@@ -25,4 +25,5 @@ where:
 \item \eqn{\mathbf{W}_t} is a two-dimensional Wiener process
 }
 }
+\concept{simulate}
 \keyword{datasets}

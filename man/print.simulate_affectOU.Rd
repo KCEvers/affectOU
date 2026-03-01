@@ -17,3 +17,4 @@
 Display overview of an \code{simulate_affectOU} object without printing
 the full data array.
 }
+\concept{simulate}
