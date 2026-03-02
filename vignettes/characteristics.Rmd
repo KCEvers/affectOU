@@ -13,7 +13,7 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7,
+  fig.width = 8,
   fig.height = 5
 )
 ```
@@ -73,7 +73,8 @@ This property is shown below, in which we simulate two independent OU processes 
 <summary>Show code</summary>
 
 ```{r mean-reversion, results = "hide", fig.show='hide'}
-# For simplicity and ease of visualisation, we specify both processes in the same model. However, as they are uncoupled, they will evolve independently over time. 
+# For simplicity and ease of visualisation, we specify both processes in the same model. 
+# However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(
   theta = diag(c(5.0, 0.5))
 )
@@ -107,7 +108,7 @@ plot(
 
 ## 2. Perturbation Persistence
 
-After affect is perturbed, it takes time to return to its baseline. The speed of this return is determined by $\mathbf{\Theta}$, which characterizes how long the effect of perturbations persists. This persistence can be quantified through the relaxation time $\tau$, which is the time for the expected deviation to shrink to $1/e \approx 36.8\%$. Effects decay exponentially: at two $\tau$, about 13.5\% remains; at three $\tau$, about 5\%. $\tau$ is also known as the characteristic time scale, which can also be defined as the half-life $t_{1/2} = \ln 2 \cdot \tau$, which is the time for the expected deviation to shrink to 50\%. 
+After affect is perturbed, it takes time to return to its baseline. The speed of this return is determined by $\mathbf{\Theta}$, which characterizes how long the effect of perturbations persists. This persistence can be quantified through the relaxation time $\tau$, which is the time it takes for deviations from the attractor $\mu$ to shrink to $1/e \approx 36.8\%$. Effects decay exponentially: at two $\tau$, about 13.5\% remains; at three $\tau$, about 5\%. $\tau$ is also known as the characteristic time scale, and can alternatively be defined as the half-life $t_{1/2} = \ln 2 \cdot \tau$, at which a deviation from $\mu$ shrinks to 50\%. 
 
  
 
@@ -171,7 +172,8 @@ In the figure shown below, the two processes are subject to the same perturbatio
 <summary>Show code</summary>
 
 ```{r reactivity, results="hide", fig.show='hide'}
-# For simplicity and ease of visualisation, we specify both processes in the same model. However, as they are uncoupled, they will evolve independently over time. 
+# For simplicity and ease of visualisation, we specify both processes in the same model. 
+# However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(theta = 0.5, mu = 0, sigma = diag(c(2.25, 0.09)))
 sim <- simulate(model, seed = 456, stop = 20)
 plot(sim,
@@ -250,11 +252,11 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 
 </details>
 
-```{r multivariate-plot, echo = FALSE, fig.height = 5, }
+```{r multivariate-plot, echo = FALSE, fig.height = 5}
 plot(sim_2d, main = "Coupled Trajectories", xlim = c(0, 20))
 ```
 
-```{r multivariate-plot2, echo = FALSE, fig.height = 6}
+```{r multivariate-plot2, echo = FALSE, fig.height = 7}
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
@@ -277,7 +279,8 @@ The sign of $\theta$ determines the qualitative behaviour of the system. Three r
 <summary>Show code</summary>
 
 ```{r regimes, results = "hide", fig.show='hide'}
-# For simplicity and ease of visualisation, we specify all processes in the same model. However, as they are uncoupled, they will evolve independently over time. 
+# For simplicity and ease of visualisation, we specify all processes in the same model.
+# However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(theta = diag(c(0.5, 0.01, -0.3)))
 sim <- simulate(model, stop = 100, seed = 43)
 plot(sim,

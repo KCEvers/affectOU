@@ -13,7 +13,7 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7,
+  fig.width = 8,
   fig.height = 5
 )
 ```
@@ -156,7 +156,7 @@ A first way to explore the simulated data is by plotting it. `affectOU` provides
 
 ```{r plot-sim}
 #| fig.show = "hold",
-#| fig.height = 5,
+#| fig.height = 6,
 #| out.width = "50%",
 #| fig.alt = "Four plots are shown in a two by two fashion. In order, the plots contain (a) the time series of the simulated data, (b) the distribution of its values, (c) a visualization of the autocorrelations per lag in time, and (d) the phase portrait of how affect changed over time. All plots use the default visualization specifications, meaning the default titles explaining the content of the simulations ('Affect Dynamics', 'Affect Distribution', 'Autocorrelation Function', and 'Phase Portrait' respectively) and using the default colors of the package (using the 'Temps' palette of the package `grDevices`)."
 # Time series trajectory (default)
@@ -186,8 +186,8 @@ plot(sim, type = "phase")
 The multidimensional OU can be simulated and visualised in the same way as before. Here, we set `by_dim = TRUE` to show each dimension in a separate subplot:
 
 ```{r simulate-md}
-#| fig.height = 5,
-#| fig.alt = "Four plots containing the same information as before, but this time divided into subplots containing information for one or the other dimension (time-series and histogram) or for the temporal relations between all potential combination of variables (autocorrelation plot and phase plot)."
+#| fig.height = 4,
+#| fig.alt = "Time series plot with two panels, each showing the evolution of affect over time."
 # Create an affectOU model with two dimensions
 model_2D <- affectOU(ndim = 2)
 

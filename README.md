@@ -109,9 +109,9 @@ summary(model)
 ```
 
 The model can then be simulated with
-[`simulate()`](\(https://kcevers.github.io/affectOU/reference/simulate.affectOU.html\))
+[`simulate()`](https://kcevers.github.io/affectOU/reference/simulate.affectOU.html)
 and visualised over time with
-[`plot()`](\(https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.html\)).
+[`plot()`](https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.html).
 
 ``` r
 sim <- simulate(model)
