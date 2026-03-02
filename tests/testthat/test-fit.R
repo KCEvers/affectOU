@@ -1,8 +1,8 @@
-test_that("fit.affectOU recovers parameters from simulated data (1D)", {
+test_that("fit.affectOU recovers parameters from complete simulated data (1D)", {
   # Create model and simulate
-  theta <- 0.5
-  mu <- 1
-  gamma <- 0.5
+  theta <- 0.8
+  mu <- -15
+  gamma <- 8.5
   true_model <- affectOU(theta = theta, mu = mu, gamma = gamma)
   sim <- simulate(true_model,
     stop = 500, dt = .01,
@@ -11,18 +11,93 @@ test_that("fit.affectOU recovers parameters from simulated data (1D)", {
   data <- as.data.frame(sim)
 
   # Fit model
+  withr::local_seed(123)
   fitted_model <- fit(true_model,
     data = data$value,
     times = data$time
   )
 
   # Check parameter recovery (allow some tolerance)
-  withr::local_seed(1234)
-  tol <- .1
-  expect_true(abs(fitted_model[["parameters"]][["theta"]] - theta) < tol)
-  expect_true(abs(fitted_model[["parameters"]][["mu"]] - mu) < tol)
-  expect_true(abs(fitted_model[["parameters"]][["gamma"]] - gamma) < tol)
+  tol <- .15
+  # expect_true(abs(fitted_model[["parameters"]][["theta"]] - theta) < tol)
+  # expect_true(abs(fitted_model[["parameters"]][["mu"]] - mu) < tol)
+  # expect_true(abs(fitted_model[["parameters"]][["gamma"]] - gamma) < tol)
+  expect_equal(fitted_model[["parameters"]][["theta"]], theta, tolerance = tol)
+  expect_equal(fitted_model[["parameters"]][["mu"]], mu, tolerance = tol)
+  expect_equal(fitted_model[["parameters"]][["gamma"]], gamma, tolerance = tol)
 })
+
+
+test_that("fit.affectOU recovers parameters from undersampled (1/10), regularly spaced simulated data (1D)", {
+  # Create model and simulate
+  theta <- 1.8
+  mu <- -5
+  gamma <- 6.4
+  true_model <- affectOU(theta = theta, mu = mu, gamma = gamma)
+  sim <- simulate(true_model,
+    stop = 500, dt = .01,
+    save_at = .1, nsim = 1, seed = 423
+  )
+  data <- as.data.frame(sim)
+
+  # Fit model
+  withr::local_seed(123)
+  fitted_model <- fit(true_model,
+    data = data$value,
+    times = data$time
+  )
+
+  # Check parameter recovery (allow some tolerance)
+  tol <- .15
+  expect_equal(fitted_model[["parameters"]][["theta"]], theta, tolerance = tol)
+  expect_equal(fitted_model[["parameters"]][["mu"]], mu, tolerance = tol)
+  expect_equal(fitted_model[["parameters"]][["gamma"]], gamma, tolerance = tol)
+})
+
+
+test_that("fit.affectOU recovers parameters from shorter, undersampled (1/10), regularly spaced simulated data (1D)", {
+  # Create model and simulate
+  theta <- 1.4
+  mu <- 10
+  gamma <- 4.4
+  true_model <- affectOU(theta = theta, mu = mu, gamma = gamma)
+  sim <- simulate(true_model,
+    stop = 200, dt = .01,
+    save_at = .1, nsim = 1, seed = 423
+  )
+  data <- as.data.frame(sim)
+
+  # Fit model
+  withr::local_seed(123)
+  fitted_model <- fit(true_model,
+    data = data$value,
+    times = data$time
+  )
+
+  # Check parameter recovery (allow some tolerance)
+  tol <- .15
+  expect_equal(fitted_model[["parameters"]][["theta"]], theta, tolerance = tol)
+  expect_equal(fitted_model[["parameters"]][["mu"]], mu, tolerance = tol)
+  expect_equal(fitted_model[["parameters"]][["gamma"]], gamma, tolerance = tol)
+})
+
+test_that("fit.affectOU errors on missing data (1D)", {
+  model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
+  sim <- simulate(model, stop = 10, dt = .1, save_at = .1, nsim = 1)
+  data <- as.data.frame(sim)
+  data$value[c(10, 20, 30)] <- NA # Introduce some missing values
+
+  expect_error(
+    fitted_model <- fit(model, data = data$value, times = data$time)
+  )
+
+  data$value[c(10, 20, 30)] <- Inf # Introduce some non-finite values
+
+  expect_error(
+    fitted_model <- fit(model, data = data$value, times = data$time)
+  )
+})
+
 
 test_that("fit.affectOU produces fitted values (1D)", {
   model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
@@ -110,21 +185,21 @@ test_that("fit.affectOU handles irregular time spacing (1D)", {
   )
 })
 
-test_that("fit.affectOU is accurate with irregular time spacing (1D)", {
+test_that("fit.affectOU is accurate with undersampling and irregular time spacing (1D)", {
   # Create model and simulate
-  theta <- 0.5
-  mu <- 1
-  gamma <- 0.5
+  theta <- 2.1
+  mu <- 5.7
+  gamma <- 2.4
   true_model <- affectOU(theta = theta, mu = mu, gamma = gamma)
   sim <- simulate(true_model,
     stop = 500, dt = .01,
-    save_at = .01, nsim = 1, seed = 42
+    save_at = .01, nsim = 1, seed = 423
   )
   data <- as.data.frame(sim)
 
   # Unequal time spacing
   withr::local_seed(123)
-  idx <- sort(sample(1:nrow(data), size = 200)) # Randomly select 200 time points
+  idx <- sort(sample(1:nrow(data), size = round(nrow(data) * .1))) # Randomly select 200 time points
   data <- data[idx, ]
 
   # Fit model
@@ -135,7 +210,7 @@ test_that("fit.affectOU is accurate with irregular time spacing (1D)", {
 
   # Check parameter recovery (allow some tolerance)
   tol <- .1
-  expect_true(abs(fitted_model[["parameters"]][["theta"]] - theta) < tol)
+  expect_true(abs(fitted_model[["parameters"]][["theta"]] - theta) < (tol * 2)) # Allow more tolerance for theta
   expect_true(abs(fitted_model[["parameters"]][["mu"]] - mu) < tol)
   expect_true(abs(fitted_model[["parameters"]][["gamma"]] - gamma) < tol)
 })

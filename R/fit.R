@@ -324,7 +324,7 @@ fit_ou_mle <- function(data, times, start) {
     -ll
   }
 
-  # Better starting values using method of moments / empirical estimates
+  # Estimate starting values using method of moments / empirical estimates
   if (is.null(start)) {
     # Estimate mu from the mean of the data
     mu_start <- mean(data)
@@ -334,7 +334,7 @@ fit_ou_mle <- function(data, times, start) {
     mean_dt <- mean(dt)
     centered <- data - mu_start
     autocov_0 <- mean(centered^2)
-    autocov_1 <- mean(centered[-n] * centered[-1])
+    autocov_1 <- sum(centered[-n] * centered[-1]) / n
     rho <- autocov_1 / autocov_0
     rho <- max(0.01, min(0.99, rho)) # Bound away from 0 and 1
     theta_start <- -log(rho) / mean_dt
@@ -377,7 +377,7 @@ fit_ou_mle <- function(data, times, start) {
         fn = neg_log_lik,
         method = "BFGS",
         hessian = TRUE,
-        control = list(maxit = 1000)
+        control = list(maxit = 5000)
       )
     },
     error = function(e) NULL
@@ -385,8 +385,9 @@ fit_ou_mle <- function(data, times, start) {
 
   # Fallback to Nelder-Mead if BFGS fails
   if (is.null(opt_result) || opt_result$convergence != 0) {
+    nm_start <- if (is.null(opt_result)) start else opt_result$par
     opt_result_nm <- stats::optim(
-      par = start,
+      par = nm_start,
       fn = neg_log_lik,
       method = "Nelder-Mead",
       hessian = TRUE,
