@@ -7,6 +7,7 @@
 #' @param object A model object
 #' @param ... Additional arguments
 #' @export
+#' @concept theory
 stability <- function(object, ...) {
   UseMethod("stability")
 }
@@ -60,7 +61,7 @@ stability <- function(object, ...) {
 #' isolation may still belong to an unstable coupled system due to
 #' coupling between dimensions.
 #'
-#' @return A list of class `stability_affectOU` containing:
+#' @return A list of class [`stability_affectOU`][stability.affectOU()] containing:
 #'   \describe{
 #'     \item{is_stable}{Logical, `TRUE` if the system is stable (all
 #'       eigenvalues have positive real parts)}
@@ -77,10 +78,10 @@ stability <- function(object, ...) {
 #'   }
 #'
 #' @seealso [`stationary()`][stationary.affectOU()] for the equilibrium
-#'   distribution, [`relaxation()`][relaxation.affectOU()] for perturbation
-#'   persistence, [`summary()`][summary.affectOU()] for the full model summary.
+#'   distribution, [`summary()`][summary.affectOU()] for the full model summary.
 #'
 #' @export
+#' @concept theory
 #' @examples
 #' # 1D stable node
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
@@ -152,6 +153,7 @@ stability.affectOU <- function(object, tol = 1e-10, ...) {
 #'
 #' @return Returns `x` invisibly.
 #' @export
+#' @concept theory
 #' @method print stability_affectOU
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)

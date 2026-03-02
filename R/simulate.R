@@ -26,6 +26,7 @@
 #' }
 #'
 #' @export
+#' @concept simulate
 #' @examples
 #' model <- affectOU(ndim = 2)
 #' sim <- simulate(model, nsim = 2)
@@ -312,6 +313,7 @@ validate_simulate_affectOU <- function(x) {
 #' @param ... Additional arguments passed to `utils::head()`
 #' @return A simulation data.frame truncated to the first `n` time points.
 #' @export
+#' @concept simulate
 #' @importFrom utils head
 #' @examples
 #' model <- affectOU()
@@ -335,6 +337,7 @@ head.simulate_affectOU <- function(x, n = 6L, ...) {
 #' @param ... Additional arguments passed to `utils::tail()`
 #' @return A simulation data.frame truncated to the last `n` time points.
 #' @export
+#' @concept simulate
 #' @importFrom utils tail
 #' @examples
 #' model <- affectOU()
@@ -367,6 +370,7 @@ tail.simulate_affectOU <- function(x, n = 6L, ...) {
 #'     \item{value}{(long format) Simulated values}
 #'   }
 #' @export
+#' @concept simulate
 #' @method as.list simulate_affectOU
 #'
 #' @examples
@@ -429,6 +433,7 @@ as.list.simulate_affectOU <- function(x, direction = c("wide", "long"), ...) {
 #'     \item{sim}{Simulation index}
 #'   }
 #' @export
+#' @concept simulate
 #' @method as.array simulate_affectOU
 #'
 #' @examples
@@ -470,8 +475,10 @@ as.array.simulate_affectOU <- function(x, ...) {
 #' @return For `direction = "long"`, a matrix with columns
 #'   `time`, `dim`, `sim`, `value`. For `direction = "wide"`, a matrix with dimensions
 #'   (ntime x ndim*nsim). Columns iterate over dimensions first, then
-#'   simulations.
+#'   simulations. Column names are `dim1`, `dim2`, ... when `nsim = 1`, or
+#'   `dim1.sim1`, `dim2.sim1`, ..., `dim1.sim2`, ... when `nsim > 1`.
 #' @export
+#' @concept simulate
 #' @method as.matrix simulate_affectOU
 #'
 #' @examples
@@ -504,11 +511,7 @@ as.matrix.simulate_affectOU <- function(x, direction = c("long", "wide"), ...) {
   } else {
     mat <- matrix(data, nrow = ntime, ncol = ndim * nsim)
 
-    if (ndim == 1 && nsim == 1) {
-      colnames(mat) <- "value"
-    } else if (ndim == 1) {
-      colnames(mat) <- paste0("sim", seq_len(nsim))
-    } else if (nsim == 1) {
+    if (nsim == 1) {
       colnames(mat) <- paste0("dim", seq_len(ndim))
     } else {
       colnames(mat) <- paste0(
@@ -548,9 +551,10 @@ as.matrix.simulate_affectOU <- function(x, direction = c("long", "wide"), ...) {
 #'     \item{value}{Simulated value}
 #'   }
 #'   For `direction = "wide"`, a data frame with `time` as the first column
-#'   and subsequent columns named `dim{d}.sim{s}` (or simplified names for
-#'   univariate or single simulations).
+#'   and subsequent columns named `dim{d}` when `nsim = 1`, or
+#'   `dim{d}.sim{s}` when `nsim > 1`.
 #' @export
+#' @concept simulate
 #' @method as.data.frame simulate_affectOU
 #'
 #' @examples
@@ -607,6 +611,7 @@ as.data.frame.simulate_affectOU <- function(x, row.names = NULL, optional = FALS
 #' @param digits Number of digits for numeric display
 #' @param ... Additional arguments (unused)
 #' @export
+#' @concept simulate
 #' @method print simulate_affectOU
 print.simulate_affectOU <- function(x, digits = 3, ...) {
   ndim <- x[["model"]][["ndim"]]
@@ -682,6 +687,7 @@ print.simulate_affectOU <- function(x, digits = 3, ...) {
 #'   }
 #'
 #' @export
+#' @concept simulate
 #' @method summary simulate_affectOU
 #'
 #' @examples
@@ -792,6 +798,7 @@ summary.simulate_affectOU <- function(object, burnin = 0, ...) {
 #' @return Invisibly returns the input object `x` after printing the summary.
 #'
 #' @export
+#' @concept simulate
 #' @method print summary_simulate_affectOU
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)

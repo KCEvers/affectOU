@@ -12,7 +12,7 @@
 \item{...}{Additional arguments (unused).}
 }
 \value{
-A list of class \code{stationary_affectOU} containing:
+A list of class \code{\link[=stationary.affectOU]{stationary_affectOU}} containing:
 \describe{
 \item{is_stable}{Logical, \code{TRUE} if a stationary distribution exists}
 \item{mean}{Stationary (long-run) mean, or \code{NULL} if non-stable}
@@ -99,6 +99,6 @@ stationary(model_2d)$cor # non-zero off-diagonal
 }
 \seealso{
 \code{\link[=stability.affectOU]{stability()}} for stability assessment,
-\code{\link[=relaxation.affectOU]{relaxation()}} for perturbation persistence,
 \code{\link[=summary.affectOU]{summary()}} for the full model summary.
 }
+\concept{theory}

@@ -99,7 +99,7 @@ test_that("equation() works for multivariate models with inline = TRUE", {
   ndim <- 2
   theta <- matrix(c(0.5, 0.1, 0.2, 0.4), ndim, ndim)
   mu <- c(3, 5)
-  gamma <- matrix(c(1, 0.3, 0.3, 1), ndim, ndim)
+  gamma <- matrix(c(1, 0.3, 0, 1), ndim, ndim)
   model <- affectOU(
     ndim = ndim,
     theta = theta,
@@ -152,7 +152,7 @@ test_that("equation() works for multivariate models with inline = FALSE", {
   ndim <- 2
   theta <- matrix(c(0.5, 0.1, 0.2, 0.4), ndim, ndim)
   mu <- c(3, 5)
-  gamma <- matrix(c(1, 0.3, 0.3, 1), ndim, ndim)
+  gamma <- matrix(c(1, 0.3, 0, 1), ndim, ndim)
   model <- affectOU(
     ndim = ndim,
     theta = theta,
@@ -254,7 +254,7 @@ test_that("LaTeX output contains required elements", {
     ndim = ndim,
     theta = matrix(c(0.5, 0.1, 0.2, 0.4), 2, 2),
     mu = c(3, 5),
-    gamma = matrix(c(1, 0.3, 0.3, 1), 2, 2)
+    gamma = matrix(c(1, 0.3, 0, 1), 2, 2)
   )
 
   # Check balanced braces in 1D
@@ -308,7 +308,7 @@ test_that("code output is parseable R", {
     ndim = ndim,
     theta = matrix(c(0.5, 0.1, 0.2, 0.4), 2, 2),
     mu = c(3, 5),
-    gamma = matrix(c(1, 0.3, 0.3, 1), 2, 2)
+    gamma = matrix(c(1, 0.3, 0, 1), 2, 2)
   )
 
   # 1D inline should parse
@@ -349,7 +349,7 @@ test_that("equation() handles large matrices", {
     ndim = ndim,
     theta = theta_raw %*% t(theta_raw), # ensures positive semi-definite
     mu = runif(ndim),
-    gamma = sigma_raw %*% t(sigma_raw) # ensures positive semi-definite
+    sigma = sigma_raw %*% t(sigma_raw) # ensures positive semi-definite
   )
 
   eq_latex <- equation(model, "latex", inline = TRUE)

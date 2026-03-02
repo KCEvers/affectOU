@@ -23,3 +23,4 @@ Print stability analysis
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 print(stability(model))
 }
+\concept{theory}

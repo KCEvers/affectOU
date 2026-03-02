@@ -108,3 +108,4 @@ model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 sim <- simulate(model, stop = 100, dt = 0.01, save_at = 0.1)
 ou_plot_phase(sim) # slope = exp(-0.5 * 0.1) = 0.95
 }
+\concept{plot_simulate}

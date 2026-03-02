@@ -4,13 +4,7 @@
 \alias{affectOU}
 \title{Create Ornstein-Uhlenbeck affect model}
 \usage{
-affectOU(
-  ndim = 1,
-  theta = 0.5,
-  mu = 0,
-  gamma = 1,
-  sigma = gamma \%*\% t(gamma)
-)
+affectOU(ndim = 1, theta = 0.5, mu = 0, sigma = 1, gamma = t(chol(sigma)))
 }
 \arguments{
 \item{ndim}{Dimensionality of the affect process. Defaults to 1 (univariate). Only needs to be specified if it cannot be inferred from the dimensions of the other parameters.}
@@ -24,15 +18,18 @@ For non-stationary models: when \eqn{\theta < 0}, the process is pushed
 away from \eqn{\mu} rather than toward it; when \eqn{\theta \approx 0},
 \eqn{\mu} has no meaningful influence on the trajectory.}
 
-\item{gamma}{Diffusion coefficient (multiplies \eqn{dW(t)} in the SDE).
-For 1D: positive scalar. For multidimensional: matrix. Either \code{gamma} or \code{sigma} must be specified, but not both. If \code{gamma} is specified, \code{sigma} is computed as \eqn{\Sigma = \Gamma\Gamma^\top}.}
-
 \item{sigma}{Noise covariance matrix (\eqn{\Sigma = \Gamma\Gamma^\top}).
 For 1D: positive scalar (variance). For multidimensional: positive
 semi-definite matrix. Off-diagonal elements represent correlated noise
-between dimensions.
-Either \code{gamma} or \code{sigma} must be specified, but not both. If \code{sigma}
-is specified, \code{gamma} is computed via Cholesky decomposition.}
+between dimensions. This is the recommended way to specify noise
+structure. Specifying both \code{gamma} and \code{sigma} is an error.}
+
+\item{gamma}{Diffusion coefficient (multiplies \eqn{dW(t)} in the SDE).
+For 1D: positive scalar. For multidimensional: lower triangular matrix
+(the Cholesky factor of \eqn{\Sigma}). Specifying both \code{gamma} and
+\code{sigma} is an error. Most users should prefer specifying \code{sigma} directly;
+\code{gamma} is available for advanced users who want explicit control over the
+Cholesky factorisation.}
 }
 \value{
 An object of class \code{\link{affectOU}}, representing a univariate or multivariate
@@ -78,8 +75,8 @@ where:
 \item \eqn{X(t)}: affect state at time \eqn{t}
 \item \eqn{\theta / \Theta} (theta): attractor strength or regulation speed (scalar or matrix)
 \item \eqn{\mu} (mu): attractor location or set point (scalar or vector)
-\item \eqn{\gamma / \Gamma} (gamma): diffusion coefficient that multiplies dW(t)
-\item \eqn{\sigma / \Sigma} (sigma): noise covariance matrix, computed as \eqn{\Sigma = \Gamma\Gamma'}
+\item \eqn{\gamma / \Gamma} (gamma): lower-triangular diffusion coefficient (Cholesky factor) that multiplies dW(t)
+\item \eqn{\sigma / \Sigma} (sigma): noise covariance matrix, computed as \eqn{\Sigma = \Gamma\Gamma'}. This is the recommended way to specify noise for most users
 \item \eqn{dW(t)}: increments of a Wiener process (Brownian motion)
 }
 
@@ -103,14 +100,14 @@ negative influence on dimension \eqn{i} (pushes it down).
 }
 \examples{
 # 1D model
-model_1d <- affectOU(theta = 0.5, mu = 0, gamma = 1)
+model_1d <- affectOU(theta = 0.5, mu = 0, sigma = 1)
 summary(model_1d)
 coef(model_1d)
 
 # 2D model (uncoupled)
 model_2d <- affectOU(
   theta = diag(c(0.5, 0.3)), mu = 0,
-  gamma = 1
+  sigma = 1
 )
 summary(model_2d)
 
@@ -126,7 +123,7 @@ theta_3d <- matrix(c(
 ), nrow = 3)
 model_3d <- affectOU(
   theta = theta_3d,
-  mu = 0, gamma = 1
+  mu = 0, sigma = 1
 )
 summary(model_3d)
 
@@ -145,9 +142,9 @@ affective dynamics. Psychological Methods, 16(4), 468-490.
 \item \code{\link[=simulate.affectOU]{simulate.affectOU()}} to generate trajectories.
 \item \code{\link[=plot.simulate_affectOU]{plot.simulate_affectOU()}} to visualize simulations
 (\code{type = "time"}, \code{"histogram"}, \code{"acf"}, \code{"phase"}).
-\item \code{\link[=summary.affectOU]{summary.affectOU()}} for stability, stationary distribution, and
-relaxation time.
+\item \code{\link[=summary.affectOU]{summary.affectOU()}} for stability and the stationary distribution.
 \item \code{\link[=fit.affectOU]{fit.affectOU()}} to estimate parameters from observed data.
 \item \code{\link[=update.affectOU]{update.affectOU()}} to modify parameters without recreating the model.
 }
 }
+\concept{config}

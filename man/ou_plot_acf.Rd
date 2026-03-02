@@ -97,3 +97,4 @@ sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.01)
 ou_plot_acf(sim, lag.max = 5)
 
 }
+\concept{plot_simulate}

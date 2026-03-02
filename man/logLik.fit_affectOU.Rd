@@ -7,12 +7,12 @@
 \method{logLik}{fit_affectOU}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{fit_affectOU}}
+\item{object}{An object of class \code{\link[=fit.affectOU]{fit_affectOU}}.}
 
-\item{...}{Additional arguments (unused)}
+\item{...}{Additional arguments (unused).}
 }
 \value{
-Numeric log-likelihood value
+Numeric log-likelihood value.
 }
 \description{
 Extract log-likelihood from fitted OU affect model
@@ -24,3 +24,4 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 logLik(fitted)
 }
+\concept{fit}

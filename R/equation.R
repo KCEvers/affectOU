@@ -12,7 +12,7 @@ generics::equation
 #' @param ... Additional arguments (unused)
 #'
 #' @export
-#'
+#' @concept config
 #' @examples
 #' # Plain text equation for 1D model
 #' model <- affectOU()

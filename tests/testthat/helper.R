@@ -24,7 +24,6 @@ expect_working_model <- function(model, ...) {
   expect_silent(dim(model))
   expect_silent(coef(model))
   expect_silent(s <- summary(model))
-  expect_silent(relaxation(model))
   is_stable <- model[["stationary"]][["is_stable"]]
   if (is_stable) {
     expect_silent(sim <- quick_sim(model, ...))

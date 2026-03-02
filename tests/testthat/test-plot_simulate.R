@@ -623,7 +623,7 @@ test_that("compute_theoretical_ccf at lag 0 equals correlation coefficient", {
 
 test_that("compute_theoretical_ccf is bounded by [-1, 1]", {
   theta <- matrix(c(0.5, 0.2, 0.15, 0.3), nrow = 2)
-  gamma <- matrix(c(1, 0.5, 0.5, 1), nrow = 2)
+  gamma <- matrix(c(1, 0.5, 0, 1), nrow = 2)
   sigma <- gamma %*% t(gamma)
   sigma_inf <- solve_lyapunov(theta, sigma)
   lags <- seq(0, 20, by = 0.5)

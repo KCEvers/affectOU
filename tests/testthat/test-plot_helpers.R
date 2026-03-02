@@ -314,7 +314,7 @@ test_that("prep_sim respects max_nsim constraint", {
   )
 })
 
-test_that("prep_sim preserves theta, gamma, and mu subsetting", {
+test_that("prep_sim preserves theta, sigma, and mu subsetting", {
   ndim <- 3
   mu <- c(0, 1, 2)
   theta <- matrix(c(
@@ -322,25 +322,28 @@ test_that("prep_sim preserves theta, gamma, and mu subsetting", {
     0.1, 0.3, 0.15,
     0.2, 0.15, 0.4
   ), nrow = ndim, byrow = TRUE)
-  gamma <- matrix(c(
+  sigma <- matrix(c(
     1, 0.2, 0.1,
     0.2, 1, 0.3,
     0.1, 0.3, 1
   ), nrow = ndim, byrow = TRUE)
 
-  model <- affectOU(ndim = ndim, theta = theta, gamma = gamma, mu = mu)
+  model <- affectOU(ndim = ndim, theta = theta, sigma = sigma, mu = mu)
   sim <- simulate(model, dt = 0.1, nsim = 1)
 
   result <- prep_sim(sim, which_dim = c(1, 3), which_sim = 1)
 
   # Should extract rows/cols 1 and 3
-  expected_theta <- theta[c(1, 3), c(1, 3)]
-  expected_sigma <- gamma[c(1, 3), c(1, 3)]
-  expected_mu <- mu[c(1, 3)]
+  idx <- c(1, 3)
+  expected_theta <- theta[idx, idx]
+  expected_sigma <- sigma[idx, idx]
+  expected_mu <- mu[idx]
+  expected_gamma <- model$parameters$gamma[idx, idx]
 
   expect_equal(result$model$parameters$theta, expected_theta)
-  expect_equal(result$model$parameters$gamma, expected_sigma)
+  expect_equal(result$model$parameters$sigma, expected_sigma)
   expect_equal(result$model$parameters$mu, expected_mu)
+  expect_equal(result$model$parameters$gamma, expected_gamma)
 })
 
 test_that("prep_sim sorts and deduplicates which_sim", {

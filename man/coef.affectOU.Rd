@@ -7,7 +7,7 @@
 \method{coef}{affectOU}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{affectOU}.}
+\item{object}{An object of class \code{\link[=affectOU]{affectOU}}.}
 
 \item{...}{Additional arguments (unused).}
 }
@@ -26,3 +26,4 @@ coef(model)
 \seealso{
 Model parameters are explained in \code{\link[=affectOU]{affectOU()}} and can be modified using \code{\link[=update.affectOU]{update()}}.
 }
+\concept{config}

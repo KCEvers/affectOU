@@ -7,13 +7,13 @@
 \method{print}{affectOU}(x, digits = 3, max_dim = 20, ...)
 }
 \arguments{
-\item{x}{An object of class \code{affectOU}}
+\item{x}{An object of class \code{\link[=affectOU]{affectOU}}.}
 
-\item{digits}{Number of digits to display}
+\item{digits}{Number of digits to display.}
 
-\item{max_dim}{Maximum number of dimensions to display details for}
+\item{max_dim}{Maximum number of dimensions to display details for.}
 
-\item{...}{Additional arguments (unused)}
+\item{...}{Additional arguments (unused).}
 }
 \description{
 Print affect OU model
@@ -22,3 +22,4 @@ Print affect OU model
 model <- affectOU(ndim = 2)
 print(model)
 }
+\concept{config}

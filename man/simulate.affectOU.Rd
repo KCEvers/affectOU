@@ -65,3 +65,4 @@ sim <- simulate(model, stop = 500, save_at = 10)
 plot(sim)
 
 }
+\concept{simulate}

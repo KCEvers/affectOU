@@ -7,14 +7,14 @@
 \method{summary}{fit_affectOU}(object, level = 0.95, ...)
 }
 \arguments{
-\item{object}{An object of class \code{fit_affectOU}}
+\item{object}{An object of class \code{\link[=fit.affectOU]{fit_affectOU}}.}
 
-\item{level}{Confidence level for intervals (default 0.95)}
+\item{level}{Confidence level for intervals (default 0.95).}
 
-\item{...}{Additional arguments (unused)}
+\item{...}{Additional arguments (unused).}
 }
 \value{
-An object of class \code{summary_fit_affectOU} containing:
+An object of class \code{\link[=summary.fit_affectOU]{summary_fit_affectOU}} containing:
 \describe{
 \item{coefficients}{Data frame with columns \code{estimate}, \code{se}, \code{lower},
 and \code{upper} for each parameter.}
@@ -38,3 +38,4 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 summary(fitted)
 }
+\concept{fit}
