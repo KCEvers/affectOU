@@ -7,13 +7,7 @@ supported.
 ## Usage
 
 ``` r
-affectOU(
-  ndim = 1,
-  theta = 0.5,
-  mu = 0,
-  gamma = 1,
-  sigma = gamma %*% t(gamma)
-)
+affectOU(ndim = 1, theta = 0.5, mu = 0, sigma = 1, gamma = t(chol(sigma)))
 ```
 
 ## Arguments
@@ -37,21 +31,22 @@ affectOU(
   when \\\theta \approx 0\\, \\\mu\\ has no meaningful influence on the
   trajectory.
 
-- gamma:
-
-  Diffusion coefficient (multiplies \\dW(t)\\ in the SDE). For 1D:
-  positive scalar. For multidimensional: matrix. Either `gamma` or
-  `sigma` must be specified, but not both. If `gamma` is specified,
-  `sigma` is computed as \\\Sigma = \Gamma\Gamma^\top\\.
-
 - sigma:
 
   Noise covariance matrix (\\\Sigma = \Gamma\Gamma^\top\\). For 1D:
   positive scalar (variance). For multidimensional: positive
   semi-definite matrix. Off-diagonal elements represent correlated noise
-  between dimensions. Either `gamma` or `sigma` must be specified, but
-  not both. If `sigma` is specified, `gamma` is computed via Cholesky
-  decomposition.
+  between dimensions. This is the recommended way to specify noise
+  structure. Specifying both `gamma` and `sigma` is an error.
+
+- gamma:
+
+  Diffusion coefficient (multiplies \\dW(t)\\ in the SDE). For 1D:
+  positive scalar. For multidimensional: lower triangular matrix (the
+  Cholesky factor of \\\Sigma\\). Specifying both `gamma` and `sigma` is
+  an error. Most users should prefer specifying `sigma` directly;
+  `gamma` is available for advanced users who want explicit control over
+  the Cholesky factorisation.
 
 ## Value
 
@@ -106,11 +101,12 @@ where:
 
 - \\\mu\\ (mu): attractor location or set point (scalar or vector)
 
-- \\\gamma / \Gamma\\ (gamma): diffusion coefficient that multiplies
-  dW(t)
+- \\\gamma / \Gamma\\ (gamma): lower-triangular diffusion coefficient
+  (Cholesky factor) that multiplies dW(t)
 
 - \\\sigma / \Sigma\\ (sigma): noise covariance matrix, computed as
-  \\\Sigma = \Gamma\Gamma'\\
+  \\\Sigma = \Gamma\Gamma'\\. This is the recommended way to specify
+  noise for most users
 
 - \\dW(t)\\: increments of a Wiener process (Brownian motion)
 
@@ -149,7 +145,7 @@ Psychological Methods, 16(4), 468-490.
   `"phase"`).
 
 - [`summary.affectOU()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
-  for stability, stationary distribution, and relaxation time.
+  for stability and the stationary distribution.
 
 - [`fit.affectOU()`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md)
   to estimate parameters from observed data.
@@ -161,7 +157,7 @@ Psychological Methods, 16(4), 468-490.
 
 ``` r
 # 1D model
-model_1d <- affectOU(theta = 0.5, mu = 0, gamma = 1)
+model_1d <- affectOU(theta = 0.5, mu = 0, sigma = 1)
 summary(model_1d)
 #> 
 #> ── 1D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────
@@ -174,7 +170,6 @@ summary(model_1d)
 #> 
 #> Mean: 0
 #> SD: 1
-#> Relaxation time (τ): 2
 coef(model_1d)
 #> $theta
 #> [1] 0.5
@@ -192,7 +187,7 @@ coef(model_1d)
 # 2D model (uncoupled)
 model_2d <- affectOU(
   theta = diag(c(0.5, 0.3)), mu = 0,
-  gamma = 1
+  sigma = 1
 )
 summary(model_2d)
 #> 
@@ -206,7 +201,6 @@ summary(model_2d)
 #> 
 #> Mean: [0, 0]
 #> SD: [1, 1.291]
-#> Relaxation time (τ): slowest = 3.333, fastest = 2
 #> 
 #> ── Structure ──
 #> 
@@ -226,7 +220,7 @@ theta_3d <- matrix(c(
 ), nrow = 3)
 model_3d <- affectOU(
   theta = theta_3d,
-  mu = 0, gamma = 1
+  mu = 0, sigma = 1
 )
 summary(model_3d)
 #> 
@@ -240,7 +234,6 @@ summary(model_3d)
 #> 
 #> Mean: [0, 0, 0]
 #> SD: [1.036, 1.351, 1.131]
-#> Relaxation time (τ): slowest = 4.086, fastest = 1.838
 #> 
 #> ── Structure ──
 #> 

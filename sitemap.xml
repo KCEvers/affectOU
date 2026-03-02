@@ -46,7 +46,6 @@
 <url><loc>https://kcevers.github.io/affectOU/reference/plot_parameters.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/print.affectOU.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/print.fit_affectOU.html</loc></url>
-<url><loc>https://kcevers.github.io/affectOU/reference/print.relaxation_affectOU.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/print.simulate_affectOU.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/print.stability_affectOU.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/print.stationary_affectOU.html</loc></url>
@@ -54,8 +53,6 @@
 <url><loc>https://kcevers.github.io/affectOU/reference/print.summary_fit_affectOU.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/print.summary_simulate_affectOU.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/reexports.html</loc></url>
-<url><loc>https://kcevers.github.io/affectOU/reference/relaxation.affectOU.html</loc></url>
-<url><loc>https://kcevers.github.io/affectOU/reference/relaxation.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/setup_panel.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/sim_legend_entries.html</loc></url>
 <url><loc>https://kcevers.github.io/affectOU/reference/simpaper.html</loc></url>

@@ -13,15 +13,16 @@ coef(object, ...)
 
 - object:
 
-  An object of class `fit_affectOU`
+  An object of class
+  [`fit_affectOU`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md).
 
 - ...:
 
-  Additional arguments (unused)
+  Additional arguments (unused).
 
 ## Value
 
-Named vector of fitted parameters
+Named vector of fitted parameters.
 
 ## Examples
 
@@ -32,5 +33,5 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 coef(fitted)
 #>      theta         mu      gamma 
-#> 0.44838108 0.02988085 1.00867173 
+#> 0.44839449 0.03008693 1.00865505 
 ```

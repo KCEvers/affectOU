@@ -22,7 +22,7 @@ update(
 - object:
 
   An object of class
-  [affectOU](https://kcevers.github.io/affectOU/reference/affectOU.md).
+  [`affectOU`](https://kcevers.github.io/affectOU/reference/affectOU.md).
 
 - ndim:
 
@@ -38,11 +38,15 @@ update(
 
 - gamma:
 
-  Optional. New diffusion coefficient (scalar or matrix).
+  Optional. New diffusion coefficient (scalar or lower triangular
+  matrix). Only `gamma` or `sigma` can be specified, not both. If
+  `sigma` is provided, `gamma` is computed via Cholesky decomposition.
 
 - sigma:
 
-  Optional. New noise covariance (scalar or matrix).
+  Optional. New noise covariance (scalar or positive semi-definite
+  matrix). Only `gamma` or `sigma` can be specified, not both. If
+  `gamma` is provided, `sigma` is computed as `gamma %*% t(gamma)`.
 
 - ...:
 

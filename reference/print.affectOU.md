@@ -13,19 +13,20 @@ print(x, digits = 3, max_dim = 20, ...)
 
 - x:
 
-  An object of class `affectOU`
+  An object of class
+  [`affectOU`](https://kcevers.github.io/affectOU/reference/affectOU.md).
 
 - digits:
 
-  Number of digits to display
+  Number of digits to display.
 
 - max_dim:
 
-  Maximum number of dimensions to display details for
+  Maximum number of dimensions to display details for.
 
 - ...:
 
-  Additional arguments (unused)
+  Additional arguments (unused).
 
 ## Examples
 

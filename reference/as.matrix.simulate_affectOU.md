@@ -32,6 +32,8 @@ as.matrix(x, direction = c("long", "wide"), ...)
 For `direction = "long"`, a matrix with columns `time`, `dim`, `sim`,
 `value`. For `direction = "wide"`, a matrix with dimensions (ntime x
 ndim\*nsim). Columns iterate over dimensions first, then simulations.
+Column names are `dim1`, `dim2`, ... when `nsim = 1`, or `dim1.sim1`,
+`dim2.sim1`, ..., `dim1.sim2`, ... when `nsim > 1`.
 
 ## Examples
 

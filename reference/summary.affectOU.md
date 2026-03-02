@@ -1,13 +1,12 @@
 # Summarize an Ornstein-Uhlenbeck affect model
 
-Summarize the dynamics, stationary distribution, and relaxation
-properties of an Ornstein-Uhlenbeck affect model. In the case of
-multi-dimensional models, additional information about coupling and
-noise structure is provided. For more details, see
+Summarize the dynamics and stationary distribution of an
+Ornstein-Uhlenbeck affect model. In the case of multi-dimensional
+models, additional information about coupling and noise structure is
+provided. For more details, see
 [`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md),
-[`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md),
 and
-[`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md).
+[`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md).
 
 ## Usage
 
@@ -44,11 +43,6 @@ An object of class `summary_affectOU` containing:
   A `stationary_affectOU` object (see
   [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md))
 
-- relaxation:
-
-  Data frame with relaxation time and half-life for each dimension (see
-  [`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md))
-
 - coupling:
 
   Coupling structure: `NA` for 1D, `NULL` if uncoupled, or data frame
@@ -67,8 +61,6 @@ An object of class `summary_affectOU` containing:
 for dynamics classification,
 [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
 for the equilibrium distribution,
-[`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
-for perturbation persistence,
 [`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md)
 for model construction,
 [`vignette("characteristics")`](https://kcevers.github.io/affectOU/articles/characteristics.md)
@@ -91,7 +83,6 @@ summary(model)
 #> 
 #> Mean: 0
 #> SD: 1
-#> Relaxation time (τ): 2
 
 # --- Accessing summary components ---
 s <- summary(model)
@@ -115,7 +106,6 @@ summary(model_2d)
 #> 
 #> Mean: [0, 0]
 #> SD: [1, 1.086]
-#> Relaxation time (τ): slowest = 2, fastest = 2
 #> 
 #> ── Structure ──
 #> 

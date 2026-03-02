@@ -63,8 +63,8 @@ For `direction = "long"`, a data frame with columns:
   Simulated value
 
 For `direction = "wide"`, a data frame with `time` as the first column
-and subsequent columns named `dim{d}.sim{s}` (or simplified names for
-univariate or single simulations).
+and subsequent columns named `dim{d}` when `nsim = 1`, or
+`dim{d}.sim{s}` when `nsim > 1`.
 
 ## Examples
 

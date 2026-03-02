@@ -15,15 +15,16 @@ summary(object, level = 0.95, ...)
 
 - object:
 
-  An object of class `fit_affectOU`
+  An object of class
+  [`fit_affectOU`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md).
 
 - level:
 
-  Confidence level for intervals (default 0.95)
+  Confidence level for intervals (default 0.95).
 
 - ...:
 
-  Additional arguments (unused)
+  Additional arguments (unused).
 
 ## Value
 
@@ -73,12 +74,12 @@ summary(fitted)
 #> ── Coefficients ──
 #> 
 #>       Estimate    SE          95% CI
-#> theta    0.484 0.045  [0.395, 0.573]
-#> mu       0.102 0.093 [-0.081, 0.284]
-#> gamma    1.006 0.010  [0.986, 1.027]
+#> theta    0.504 0.046  [0.413, 0.594]
+#> mu       0.103 0.091 [-0.076, 0.282]
+#> gamma    1.029 0.011  [1.009, 1.050]
 #> 
 #> ── Goodness of fit ──
 #> 
-#> Log-likelihood: -1250.582
-#> RMSE: 0.311
+#> Log-likelihood: -1358.04
+#> RMSE: 0.317
 ```

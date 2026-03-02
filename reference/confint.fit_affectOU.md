@@ -13,7 +13,8 @@ confint(object, parm, level = 0.95, ...)
 
 - object:
 
-  An object of class `fit_affectOU`
+  An object of class
+  [`fit_affectOU`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md).
 
 - parm:
 
@@ -22,15 +23,15 @@ confint(object, parm, level = 0.95, ...)
 
 - level:
 
-  Confidence level for intervals (default 0.95)
+  Confidence level for intervals (default 0.95).
 
 - ...:
 
-  Additional arguments (unused)
+  Additional arguments (unused).
 
 ## Value
 
-Matrix of confidence intervals with columns for lower and upper bounds
+Matrix of confidence intervals with columns for lower and upper bounds.
 
 ## Examples
 
@@ -41,7 +42,7 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 confint(fitted)
 #>              2.5%     97.5%
-#> theta  0.39390276 0.5704103
-#> mu    -0.08120637 0.2787374
-#> gamma  0.97001176 1.0097551
+#> theta  0.39396370 0.5704666
+#> mu    -0.08125462 0.2786512
+#> gamma  0.97002652 1.0097711
 ```

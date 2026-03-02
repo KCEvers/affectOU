@@ -12,7 +12,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</script><script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">affectOU</a>
 
@@ -42,7 +42,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
+<li><a class="dropdown-item" href="articles/characteristics.html">Affect characteristics implied by the OU process</a></li>
   </ul>
 </li>
       </ul>
@@ -51,6 +51,14 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/KCEvers/affectOU/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
@@ -59,26 +67,20 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="affectou-simulate-affect-dynamics-with-ornstein-uhlenbeck-processes">affectOU: Simulate Affect Dynamics with Ornstein-Uhlenbeck Processes<a class="anchor" aria-label="anchor" href="#affectou-simulate-affect-dynamics-with-ornstein-uhlenbeck-processes"></a>
+<div class="page-header"><h1 id="affectou-ornstein-uhlenbeck-model-for-affect-dynamics">affectOU: Ornstein-Uhlenbeck Model for Affect Dynamics<a class="anchor" aria-label="anchor" href="#affectou-ornstein-uhlenbeck-model-for-affect-dynamics"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The aim of <code>affectOU</code> is to provide tools for simulating and analyzing the Ornstein-Uhlenbeck (OU) process in R. The OU process models how variables change over time while being influenced by random perturbations. It is widely used to model affect dynamics in psychology, formulating three core psychological mechanisms (assuming a unidimensional process for simplicity):</p>
+<p>The aim of <code>affectOU</code> is to provide tools for simulating the Ornstein-Uhlenbeck (OU) process in R. The OU is widely used to model affect dynamics: how feelings or emotions change over time (e.g., Guthier et al., 2020; Kuppens et al., 2010a; Voelkle &amp; Oud, 2013). It formulates three core psychological mechanisms through three sets of parameters (Uhlenbeck &amp; Ornstein, 1930; Oravecz et al., 2011):</p>
 <ul>
 <li>
-<p><strong>θ (theta): emotion regulation capacity</strong></p>
-<p>Governs the rate at which affect returns to baseline. Low θ indicates emotional inertia or rumination; high θ indicates rapid regulation.</p>
-</li>
+<strong>Drift matrix Θ:</strong> Governs the rate at which affect returns to baseline, capturing a person’s <em>emotion regulation capacity</em> or <em>emotional inertia</em>;</li>
 <li>
-<p><strong>μ (mu): affective set point</strong></p>
-<p>The long-term average level of affect that the system tends to return to. This could represent an individual’s baseline mood or emotional equilibrium.</p>
-</li>
+<strong>Attractor μ:</strong> The long-term average level of affect that the system tends to return to, representing a person’s <em>baseline mood</em> or <em>emotional setpoint</em>;</li>
 <li>
-<p><strong>γ (gamma): emotional reactivity</strong></p>
-<p>Controls the magnitude of short-term fluctuations or noise in the affective system. This can be interpreted as an individual’s sensitivity to environmental perturbations.</p>
-</li>
+<strong>Diffusion matrix Γ:</strong> Controls the magnitude of short-term fluctuations or noise in the affective system, characterizing an individual’s <em>reactivity</em> or <em>sensitivity</em> to environmental perturbations.</li>
 </ul>
-<p><code>affectOU</code> serves as a demonstration of how to package computational models, as detailed in Evers &amp; Vanhasbroeck (2026), “Sharing Computational Models as Reproducible and User-Friendly Packages: A Tutorial in R” (forthcoming).</p>
+<p><code>affectOU</code> primarily serves as a demonstration of a packaged computational model, as detailed in Evers &amp; Vanhasbroeck (2026), “Sharing Computational Models as Reproducible and User-Friendly Packages: A Tutorial in R” (forthcoming).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -86,16 +88,19 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"KCEvers/affectOU"</span><span class="op">)</span></span></code></pre></div>
+<p>Once installed, one can use the package through calling the <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> function.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KCEvers/affectOU" class="external-link">affectOU</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KCEvers/affectOU" class="external-link">affectOU</a></span><span class="op">)</span></span></code></pre></div>
+<!-- The chief functionalities of the package revolve around a user-specified OU model of a particular dimensionality. To create such a model, one should use the [`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.html) function and specify its dimensionality and/or parameters (see [Get Started](https://kcevers.github.io/affectOU/articles/affectOU.html)). For example, the following call creates a two-dimensional OU model with default parameter values: -->
+<p>The core functionality of the package revolves around an OU model object created by the function <a href="https://kcevers.github.io/affectOU/reference/affectOU.html"><code>affectOU()</code></a>. For example, the following creates a two-dimensional model with default parameter values:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create two-dimensional OU</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/affectOU.html">affectOU</a></span><span class="op">(</span>ndim <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">model</span></span>
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/affectOU.html">affectOU</a></span><span class="op">(</span>ndim <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── 2D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; dX(t) = Θ(μ − X(t))dt + Γ dW(t)</span></span>
@@ -116,11 +121,30 @@
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
 <span><span class="co">#&gt; [1,]    1    0</span></span>
 <span><span class="co">#&gt; [2,]    0    1</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Simulate timeseries</span></span>
-<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-sim-img-1.svg" alt="" width="100%"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── 2D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Dynamics ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Stable (node)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Stationary distribution ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Mean: [0, 0]</span></span>
+<span><span class="co">#&gt; SD: [1, 1]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coupling: none</span></span>
+<span><span class="co">#&gt; Noise: independent</span></span></code></pre></div>
+<p>The model can then be simulated with <a href="(https://kcevers.github.io/affectOU/reference/simulate.affectOU.html)"><code>simulate()</code></a> and visualised over time with <a href="(https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.html)"><code>plot()</code></a>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-plot-1.svg" alt="Visualization of a time-series plot, showing the results of the simulation. In one time-series plot, it shows the simulated values for both dimensions of the OU process together with a horizontal line denoting the baseline affective state $\mu$." width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="explore-the-ou-process">Explore the OU Process<a class="anchor" aria-label="anchor" href="#explore-the-ou-process"></a>
@@ -128,17 +152,19 @@
 <p>For more detailed examples and visual demonstrations of the model’s characteristics, see the vignettes:</p>
 <ul>
 <li><a href="https://kcevers.github.io/affectOU/articles/affectOU.html">Get started with affectOU</a></li>
-<li><a href="https://kcevers.github.io/affectOU/articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
+<li><a href="https://kcevers.github.io/affectOU/articles/characteristics.html">Affect characteristics implied by the OU process</a></li>
 </ul>
-<p>Theoretical properties of the OU process are explained in <a href="https://kcevers.github.io/affectOU/reference/stability.affectOU.html"><code>stability()</code></a>, <a href="https://kcevers.github.io/affectOU/reference/stationary.affectOU.html"><code>stationary()</code></a>, and <a href="https://kcevers.github.io/affectOU/reference/relaxation.affectOU.html"><code>relaxation()</code></a>. For fitting unidimensional OU models to data, see <a href="https://kcevers.github.io/affectOU/reference/fit.affectOU.html"><code>fit()</code></a>.</p>
+<p>More ways to visualise the OU are offered in <a href="https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.html"><code>plot()</code></a>. Its theoretical properties are further explained in the function documentation of <a href="https://kcevers.github.io/affectOU/reference/stability.affectOU.html"><code>stability()</code></a> and <a href="https://kcevers.github.io/affectOU/reference/stationary.affectOU.html"><code>stationary()</code></a>. For fitting unidimensional OU models to data, see <a href="https://kcevers.github.io/affectOU/reference/fit.affectOU.html"><code>fit()</code></a>.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Uhlenbeck &amp; Ornstein (1930) <a href="https://libkey.io/libraries/1691/10.1103/PhysRev.36.823" class="external-link">doi:10.1103/PhysRev.36.823</a></p>
-<p>Oravecz, Tuerlinckx &amp; Vandekerckhove (2009) <a href="https://libkey.io/libraries/1691/10.1007/s11336-008-9106-8" class="external-link">doi:10.1007/s11336-008-9106-8</a></p>
-<p>Kuppens, Allen &amp; Sheeber (2010) <a href="https://libkey.io/libraries/1691/10.1177/0956797610372634" class="external-link">doi:10.1177/0956797610372634</a></p>
-<p>Kuppens, Oravecz &amp; Tuerlinckx (2010) <a href="https://libkey.io/libraries/1691/10.1037/a0020962" class="external-link">doi:10.1037/a0020962</a></p>
+<p>Evers, K. C. &amp; Vanhasbroeck, N. (2026). <em>Sharing computational models as reproducible and user-friendly packages: A tutorial in R.</em> Manuscript in preparation.</p>
+<p>Guthier, C., Dormann, C., &amp; Voelkle, M. C. (2020). Reciprocal effects between job stressors and burnout: A continuous-time meta-analysis of longitudinal studies. <em>Psychological Bulletin, 146</em>, 1146-1173. doi: <a href="https://doi.org/10.1037/bul0000304" class="external-link">10.1037/bul0000304</a></p>
+<p>Kuppens, P., Oravecz, Z., &amp; Tuerlinckx, F. (2010). Feelings change: Accounting for individual differences in the temporal dynamics of affect. <em>Journal of Personality and Social Psychology, 99</em>, 1042-1060. doi: <a href="https://doi.org/10.1037/a0020962" class="external-link">10.1037/a0020962</a></p>
+<p>Oravecz, Z., Tuerlinckx, F., &amp; Vandekerckhove, J. (2011). A hierarchical latent stochastic differential equation model for affective dynamics. <em>Psychological Methods, 16</em>, 468-490. doi: <a href="https://doi.org/10.1037/a0024375" class="external-link">10.1037/a0024375</a></p>
+<p>Uhlenbeck, G. E. &amp; Ornstein, L. S. (1930). On the theory of Brownian motion. <em>Physical Review, 46</em>, 823-841.</p>
+<p>Voelkle, M. C. &amp; Oud, J. H. L. (2013). Continuous time modelling with individually varying time intervals for oscillating and non-oscillating processes. <em>British Journal of Mathematical and Statistical Psychology, 66</em>, 103-126. doi: <a href="https://doi.org/10.1111/j.2044-8317.2012.02043.x" class="external-link">10.1111/j.2044-8317.2012.02043.x</a></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

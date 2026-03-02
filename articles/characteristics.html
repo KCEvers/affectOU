@@ -5,24 +5,24 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Affect characteristics implied by the OU Process • affectOU</title>
+<title>Affect characteristics implied by the OU process • affectOU</title>
 <!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
   window.MathJax = {
     chtml: {
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Affect characteristics implied by the OU Process">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Affect characteristics implied by the OU process">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">affectOU</a>
 
@@ -40,7 +40,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
+<li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU process</a></li>
   </ul>
 </li>
       </ul>
@@ -49,6 +49,14 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/KCEvers/affectOU/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
@@ -62,7 +70,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Affect characteristics implied by the OU Process</h1>
+      <h1>Affect characteristics implied by the OU process</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/KCEvers/affectOU/blob/main/vignettes/characteristics.Rmd" class="external-link"><code>vignettes/characteristics.Rmd</code></a></small>
@@ -71,172 +79,194 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KCEvers/affectOU" class="external-link">affectOU</a></span><span class="op">)</span></span></code></pre></div>
 <p>Modelling affect with the Ornstein-Uhlenbeck (OU) process implies
 affect dynamics are characterized by several distinct features. This
-vignette demonstrates each feature visually. For mathematical
-definitions of the quantities shown here, see <a href="../reference/stability.affectOU.html"><code>stability()</code></a>,
-<a href="../reference/stationary.affectOU.html"><code>stationary()</code></a>,
-and <a href="../reference/relaxation.affectOU.html"><code>relaxation()</code></a>.</p>
+vignette demonstrates each feature visually. For further mathematical
+definitions of the quantities shown here, see <a href="../reference/stability.affectOU.html"><code>stability()</code></a>
+and <a href="../reference/stationary.affectOU.html"><code>stationary()</code></a>.</p>
+<p>For reference, the multivariate OU process is defined as:</p>
+<p><span class="math display">\[d\mathbf{X}(t) =
+\mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} \,
+d\mathbf{W}(t)\]</span></p>
+<p>where <span class="math inline">\(\mathbf{\mu}\)</span> defines the
+location of the affective baseline, <span class="math inline">\(\mathbf{\Theta}\)</span> defines the regulation
+towards this baseline (for stable systems), and <span class="math inline">\(\mathbf{\Gamma}\)</span> defines the reactivity to
+random perturbations.</p>
 <div class="section level2">
-<h2 id="mean-reversion">1. Mean Reversion<a class="anchor" aria-label="anchor" href="#mean-reversion"></a>
+<h2 id="mean-reversion">Mean Reversion<a class="anchor" aria-label="anchor" href="#mean-reversion"></a>
 </h2>
-<p>After perturbations, affect returns toward its baseline <span class="math inline">\(\mu\)</span> at a rate determined by <span class="math inline">\(\theta\)</span> (for stable, unidimensional
-systems). High <span class="math inline">\(\theta\)</span> indicates
-rapid regulation; low <span class="math inline">\(\theta\)</span>
-indicates emotional inertia.</p>
+<p>The first main feature of the OU as a model of affect dynamics
+concerns the tendency to return to its mean. For stable systems (see
+later sections), when affect is perturbed, it returns toward its
+baseline <span class="math inline">\(\mathbf{\mu}\)</span> at a rate
+determined by <span class="math inline">\(\mathbf{\Theta}\)</span>. In
+unidimensional systems, <span class="math inline">\(\theta\)</span> can
+simply be interpreted as the speed of emotional regulation, where low
+<span class="math inline">\(\theta\)</span> represents emotional
+inertia.</p>
+<details><summary>
+Show mathematical background
+</summary><p>It can be proven that this regulation is captured by a matrix
+exponential so that, after a time step <span class="math inline">\(\Delta t\)</span>, the deterministic drift of the
+system can be described by the following equation:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathbf{X}_{t + \Delta t} = (\mathbf{I}_d - e^{-\mathbf{\Theta} \Delta
+t}) \mathbf{\mu} + e^{-\mathbf{\Theta} \Delta t} \mathbf{X}_t
+\end{equation}\]</span></p>
+<p>The rate of this regulation is determined by the eigenvalues of <span class="math inline">\(\mathbf{\Theta}\)</span>. Decomposing:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathbf{\Theta} = \mathbf{\Omega} \mathbf{\Lambda}
+\mathbf{\Omega}^{-1}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\mathbf{\Omega}\)</span> contains
+the eigenvectors and <span class="math inline">\(\mathbf{\Lambda}\)</span> contains the eigenvalues
+of the drift matrix <span class="math inline">\(\mathbf{\Theta}\)</span>. The drift can itself be
+decomposed as:</p>
+<p><span class="math display">\[\begin{equation}
+\begin{split}
+  e^{-\mathbf{\Theta} \Delta t} &amp;= e^{-\mathbf{\Omega}
+\mathbf{\Lambda} \mathbf{\Omega}^{-1} \Delta t} \\
+  &amp;= \mathbf{\Omega} e^{-\mathbf{\Lambda} \Delta t}
+\mathbf{\Omega}^{-1}
+\end{split}
+\end{equation}\]</span></p>
+<p>This derivation shows that the rate of the regulation is determined
+by the eigenvalues <span class="math inline">\(\mathbf{\Lambda}\)</span>
+while the directionality of the regulation is determined by the
+eigenvectors <span class="math inline">\(\mathbf{\Omega}\)</span>. For
+stable systems with positive real parts to the eigenvalues, higher
+values of <span class="math inline">\(\lambda_i \in
+\mathbf{\Lambda}\)</span> will lead to a more rapid regulation while
+lower values of <span class="math inline">\(\lambda_i\)</span> indicate
+slower regulation.</p>
+</details><p>This property is shown below, in which we simulate two independent OU
+processes only differing in <span class="math inline">\(\theta\)</span>.
+The process with higher <span class="math inline">\(\theta\)</span>
+(red) stays closer to its attractor (horizontal line, <span class="math inline">\(\mu\)</span>) than the process with lower <span class="math inline">\(\theta\)</span> (green), which strays further
+away. In emotion terms, the second process displays greater affective
+inertia than the second process.</p>
 <details><summary>
 Show code
-</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, seed <span class="op">=</span> <span class="fl">123</span>, stop <span class="op">=</span> <span class="fl">20</span>, initial_state <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>,</span>
+</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify both processes in the same model. However, as they are uncoupled, they will evolve independently over time. </span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span></span>
+<span>  theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Simulate and plot timeseries</span></span>
+<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">model</span>, </span>
+<span>  seed <span class="op">=</span> <span class="fl">123</span>, </span>
+<span>  stop <span class="op">=</span> <span class="fl">20</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">sim</span>,</span>
+<span>  by_dim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  main <span class="op">=</span> <span class="st">"Mean Reversion Depends on θ"</span>,</span>
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Fast Regulation (θ = 5.0)"</span>, <span class="st">"Slow Regulation (θ = 0.5)"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/mean-reversion-plot-1.svg" class="r-plt" alt="" width="672"></p>
+</details><p><img src="characteristics_files/figure-html/mean-reversion-plot-1.svg" class="r-plt" alt="Time series plot with two lines, one for each process that is displayed. The fast-regulating process (red, with θ = 5.0) is shown to fluctuate closely around the attractor, typically remaining within the bounds [-1, 1]. The slow-regulating process (green, with θ = 0.5), however, fluctuates more widely around the attractor, with small perturbations building up to large fluctuations around the attractor state." width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="perturbation-persistence">2. Perturbation Persistence<a class="anchor" aria-label="anchor" href="#perturbation-persistence"></a>
 </h2>
-<p>The relaxation time <span class="math inline">\(\tau =
-1/\theta\)</span> is the characteristic time scale of the OU process—the
-time for the expected deviation to shrink to <span class="math inline">\(1/e \approx 36.8\%\)</span>. The half-life <span class="math inline">\(t_{1/2} = \ln 2 \cdot \tau\)</span> marks the 50%
-point. Effects decay exponentially: at two <span class="math inline">\(\tau\)</span>, about 13.5% remains; at three <span class="math inline">\(\tau\)</span>, about 5%.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/relaxation.html">relaxation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Relaxation time of 1D Ornstein-Uhlenbeck Model</span> ──</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Relaxation time (τ): 2 time units</span></span>
-<span><span class="co">#&gt; Half-life (t₁/₂): 1.386 time units</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Time for perturbation to decay to:</span></span>
-<span><span class="co">#&gt;      50%     37%     14%      5%      1%</span></span>
-<span><span class="co">#&gt;    1.386   2.000   4.000   6.000  10.000</span></span></code></pre></div>
+<p>After affect is perturbed, it takes time to return to its baseline.
+The speed of this return is determined by <span class="math inline">\(\mathbf{\Theta}\)</span>, which characterizes how
+long the effect of perturbations persists. This persistence can be
+quantified through the relaxation time <span class="math inline">\(\tau\)</span>, which is the time for the expected
+deviation to shrink to <span class="math inline">\(1/e \approx
+36.8\%\)</span>. Effects decay exponentially: at two <span class="math inline">\(\tau\)</span>, about 13.5% remains; at three <span class="math inline">\(\tau\)</span>, about 5%. <span class="math inline">\(\tau\)</span> is also known as the characteristic
+time scale, which can also be defined as the half-life <span class="math inline">\(t_{1/2} = \ln 2 \cdot \tau\)</span>, which is the
+time for the expected deviation to shrink to 50%.</p>
+<details><summary>
+Show mathematical background
+</summary><p>The relaxation time is straightforward to compute for unidimensional
+OUs, as <span class="math inline">\(\tau = 1/\theta\)</span>. At time
+<span class="math inline">\(\tau\)</span>, the deterministic drift
+reduces to <span class="math inline">\(e^{-\theta \tau} y(0) = e^{-1}
+y(0) \approx 0.368\, y(0)\)</span>, meaning the system has returned to
+about 36.8% of its initial displacement. The same logic extends to
+uncoupled multivariate OUs, where each variable <span class="math inline">\(i\)</span> has its own relaxation time <span class="math inline">\(\tau_i = 1/\theta_{ii}\)</span>, and the
+deterministic drift for each variable reduces to <span class="math inline">\(e^{-1} y_i(0) \approx 0.368\, y_i(0)\)</span> at
+time <span class="math inline">\(\tau_i\)</span>. Equivalently, we may
+use the eigenvalues of <span class="math inline">\(\mathbf{\Theta}\)</span>, as in the case of
+diagonal <span class="math inline">\(\mathbf{\Theta}\)</span>, the
+eigenvalues are simply the diagonal elements of <span class="math inline">\(\mathbf{\Theta}\)</span>. In this case, the
+relaxation time for each eigenvalue <span class="math inline">\(\lambda_i\)</span> is <span class="math inline">\(\tau_i = 1/\lambda_i\)</span>.</p>
+<p>However, this same principle does not apply to coupled multivariate
+OUs. Coupling between variables means that the relaxation of one
+variable can affect the relaxation of others. In this case, the
+relaxation time is not simply determined by the diagonal elements of
+<span class="math inline">\(\mathbf{\Theta}\)</span> or its eigenvalues,
+but rather by the full dynamics of the system.</p>
+</details><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <details><summary>
 Show code
-</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Simulate with more time points for accurate ACF</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, stop <span class="op">=</span> <span class="fl">10000</span>, dt <span class="op">=</span> <span class="fl">0.01</span>, save_at <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, type <span class="op">=</span> <span class="st">"acf"</span>, lag.max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 </details><p><img src="characteristics_files/figure-html/persistence-plot-show-1.svg" class="r-plt" alt="" width="672"></p>
 <p>The ACF equals <span class="math inline">\(1/e\)</span> at the
 relaxation time and <span class="math inline">\(0.5\)</span> at the
-half-life. Slow regulation means longer persistence and higher
-autocorrelation. See <a href="../reference/relaxation.affectOU.html"><code>relaxation()</code></a>
-for more details on this concept and its interpretations.</p>
+half-life. Slow regulation (i.e., lower <span class="math inline">\(\theta\)</span>) means longer persistence and
+higher autocorrelation.</p>
 </div>
 <div class="section level2">
 <h2 id="reactivity">3. Reactivity<a class="anchor" aria-label="anchor" href="#reactivity"></a>
 </h2>
-<p>The parameter <span class="math inline">\(\gamma\)</span> controls
-the magnitude of random perturbations—emotional reactivity to
-environmental fluctuations.</p>
+<p>The noise covariance <span class="math inline">\(\sigma\)</span> (or
+<span class="math inline">\(\mathbf{\Sigma}\)</span> in the multivariate
+case) controls how affect responds to random perturbations, i.e.,
+emotional reactivity to environmental fluctuations.</p>
+<details><summary>
+Show mathematical background
+</summary><p>In our implementation of the OU, the noise term is defined as <span class="math inline">\(\mathbf{\Gamma} \, d\mathbf{W}(t)\)</span>, where
+<span class="math inline">\(\mathbf{\Gamma}\)</span> is the diffusion
+matrix and <span class="math inline">\(d\mathbf{W}(t)\)</span> is a
+vector of independent Wiener processes. This means that the noise
+covariance <span class="math inline">\(\mathbf{\Sigma}\)</span> is not
+directly specified but rather derived from <span class="math inline">\(\mathbf{\Gamma}\)</span>.</p>
+<p>The noise covariance <span class="math inline">\(\mathbf{\Sigma}\)</span> is related to the
+diffusion matrix <span class="math inline">\(\mathbf{\Gamma}\)</span>
+through:</p>
+<p><span class="math display">\[\begin{equation}
+  \mathbf{\Sigma} = \mathbf{\Gamma} \mathbf{\Gamma}^T
+\end{equation}\]</span></p>
+<p>We derive <span class="math inline">\(\mathbf{\Gamma}\)</span> from
+<span class="math inline">\(\mathbf{\Sigma}\)</span> using a Cholesky
+decomposition, which results in a lower triangular matrix. This ensures
+that we may convert between <span class="math inline">\(\mathbf{\Sigma}\)</span> and <span class="math inline">\(\mathbf{\Gamma}\)</span> without loss of
+generality, meaning that any positive semi-definite covariance matrix
+<span class="math inline">\(\mathbf{\Sigma}\)</span> can be represented
+through <span class="math inline">\(\mathbf{\Gamma}\)</span>. With
+<code><a href="../reference/affectOU.html">affectOU()</a></code>, you can either specify <span class="math inline">\(\mathbf{\Sigma}\)</span> or <span class="math inline">\(\mathbf{\Gamma}\)</span>, where <span class="math inline">\(\mathbf{\Gamma}\)</span> must be a lower
+triangular matrix. The noise covariance <span class="math inline">\(\mathbf{\Sigma}\)</span> is the more intuitive
+parameter to specify when defining the reactivity of the system, as it
+directly captures the variance and covariance of the noise across
+dimensions.</p>
+</details><p>In the figure shown below, the two processes are subject to the same
+perturbations, but the process with higher <span class="math inline">\(\sigma\)</span> (red) shows larger fluctuations
+around the attractor than the process with lower <span class="math inline">\(\sigma\)</span> (green). In emotion terms, the
+second process is more emotionally reactive to environmental
+fluctuations than the first process.</p>
 <details><summary>
 Show code
-</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify both processes in the same model. However, as they are uncoupled, they will evolve independently over time. </span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.25</span>, <span class="fl">0.09</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, seed <span class="op">=</span> <span class="fl">456</span>, stop <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>,</span>
-<span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low Reactivity (γ = 0.3)"</span>, <span class="st">"High Reactivity (γ = 1.5)"</span><span class="op">)</span>,</span>
+<span>  by_dim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"High Reactivity (σ = 2.25)"</span>, <span class="st">"Low Reactivity (σ = 0.09)"</span><span class="op">)</span>,</span>
 <span>  main <span class="op">=</span> <span class="st">"Effect of Reactivity on Fluctuation Magnitude"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </details><p><img src="characteristics_files/figure-html/reactivity-plot-1.svg" class="r-plt" alt="" width="672"></p>
-<p>Higher <span class="math inline">\(\gamma\)</span> produces larger
-fluctuations around the attractor.</p>
 </div>
 <div class="section level2">
-<h2 id="stability-regimes">4. Stability Regimes<a class="anchor" aria-label="anchor" href="#stability-regimes"></a>
-</h2>
-<div class="section level3">
-<h3 id="univariate">Univariate<a class="anchor" aria-label="anchor" href="#univariate"></a>
-</h3>
-<p>The sign of <span class="math inline">\(\theta\)</span> determines
-qualitative behaviour:</p>
-<ul>
-<li>
-<strong><span class="math inline">\(\theta &gt; 0\)</span></strong>:
-Stable. Mean-reverting around <span class="math inline">\(\mu\)</span>.
-Affect fluctuates within a bounded range.</li>
-<li>
-<strong><span class="math inline">\(\theta \approx
-0\)</span></strong>: Random walk. No attractor; variance grows over
-time. Affect drifts without returning.</li>
-<li>
-<strong><span class="math inline">\(\theta &lt; 0\)</span></strong>:
-Unstable. Exponential divergence from <span class="math inline">\(\mu\)</span>. Small perturbations amplify.</li>
-</ul>
-<details><summary>
-Show code
-</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.01</span>, <span class="op">-</span><span class="fl">0.3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, stop <span class="op">=</span> <span class="fl">100</span>, seed <span class="op">=</span> <span class="fl">43</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">!</span> System is not stable; no stationary distribution exists.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Defaulting `initial_state` to <span style="color: #00BB00;">mu</span>.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>,</span>
-<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span>  main <span class="op">=</span> <span class="st">"Affect Dynamics of Different Stability Regimes"</span>,</span>
-<span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"θ &gt; 0 (stable)"</span>, <span class="st">"θ ≈ 0 (random walk)"</span>, <span class="st">"θ &lt; 0 (unstable)"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/regimes-plot-1.svg" class="r-plt" alt="" width="672"></p>
-</div>
-<div class="section level3">
-<h3 id="multivariate">Multivariate<a class="anchor" aria-label="anchor" href="#multivariate"></a>
-</h3>
-<p>For multiple dimensions, stability depends on the eigenvalues of
-<span class="math inline">\(\mathbf{\Theta}\)</span>. Three cases
-arise:</p>
-<ul>
-<li>
-<strong>Real positive eigenvalues</strong>: Smooth exponential decay
-toward <span class="math inline">\(\mathbf{\mu}\)</span>. All dimensions
-settle without oscillation.</li>
-<li>
-<strong>Complex eigenvalues with positive real parts</strong>:
-Damped oscillations. Dimensions rotate around <span class="math inline">\(\mathbf{\mu}\)</span> in the phase space,
-spiralling inward. This can represent cyclical affect patterns.</li>
-<li>
-<strong>Any eigenvalue with zero or negative real part</strong>: The
-system is non-stationary. Affect diverges over time – either drifting
-monotonically or oscillating with growing amplitude, depending on
-whether the eigenvalues are real or complex.</li>
-</ul>
-<p>Below, we set perturbations to zero to better show the dynamics
-implied by the eigenvalues.</p>
-<details><summary>
-Show code
-</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Real eigenvalues: smooth decay</span></span>
-<span><span class="va">theta_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/eigen.html" class="external-link">eigen</a></span><span class="op">(</span><span class="va">theta_real</span><span class="op">)</span><span class="op">$</span><span class="va">values</span></span>
-<span><span class="co">#&gt; [1] 0.3 0.1</span></span>
-<span></span>
-<span><span class="co"># Complex eigenvalues: oscillatory decay</span></span>
-<span><span class="va">theta_complex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.2</span><span class="op">)</span>, <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/eigen.html" class="external-link">eigen</a></span><span class="op">(</span><span class="va">theta_complex</span><span class="op">)</span><span class="op">$</span><span class="va">values</span></span>
-<span><span class="co">#&gt; [1] 0.2+1i 0.2-1i</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">seed</span> <span class="op">&lt;-</span> <span class="fl">123</span></span>
-<span><span class="va">sim_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="va">theta_real</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>  stop <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="va">seed</span>, initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">sim_complex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="va">theta_complex</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>  stop <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="va">seed</span>, initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_real</span>, main <span class="op">=</span> <span class="st">"Real eigenvalues"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_complex</span>, main <span class="op">=</span> <span class="st">"Complex eigenvalues"</span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/regimes-2d-plot-1.svg" class="r-plt" alt="" width="50%"><img src="characteristics_files/figure-html/regimes-2d-plot-2.svg" class="r-plt" alt="" width="50%"></p>
-<p>The oscillatory case shows damped oscillations, reflecting the
-imaginary component of the eigenvalues.</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="multivariate-coupling">5. Multivariate Coupling<a class="anchor" aria-label="anchor" href="#multivariate-coupling"></a>
+<h2 id="multivariate-coupling">4. Multivariate Coupling<a class="anchor" aria-label="anchor" href="#multivariate-coupling"></a>
 </h2>
 <p>In multivariate models, off-diagonal elements of <span class="math inline">\(\mathbf{\Theta}\)</span> capture coupling between
 dimensions.</p>
@@ -249,8 +279,32 @@ dimensions.</p>
 \text{influence of dim 1 on dim 2} &amp; \text{self-regulation of dim 2}
 \end{bmatrix}\]</span></p>
 <details><summary>
+Show mathematical background
+</summary><p>In the drift matrix <span class="math inline">\(\mathbf{\Theta}\)</span>, the off-diagonal
+elements allow for coupling in the dynamics between the different
+dimensions of the model. This coupling is captured through the
+eigenvectors <span class="math inline">\(\mathbf{\Omega}\)</span>, which
+shape the direction along which the system moves towards its attractor
+<span class="math inline">\(\mathbf{\mu}\)</span> (in case of a stable
+system). This is easiest shown through an example. Take a
+two-dimensional system in which:</p>
+<p><span class="math display">\[\mathbf{\Theta} = \begin{bmatrix}
+  0.5 &amp; 0.0 \\
+  -2.0 &amp; 0.5
+\end{bmatrix}\]</span></p>
+<p>Importantly, one can see this through an inspection of the
+eigenvectors as well. In this case, the eigenvectors of <span class="math inline">\(\mathbf{\Theta}\)</span> are:</p>
+<p><span class="math display">\[\mathbf{\Omega} \approx \begin{bmatrix}
+  0 &amp; 0 \\
+  1 &amp; 1
+\end{bmatrix}\]</span></p>
+<p>which means that the two dimensions are closely coupled together,
+essentially falling on one dimension rather than two. This behaviour is
+similarly visible in a time-series plot (below), where both dimensions
+evolve in an almost identical way over time.</p>
+</details><details><summary>
 Show code
-</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Dimension 1's deviations from baseline push dimension 2 in the opposite direction</span></span>
 <span><span class="va">theta_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="fl">0.5</span>, <span class="fl">0.0</span>,</span>
@@ -271,21 +325,165 @@ dimension 2 is pushed up, and vice versa. This creates interdependent
 dynamics visible in the phase portrait.</p>
 </div>
 <div class="section level2">
-<h2 id="noise-coupling">6. Noise Coupling<a class="anchor" aria-label="anchor" href="#noise-coupling"></a>
+<h2 id="stability-regimes">5. Stability Regimes<a class="anchor" aria-label="anchor" href="#stability-regimes"></a>
 </h2>
-<p>Off-diagonal elements of <span class="math inline">\(\mathbf{\Gamma}\)</span> mean that the same random
-fluctuation drives both dimensions simultaneously — the noise sources
-are shared. This can lead to synchronized fluctuations even when there
-is no coupling in the deterministic part of the process (i.e., <span class="math inline">\(\mathbf{\Theta}\)</span> is diagonal). The
-resulting noise covariance is <span class="math inline">\(\mathbf{\Sigma} =
-\mathbf{\Gamma}\mathbf{\Gamma}'\)</span>, so the degree of
-synchronization depends on the off-diagonal structure of <span class="math inline">\(\mathbf{\Gamma}\)</span>.</p>
+<div class="section level3">
+<h3 id="univariate">Univariate<a class="anchor" aria-label="anchor" href="#univariate"></a>
+</h3>
+<p>The sign of <span class="math inline">\(\theta\)</span> determines
+the qualitative behaviour of the system. Three regimes can be
+distinguished:</p>
+<ul>
+<li>
+<strong><span class="math inline">\(\theta &gt; 0\)</span></strong>:
+Stable, mean-reverting around <span class="math inline">\(\mu\)</span>;</li>
+<li>
+<strong><span class="math inline">\(\theta \approx
+0\)</span></strong>: Random walk without clear attractor, meaning the
+process drifts without returning to its baseline;</li>
+<li>
+<strong><span class="math inline">\(\theta &lt; 0\)</span></strong>:
+Unstable process that diverges from <span class="math inline">\(\mu\)</span>.</li>
+</ul>
 <details><summary>
 Show code
-</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify all processes in the same model. However, as they are uncoupled, they will evolve independently over time. </span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.01</span>, <span class="op">-</span><span class="fl">0.3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, stop <span class="op">=</span> <span class="fl">100</span>, seed <span class="op">=</span> <span class="fl">43</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">!</span> System is not stable; no stationary distribution exists.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Defaulting `initial_state` to <span style="color: #00BB00;">mu</span>.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, by_dim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">"Affect Dynamics of Different Stability Regimes"</span>,</span>
+<span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"θ &gt; 0 (stable)"</span>, <span class="st">"θ ≈ 0 (random walk)"</span>, <span class="st">"θ &lt; 0 (unstable)"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="characteristics_files/figure-html/regimes-plot-1.svg" class="r-plt" alt="" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="multivariate">Multivariate<a class="anchor" aria-label="anchor" href="#multivariate"></a>
+</h3>
+<p>For multiple dimensions, stability depends on the eigenvalues of
+<span class="math inline">\(\mathbf{\Theta}\)</span>. We distinguish
+three cases:</p>
+<ul>
+<li>
+<strong>Real positive eigenvalues:</strong> In this case, the OU
+shows smooth exponential decay toward the attractor <span class="math inline">\(\mathbf{\mu}\)</span> for all variables;</li>
+<li>
+<strong>Complex eigenvalues with positive real parts</strong>: In
+this case, the OU will display damped linear oscillations around the
+attractor <span class="math inline">\(\mathbf{\mu}\)</span> for all
+variables, representing cyclical affect patterns;</li>
+<li>
+<strong>Eigenvalue with zero or negative real part</strong>: In this
+case, the OU is non-stationary, meaning that affect will diverge over
+time – either drifting monotonically or oscillating with growing
+amplitude, depending on whether the eigenvalues are real or complex.
+This type of behaviour is usually not of theoretical interest.</li>
+</ul>
+<p>Below, we demonstrate the first two cases, setting the noise
+covariance <span class="math inline">\(\mathbf{\Sigma}\)</span> to zero
+to better show the dynamics implied by the eigenvalues.</p>
+<details><summary>
+Show code
+</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Real eigenvalues: Smooth decay</span></span>
+<span><span class="va">theta_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span><span class="op">)</span>, </span>
+<span>  nrow <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/eigen.html" class="external-link">eigen</a></span><span class="op">(</span><span class="va">theta_real</span><span class="op">)</span><span class="op">$</span><span class="va">values</span></span>
+<span><span class="co">#&gt; [1] 0.3 0.1</span></span>
+<span></span>
+<span><span class="co"># Complex eigenvalues: Oscillatory decay</span></span>
+<span><span class="va">theta_complex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.2</span><span class="op">)</span>, </span>
+<span>  nrow <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/eigen.html" class="external-link">eigen</a></span><span class="op">(</span><span class="va">theta_complex</span><span class="op">)</span><span class="op">$</span><span class="va">values</span></span>
+<span><span class="co">#&gt; [1] 0.2+1i 0.2-1i</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Define the two models</span></span>
+<span><span class="va">model_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span></span>
+<span>  theta <span class="op">=</span> <span class="va">theta_real</span>,</span>
+<span>  sigma <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model_complex</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span></span>
+<span>  theta <span class="op">=</span> <span class="va">theta_complex</span>,</span>
+<span>  sigma <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Perform simulations for both systems</span></span>
+<span><span class="va">seed</span> <span class="op">&lt;-</span> <span class="fl">123</span></span>
+<span><span class="va">sim_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_real</span>,</span>
+<span>  stop <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="va">seed</span>,</span>
+<span>  initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sim_complex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_complex</span>,</span>
+<span>  stop <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="va">seed</span>,</span>
+<span>  initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot the resulting time-series</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_real</span>, main <span class="op">=</span> <span class="st">"Real eigenvalues"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_complex</span>, main <span class="op">=</span> <span class="st">"Complex eigenvalues"</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="characteristics_files/figure-html/regimes-2d-plot-1.svg" class="r-plt" alt="Visualization of the two types of behavior expected in two separate plot panes. Each plot consists of two smooth lines displaying the expected behavior according to the model. In the left plot, the two lines start out at the intercepts [-3, 3] and then decay exponentially towards the attractor $\mu = (0, 0)$. In the right plot, the two lines start at at the same intercepts [-3, 3] but then oscillate around the attractor $\mu = (0, 0)$. These oscillations are damped so that they initially start out big, but die down after a while." width="50%"><img src="characteristics_files/figure-html/regimes-2d-plot-2.svg" class="r-plt" alt="Visualization of the two types of behavior expected in two separate plot panes. Each plot consists of two smooth lines displaying the expected behavior according to the model. In the left plot, the two lines start out at the intercepts [-3, 3] and then decay exponentially towards the attractor $\mu = (0, 0)$. In the right plot, the two lines start at at the same intercepts [-3, 3] but then oscillate around the attractor $\mu = (0, 0)$. These oscillations are damped so that they initially start out big, but die down after a while." width="50%"></p>
+<p>Note that the behaviour of the OU may also represent a mix of these
+two types, combining exponential decay with oscillatory patterns. This
+is for example the case in the following figure:</p>
+<details><summary>
+Show code
+</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Both complex and real eigenvalues: Combination of smooth and oscillatory </span></span>
+<span><span class="co"># dynamics</span></span>
+<span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.2</span><span class="op">)</span>, </span>
+<span>  nrow <span class="op">=</span> <span class="fl">3</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/eigen.html" class="external-link">eigen</a></span><span class="op">(</span><span class="va">theta</span><span class="op">)</span><span class="op">$</span><span class="va">values</span></span>
+<span><span class="co">#&gt; [1] 0.2000034+0.00000e+00i 0.1999983+2.93925e-06i 0.1999983-2.93925e-06i</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Define the the model</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span></span>
+<span>  theta <span class="op">=</span> <span class="va">theta</span>,</span>
+<span>  sigma <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Perform simulations for the system</span></span>
+<span><span class="va">seed</span> <span class="op">&lt;-</span> <span class="fl">123</span></span>
+<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">model</span>,</span>
+<span>  stop <span class="op">=</span> <span class="fl">50</span>, </span>
+<span>  seed <span class="op">=</span> <span class="va">seed</span>,</span>
+<span>  initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot the resulting time-series</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, main <span class="op">=</span> <span class="st">"Real and complex eigenvalues"</span><span class="op">)</span></span></code></pre></div>
+</details><p><img src="characteristics_files/figure-html/regimes-3d-plot-1.svg" class="r-plt" alt="Visualization of an OU process with real and complex eigenvalues. All dimensions show an initial overshoot of the attractor state $\mu$, but then relax in an exponential way." width="75%" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="noise-coupling">6. Noise Coupling<a class="anchor" aria-label="anchor" href="#noise-coupling"></a>
+</h2>
+<p>Non-zero off-diagonal elements of <span class="math inline">\(\mathbf{\Gamma}\)</span> mean that the same random
+fluctuations drive both dimensions simultaneously — the noise sources
+are shared. This can lead to synchronized fluctuations even when there
+is no coupling in the deterministic part of the process (i.e., <span class="math inline">\(\mathbf{\Theta}\)</span> is diagonal).</p>
+<details><summary>
+Show code
+</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Shared noise sources (same fluctuation drives both dims), no drift coupling</span></span>
 <span><span class="va">gamma_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="fl">1</span>, <span class="fl">0.5</span>,</span>
+<span>  <span class="fl">1</span>, <span class="fl">0</span>,</span>
 <span>  <span class="fl">0.5</span>, <span class="fl">1</span></span>
 <span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">gamma_2d</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">gamma_2d</span><span class="op">)</span>  <span class="co"># implied noise covariance Σ</span></span>
@@ -312,35 +510,34 @@ Show code
 <tbody>
 <tr class="odd">
 <td>Mean reversion</td>
-<td><span class="math inline">\(\theta\)</span></td>
-<td>Rate of return to baseline</td>
+<td><span class="math inline">\(\mathbf{\Theta}\)</span></td>
+<td>Rate and direction of return to baseline</td>
 </tr>
 <tr class="even">
+<td>Relaxation time</td>
+<td><span class="math inline">\(\mathbf{\Theta}\)</span></td>
 <td>Perturbation persistence</td>
-<td><span class="math inline">\(\theta\)</span></td>
-<td>Relaxation time of perturbations</td>
 </tr>
 <tr class="odd">
 <td>Reactivity</td>
-<td><span class="math inline">\(\gamma\)</span></td>
-<td>Magnitude of fluctuations</td>
+<td><span class="math inline">\(\mathbf{\Sigma}\)</span></td>
+<td>Magnitude of response to perturbations</td>
 </tr>
 <tr class="even">
+<td>Dimensional Coupling</td>
+<td>Eigenvectors of <span class="math inline">\(\mathbf{\Theta}\)</span>
+</td>
+<td>Coupled dynamics</td>
+</tr>
+<tr class="odd">
 <td>Stability</td>
-<td>sign(<span class="math inline">\(\theta\)</span>) / eigenvalues of
-<span class="math inline">\(\mathbf{\Theta}\)</span>
+<td>Eigenvalues of <span class="math inline">\(\mathbf{\Theta}\)</span>
 </td>
 <td>Stationary vs divergent</td>
 </tr>
-<tr class="odd">
-<td>Cross-coupling</td>
-<td>off-diagonal <span class="math inline">\(\mathbf{\Theta}\)</span>
-</td>
-<td>Interdimensional dynamics</td>
-</tr>
 <tr class="even">
 <td>Noise coupling</td>
-<td>off-diagonal <span class="math inline">\(\mathbf{\Gamma}\)</span>
+<td>Off-diagonal elements of <span class="math inline">\(\mathbf{\Sigma}\)</span>
 </td>
 <td>Shared noise sources across dimensions</td>
 </tr>

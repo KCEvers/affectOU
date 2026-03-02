@@ -107,8 +107,6 @@ coupling between dimensions.
 
 [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md)
 for the equilibrium distribution,
-[`relaxation()`](https://kcevers.github.io/affectOU/reference/relaxation.affectOU.md)
-for perturbation persistence,
 [`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
 for the full model summary.
 

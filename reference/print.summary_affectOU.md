@@ -17,11 +17,11 @@ print(x, digits = 3, max_dim = 20, ...)
 
 - digits:
 
-  Number of digits to display
+  Number of digits to display.
 
 - max_dim:
 
-  Maximum number of dimensions to display details for
+  Maximum number of dimensions to display details for.
 
 - ...:
 
@@ -44,7 +44,6 @@ print(summary_model)
 #> 
 #> Mean: [0, 0]
 #> SD: [1, 1]
-#> Relaxation time (τ): slowest = 2, fastest = 2
 #> 
 #> ── Structure ──
 #> 

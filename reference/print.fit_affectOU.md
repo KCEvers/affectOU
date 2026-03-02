@@ -1,7 +1,8 @@
 # Print fitted OU affect model
 
-Provides a concise overview of a `fit_affectOU` object using the same
-styling conventions as `print.affectOU` and `print.simulate.affectOU`.
+Provide a concise overview of a
+[`fit_affectOU`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md)
+object.
 
 ## Usage
 
@@ -14,15 +15,16 @@ print(x, digits = 3, ...)
 
 - x:
 
-  An object of class `fit_affectOU`
+  An object of class
+  [`fit_affectOU`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md)
 
 - digits:
 
-  Number of digits for numeric display
+  Number of digits for numeric display.
 
 - ...:
 
-  Additional arguments (unused)
+  Additional arguments (unused).
 
 ## Value
 

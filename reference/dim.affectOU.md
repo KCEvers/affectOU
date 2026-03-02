@@ -14,7 +14,8 @@ dim(x)
 
 - x:
 
-  An object of class `affectOU`
+  An object of class
+  [`affectOU`](https://kcevers.github.io/affectOU/reference/affectOU.md).
 
 ## Value
 

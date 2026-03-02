@@ -13,15 +13,16 @@ print(x, digits = 3, ...)
 
 - x:
 
-  An object of class `summary_fit_affectOU`
+  An object of class
+  [`summary_fit_affectOU`](https://kcevers.github.io/affectOU/reference/summary.fit_affectOU.md).
 
 - digits:
 
-  Number of digits for numeric display
+  Number of digits for numeric display.
 
 - ...:
 
-  Additional arguments (unused)
+  Additional arguments (unused).
 
 ## Value
 
@@ -42,12 +43,12 @@ print(summary(fitted))
 #> ── Coefficients ──
 #> 
 #>       Estimate    SE          95% CI
-#> theta    0.553 0.048  [0.458, 0.648]
-#> mu      -0.009 0.082 [-0.169, 0.151]
-#> gamma    1.010 0.010  [0.990, 1.031]
+#> theta    0.551 0.048  [0.456, 0.645]
+#> mu      -0.008 0.082 [-0.168, 0.153]
+#> gamma    1.008 0.010  [0.988, 1.028]
 #> 
 #> ── Goodness of fit ──
 #> 
-#> Log-likelihood: -1252.592
-#> RMSE: 0.311
+#> Log-likelihood: -1241.068
+#> RMSE: 0.31
 ```

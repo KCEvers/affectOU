@@ -12,7 +12,7 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">affectOU</a>
 
@@ -40,7 +40,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU Process</a></li>
+<li><a class="dropdown-item" href="../articles/characteristics.html">Affect characteristics implied by the OU process</a></li>
   </ul>
 </li>
       </ul>
@@ -49,6 +49,14 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/KCEvers/affectOU/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
@@ -77,37 +85,37 @@ model that captures how emotions fluctuate around a baseline and return
 to equilibrium over time.</p>
 <p>This vignette walks through the package’s core functionality:
 simulating the OU process, computing theoretical quantities, and fitting
-unidimensional models to data. See <a href="characteristics.html">Affect
-characteristics implied by the OU Process</a> for visual demonstrations
-of the model’s qualitative behaviours and their psychological
-interpretations.</p>
+the unidimensional OU to data. See the vignette <a href="characteristics.html">Affect characteristics implied by the OU
+process</a> for visual demonstrations of the model’s qualitative
+behaviours and their psychological interpretations.</p>
 <!-- ## Setup -->
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KCEvers/affectOU" class="external-link">affectOU</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="creating-an-affectou-model">Creating an affectOU Model<a class="anchor" aria-label="anchor" href="#creating-an-affectou-model"></a>
+<h2 id="creating-a-model">Creating a Model<a class="anchor" aria-label="anchor" href="#creating-a-model"></a>
 </h2>
 <div class="section level3">
 <h3 id="one-dimensional-model">One-Dimensional Model<a class="anchor" aria-label="anchor" href="#one-dimensional-model"></a>
 </h3>
-<p>For a univariate affect process, the stochastic differential equation
-of the OU process is:</p>
+<p>For a univariate affective process, the stochastic differential
+equation of the OU is:</p>
 <p><span class="math display">\[d{X}(t) = {\theta}({\mu} - {X}(t))dt +
 {\gamma} \, d{W}(t)\]</span></p>
 <p>Here, the parameters represent:</p>
 <ul>
 <li>
-<strong>θ (theta)</strong>: Attractor strength—how quickly affect
-returns to baseline</li>
+<span class="math inline">\(\mu\)</span> (<code>mu</code>):
+Attractor location, or the baseline and “set point” of affect;</li>
 <li>
-<strong>μ (mu)</strong>: Attractor location—the baseline or “set
-point” of affect</li>
+<span class="math inline">\(\theta\)</span> (<code>theta</code>):
+Attractor strength, or how quickly affect returns to the baseline;</li>
 <li>
-<strong>γ (gamma)</strong>: Diffusion coefficient—the intensity of
-random perturbations</li>
+<span class="math inline">\(\gamma\)</span> (<code>gamma</code>):
+Diffusion coefficient, or the scale of the random perturbations.</li>
 </ul>
-<p>Create a simple one-dimensional model with default parameters:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>The diffusion coefficient <span class="math inline">\(\gamma\)</span>
+is more easily interpreted in terms of the noise variance <span class="math inline">\(\sigma\)</span> (<code>sigma</code>), where <span class="math inline">\(\sigma = \gamma^2\)</span>.</p>
+<p>You can create a simple one-dimensional model through calling the
+<code>affectOU</code> constructor using the default parameters:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">model</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -115,33 +123,34 @@ random perturbations</li>
 <span><span class="co">#&gt; d<span style="font-style: italic;">X</span>(t) = <span style="font-style: italic;">θ</span>(<span style="font-style: italic;">μ</span> − <span style="font-style: italic;">X</span>(t))dt + <span style="font-style: italic;">γ</span> d<span style="font-style: italic;">W</span>(t)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="font-style: italic;">θ</span> = 0.500, <span style="font-style: italic;">μ</span> = 0.000, <span style="font-style: italic;">γ</span> = 1.000, <span style="font-style: italic;">σ</span> = |<span style="font-style: italic;">γ</span>| = 1.000</span></span></code></pre></div>
-<p>Specify custom parameters to represent, for example, a process with
-moderate mean-reversion (<span class="math inline">\(\theta\)</span> =
-0.5), positive baseline (<span class="math inline">\(\mu\)</span> = 1),
-and unit diffusion (<span class="math inline">\(\gamma\)</span> =
-1):</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">1</span>, gamma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<p>Alternatively, you can specify custom parameters to represent, for
+example, a process with a stronger mean-reversion (<span class="math inline">\(\theta = 1\)</span>), positive baseline (<span class="math inline">\(\mu = 1\)</span>), and smaller amount of random
+perturbations (<span class="math inline">\(\sigma = 0.25\)</span>):</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">1</span>, mu <span class="op">=</span> <span class="fl">1</span>, sigma <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span><span class="va">model</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">1D Ornstein-Uhlenbeck Model</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; d<span style="font-style: italic;">X</span>(t) = <span style="font-style: italic;">θ</span>(<span style="font-style: italic;">μ</span> − <span style="font-style: italic;">X</span>(t))dt + <span style="font-style: italic;">γ</span> d<span style="font-style: italic;">W</span>(t)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">θ</span> = 0.500, <span style="font-style: italic;">μ</span> = 1.000, <span style="font-style: italic;">γ</span> = 1.000, <span style="font-style: italic;">σ</span> = |<span style="font-style: italic;">γ</span>| = 1.000</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="font-style: italic;">θ</span> = 1.000, <span style="font-style: italic;">μ</span> = 1.000, <span style="font-style: italic;">γ</span> = 0.500, <span style="font-style: italic;">σ</span> = |<span style="font-style: italic;">γ</span>| = 0.250</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multidimensional-models">Multidimensional Models<a class="anchor" aria-label="anchor" href="#multidimensional-models"></a>
 </h3>
-<p>The OU framework extends naturally to model multiple affect
-dimensions (e.g., valence and arousal). For a d-dimensional process:</p>
+<p>The OU framework extends naturally to multiple affect dimensions
+(e.g., valence and arousal). For a d-dimensional process, the OU looks
+like:</p>
 <p><span class="math display">\[d\mathbf{X}(t) =
 \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} \,
 d\mathbf{W}(t)\]</span></p>
+<p>For multivariate models, the noise variance <span class="math inline">\(\Sigma\)</span> is defined as <span class="math inline">\(\Sigma = \Gamma \Gamma^\top\)</span>.</p>
 <p>By default, <code><a href="../reference/affectOU.html">affectOU()</a></code> creates a model with uncoupled
 dynamics (diagonal <span class="math inline">\(\mathbf{\Theta}\)</span>
-and <span class="math inline">\(\mathbf{\Gamma}\)</span>) and identical
-parameters across dimensions:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+and <span class="math inline">\(\mathbf{\Sigma}\)</span>) and identical
+parameters across dimensions. For example, for a two-dimensional model,
+we get:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>ndim <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">model_2d</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -164,50 +173,154 @@ parameters across dimensions:</p>
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
 <span><span class="co">#&gt; [1,]    1    0</span></span>
 <span><span class="co">#&gt; [2,]    0    1</span></span></code></pre></div>
-<p>Create an uncoupled 2D model with different parameters for each
-dimension:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">model_2d</span>,</span>
+<p>The <a href="../reference/update.affectOU.html"><code>update()</code></a>
+function can be used to modify an existing model without recreating it
+from scratch:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_2d</span>,</span>
 <span>  theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span>, <span class="co"># Different regulation speeds</span></span>
-<span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, <span class="co"># Different baselines</span></span>
-<span>  gamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="co"># Different diffusion levels</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>Above, we use <a href="../reference/update.affectOU.html"><code>update()</code></a> to
-modify an existing model without recreating it from scratch. For coupled
-dynamics where dimensions influence each other, use a non-diagonal <span class="math inline">\(\mathbf{\Theta}\)</span> matrix:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">theta_coupled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,              <span class="co"># Different baselines</span></span>
+<span>  sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.64</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Different noise levels</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model_2d</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">2D Ornstein-Uhlenbeck Model</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; d<span style="font-weight: bold;">X</span>(t) = <span style="font-weight: bold;">Θ</span>(<span style="font-weight: bold;">μ</span> − <span style="font-weight: bold;">X</span>(t))dt + <span style="font-weight: bold;">Γ</span> d<span style="font-weight: bold;">W</span>(t)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">μ</span> = [0.000, 1.000]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Θ</span>:</span></span>
+<span><span class="co">#&gt;      [,1] [,2]</span></span>
+<span><span class="co">#&gt; [1,]  0.5  0.0</span></span>
+<span><span class="co">#&gt; [2,]  0.0  0.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Γ</span>:</span></span>
+<span><span class="co">#&gt;      [,1] [,2]</span></span>
+<span><span class="co">#&gt; [1,]    1  0.0</span></span>
+<span><span class="co">#&gt; [2,]    0  0.8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Σ</span> = <span style="font-weight: bold;">ΓΓ</span>ᵀ:</span></span>
+<span><span class="co">#&gt;      [,1] [,2]</span></span>
+<span><span class="co">#&gt; [1,]    1 0.00</span></span>
+<span><span class="co">#&gt; [2,]    0 0.64</span></span></code></pre></div>
+<p>To create coupled dynamics, in which dimensions affect each other
+over time, a non-diagonal <span class="math inline">\(\mathbf{\Theta}\)</span> matrix should be
+specified. For example, the following creates a model in which the first
+dimension has a stronger influence on the second than vice versa:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">theta_coupled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="fl">0.5</span>, <span class="fl">0.1</span>,</span>
 <span>  <span class="fl">0.2</span>, <span class="fl">0.3</span></span>
-<span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">model_coupled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">model_2d</span>,</span>
+<span><span class="va">model_coupled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_2d</span>,</span>
 <span>  theta <span class="op">=</span> <span class="va">theta_coupled</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model_coupled</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">2D Ornstein-Uhlenbeck Model</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; d<span style="font-weight: bold;">X</span>(t) = <span style="font-weight: bold;">Θ</span>(<span style="font-weight: bold;">μ</span> − <span style="font-weight: bold;">X</span>(t))dt + <span style="font-weight: bold;">Γ</span> d<span style="font-weight: bold;">W</span>(t)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">μ</span> = [0.000, 1.000]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Θ</span>:</span></span>
+<span><span class="co">#&gt;      [,1] [,2]</span></span>
+<span><span class="co">#&gt; [1,]  0.5  0.1</span></span>
+<span><span class="co">#&gt; [2,]  0.2  0.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Γ</span>:</span></span>
+<span><span class="co">#&gt;      [,1] [,2]</span></span>
+<span><span class="co">#&gt; [1,]    1  0.0</span></span>
+<span><span class="co">#&gt; [2,]    0  0.8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Σ</span> = <span style="font-weight: bold;">ΓΓ</span>ᵀ:</span></span>
+<span><span class="co">#&gt;      [,1] [,2]</span></span>
+<span><span class="co">#&gt; [1,]    1 0.00</span></span>
+<span><span class="co">#&gt; [2,]    0 0.64</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="simulating-trajectories">Simulating Trajectories<a class="anchor" aria-label="anchor" href="#simulating-trajectories"></a>
 </h2>
-<p><a href="../reference/simulate.affectOU.html"><code>simulate()</code></a>
-generates trajectories using Euler-Maruyama discretization:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>You can simulate data from the specified model through the <a href="../reference/simulate.affectOU.html"><code>simulate()</code></a>
+function:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
-<p>Simulation settings can be customized:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>Though the OU is a continous-time process, it can be simulated
+through discretization. In the package, we use Euler-Maruyama
+discretization, which is a common numerical approach for simulating
+stochastic differential equations. For the OU, it amounts to updating
+the state <span class="math inline">\(\mathbf{X}\)</span> after a
+discrete time-step <span class="math inline">\(\Delta t\)</span>
+according to the following equation:</p>
+<p><span class="math display">\[\begin{equation}
+\begin{split}
+  \mathbf{X}_{t + \Delta t} &amp;= \mathbf{X}_t + \mathbf{\Theta}
+(\mathbf{\mu} - \mathbf{X}_t) \Delta t + \mathbf{\Gamma} \sqrt{\Delta t}
+\mathbf{\epsilon}_t \\
+  \mathbf{\epsilon}_t &amp;\sim N(\mathbf{0}, \mathbf{I})
+\end{split}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\mathbf{I}\)</span> is the identity
+matrix (i.e., a matrix with 1s on the diagonal and 0s elsewhere) and
+<span class="math inline">\(\Delta t\)</span> is sufficiently small
+(e.g., <span class="math inline">\(\Delta t = 0.01\)</span>) to ensure
+sensible results.</p>
+<p>Simulations can be customized to fit one’s needs, specifically by
+changing the arguments:</p>
+<ul>
+<li>
+<code>nsim</code>: Number of replications or simulations to
+run;</li>
+<li>
+<code>dt</code>: The (discretized) time step to use within the
+Euler-Maruyama approximation;</li>
+<li>
+<code>stop</code>: Total time to simulate for (e.g.,
+<code>stop = 100</code> simulates from time 0 to time 100);</li>
+<li>
+<code>save_at</code>: Time interval between saved simulation
+values;</li>
+<li>
+<code>seed</code>: Seed to use for sampling random
+perturbations.</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  nsim <span class="op">=</span> <span class="fl">1</span>, <span class="co"># Number of replications</span></span>
-<span>  dt <span class="op">=</span> <span class="fl">0.01</span>, <span class="co"># Integration time step</span></span>
-<span>  stop <span class="op">=</span> <span class="fl">100</span>, <span class="co"># Total simulation time</span></span>
-<span>  save_at <span class="op">=</span> <span class="fl">0.1</span>, <span class="co"># Output sampling interval</span></span>
-<span>  seed <span class="op">=</span> <span class="fl">42</span> <span class="co"># For reproducibility</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>  nsim <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>  dt <span class="op">=</span> <span class="fl">0.01</span>, </span>
+<span>  stop <span class="op">=</span> <span class="fl">100</span>, </span>
+<span>  save_at <span class="op">=</span> <span class="fl">0.1</span>, </span>
+<span>  seed <span class="op">=</span> <span class="fl">42</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">1D Ornstein-Uhlenbeck Simulation</span> <span style="color: #00BBBB;">────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; Time: 0 → 100.000; dt: 0.010; save_at: 0.100</span></span>
+<span><span class="co">#&gt; Seed: 42</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   time dim sim value</span></span>
+<span><span class="co">#&gt; 1  0.0   1   1 1.485</span></span>
+<span><span class="co">#&gt; 2  0.1   1   1 1.702</span></span>
+<span><span class="co">#&gt; 3  0.2   1   1 1.474</span></span>
+<span><span class="co">#&gt; 4  0.3   1   1 1.380</span></span>
+<span><span class="co">#&gt; 5  0.4   1   1 1.153</span></span>
+<span><span class="co">#&gt; 6  0.5   1   1 1.137</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="visualizing-simulations">Visualizing Simulations<a class="anchor" aria-label="anchor" href="#visualizing-simulations"></a>
 </h3>
-<p>Simulated data can be explored in various ways:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>A first way to explore the simulated data is by plotting it.
+<code>affectOU</code> provides the <code>plot</code> function with
+several different types of plots to visualize the simulated data,
+namely:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Time series trajectory (default)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span>
 <span></span>
@@ -219,17 +332,61 @@ generates trajectories using Euler-Maruyama discretization:</p>
 <span></span>
 <span><span class="co"># Phase portrait (lag-1 relationship)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, type <span class="op">=</span> <span class="st">"phase"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/plot-sim-1.svg" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-2.svg" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-3.svg" class="r-plt" alt="" width="50%"><img src="affectOU_files/figure-html/plot-sim-4.svg" class="r-plt" alt="" width="50%"></p>
+<p><img src="affectOU_files/figure-html/plot-sim-1.svg" class="r-plt" alt="Four plots are shown in a two by two fashion. In order, the plots contain (a) the time series of the simulated data, (b) the distribution of its values, (c) a visualization of the autocorrelations per lag in time, and (d) the phase portrait of how affect changed over time. All plots use the default visualization specifications, meaning the default titles explaining the content of the simulations ('Affect Dynamics', 'Affect Distribution', 'Autocorrelation Function', and 'Phase Portrait' respectively) and using the default colors of the package (using the 'Temps' palette of the package `grDevices`)." width="50%"><img src="affectOU_files/figure-html/plot-sim-2.svg" class="r-plt" alt="Four plots are shown in a two by two fashion. In order, the plots contain (a) the time series of the simulated data, (b) the distribution of its values, (c) a visualization of the autocorrelations per lag in time, and (d) the phase portrait of how affect changed over time. All plots use the default visualization specifications, meaning the default titles explaining the content of the simulations ('Affect Dynamics', 'Affect Distribution', 'Autocorrelation Function', and 'Phase Portrait' respectively) and using the default colors of the package (using the 'Temps' palette of the package `grDevices`)." width="50%"><img src="affectOU_files/figure-html/plot-sim-3.svg" class="r-plt" alt="Four plots are shown in a two by two fashion. In order, the plots contain (a) the time series of the simulated data, (b) the distribution of its values, (c) a visualization of the autocorrelations per lag in time, and (d) the phase portrait of how affect changed over time. All plots use the default visualization specifications, meaning the default titles explaining the content of the simulations ('Affect Dynamics', 'Affect Distribution', 'Autocorrelation Function', and 'Phase Portrait' respectively) and using the default colors of the package (using the 'Temps' palette of the package `grDevices`)." width="50%"><img src="affectOU_files/figure-html/plot-sim-4.svg" class="r-plt" alt="Four plots are shown in a two by two fashion. In order, the plots contain (a) the time series of the simulated data, (b) the distribution of its values, (c) a visualization of the autocorrelations per lag in time, and (d) the phase portrait of how affect changed over time. All plots use the default visualization specifications, meaning the default titles explaining the content of the simulations ('Affect Dynamics', 'Affect Distribution', 'Autocorrelation Function', and 'Phase Portrait' respectively) and using the default colors of the package (using the 'Temps' palette of the package `grDevices`)." width="50%"></p>
+<ul>
+<li><p>Time series trajectory (<code>type = "time"</code>, <a href="../reference/ou_plot_time.html"><code>ou_plot_time()</code></a>):
+Shows the simulated values of affect over time, along with a horizontal
+line denoting the baseline affective state <span class="math inline">\(\mu\)</span>.</p></li>
+<li><p>Distribution of affect values (<code>type = "histogram"</code>,
+<a href="../reference/ou_plot_histogram.html"><code>ou_plot_histogram()</code></a>):
+Shows the distribution of simulated affect values aggregated across
+time, along with a vertical line denoting the baseline affective state
+<span class="math inline">\(\mu\)</span>.</p></li>
+<li><p>Autocorrelation function (<code>type = "acf"</code>, <a href="../reference/ou_plot_acf.html"><code>ou_plot_acf()</code></a>):
+Shows the value of the autocorrelation between simulated values at
+particular lags apart, along with a dashed line denoting the theoretical
+autocorrelation function implied by the OU model.</p></li>
+<li><p>Phase portrait (<code>type = "phase"</code>, <a href="../reference/ou_plot_phase.html"><code>ou_plot_phase()</code></a>):
+Shows how affect at time <span class="math inline">\(t\)</span> relates
+to the value of affect at the next time point <span class="math inline">\(t + \Delta t\)</span>. The dashed line denotes the
+theoretical relationship between affect at time <span class="math inline">\(t\)</span> and <span class="math inline">\(t +
+\Delta t\)</span> implied by the OU model, which is a linear
+relationship with slope <span class="math inline">\(e^{-\theta \Delta
+t}\)</span> and intercept <span class="math inline">\(\mu (1 -
+e^{-\theta \Delta t})\)</span>.</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
+</h3>
+<p>The multidimensional OU can be simulated and visualised in the same
+way as before. Here, we set <code>by_dim = TRUE</code> to show each
+dimension in a separate subplot:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create an affectOU model with two dimensions</span></span>
+<span><span class="va">model_2D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>ndim <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Simulate timeseries</span></span>
+<span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">model_2D</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, by_dim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="affectOU_files/figure-html/simulate-md-1.svg" class="r-plt" alt="Four plots containing the same information as before, but this time divided into subplots containing information for one or the other dimension (time-series and histogram) or for the temporal relations between all potential combination of variables (autocorrelation plot and phase plot)." width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="multiple-simulations">Multiple Simulations<a class="anchor" aria-label="anchor" href="#multiple-simulations"></a>
 </h3>
-<p>Generate multiple independent realizations by setting
-<code>nsim</code> &gt; 1:</p>
+<p>Multiple independent realizations of the model can be generated by
+setting <code>nsim</code> &gt; 1. This showcases the variability in
+trajectories that arises from the stochastic nature of the OU process.
+For example, the following code generates three independent simulations
+from the same model:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, nsim <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, type <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/simulate-multiple-1.svg" class="r-plt" alt="" width="672"></p>
+<p><img src="affectOU_files/figure-html/simulate-multiple-1.svg" class="r-plt" alt="Shown is a time-series plot containing all three of the simulations overlayed on top of each other." width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="extracting-simulation-data">Extracting Simulation Data<a class="anchor" aria-label="anchor" href="#extracting-simulation-data"></a>
@@ -242,25 +399,25 @@ generates trajectories using Euler-Maruyama discretization:</p>
 <code class="sourceCode R"><span><span class="co"># Using head() or tail()</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   time dim sim    value</span></span>
-<span><span class="co">#&gt; 1 0.00   1   1 1.274567</span></span>
-<span><span class="co">#&gt; 2 0.01   1   1 1.069773</span></span>
-<span><span class="co">#&gt; 3 0.02   1   1 1.081224</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0.00   1   1 1.364023</span></span>
+<span><span class="co">#&gt; 2 0.01   1   1 1.425661</span></span>
+<span><span class="co">#&gt; 3 0.02   1   1 1.383119</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># As a list of data frames (one per simulation)</span></span>
 <span><span class="va">sim_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   time     dim1</span></span>
-<span><span class="co">#&gt; 1 0.00 1.274567</span></span>
-<span><span class="co">#&gt; 2 0.01 1.069773</span></span>
-<span><span class="co">#&gt; 3 0.02 1.081224</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0.00 1.364023</span></span>
+<span><span class="co">#&gt; 2 0.01 1.425661</span></span>
+<span><span class="co">#&gt; 3 0.02 1.383119</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># As a data frame (long or wide format)</span></span>
 <span><span class="va">sim_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim_df</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   time dim sim    value</span></span>
-<span><span class="co">#&gt; 1 0.00   1   1 1.274567</span></span>
-<span><span class="co">#&gt; 2 0.01   1   1 1.069773</span></span>
-<span><span class="co">#&gt; 3 0.02   1   1 1.081224</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 0.00   1   1 1.364023</span></span>
+<span><span class="co">#&gt; 2 0.01   1   1 1.425661</span></span>
+<span><span class="co">#&gt; 3 0.02   1   1 1.383119</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># As a 3D array (time × dimension × simulation)</span></span>
 <span><span class="va">sim_array</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">as.array</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span>
@@ -271,9 +428,9 @@ generates trajectories using Euler-Maruyama discretization:</p>
 <span><span class="va">sim_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim_matrix</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      time dim sim    value</span></span>
-<span><span class="co">#&gt; [1,] 0.00   1   1 1.274567</span></span>
-<span><span class="co">#&gt; [2,] 0.01   1   1 1.069773</span></span>
-<span><span class="co">#&gt; [3,] 0.02   1   1 1.081224</span></span></code></pre></div>
+<span><span class="co">#&gt; [1,] 0.00   1   1 1.364023</span></span>
+<span><span class="co">#&gt; [2,] 0.01   1   1 1.425661</span></span>
+<span><span class="co">#&gt; [3,] 0.02   1   1 1.383119</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -282,7 +439,10 @@ generates trajectories using Euler-Maruyama discretization:</p>
 <div class="section level3">
 <h3 id="model-summary">Model Summary<a class="anchor" aria-label="anchor" href="#model-summary"></a>
 </h3>
-<p>Key theoretical properties can be computed with <a href="../reference/summary.affectOU.html"><code>summary()</code></a>:</p>
+<p>Key theoretical properties can be computed with <a href="../reference/summary.affectOU.html"><code>summary()</code></a>,
+showing the stability of the system (i.e., its long-term behavior) and
+the stationary distribution (i.e., long-run means and (co)variances)
+implied by the model parameters:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -295,23 +455,7 @@ generates trajectories using Euler-Maruyama discretization:</p>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Stationary distribution</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mean: 1</span></span>
-<span><span class="co">#&gt; SD: 1</span></span>
-<span><span class="co">#&gt; Relaxation time (τ): 2</span></span></code></pre></div>
-<p>The summary aggregates results from <a href="../reference/stability.affectOU.html"><code>stability()</code></a>,
-<a href="../reference/stationary.affectOU.html"><code>stationary()</code></a>,
-and <a href="../reference/relaxation.affectOU.html"><code>relaxation()</code></a>.
-Each can also be called independently for more detail:</p>
-<ul>
-<li>
-<strong>Stability</strong>: Is the system stable? What type of
-dynamics does the system exhibit?</li>
-<li>
-<strong>Stationary distribution</strong>: Long-run mean, SD, and
-(for multivariate models) covariance</li>
-<li>
-<strong>Relaxation time</strong>: Time constant of perturbation
-decay (<span class="math inline">\(\tau = 1/\theta\)</span>)</li>
-</ul>
+<span><span class="co">#&gt; SD: 0.354</span></span></code></pre></div>
 <p>For multidimensional models, the model summary also includes coupling
 indicators:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -327,33 +471,38 @@ indicators:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Mean: [0, 1]</span></span>
 <span><span class="co">#&gt; SD: [1.043, 1.167]</span></span>
-<span><span class="co">#&gt; Relaxation time (τ): slowest = 4.409, fastest = 1.745</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Structure</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coupling: Dim 1 → Dim 2 (+), Dim 2 → Dim 1 (+)</span></span>
 <span><span class="co">#&gt; Noise: independent</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="extract-equation">Extract Equation<a class="anchor" aria-label="anchor" href="#extract-equation"></a>
-</h2>
-<p><a href="../reference/equation.affectOU.html"><code>equation()</code></a>
-renders the model’s stochastic differential equation in multiple
-formats, offering plain text, LaTeX, R expression, or code output.</p>
+<p>More detail is provided by <a href="../reference/stability.affectOU.html"><code>stability()</code></a>
+and <a href="../reference/stationary.affectOU.html"><code>stationary()</code></a>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; dX(t) = theta * (mu - X(t)) dt + gamma dW(t)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/stability.html">stability</a></span><span class="op">(</span><span class="va">model_coupled</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; where:</span></span>
-<span><span class="co">#&gt;   theta = 0.5</span></span>
-<span><span class="co">#&gt;   mu    = 1</span></span>
-<span><span class="co">#&gt;   gamma = 1</span></span>
-<span><span class="co">#&gt;   sigma = 1</span></span></code></pre></div>
-<p>With evaluated parameters:</p>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Stability analysis of 2D Ornstein-Uhlenbeck Model</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Stable (node). Deviations from the attractor decay exponentially.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Eigenvalues (all real):</span></span>
+<span><span class="co">#&gt; • λ1: 0.573</span></span>
+<span><span class="co">#&gt; • λ2: 0.227</span></span></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span>, inline <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; dX(t) = 0.5 * (1 - X(t)) dt + 1 dW(t)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/stationary.html">stationary</a></span><span class="op">(</span><span class="va">model_coupled</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── <span style="font-weight: bold;">Stationary distribution of 2D Ornstein-Uhlenbeck Model</span> ──</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Mean: [0, 1]</span></span>
+<span><span class="co">#&gt; SD: [1.043, 1.167]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 95% intervals:</span></span>
+<span><span class="co">#&gt; • Dim. 1: [-2.087, 2.087]</span></span>
+<span><span class="co">#&gt; • Dim. 2: [-1.334, 3.334]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Stationary correlations:</span></span>
+<span><span class="co">#&gt;   • Dims 1 &amp; 2: -0.363</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="fitting-models-to-data">Fitting Models to Data<a class="anchor" aria-label="anchor" href="#fitting-models-to-data"></a>
@@ -363,7 +512,7 @@ estimates OU parameters from univariate time series using maximum
 likelihood:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate data from known parameters</span></span>
-<span><span class="va">true_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">true_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">true_model</span>, dt <span class="op">=</span> <span class="fl">0.01</span>, stop <span class="op">=</span> <span class="fl">500</span>, save_at <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Extract the simulated data</span></span>
@@ -375,29 +524,50 @@ likelihood:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Fitted 1D Ornstein-Uhlenbeck Model</span> <span style="color: #00BBBB;">──────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; 5001 data points (dt ≈ 0.100)</span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">θ</span> = 0.455, <span style="font-style: italic;">μ</span> = 0.021, <span style="font-style: italic;">γ</span> = 1.013</span></span>
-<span><span class="co">#&gt; Log-likelihood: -1291.561</span></span>
-<span><span class="co">#&gt; RMSE: 0.313</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="font-style: italic;">θ</span> = 0.542, <span style="font-style: italic;">μ</span> = -0.032, <span style="font-style: italic;">γ</span> = 1.009</span></span>
+<span><span class="co">#&gt; Log-likelihood: -1247.447</span></span>
+<span><span class="co">#&gt; RMSE: 0.311</span></span></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Residuals over time</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fitted</span>, type <span class="op">=</span> <span class="st">"residuals"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/plot-fit-residuals-1.svg" class="r-plt" alt="" width="672"></p>
+<p><img src="affectOU_files/figure-html/plot-fit-residuals-1.svg" class="r-plt" alt="Visualization of the residuals left in the data after fitting the OU to them as a typical diagonistic plot used for linear regression models." width="672"></p>
 <p>See <a href="../reference/plot.fit.affectOU.html"><code>plot()</code></a> for
 more details on available diagnostics and their interpretations.</p>
 </div>
 <div class="section level2">
+<h2 id="extract-equation">Extract Equation<a class="anchor" aria-label="anchor" href="#extract-equation"></a>
+</h2>
+<p>To ease the process of writing down the OU’s stochastic differential
+equation, <code>affectOU</code> includes an <a href="../reference/equation.affectOU.html"><code>equation()</code></a>
+function which renders the model’s equation in multiple formats,
+offering plain text, LaTeX, R expression, or code output.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "dX(t) = theta * (mu - X(t)) dt + gamma dW(t)\n\nwhere:\n  theta = 1\n  mu    = 1\n  gamma = 0.5\n  sigma = 0.25\n"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"latex"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "dX(t) = \\theta \\left( \\mu - X(t) \\right) dt + \\gamma \\, dW(t)\n\n\\text{where:}\n\\begin{align*}\n  \\theta &amp;= 1 \\\\\n  \\mu &amp;= 1 \\\\\n  \\gamma &amp;= 0.5 \\\\\n  \\sigma &amp;= 0.25\n\\end{align*}\n"</span></span></code></pre></div>
+<p>By default, this function will output the general equation and define
+the parameter values below. The parameter values can also directly be
+included in the equation by setting <code>inline = TRUE</code>:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span>, inline <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "dX(t) = 1 * (1 - X(t)) dt + 0.5 dW(t)"</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>The typical workflow starts with <a href="../reference/affectOU.html"><code>affectOU()</code></a> to define
-a model (1D or multidimensional), optionally adjusting parameters via <a href="../reference/update.affectOU.html"><code>update()</code></a>.
-Trajectories are generated with <a href="../reference/simulate.affectOU.html"><code>simulate()</code></a>
+<p>The typical workflow starts with the specification of an OU model of
+the <a href="../reference/affectOU.html"><code>affectOU()</code></a>
+class, optionally adjusting its parameters via its arguments or through
+the <a href="../reference/update.affectOU.html"><code>update()</code></a>
+method. Model trajectories can be generated with <a href="../reference/simulate.affectOU.html"><code>simulate()</code></a>
 and visualized with <a href="../reference/plot.simulate_affectOU.html"><code>plot()</code></a>.
-Theoretical properties – stability, stationary distribution, and
-relaxation time – are available through <a href="../reference/summary.affectOU.html"><code>summary()</code></a> and
-its component functions. The model’s SDE can be rendered in several
-formats via <a href="../reference/equation.affectOU.html"><code>equation()</code></a>.
-For empirical data, <a href="../reference/fit.affectOU.html"><code>fit()</code></a> estimates
-parameters from univariate time series using maximum likelihood.</p>
+The model may be further understood by inspecting its theoretical
+properties, for which the package offers <a href="../reference/summary.affectOU.html"><code>summary()</code></a>, <a href="../reference/stability.affectOU.html"><code>stability()</code></a>,
+and <a href="../reference/stationary.affectOU.html"><code>stationary()</code></a>.
+Finally, the OU can be fitted to empirical data through the <a href="../reference/fit.affectOU.html"><code>fit()</code></a> method, and
+the resulting equation can be extracted with <a href="../reference/equation.affectOU.html"><code>equation()</code></a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

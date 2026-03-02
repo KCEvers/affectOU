@@ -13,15 +13,16 @@ logLik(object, ...)
 
 - object:
 
-  An object of class `fit_affectOU`
+  An object of class
+  [`fit_affectOU`](https://kcevers.github.io/affectOU/reference/fit.affectOU.md).
 
 - ...:
 
-  Additional arguments (unused)
+  Additional arguments (unused).
 
 ## Value
 
-Numeric log-likelihood value
+Numeric log-likelihood value.
 
 ## Examples
 
