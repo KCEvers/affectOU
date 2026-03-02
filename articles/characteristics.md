@@ -71,7 +71,8 @@ affective inertia than the second process.
 Show code
 
 ``` r
-# For simplicity and ease of visualisation, we specify both processes in the same model. However, as they are uncoupled, they will evolve independently over time. 
+# For simplicity and ease of visualisation, we specify both processes in the same model. 
+# However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(
   theta = diag(c(5.0, 0.5))
 )
@@ -105,12 +106,12 @@ After affect is perturbed, it takes time to return to its baseline. The
 speed of this return is determined by \\\mathbf{\Theta}\\, which
 characterizes how long the effect of perturbations persists. This
 persistence can be quantified through the relaxation time \\\tau\\,
-which is the time for the expected deviation to shrink to \\1/e \approx
-36.8\\\\. Effects decay exponentially: at two \\\tau\\, about 13.5%
-remains; at three \\\tau\\, about 5%. \\\tau\\ is also known as the
-characteristic time scale, which can also be defined as the half-life
-\\t\_{1/2} = \ln 2 \cdot \tau\\, which is the time for the expected
-deviation to shrink to 50%.
+which is the time it takes for deviations from the attractor \\\mu\\ to
+shrink to \\1/e \approx 36.8\\\\. Effects decay exponentially: at two
+\\\tau\\, about 13.5% remains; at three \\\tau\\, about 5%. \\\tau\\ is
+also known as the characteristic time scale, and can alternatively be
+defined as the half-life \\t\_{1/2} = \ln 2 \cdot \tau\\, at which a
+deviation from \\\mu\\ shrinks to 50%.
 
 Show mathematical background
 
@@ -194,7 +195,8 @@ reactive to environmental fluctuations than the first process.
 Show code
 
 ``` r
-# For simplicity and ease of visualisation, we specify both processes in the same model. However, as they are uncoupled, they will evolve independently over time. 
+# For simplicity and ease of visualisation, we specify both processes in the same model. 
+# However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(theta = 0.5, mu = 0, sigma = diag(c(2.25, 0.09)))
 sim <- simulate(model, seed = 456, stop = 20)
 plot(sim,
@@ -279,7 +281,8 @@ system. Three regimes can be distinguished:
 Show code
 
 ``` r
-# For simplicity and ease of visualisation, we specify all processes in the same model. However, as they are uncoupled, they will evolve independently over time. 
+# For simplicity and ease of visualisation, we specify all processes in the same model.
+# However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(theta = diag(c(0.5, 0.01, -0.3)))
 sim <- simulate(model, stop = 100, seed = 43)
 #> Warning: ! System is not stable; no stationary distribution exists.

@@ -96,8 +96,10 @@ summary(model)
 #> Noise: independent
 ```
 
-The model can then be simulated with [`simulate()`](NA) and visualised
-over time with [`plot()`](NA).
+The model can then be simulated with
+[`simulate()`](https://kcevers.github.io/affectOU/reference/simulate.affectOU.html)
+and visualised over time with
+[`plot()`](https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.html).
 
 ``` r
 sim <- simulate(model)

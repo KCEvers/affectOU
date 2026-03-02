@@ -148,7 +148,8 @@ inertia than the second process.</p>
 <details><summary>
 Show code
 </summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify both processes in the same model. However, as they are uncoupled, they will evolve independently over time. </span></span>
+<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify both processes in the same model. </span></span>
+<span><span class="co"># However, as they are uncoupled, they will evolve independently over time. </span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span></span>
 <span>  theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.0</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -166,7 +167,7 @@ Show code
 <span>  main <span class="op">=</span> <span class="st">"Mean Reversion Depends on θ"</span>,</span>
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Fast Regulation (θ = 5.0)"</span>, <span class="st">"Slow Regulation (θ = 0.5)"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/mean-reversion-plot-1.svg" class="r-plt" alt="Time series plot with two lines, one for each process that is displayed. The fast-regulating process (red, with θ = 5.0) is shown to fluctuate closely around the attractor, typically remaining within the bounds [-1, 1]. The slow-regulating process (green, with θ = 0.5), however, fluctuates more widely around the attractor, with small perturbations building up to large fluctuations around the attractor state." width="672"></p>
+</details><p><img src="characteristics_files/figure-html/mean-reversion-plot-1.svg" class="r-plt" alt="Time series plot with two lines, one for each process that is displayed. The fast-regulating process (red, with θ = 5.0) is shown to fluctuate closely around the attractor, typically remaining within the bounds [-1, 1]. The slow-regulating process (green, with θ = 0.5), however, fluctuates more widely around the attractor, with small perturbations building up to large fluctuations around the attractor state." width="768"></p>
 </div>
 <div class="section level2">
 <h2 id="perturbation-persistence">2. Perturbation Persistence<a class="anchor" aria-label="anchor" href="#perturbation-persistence"></a>
@@ -174,11 +175,13 @@ Show code
 <p>After affect is perturbed, it takes time to return to its baseline.
 The speed of this return is determined by <span class="math inline">\(\mathbf{\Theta}\)</span>, which characterizes how
 long the effect of perturbations persists. This persistence can be
-quantified through the relaxation time <span class="math inline">\(\tau\)</span>, which is the time for the expected
-deviation to shrink to <span class="math inline">\(1/e \approx
-36.8\%\)</span>. Effects decay exponentially: at two <span class="math inline">\(\tau\)</span>, about 13.5% remains; at three <span class="math inline">\(\tau\)</span>, about 5%. <span class="math inline">\(\tau\)</span> is also known as the characteristic
-time scale, which can also be defined as the half-life <span class="math inline">\(t_{1/2} = \ln 2 \cdot \tau\)</span>, which is the
-time for the expected deviation to shrink to 50%.</p>
+quantified through the relaxation time <span class="math inline">\(\tau\)</span>, which is the time it takes for
+deviations from the attractor <span class="math inline">\(\mu\)</span>
+to shrink to <span class="math inline">\(1/e \approx 36.8\%\)</span>.
+Effects decay exponentially: at two <span class="math inline">\(\tau\)</span>, about 13.5% remains; at three <span class="math inline">\(\tau\)</span>, about 5%. <span class="math inline">\(\tau\)</span> is also known as the characteristic
+time scale, and can alternatively be defined as the half-life <span class="math inline">\(t_{1/2} = \ln 2 \cdot \tau\)</span>, at which a
+deviation from <span class="math inline">\(\mu\)</span> shrinks to
+50%.</p>
 <details><summary>
 Show mathematical background
 </summary><p>The relaxation time is straightforward to compute for unidimensional
@@ -208,7 +211,7 @@ Show code
 <code class="sourceCode R"><span><span class="co"># Simulate with more time points for accurate ACF</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, stop <span class="op">=</span> <span class="fl">10000</span>, dt <span class="op">=</span> <span class="fl">0.01</span>, save_at <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, type <span class="op">=</span> <span class="st">"acf"</span>, lag.max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/persistence-plot-show-1.svg" class="r-plt" alt="" width="672"></p>
+</details><p><img src="characteristics_files/figure-html/persistence-plot-show-1.svg" class="r-plt" alt="" width="768"></p>
 <p>The ACF equals <span class="math inline">\(1/e\)</span> at the
 relaxation time and <span class="math inline">\(0.5\)</span> at the
 half-life. Slow regulation (i.e., lower <span class="math inline">\(\theta\)</span>) means longer persistence and
@@ -255,7 +258,8 @@ fluctuations than the first process.</p>
 <details><summary>
 Show code
 </summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify both processes in the same model. However, as they are uncoupled, they will evolve independently over time. </span></span>
+<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify both processes in the same model. </span></span>
+<span><span class="co"># However, as they are uncoupled, they will evolve independently over time. </span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.25</span>, <span class="fl">0.09</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, seed <span class="op">=</span> <span class="fl">456</span>, stop <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>,</span>
@@ -263,7 +267,7 @@ Show code
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"High Reactivity (σ = 2.25)"</span>, <span class="st">"Low Reactivity (σ = 0.09)"</span><span class="op">)</span>,</span>
 <span>  main <span class="op">=</span> <span class="st">"Effect of Reactivity on Fluctuation Magnitude"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/reactivity-plot-1.svg" class="r-plt" alt="" width="672"></p>
+</details><p><img src="characteristics_files/figure-html/reactivity-plot-1.svg" class="r-plt" alt="" width="768"></p>
 </div>
 <div class="section level2">
 <h2 id="multivariate-coupling">4. Multivariate Coupling<a class="anchor" aria-label="anchor" href="#multivariate-coupling"></a>
@@ -315,8 +319,8 @@ Show code
 <span><span class="va">sim_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model_2d</span>, seed <span class="op">=</span> <span class="fl">105</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, main <span class="op">=</span> <span class="st">"Coupled Trajectories"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, type <span class="op">=</span> <span class="st">"phase"</span>, main <span class="op">=</span> <span class="st">"Phase Portrait"</span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/multivariate-plot-1.svg" class="r-plt" alt="" width="672"></p>
-<p><img src="characteristics_files/figure-html/multivariate-plot2-1.svg" class="r-plt" alt="" width="672"></p>
+</details><p><img src="characteristics_files/figure-html/multivariate-plot-1.svg" class="r-plt" alt="" width="768"></p>
+<p><img src="characteristics_files/figure-html/multivariate-plot2-1.svg" class="r-plt" alt="" width="768"></p>
 <!-- The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait. -->
 <p>The negative entry <span class="math inline">\(\theta_{21}\)</span>
 means that when dimension 1 deviates from its attractor, it pushes
@@ -348,7 +352,8 @@ Unstable process that diverges from <span class="math inline">\(\mu\)</span>.</l
 <details><summary>
 Show code
 </summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify all processes in the same model. However, as they are uncoupled, they will evolve independently over time. </span></span>
+<code class="sourceCode R"><span><span class="co"># For simplicity and ease of visualisation, we specify all processes in the same model.</span></span>
+<span><span class="co"># However, as they are uncoupled, they will evolve independently over time. </span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.01</span>, <span class="op">-</span><span class="fl">0.3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, stop <span class="op">=</span> <span class="fl">100</span>, seed <span class="op">=</span> <span class="fl">43</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: <span style="color: #BBBB00;">!</span> System is not stable; no stationary distribution exists.</span></span>
@@ -358,7 +363,7 @@ Show code
 <span>  main <span class="op">=</span> <span class="st">"Affect Dynamics of Different Stability Regimes"</span>,</span>
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"θ &gt; 0 (stable)"</span>, <span class="st">"θ ≈ 0 (random walk)"</span>, <span class="st">"θ &lt; 0 (unstable)"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/regimes-plot-1.svg" class="r-plt" alt="" width="672"></p>
+</details><p><img src="characteristics_files/figure-html/regimes-plot-1.svg" class="r-plt" alt="" width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="multivariate">Multivariate<a class="anchor" aria-label="anchor" href="#multivariate"></a>
@@ -491,7 +496,7 @@ Show code
 <span><span class="va">model_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="va">gamma_2d</span><span class="op">)</span></span>
 <span><span class="va">sim_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model_2d</span>, seed <span class="op">=</span> <span class="fl">105</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, main <span class="op">=</span> <span class="st">"Shared Noise Sources"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/noise-plot-1.svg" class="r-plt" alt="" width="672"></p>
+</details><p><img src="characteristics_files/figure-html/noise-plot-1.svg" class="r-plt" alt="" width="768"></p>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>

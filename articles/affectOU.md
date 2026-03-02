@@ -349,11 +349,8 @@ sim <- simulate(
 plot(sim, by_dim = TRUE)
 ```
 
-![Four plots containing the same information as before, but this time
-divided into subplots containing information for one or the other
-dimension (time-series and histogram) or for the temporal relations
-between all potential combination of variables (autocorrelation plot and
-phase plot).](affectOU_files/figure-html/simulate-md-1.svg)
+![Time series plot with two panels, each showing the evolution of affect
+over time.](affectOU_files/figure-html/simulate-md-1.svg)
 
 ### Multiple Simulations
 

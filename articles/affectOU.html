@@ -373,7 +373,7 @@ dimension in a separate subplot:</p>
 <span></span>
 <span><span class="co"># Plot</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, by_dim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/simulate-md-1.svg" class="r-plt" alt="Four plots containing the same information as before, but this time divided into subplots containing information for one or the other dimension (time-series and histogram) or for the temporal relations between all potential combination of variables (autocorrelation plot and phase plot)." width="672"></p>
+<p><img src="affectOU_files/figure-html/simulate-md-1.svg" class="r-plt" alt="Time series plot with two panels, each showing the evolution of affect over time." width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="multiple-simulations">Multiple Simulations<a class="anchor" aria-label="anchor" href="#multiple-simulations"></a>
@@ -386,7 +386,7 @@ from the same model:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, nsim <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim</span>, type <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/simulate-multiple-1.svg" class="r-plt" alt="Shown is a time-series plot containing all three of the simulations overlayed on top of each other." width="672"></p>
+<p><img src="affectOU_files/figure-html/simulate-multiple-1.svg" class="r-plt" alt="Shown is a time-series plot containing all three of the simulations overlayed on top of each other." width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="extracting-simulation-data">Extracting Simulation Data<a class="anchor" aria-label="anchor" href="#extracting-simulation-data"></a>
@@ -530,7 +530,7 @@ likelihood:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Residuals over time</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fitted</span>, type <span class="op">=</span> <span class="st">"residuals"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="affectOU_files/figure-html/plot-fit-residuals-1.svg" class="r-plt" alt="Visualization of the residuals left in the data after fitting the OU to them as a typical diagonistic plot used for linear regression models." width="672"></p>
+<p><img src="affectOU_files/figure-html/plot-fit-residuals-1.svg" class="r-plt" alt="Visualization of the residuals left in the data after fitting the OU to them as a typical diagonistic plot used for linear regression models." width="768"></p>
 <p>See <a href="../reference/plot.fit.affectOU.html"><code>plot()</code></a> for
 more details on available diagnostics and their interpretations.</p>
 </div>
