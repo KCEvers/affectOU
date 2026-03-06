@@ -36,7 +36,7 @@ where $\mathbf{\mu}$ defines the location of the affective baseline, $\mathbf{\T
 
 ## 1. Mean Reversion
 
-The first main feature of the OU as a model of affect dynamics concerns the tendency to return to its mean. For stable systems (see later sections), when affect is perturbed, it returns toward its baseline $\mathbf{\mu}$ at a rate determined by $\mathbf{\Theta}$. In unidimensional systems, $\theta$ can simply be interpreted as the speed of emotional regulation, where low $\theta$ represents emotional inertia.
+The first main feature of the OU as a model of affect dynamics concerns the tendency to return to its mean. For stable systems (see later sections), when affect is perturbed, it returns toward its baseline $\mathbf{\mu}$ at a rate determined by the eigenvalues of $\mathbf{\Theta}$. In unidimensional systems, $\theta$ can simply be interpreted as the speed of emotional regulation, where low $\theta$ represents emotional inertia.
 
 
 <details>
@@ -67,7 +67,7 @@ This derivation shows that the rate of the regulation is determined by the eigen
 
 </details>
 
-This property is shown below, in which we simulate two independent OU processes only differing in $\theta$. The process with higher $\theta$ (red) stays closer to its attractor (horizontal line, $\mu$) than the process with lower $\theta$ (green), which strays further away. In emotion terms, the second process displays greater affective inertia than the second process.
+This property of $\theta$ is shown below, in which we simulate two independent OU processes only differing in $\theta$. The process with a higher value for $\theta$ (red) stays closer to its attractor (horizontal line, $\mu$) than the process with a lower value for $\theta$ (green), which strays further away. In emotion terms, the latter process displays greater affective inertia than the former.
 
 <details>
 <summary>Show code</summary>
@@ -148,12 +148,12 @@ The ACF equals $1/e$ at the relaxation time and $0.5$ at the half-life. Slow reg
 
 ## 3. Reactivity
 
-The noise covariance $\sigma$ (or $\mathbf{\Sigma}$ in the multivariate case) controls how affect responds to random perturbations, i.e., emotional reactivity to environmental fluctuations. 
+The noise covariance $\mathbf{\Sigma}$ controls the randomness of the affective system, which has often been interpreted as affective reactivity to environmental fluctuations. Within `affectOU()`, you can either specify the covariance matrix $\mathbf{\Sigma}$ or the diffusion matrix $\mathbf{\Gamma}$, where $\mathbf{\Gamma}$ must be a lower triangular matrix. The noise covariance $\mathbf{\Sigma}$ is the more intuitive parameter to specify when defining the reactivity of the system, as it directly captures the variance and covariance of the noise across dimensions.
 
 <details>
 <summary>Show mathematical background</summary>
 
-In our implementation of the OU, the noise term is defined as $\mathbf{\Gamma} \, d\mathbf{W}(t)$, where $\mathbf{\Gamma}$ is the diffusion matrix and $d\mathbf{W}(t)$ is a vector of independent Wiener processes. This means that the noise covariance $\mathbf{\Sigma}$ is not directly specified but rather derived from $\mathbf{\Gamma}$.
+In our implementation of the OU, the noise term is defined as $\mathbf{\Gamma} \, d\mathbf{W}(t)$, where $\mathbf{\Gamma}$ is the diffusion matrix and $d\mathbf{W}(t)$ is a vector of independent Wiener processes. This means that the noise covariance $\mathbf{\Sigma}$ is not directly specified but should be derived from $\mathbf{\Gamma}$.
 
 The noise covariance $\mathbf{\Sigma}$ is related to the diffusion matrix $\mathbf{\Gamma}$ through:
 
@@ -161,11 +161,11 @@ The noise covariance $\mathbf{\Sigma}$ is related to the diffusion matrix $\math
   \mathbf{\Sigma} = \mathbf{\Gamma} \mathbf{\Gamma}^T
 \end{equation}
 
-We derive $\mathbf{\Gamma}$ from $\mathbf{\Sigma}$ using a Cholesky decomposition, which results in a lower triangular matrix. This ensures that we may convert between $\mathbf{\Sigma}$ and $\mathbf{\Gamma}$ without loss of generality, meaning that any positive semi-definite covariance matrix $\mathbf{\Sigma}$ can be represented through $\mathbf{\Gamma}$. With `affectOU()`, you can either specify $\mathbf{\Sigma}$ or $\mathbf{\Gamma}$, where $\mathbf{\Gamma}$ must be a lower triangular matrix. The noise covariance $\mathbf{\Sigma}$ is the more intuitive parameter to specify when defining the reactivity of the system, as it directly captures the variance and covariance of the noise across dimensions.
+This equality is known as the Cholesky decomposition, requiring the diffusion matrix $\mathbf{\Gamma}$ to be a lower triangular matrix. This restriction ensures that we may convert between $\mathbf{\Sigma}$ and $\mathbf{\Gamma}$ without loss of generality, meaning that any positive semi-definite covariance matrix $\mathbf{\Sigma}$ can be represented through $\mathbf{\Gamma}$. 
 
 </details>
 
-In the figure shown below, the two processes are subject to the same perturbations, but the process with higher $\sigma$ (red) shows larger fluctuations around the attractor than the process with lower $\sigma$ (green). In emotion terms, the second process is more emotionally reactive to environmental fluctuations than the first process.
+In the figure shown below, we visualize how two processes that are subject to the same perturbations may show larger fluctuations based on their value of the variance $\sigma$, with higher values of $\sigma$ leading to greater fluctuations around the attractor (red) than for lower values of $\sigma$ (green). In emotion terms, the former process is presumably more reactive to the environment than the latter.
 
 
 <details>
@@ -198,41 +198,17 @@ plot(sim,
 
 ## 4. Multivariate Coupling
 
-In multivariate models, off-diagonal elements of $\mathbf{\Theta}$ capture coupling between dimensions.
+In multivariate models, off-diagonal elements of $\mathbf{\Theta}$ allow for coupling between dimensions, meaning that the dynamics of two variables are interlinked in often interesting ways. For example, taking the example of a coupled two-dimensional system where:
 
 $$\mathbf{\Theta} = \begin{bmatrix}
 \theta_{11} & \theta_{12} \\
 \theta_{21} & \theta_{22}
 \end{bmatrix} = \begin{bmatrix}
-\text{self-regulation of dim 1} & \text{influence of dim 2 on dim 1} \\
-\text{influence of dim 1 on dim 2} & \text{self-regulation of dim 2}
-\end{bmatrix}$$
-
-
-<details>
-<summary>Show mathematical background</summary>
-
-
-In the drift matrix $\mathbf{\Theta}$, the off-diagonal elements allow for coupling in the dynamics between the different dimensions of the model. This coupling is captured through the eigenvectors $\mathbf{\Omega}$, which shape the direction along which the system moves towards its attractor $\mathbf{\mu}$ (in case of a stable system). This is easiest shown through an example. Take a two-dimensional system in which:
-
-$$\mathbf{\Theta} = \begin{bmatrix}
   0.5 & 0.0 \\
   -2.0 & 0.5
 \end{bmatrix}$$
 
-
-Importantly, one can see this through an inspection of the eigenvectors as well. In this case, the eigenvectors of $\mathbf{\Theta}$ are:
-
-$$\mathbf{\Omega} \approx \begin{bmatrix}
-  0 & 0 \\
-  1 & 1
-\end{bmatrix}$$
-
-which means that the two dimensions are closely coupled together, essentially falling on one dimension rather than two. This behaviour is similarly visible in a time-series plot (below), where both dimensions evolve in an almost identical way over time. 
-
-
-
-</details>
+then we can simulate such coupled dynamics, as shown in the following figure.
 
 <details>
 <summary>Show code</summary>
@@ -262,14 +238,40 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 
 <!-- The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait. -->
 
-The negative entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the same direction: if dimension 1 is above baseline, dimension 2 is pushed up, and vice versa. This creates interdependent dynamics visible in the phase portrait.
+In this two-dimensional case, the negative entry $\theta_{21}$ pushes both dimensions into the same direction: if dimension 1 is above baseline, dimension 2 is pushed up, and vice versa. This creates interdependent dynamics visible in the phase portrait.
+
+<details>
+<summary>Show mathematical background</summary>
+
+
+In the drift matrix $\mathbf{\Theta}$, the off-diagonal elements allow for coupling in the dynamics between the different dimensions of the model. This coupling is captured through the eigenvectors $\mathbf{\Omega}$, which shape the direction along which the system moves towards its attractor $\mathbf{\mu}$ (in case of a stable system). This is easiest shown through an example. Taking the two-dimensional example from above:
+
+$$\mathbf{\Theta} = \begin{bmatrix}
+  0.5 & 0.0 \\
+  -2.0 & 0.5
+\end{bmatrix}$$
+
+Importantly, one can see this through an inspection of the eigenvectors as well. In this case, the eigenvectors of $\mathbf{\Theta}$ are:
+
+$$\mathbf{\Omega} \approx \begin{bmatrix}
+  0 & 0 \\
+  1 & 1
+\end{bmatrix}$$
+
+which means that the two dimensions are closely coupled together, essentially falling on one dimension rather than two. This behaviour is similarly visible in a time-series plot (below), where both dimensions evolve in an almost identical way over time. 
+
+
+
+</details>
 
 
 ## 5. Stability Regimes
 
+Stability regimes refers to the stability of the system and its qualitative behaviour, specifically asking whether a system will be regulated towards the attractor $\mathbf{\mu}$ and, if so, in what way. This behaviour depends largely on the values of the parameters in the drift matrix $\mathbf{\Theta}$. We distinguish between the univariate and the multivariate case.
+
 ### Univariate
 
-The sign of $\theta$ determines the qualitative behaviour of the system. Three regimes can be distinguished:
+In the univariate case, the sign of $\theta$ determines the qualitative behaviour of the system. Three regimes can be distinguished:
 
 - **$\theta > 0$**: Stable, mean-reverting around $\mu$;
 - **$\theta \approx 0$**: Random walk without clear attractor, meaning the process drifts without returning to its baseline;
@@ -307,7 +309,7 @@ For multiple dimensions, stability depends on the eigenvalues of $\mathbf{\Theta
 
 - **Real positive eigenvalues:** In this case, the OU shows smooth exponential decay toward the attractor $\mathbf{\mu}$ for all variables; 
 - **Complex eigenvalues with positive real parts**: In this case, the OU will display damped linear oscillations around the attractor $\mathbf{\mu}$ for all variables, representing cyclical affect patterns;
-- **Eigenvalue with zero or negative real part**: In this case, the OU is non-stationary, meaning that affect will diverge over time -- either drifting monotonically or oscillating with growing amplitude, depending on whether the eigenvalues are real or complex. This type of behaviour is usually not of theoretical interest.
+- **Eigenvalue with zero or negative real parts**: In this case, the OU is non-stationary, meaning that affect will diverge over time -- either drifting monotonically or oscillating with growing amplitude, depending on whether the eigenvalues are real or complex. This type of behaviour is usually not of theoretical interest.
 
 Below, we demonstrate the first two cases, setting the noise covariance $\mathbf{\Sigma}$ to zero to better show the dynamics implied by the eigenvalues. 
 
