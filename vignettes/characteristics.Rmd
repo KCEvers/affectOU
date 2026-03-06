@@ -34,7 +34,7 @@ where $\mathbf{\mu}$ defines the location of the affective baseline, $\mathbf{\T
 
 
 
-## Mean Reversion
+## 1. Mean Reversion
 
 The first main feature of the OU as a model of affect dynamics concerns the tendency to return to its mean. For stable systems (see later sections), when affect is perturbed, it returns toward its baseline $\mathbf{\mu}$ at a rate determined by $\mathbf{\Theta}$. In unidimensional systems, $\theta$ can simply be interpreted as the speed of emotional regulation, where low $\theta$ represents emotional inertia.
 

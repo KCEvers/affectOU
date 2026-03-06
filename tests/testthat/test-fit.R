@@ -252,3 +252,248 @@ test_that("fit.affectOU handles constant data (1D)", {
     fitted_model <- fit(model, data = data$value, times = data$time, start = c(theta = 0.5, mu = 0, gamma = 1))
   )
 })
+
+
+# coef.fit_affectOU -----------------------------------------------------------
+
+test_that("coef.fit_affectOU returns a named numeric vector", {
+  fit_obj <- quick_fit()
+  result <- coef(fit_obj)
+
+  expect_true(is.numeric(result))
+  expect_true(is.vector(result))
+  expect_named(result, c("theta", "mu", "gamma"))
+})
+
+test_that("coef.fit_affectOU values match stored parameters", {
+  fit_obj <- quick_fit()
+  result <- coef(fit_obj)
+
+  expect_equal(result[["theta"]], fit_obj[["parameters"]][["theta"]])
+  expect_equal(result[["mu"]], fit_obj[["parameters"]][["mu"]])
+  expect_equal(result[["gamma"]], fit_obj[["parameters"]][["gamma"]])
+})
+
+
+# confint.fit_affectOU --------------------------------------------------------
+
+test_that("confint.fit_affectOU returns matrix with correct structure (default)", {
+  fit_obj <- quick_fit()
+  ci <- confint(fit_obj)
+
+  expect_true(is.matrix(ci))
+  expect_equal(nrow(ci), 3)
+  expect_equal(ncol(ci), 2)
+  expect_named(ci[1, ], c("2.5%", "97.5%"))
+  expect_equal(rownames(ci), c("theta", "mu", "gamma"))
+})
+
+test_that("confint.fit_affectOU lower < estimate < upper", {
+  fit_obj <- quick_fit()
+  ci <- confint(fit_obj)
+  params <- coef(fit_obj)
+
+  expect_true(all(ci[, 1] < params))
+  expect_true(all(params < ci[, 2]))
+})
+
+test_that("confint.fit_affectOU respects level argument", {
+  fit_obj <- quick_fit()
+  ci_90 <- confint(fit_obj, level = 0.90)
+  ci_95 <- confint(fit_obj, level = 0.95)
+
+  width_90 <- ci_90[, 2] - ci_90[, 1]
+  width_95 <- ci_95[, 2] - ci_95[, 1]
+  expect_true(all(width_90 < width_95))
+  expect_named(ci_90[1, ], c("5%", "95%"))
+})
+
+test_that("confint.fit_affectOU subsets parameters via parm", {
+  fit_obj <- quick_fit()
+  ci <- confint(fit_obj, parm = c("theta", "gamma"))
+
+  expect_equal(nrow(ci), 2)
+  expect_equal(rownames(ci), c("theta", "gamma"))
+})
+
+test_that("confint.fit_affectOU errors on invalid parm names", {
+  fit_obj <- quick_fit()
+  expect_error(confint(fit_obj, parm = "invalid"), "Invalid parameter names")
+})
+
+test_that("confint.fit_affectOU errors on invalid level", {
+  fit_obj <- quick_fit()
+  expect_error(confint(fit_obj, level = 1.5), "between 0 and 1")
+  expect_error(confint(fit_obj, level = 0),   "between 0 and 1")
+  expect_error(confint(fit_obj, level = "a"), "single numeric value")
+})
+
+
+# summary.fit_affectOU --------------------------------------------------------
+
+test_that("summary.fit_affectOU returns correct class", {
+  fit_obj <- quick_fit()
+  s <- summary(fit_obj)
+  expect_s3_class(s, "summary_fit_affectOU")
+})
+
+test_that("summary.fit_affectOU contains all expected components", {
+  fit_obj <- quick_fit()
+  s <- summary(fit_obj)
+  expect_named(s, c("coefficients", "log_likelihood", "rmse", "nobs", "convergence", "level", "method"))
+})
+
+test_that("summary.fit_affectOU coefficients is data.frame with correct columns", {
+  fit_obj <- quick_fit()
+  s <- summary(fit_obj)
+  coef_df <- s$coefficients
+
+  expect_s3_class(coef_df, "data.frame")
+  expect_equal(nrow(coef_df), 3)
+  expect_true(all(c("estimate", "se") %in% names(coef_df)))
+  expect_equal(rownames(coef_df), c("theta", "mu", "gamma"))
+})
+
+test_that("summary.fit_affectOU estimates match coef()", {
+  fit_obj <- quick_fit()
+  s <- summary(fit_obj)
+  expect_equal(s$coefficients$estimate, unname(coef(fit_obj)))
+})
+
+test_that("summary.fit_affectOU scalars match fit object", {
+  fit_obj <- quick_fit()
+  s <- summary(fit_obj)
+  expect_equal(s$log_likelihood, fit_obj[["log_likelihood"]])
+  expect_equal(s$rmse,           fit_obj[["rmse"]])
+  expect_equal(s$nobs,           fit_obj[["nobs"]])
+  expect_equal(s$convergence,    fit_obj[["convergence"]])
+  expect_equal(s$method,         fit_obj[["method"]])
+})
+
+test_that("summary.fit_affectOU level argument propagates to CI columns", {
+  fit_obj <- quick_fit()
+  s90 <- summary(fit_obj, level = 0.90)
+  expect_equal(s90$level, 0.90)
+  expect_equal(names(s90$coefficients)[3:4], c("5%", "95%"))
+})
+
+
+# print.fit_affectOU ----------------------------------------------------------
+
+cli::test_that_cli(config = c("plain", "ansi"), "print.fit_affectOU snapshot", {
+  fit_obj <- quick_fit()
+  expect_snapshot(print(fit_obj))
+})
+
+cli::test_that_cli(config = c("plain", "ansi"), "print.fit_affectOU digits snapshot", {
+  fit_obj <- quick_fit()
+  expect_snapshot(print(fit_obj, digits = 1))
+  expect_snapshot(print(fit_obj, digits = 5))
+})
+
+test_that("print.fit_affectOU returns invisibly", {
+  fit_obj <- quick_fit()
+  expect_invisible(print(fit_obj))
+})
+
+
+# print.summary_fit_affectOU --------------------------------------------------
+
+cli::test_that_cli(config = c("plain", "ansi"), "print.summary_fit_affectOU snapshot", {
+  fit_obj <- quick_fit()
+  s <- summary(fit_obj)
+  expect_snapshot(print(s))
+})
+
+cli::test_that_cli(config = c("plain", "ansi"), "print.summary_fit_affectOU digits snapshot", {
+  fit_obj <- quick_fit()
+  s <- summary(fit_obj)
+  expect_snapshot(print(s, digits = 1))
+  expect_snapshot(print(s, digits = 5))
+})
+
+test_that("print.summary_fit_affectOU returns invisibly", {
+  fit_obj <- quick_fit()
+  s <- summary(fit_obj)
+  expect_invisible(print(s))
+})
+
+test_that("print.summary_fit_affectOU shows convergence warning when convergence != 0", {
+  fit_obj <- quick_fit()
+  fit_obj[["convergence"]] <- 1
+  s <- summary(fit_obj)
+  expect_equal(s$convergence, 1)
+  # cli_alert_warning does not produce an R-level warning; verify print runs without error
+  expect_no_error(print(s))
+})
+
+
+# validate_fit_affectOU -------------------------------------------------------
+
+test_that("validate_fit_affectOU passes on valid object", {
+  fit_obj <- quick_fit()
+  expect_no_error(validate_fit_affectOU(fit_obj))
+  expect_invisible(validate_fit_affectOU(fit_obj))
+})
+
+test_that("validate_fit_affectOU errors on wrong class", {
+  expect_error(
+    validate_fit_affectOU(list()),
+    "class.*fit_affectOU"
+  )
+})
+
+test_that("validate_fit_affectOU errors on missing components", {
+  fit_obj <- quick_fit()
+  bad <- fit_obj
+  bad[["rmse"]] <- NULL
+  expect_error(
+    validate_fit_affectOU(bad),
+    "Missing components"
+  )
+})
+
+test_that("validate_fit_affectOU errors on wrong parameter types", {
+  fit_obj <- quick_fit()
+
+  bad_params <- fit_obj
+  bad_params[["parameters"]] <- c(theta = 0.5, mu = 0, gamma = 1)
+  expect_error(validate_fit_affectOU(bad_params), "parameters")
+
+  bad_fv <- fit_obj
+  bad_fv[["fitted_values"]] <- "not numeric"
+  expect_error(validate_fit_affectOU(bad_fv), "fitted_values")
+
+  bad_ll <- fit_obj
+  bad_ll[["log_likelihood"]] <- c(1, 2)
+  expect_error(validate_fit_affectOU(bad_ll), "log_likelihood")
+
+  bad_method <- fit_obj
+  bad_method[["method"]] <- 123
+  expect_error(validate_fit_affectOU(bad_method), "method")
+
+  bad_model <- fit_obj
+  bad_model[["model"]] <- list()
+  expect_error(validate_fit_affectOU(bad_model), "model")
+})
+
+test_that("validate_fit_affectOU errors on inconsistent data/fitted_values lengths", {
+  fit_obj <- quick_fit()
+  bad <- fit_obj
+  bad[["fitted_values"]] <- head(fit_obj[["fitted_values"]], -1)
+  expect_error(validate_fit_affectOU(bad), "fitted_values")
+})
+
+test_that("validate_fit_affectOU errors on data != fitted_values + residuals", {
+  fit_obj <- quick_fit()
+  bad <- fit_obj
+  bad[["residuals"]] <- fit_obj[["residuals"]] + 999
+  expect_error(validate_fit_affectOU(bad), "residuals")
+})
+
+test_that("validate_fit_affectOU errors on nobs inconsistency", {
+  fit_obj <- quick_fit()
+  bad <- fit_obj
+  bad[["nobs"]] <- fit_obj[["nobs"]] + 5
+  expect_error(validate_fit_affectOU(bad), "nobs")
+})

@@ -241,11 +241,11 @@ validate_fit_affectOU <- function(x) {
       "Length of {.field residuals} and {.field data} must be the same."
     )
   }
-  if (!all.equal(
+  if (!isTRUE(all.equal(
     x$data,
     x$fitted_values + x$residuals,
     check.attributes = FALSE
-  )) {
+  ))) {
     cli::cli_abort(
       "{.field data} must equal {.field fitted_values} + {.field residuals}."
     )

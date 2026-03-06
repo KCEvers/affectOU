@@ -78,17 +78,28 @@ set.seed(
 )
 ```
 
-```{r sim, echo = TRUE, results='hide', fig.show='hide', fig.height=5, fig.width=11}
+```{r sim, echo = TRUE}
 sim <- simulate(model)
 ```
 
-```{r plot}
-#| fig.height = 6,
-#| fig.width = 11,
-#| fig.alt = "Visualization of a time-series plot, showing the results of the simulation. In one time-series plot, it shows the simulated values for both dimensions of the OU process together with a horizontal line denoting the baseline affective state $\\mu$."
+```{r tutorial_paper, echo = FALSE, include=FALSE, fig.show='hide', fig.height=4, fig.width=7}
+plot(sim, main = "Ornstein-Uhlenbeck Affect Dynamics",  
+          mar = c(2, 2, 0.5, 2))
+```
+
+```{r proposal_paper, echo = FALSE, include=FALSE, fig.show='hide', fig.height=4, fig.width=7}
+plot(sim, main = "", mar = c(2, 2, 0, 2))
+```
+
+
+```{r plot, results='hide', fig.show='hide'}
 plot(sim)
 ```
 
+```{r fig, echo = FALSE, include=TRUE, fig.height=4, fig.width=11}
+#| fig.alt = "Visualization of a time-series plot, showing the results of the simulation. In one time-series plot, it shows the simulated values for both dimensions of the OU process together with a horizontal line denoting the baseline affective state $\\mu$."
+plot(sim, mar = c(2, 2, 0.5, 2))
+```
 
 
 ## Explore the OU Process
