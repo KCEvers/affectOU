@@ -16,6 +16,16 @@ quick_sim <- function(model = NULL, stop = 10, dt = .1,
   sim
 }
 
+quick_fit <- function(theta = 0.5, mu = 0, gamma = 1,
+                      stop = 10, dt = 0.1, seed = 42) {
+  model <- affectOU(theta = theta, mu = mu, gamma = gamma)
+  sim <- simulate(model, stop = stop, dt = dt, nsim = 1, seed = seed)
+  data <- as.data.frame(sim)
+  withr::with_seed(seed, {
+    fit(model, data = data$value, times = data$time)
+  })
+}
+
 expect_working_model <- function(model, ...) {
   # Suppress graphics output
   withr::local_pdf(NULL)

@@ -2,6 +2,7 @@ url: https://kcevers.github.io/affectOU/
 template:
   bootstrap: 5
   math-rendering: mathjax
+  bootswatch: flatly
   light-switch: true
   theme: github-light 
   theme-dark: github-dark
