@@ -34,8 +34,8 @@ Here, the parameters represent:
 The diffusion coefficient \\\gamma\\ is more easily interpreted in terms
 of the noise variance \\\sigma\\ (`sigma`), where \\\sigma = \gamma^2\\.
 
-You can create a simple one-dimensional model through calling the
-`affectOU` constructor using the default parameters:
+You can create a simple one-dimensional model with default parameters by
+calling the `affectOU` constructor:
 
 ``` r
 model <- affectOU()

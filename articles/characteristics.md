@@ -18,7 +18,7 @@ where \\\mathbf{\mu}\\ defines the location of the affective baseline,
 stable systems), and \\\mathbf{\Gamma}\\ defines the reactivity to
 random perturbations.
 
-## Mean Reversion
+## 1. Mean Reversion
 
 The first main feature of the OU as a model of affect dynamics concerns
 the tendency to return to its mean. For stable systems (see later

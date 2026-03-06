@@ -113,7 +113,7 @@ plot(sim)
 simulation. In one time-series plot, it shows the simulated values for
 both dimensions of the OU process together with a horizontal line
 denoting the baseline affective state
-\$\mu\$.](reference/figures/README-plot-1.svg)
+\$\mu\$.](reference/figures/README-fig-1.svg)
 
 ## Explore the OU Process
 
