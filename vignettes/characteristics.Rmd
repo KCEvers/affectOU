@@ -108,19 +108,56 @@ plot(
 
 ## 2. Perturbation Persistence
 
-After affect is perturbed, it takes time to return to its baseline. The speed of this return is determined by $\mathbf{\Theta}$, which characterizes how long the effect of perturbations persists. This persistence can be quantified through the relaxation time $\tau$, which is the time it takes for deviations from the attractor $\mu$ to shrink to $1/e \approx 36.8\%$. Effects decay exponentially: at two $\tau$, about 13.5\% remains; at three $\tau$, about 5\%. $\tau$ is also known as the characteristic time scale, and can alternatively be defined as the half-life $t_{1/2} = \ln 2 \cdot \tau$, at which a deviation from $\mu$ shrinks to 50\%. 
+After affect is perturbed, it takes time to return to its baseline. The speed of this return is determined by $\mathbf{\Theta}$, which characterizes how long the effect of perturbations persists. The rate of decay $\tau$ -- sometimes referred to as the relaxation time -- can be computed through the solution of the OU, specifically:
+
+\begin{equation}
+  \mathbf{y}_{\Delta t} = \mathbf{\mu} + e^{-\mathbf{\Theta} \Delta t} (\mathbf{y}_0 - \mathbf{\mu})
+\end{equation}
+
+We can then define the relaxation time $\tau$ as the time $\Delta t$ after which the initial condition $\mathbf{y}_0$ relaxed towards the attractor $\mathbf{\mu}$, retaining only a particular percentage of its original value. For example, for unidimensional OUs, setting the relaxation time $\tau = \theta^{-1}$ leads to the deviation of initial condition from the attractor ($\mathbf{y}_0 - \mathbf{\mu}$) to shrink to $e^{-1} \approx 0.37 = 37\%$ of its original value. 
+
+With these calculations, we assume affect decays exponentially, meaning that the bigger the value of $\tau$, the greater the relaxation percentage. Note that through this set of equations, we can alternatively define the half-life $\tau = t_{.50} = \ln(2) \mathbf{\Theta^{-1}}$ as the time after which a deviation from $\mathbf{\mu}$ shrinks to 50\%. 
 
  
 
 <details> 
 <summary>Show mathematical background</summary>
 
-The relaxation time is straightforward to compute for unidimensional OUs, as
-$\tau = 1/\theta$. At time $\tau$, the deterministic drift reduces to
-$e^{-\theta \tau} y(0) = e^{-1} y(0) \approx 0.368\, y(0)$, meaning the system
-has returned to about 36.8% of its initial displacement. The same logic extends to uncoupled multivariate OUs, where each variable $i$ has its own relaxation time $\tau_i = 1/\theta_{ii}$, and the deterministic drift for each variable reduces to $e^{-1} y_i(0) \approx 0.368\, y_i(0)$ at time $\tau_i$. Equivalently, we may use the eigenvalues of $\mathbf{\Theta}$, as in the case of diagonal $\mathbf{\Theta}$, the eigenvalues are simply the diagonal elements of $\mathbf{\Theta}$. In this case, the relaxation time for each eigenvalue $\lambda_i$ is $\tau_i = 1/\lambda_i$.
+In the unidimensional case, we can use the solution of the OU to compute the relaxation times $\tau$:
 
-However, this same principle does not apply to coupled multivariate OUs. Coupling between variables means that the relaxation of one variable can affect the relaxation of others. In this case, the relaxation time is not simply determined by the diagonal elements of $\mathbf{\Theta}$ or its eigenvalues, but rather by the full dynamics of the system.
+\begin{equation}
+  y_{\Delta t} = \mu + e^{-\theta \Delta t} (y_0 - \mu)
+\end{equation}
+
+where $y_{\Delta t}$ represents the value of the variable after a time step $\Delta t$, $y_0$ represents the initial condition, $\theta$ is the drift parameter, and $\mu$ is the attractor. Within this equation, we are interested in finding out to what degree the initial deviation from the attractor determines the value of $y_{\Delta t}$ after a particular time $\tau$ has passed. In other words, in this solution, we are only interested in the last part of the solution scaling the initial deviation from the attractor:
+
+\begin{equation}
+  e^{-\theta \Delta t} (y_0 - \mu)
+\end{equation}
+
+Let's call the relaxation percentage $r \in [0, 1]$, then we can compute the corresponding relaxation time $\tau$ as follows:
+
+\begin{equation}
+\begin{split}
+  e^{-\theta \tau} &= r \\
+  -\theta \tau &= \ln(r) \\
+  \tau &= -\ln(r) \theta^{-1}
+\end{split}
+\end{equation}
+
+Exemplifying this equation with a unidimensional OU with drift coefficient $\theta = 2$, we can compute its half-time $\tau = t_{0.5}$ as $\tau = -\ln(0.5) 2^{-1} = -\frac{\ln(0.5)}{2} \approx 0.35$.
+
+The same logic extends to multivariate OUs, where if we assume the exponential and the logarithm of the drift matrix $\mathbf{\Theta}$ exists, and if we assume a $d \times d$ matrix of relaxation percentages $R$ for which the logarithm esists, then the corresponding relaxation times $\tau$ can be computed as:
+
+\begin{equation}
+\begin{split}
+  e^{-\mathbf{\Theta} \tau} &= R \\
+  -\mathbf{\Theta} \tau &= \ln(R) \\
+  \tau &= -\mathbf{\Theta}^{-1} \ln(R)
+\end{split}
+\end{equation}
+
+Note that, in this case, $\tau$ is a $d \times d$ matrix containing the relaxation times for each dimension separately. We contend that one may use the same interpretation of relaxation times as before in cases where the variables captured by the OU are independent (i.e., when $\mathbf{\Theta}$ is diagonal), in which case $\tau$ would be a diagonal matrix containing the relaxation times per dimension separately. However, we do not believe that this same principle applies to multivariate OUs with coupled dynamics (i.e., when $\mathbf{\Theta}$ is not diagonal).
 
 </details>
 
