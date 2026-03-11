@@ -7,7 +7,9 @@
 affectOU(ndim = 1, theta = 0.5, mu = 0, sigma = 1, gamma = t(chol(sigma)))
 }
 \arguments{
-\item{ndim}{Dimensionality of the affect process. Defaults to 1 (univariate). Only needs to be specified if it cannot be inferred from the dimensions of the other parameters.}
+\item{ndim}{Dimensionality of the affect process. Defaults to 1 (univariate).
+Only needs to be specified if it cannot be inferred from the dimensions of
+the other parameters.}
 
 \item{theta}{Attractor strength (rate of return to baseline).
 For 1D: positive scalar. For multidimensional: square matrix.}
@@ -33,7 +35,8 @@ Cholesky factorisation.}
 }
 \value{
 An object of class \code{\link{affectOU}}, representing a univariate or multivariate
-Ornstein–Uhlenbeck affect regulation model. The object is a list with the following components:
+Ornstein–Uhlenbeck affect regulation model. The object is a list with the
+following components:
 
 \describe{
 
@@ -61,42 +64,42 @@ Integer.
 }
 }
 \description{
-Create a model object representing an Ornstein-Uhlenbeck (OU) process for affect dynamics. Both unidimensional and multidimensional models are supported.
+Create a model object representing an Ornstein-Uhlenbeck (OU) process for
+affect dynamics. Both unidimensional and multidimensional models are supported.
 }
 \details{
-The OU is a continuous-time stochastic differential equation model:
-\deqn{dX(t) = \theta(\mu - X(t))dt + \gamma dW(t)}
-for the 1D case, or
-\deqn{dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)}
-for the multidimensional case.
+The OU is a continuous-time stochastic differential equation model that, in
+its multivariate variant, can be written down as follows:
+
+\deqn{d\mathbf{X}(t) = \mathbf{\Theta} (\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} d\mathbf{W}(t)}
+
+which can be simplified in the one-dimensional case to:
+
+\deqn{dX(t) = \theta (\mu - X(t))dt + \gamma dW(t)}
 
 where:
 \itemize{
-\item \eqn{X(t)}: affect state at time \eqn{t}
-\item \eqn{\theta / \Theta} (theta): attractor strength or regulation speed (scalar or matrix)
-\item \eqn{\mu} (mu): attractor location or set point (scalar or vector)
-\item \eqn{\gamma / \Gamma} (gamma): lower-triangular diffusion coefficient (Cholesky factor) that multiplies dW(t)
-\item \eqn{\sigma / \Sigma} (sigma): noise covariance matrix, computed as \eqn{\Sigma = \Gamma\Gamma'}. This is the recommended way to specify noise for most users
-\item \eqn{dW(t)}: increments of a Wiener process (Brownian motion)
+\item \eqn{\mathbf{X}(t)} represents the affective state at time \eqn{t};
+\item \eqn{\mathbf{\Theta}} (theta) represents the drift matrix, governing the
+rate at which affect returns to its baseline;
+\item \eqn{\mathbf{\mu}} (mu) represents the location of the baseline or attractor;
+\item \eqn{\mathbf{\Gamma}} (gamma) is a lower-triangular matrix governing the
+size of the stochastic diffusion;
+\item \eqn{\mathbf{W}(t)} represents the Wiener process, adding randomness to the
+system.
 }
 
-In the multidimensional case, the element \eqn{\Theta_{ij}} (row \eqn{i},
-column \eqn{j}) represents the influence of dimension \eqn{j} on dimension
-\eqn{i}'s drift. Specifically, the drift for dimension \eqn{i} is
-\eqn{\sum_j \Theta_{ij}(\mu_j - X_j)}:
-\itemize{
-\item Diagonal elements \eqn{\Theta_{ii}}: self-regulation (how fast dimension
-\eqn{i} returns to its own attractor \eqn{\mu_i}). Positive values are
-necessary for self-regulation, but strong coupling between dimensions can override
-this and destabilise the system (see \code{\link[=summary.affectOU]{summary()}} for
-system-level stability checks).
-\item Off-diagonal elements \eqn{\Theta_{ij}} where \eqn{i \neq j}:
-coupling between dimensions (how dimension \eqn{j} influences dimension \eqn{i}).
-If \eqn{\Theta_{ij} > 0}, dimension \eqn{j} below its attractor has a
-positive influence on dimension \eqn{i} (pulls it up); if
-\eqn{\Theta_{ij} < 0}, dimension \eqn{j} below its attractor has a
-negative influence on dimension \eqn{i} (pushes it down).
-}
+Using the matrix \eqn{\mathbf{\Gamma}}, one can derive the stationary
+covariance matrix \eqn{\mathbf{\Sigma}} for the system through using
+\eqn{\mathbf{\Gamma}} as the basis for the Cholesky decomposition and solving
+the Lyapunov equation, namely:
+
+\deqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma} - \mathbf{\Sigma} \mathbf{\Theta}^T}
+
+In the multidimensional case, the off-diagonal elements of the drift matrix
+\eqn{\mathbf{\Theta}} determine the temporal coupling between the different
+variables contained in \eqn{\mathbf{X}}, capturing how these variables may
+co-evolve over time.
 }
 \examples{
 # 1D model

@@ -28,7 +28,9 @@ ou_plot_fit_time(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"},
+\code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"},
+\code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }
@@ -36,7 +38,8 @@ ou_plot_fit_time(
 NULL (invisibly), called for side effects only.
 }
 \description{
-Compare the observed data with the fitted trajectory over time. This plot helps assess how well the model captures the overall pattern of the data.
+Compare the observed data with the fitted trajectory over time. This plot
+helps assess how well the model captures the overall pattern of the data.
 }
 \examples{
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)

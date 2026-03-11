@@ -33,7 +33,9 @@ ou_plot_fit_residuals(
 NULL (invisibly), called for side effects only.
 }
 \description{
-Visualize the residuals (differences between observed and fitted values) over time to assess model fit. Ideally, residuals should show no systematic patterns and be randomly scattered around zero.
+Visualize the residuals (differences between observed and fitted values) over
+time to assess model fit. Ideally, residuals should show no systematic
+patterns and be randomly scattered around zero.
 }
 \examples{
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)

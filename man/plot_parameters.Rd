@@ -24,7 +24,9 @@
 
 \item{breaks}{Number of histogram breaks}
 
-\item{lag.max}{Maximum lag to compute. Specified in terms of saved time points. For example, \code{lag.max = 10} corresponds to 10 time units and 100 lags with \code{save_at = 0.1}.}
+\item{lag.max}{Maximum lag to compute. Specified in terms of saved time
+points. For example, \code{lag.max = 10} corresponds to 10 time units and 100
+lags with \code{save_at = 0.1}.}
 
 \item{main}{Main title}
 
@@ -34,7 +36,9 @@
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"},
+\code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"},
+\code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }

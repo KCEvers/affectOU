@@ -17,7 +17,8 @@
 \code{NULL} (invisibly), called for side effects only.
 }
 \description{
-Visualise an Ornstein-Uhlenbeck affect simulation using different types of plots. See specific plotting functions for allowed arguments and details.
+Visualise an Ornstein-Uhlenbeck affect simulation using different types of
+plots. See specific plotting functions for allowed arguments and details.
 }
 \details{
 Available plot types:

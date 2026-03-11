@@ -22,13 +22,17 @@
 
 \item{seed}{Random seed for reproducibility.}
 
-\item{initial_state}{Optional initial state vector. If \code{NULL}, defaults to a draw from the stationary distribution (if stable) or the attractor location \code{mu} (if non-stable).}
+\item{initial_state}{Optional initial state vector. If \code{NULL}, defaults to a
+draw from the stationary distribution (if stable) or the attractor location
+\code{mu} (if non-stable).}
 
-\item{dt}{Time step for Euler-Maruyama discretization (smaller = more accurate).}
+\item{dt}{Time step for Euler-Maruyama discretization (smaller = more
+accurate).}
 
 \item{stop}{Total simulation time.}
 
-\item{save_at}{Time interval at which to save simulated data; used to linearly interpolate results. Useful for reducing output size.}
+\item{save_at}{Time interval at which to save simulated data; used to
+linearly interpolate results. Useful for reducing output size.}
 
 \item{...}{Additional arguments (unused).}
 }

@@ -54,7 +54,9 @@ ou_plot_phase(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"},
+\code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"},
+\code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }
@@ -90,8 +92,8 @@ system is stable.
 The off-diagonal panels plot \eqn{X_i(t)} against \eqn{X_j(t)} at the same
 time point, showing the joint distribution of dimensions \eqn{i} and
 \eqn{j}. When the system is stable, the conditional expectation based on
-the stationary covariance \eqn{\Gamma_\infty} is:
-\deqn{E[X_j \mid X_i = x] = \mu_j + \frac{\Gamma_{\infty,ij}}{\Gamma_{\infty,ii}}(x - \mu_i)}
+the stationary covariance \eqn{\Sigma_\infty} is:
+\deqn{E[X_j \mid X_i = x] = \mu_j + \frac{\Sigma_{\infty,ij}}{\Sigma_{\infty,ii}}(x - \mu_i)}
 
 This is a regression line through \eqn{(\mu_i, \mu_j)} with slope determined
 by the stationary covariance structure. The theoretical line is only drawn

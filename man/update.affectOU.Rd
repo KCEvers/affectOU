@@ -24,10 +24,12 @@
 \item{mu}{Optional. New attractor location (scalar or vector).}
 
 \item{gamma}{Optional. New diffusion coefficient (scalar or lower triangular
-matrix). Only \code{gamma} or \code{sigma} can be specified, not both. If \code{sigma} is provided, \code{gamma} is computed via Cholesky decomposition.}
+matrix). Only \code{gamma} or \code{sigma} can be specified, not both. If \code{sigma} is
+provided, \code{gamma} is computed via Cholesky decomposition.}
 
 \item{sigma}{Optional. New noise covariance (scalar or positive semi-definite
-matrix). Only \code{gamma} or \code{sigma} can be specified, not both. If \code{gamma} is provided, \code{sigma} is computed as \code{gamma \%*\% t(gamma)}.}
+matrix). Only \code{gamma} or \code{sigma} can be specified, not both. If \code{gamma} is
+provided, \code{sigma} is computed as \code{gamma \%*\% t(gamma)}.}
 
 \item{...}{Additional arguments (unused)}
 }

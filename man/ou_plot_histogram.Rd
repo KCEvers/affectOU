@@ -60,7 +60,9 @@ ou_plot_histogram(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"},
+\code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"},
+\code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }
@@ -70,18 +72,24 @@ ou_plot_histogram(
 \description{
 Visualise the distribution of affect values from an OU affect simulation
 using histograms for each dimension. In case of multiple simulations, the
-histograms aggregate data across all simulations for each dimension. Different dimensions can be plotted in separate panels by setting \code{by_dim = TRUE}. Specific dimensions or simulations can be plotted with \code{which_dim} and \code{which_sim}, respectively.
+histograms aggregate data across all simulations for each dimension. Different
+dimensions can be plotted in separate panels by setting \code{by_dim = TRUE}.
+Specific dimensions or simulations can be plotted with \code{which_dim} and
+\code{which_sim}, respectively.
 }
 \section{Stationary Distribution}{
 
-When the system is stable (\eqn{\theta > 0}), the stationary distribution
-is normal with mean \eqn{\mu} and variance \eqn{\gamma^2 / (2\theta)}. The
-theoretical density curve is overlaid on the histogram when the system is
+When the system is stable, the stationary distribution of the multivariate
+OU is normal with mean \eqn{\mathbf{\mu}} and covariance matrix
+\eqn{\mathbf{\Sigma}_\infty} derived as the solution of the Lyapunov
+equation \eqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma}_\infty - \mathbf{\Sigma}_\infty \mathbf{\Theta}^T}.
+The theoretical density curve is overlaid on the histogram when the system is
 stationary.
 
 Different parameter combinations can yield the same stationary variance but
 produce different dynamics. For example, doubling both \eqn{\theta} and
-\eqn{\gamma} keeps the stationary SD constant but changes the half-life.
+\eqn{\gamma} keeps the stationary covariances constant but changes the half-
+life.
 }
 
 \examples{
