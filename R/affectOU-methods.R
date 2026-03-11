@@ -123,9 +123,11 @@ coef.affectOU <- function(object, ...) {
 #' @param theta Optional. New attractor strength (scalar or matrix).
 #' @param mu Optional. New attractor location (scalar or vector).
 #' @param gamma Optional. New diffusion coefficient (scalar or lower triangular
-#'   matrix). Only `gamma` or `sigma` can be specified, not both. If `sigma` is provided, `gamma` is computed via Cholesky decomposition.
+#'   matrix). Only `gamma` or `sigma` can be specified, not both. If `sigma` is 
+#'   provided, `gamma` is computed via Cholesky decomposition.
 #' @param sigma Optional. New noise covariance (scalar or positive semi-definite
-#'   matrix). Only `gamma` or `sigma` can be specified, not both. If `gamma` is provided, `sigma` is computed as `gamma %*% t(gamma)`.
+#'   matrix). Only `gamma` or `sigma` can be specified, not both. If `gamma` is 
+#'   provided, `sigma` is computed as `gamma %*% t(gamma)`.
 #' @param ... Additional arguments (unused)
 #'
 #' @return Updated [affectOU] object
@@ -243,7 +245,10 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 
 #' Summarize an Ornstein-Uhlenbeck affect model
 #'
-#' Summarize the dynamics and stationary distribution of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see [`stability()`][stability.affectOU()], and
+#' Summarize the dynamics and stationary distribution of an Ornstein-Uhlenbeck 
+#' affect model. In the case of multi-dimensional models, additional information 
+#' about coupling and noise structure is provided. For more details, see 
+#' [`stability()`][stability.affectOU()] and 
 #' [`stationary()`][stationary.affectOU()].
 #'
 #' @param object An `affectOU` model object
