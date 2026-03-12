@@ -41,7 +41,7 @@ print.affectOU <- function(x, digits = 3, max_dim = 20, ...) {
     cli::cli_text("d{.emph X}(t) = {.emph \u03b8}({.emph \u03bc} \u2212 {.emph X}(t))dt + {.emph \u03b3} d{.emph W}(t)")
     cli::cli_text("")
     cli::cli_text(sprintf(
-      "{.emph \u03b8} = %.*f, {.emph \u03bc} = %.*f, {.emph \u03b3} = %.*f, {.emph \u03c3} = |{.emph \u03b3}| = %.*f",
+      "{.emph \u03b8} = %.*f, {.emph \u03bc} = %.*f, {.emph \u03b3} = %.*f, {.emph \u03c3} = {.emph \u03b3}\u00b2 = %.*f",
       digits, theta[1, 1], digits, mu[1], digits, gamma[1, 1], digits, sigma[1, 1]
     ))
   } else {

@@ -198,34 +198,44 @@ plot(sim,
 
 ## 4. Multivariate Coupling
 
-In multivariate models, off-diagonal elements of $\mathbf{\Theta}$ capture coupling between dimensions.
+In multivariate models, off-diagonal elements of $\mathbf{\Theta}$ capture coupling between dimensions. $\mathbf{\Theta}$ is multiplied by the current state $\mathbf{X}(t)$ to determine the deterministic drift of the system. For example, in a two-dimensional system without any diffusion (i.e., $\mathbf{\Gamma} = 0$), the change in $\mathbf{x}$ is given by:
 
-$$\mathbf{\Theta} = \begin{bmatrix}
+<!-- $$\mathbf{\Theta} = \begin{bmatrix}
 \theta_{11} & \theta_{12} \\
 \theta_{21} & \theta_{22}
 \end{bmatrix} = \begin{bmatrix}
 \text{self-regulation of dim 1} & \text{influence of dim 2 on dim 1} \\
 \text{influence of dim 1 on dim 2} & \text{self-regulation of dim 2}
+\end{bmatrix}$$ -->
+
+$$\frac{d\mathbf{x}}{dt} = \mathbf{\Theta} (\mathbf{\mu} - \mathbf{x}) = \begin{bmatrix}
+\theta_{11} & \theta_{12} \\
+\theta_{21} & \theta_{22}
+\end{bmatrix} \begin{bmatrix} \mu_1 - x_1 \\ \mu_2 - x_2 \end{bmatrix} =
+\begin{bmatrix}
+\theta_{11} (\mu_1 - x_1) + \theta_{12} (\mu_2 - x_2) \\
+\theta_{21} (\mu_1 - x_1) + \theta_{22} (\mu_2 - x_2)
 \end{bmatrix}$$
 
+The change in each dimension $i$ is determined by both its own deviation from $\mathbf{\mu}$ and the deviation of the other dimension, weighted by the corresponding elements of $\mathbf{\Theta}{i\cdot}$. This means that the dynamics of one dimension can influence the dynamics of the other dimension, creating coupled trajectories. For example, as shown below, a negative entry $\theta_{12}$ means that when dimension 2 is above its attractor, it pushes dimension 1 up, and when dimension 2 is below its attractor, it pushes dimension 1 down. This creates interdependent dynamics visible in the time-series and phase portrait.
 
 <details>
-<summary>Show mathematical background</summary>
+<summary>Show background on eigenvalues and eigenvectors</summary>
 
 
 In the drift matrix $\mathbf{\Theta}$, the off-diagonal elements allow for coupling in the dynamics between the different dimensions of the model. This coupling is captured through the eigenvectors $\mathbf{\Omega}$, which shape the direction along which the system moves towards its attractor $\mathbf{\mu}$ (in case of a stable system). This is easiest shown through an example. Take a two-dimensional system in which:
 
 $$\mathbf{\Theta} = \begin{bmatrix}
-  0.5 & 0.0 \\
-  -2.0 & 0.5
+  0.5 & -2.0 \\
+  0 & 0.5
 \end{bmatrix}$$
 
 
 Importantly, one can see this through an inspection of the eigenvectors as well. In this case, the eigenvectors of $\mathbf{\Theta}$ are:
 
 $$\mathbf{\Omega} \approx \begin{bmatrix}
-  0 & 0 \\
-  1 & 1
+  1 & 1 \\
+  0 & 0
 \end{bmatrix}$$
 
 which means that the two dimensions are closely coupled together, essentially falling on one dimension rather than two. This behaviour is similarly visible in a time-series plot (below), where both dimensions evolve in an almost identical way over time. 
@@ -238,14 +248,15 @@ which means that the two dimensions are closely coupled together, essentially fa
 <summary>Show code</summary>
 
 ```{r multivariate, results="hide", fig.show='hide'}
-# Dimension 1's deviations from baseline push dimension 2 in the opposite direction
+# theta_12 = -2: when dimension 2 is above its attractor, it pushes dimension 1 up;
+# when dimension 2 is below its attractor, it pushes dimension 1 down
 theta_2d <- matrix(c(
-  0.5, 0.0,
-  -2, 0.5
+  0.5, -2,
+  0, 0.5
 ), nrow = 2, byrow = TRUE)
 
 model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
-sim_2d <- simulate(model_2d, seed = 105)
+sim_2d <- simulate(model_2d)
 plot(sim_2d, main = "Coupled Trajectories", xlim = c(0, 20))
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
@@ -262,7 +273,6 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 
 <!-- The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait. -->
 
-The negative entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the same direction: if dimension 1 is above baseline, dimension 2 is pushed up, and vice versa. This creates interdependent dynamics visible in the phase portrait.
 
 
 ## 5. Stability Regimes

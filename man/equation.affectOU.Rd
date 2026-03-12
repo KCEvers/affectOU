@@ -18,7 +18,7 @@
 \item{type}{Output format; one of \code{"plain"}, \code{"expression"}, \code{"latex"}, or \code{"code"}}
 
 \item{inline}{If TRUE, insert numeric parameter values into equations.
-If FALSE, keep symbolic notation and define parameters separately.}
+If \code{FALSE}, keep symbolic notation and define parameters separately.}
 
 \item{digits}{Number of digits for rounding numeric values}
 
@@ -30,11 +30,11 @@ Extract model equations
 \examples{
 # Plain text equation for 1D model
 model <- affectOU()
-cat(equation(model))
+equation(model)
 
 # Inlined Latex equation for 2D model
 model <- affectOU(ndim = 2)
-cat(equation(model, type = "latex", inline = TRUE))
+equation(model, type = "latex", inline = TRUE)
 
 # Expression output for 1D model
 model <- affectOU()
@@ -42,7 +42,7 @@ equation(model, type = "expression")
 
 # R code output for 1D model
 model <- affectOU()
-cat(equation(model, type = "code"))
+equation(model, type = "code")
 
 }
 \concept{config}

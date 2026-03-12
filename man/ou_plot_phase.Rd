@@ -38,7 +38,7 @@ ou_plot_phase(
 
 \item{share_yaxis}{Logical; use same y-axis limits for all panels?}
 
-\item{palette}{Color palette. Should be one \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
+\item{palette}{Color palette. Should be one of \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
 
 \item{col_theory}{Color for theoretical relationship line}
 
