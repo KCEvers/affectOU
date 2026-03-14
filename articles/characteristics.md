@@ -211,15 +211,31 @@ plot(sim,
 ## 4. Multivariate Coupling
 
 In multivariate models, off-diagonal elements of \\\mathbf{\Theta}\\
-capture coupling between dimensions.
+capture coupling between dimensions. \\\mathbf{\Theta}\\ is multiplied
+by the current state \\\mathbf{X}(t)\\ to determine the deterministic
+drift of the system. For example, in a two-dimensional system without
+any diffusion (i.e., \\\mathbf{\Gamma} = 0\\), the change in
+\\\mathbf{x}\\ is given by:
 
-\\\mathbf{\Theta} = \begin{bmatrix} \theta\_{11} & \theta\_{12} \\
-\theta\_{21} & \theta\_{22} \end{bmatrix} = \begin{bmatrix}
-\text{self-regulation of dim 1} & \text{influence of dim 2 on dim 1} \\
-\text{influence of dim 1 on dim 2} & \text{self-regulation of dim 2}
-\end{bmatrix}\\
+\\\frac{d\mathbf{x}}{dt} = \mathbf{\Theta} (\mathbf{\mu} - \mathbf{x}) =
+\begin{bmatrix} \theta\_{11} & \theta\_{12} \\ \theta\_{21} &
+\theta\_{22} \end{bmatrix} \begin{bmatrix} \mu_1 - x_1 \\ \mu_2 - x_2
+\end{bmatrix} = \begin{bmatrix} \theta\_{11} (\mu_1 - x_1) +
+\theta\_{12} (\mu_2 - x_2) \\ \theta\_{21} (\mu_1 - x_1) + \theta\_{22}
+(\mu_2 - x_2) \end{bmatrix}\\
 
-Show mathematical background
+The change in each dimension \\i\\ is determined by both its own
+deviation from \\\mathbf{\mu}\\ and the deviation of the other
+dimension, weighted by the corresponding elements of
+\\\mathbf{\Theta}{i\cdot}\\. This means that the dynamics of one
+dimension can influence the dynamics of the other dimension, creating
+coupled trajectories. For example, as shown below, a negative entry
+\\\theta\_{12}\\ means that when dimension 2 is above its attractor, it
+pushes dimension 1 up, and when dimension 2 is below its attractor, it
+pushes dimension 1 down. This creates interdependent dynamics visible in
+the time-series and phase portrait.
+
+Show background on eigenvalues and eigenvectors
 
 In the drift matrix \\\mathbf{\Theta}\\, the off-diagonal elements allow
 for coupling in the dynamics between the different dimensions of the
@@ -229,42 +245,51 @@ moves towards its attractor \\\mathbf{\mu}\\ (in case of a stable
 system). This is easiest shown through an example. Take a
 two-dimensional system in which:
 
-\\\mathbf{\Theta} = \begin{bmatrix} 0.5 & 0.0 \\ -2.0 & 0.5
+\\\mathbf{\Theta} = \begin{bmatrix} 0.5 & -2.0 \\ 0 & 0.5
 \end{bmatrix}\\
 
-Importantly, one can see this through an inspection of the eigenvectors
-as well. In this case, the eigenvectors of \\\mathbf{\Theta}\\ are:
+In this case, the eigenvalues are \\\lambda_1 = \lambda_2 = 0.5\\, and
+the eigenvectors of \\\mathbf{\Theta}\\ are:
 
-\\\mathbf{\Omega} \approx \begin{bmatrix} 0 & 0 \\ 1 & 1 \end{bmatrix}\\
+\\\mathbf{\Omega} \approx \begin{bmatrix} 1 & 1 \\ 0 & 0 \end{bmatrix}\\
 
-which means that the two dimensions are closely coupled together,
-essentially falling on one dimension rather than two. This behaviour is
-similarly visible in a time-series plot (below), where both dimensions
-evolve in an almost identical way over time.
+Each column of \\\mathbf{\Omega}\\ represents an eigenvector, which is a
+direction in the state space along which the system moves towards its
+attractor. The matrix is defective, with only one linearly independent
+eigenvector. The system is effectively one-dimensional, with both
+dimensions moving together along the same trajectory toward the
+attractor. This behaviour is similarly visible in the time-series plot
+below, where both dimensions evolve in an almost identical way over
+time.
 
 Show code
 
 ``` r
-# Dimension 1's deviations from baseline push dimension 2 in the opposite direction
+# theta_12 = -2: when dimension 2 is above its attractor, it pushes dimension 1 up;
+# when dimension 2 is below its attractor, it pushes dimension 1 down
 theta_2d <- matrix(c(
-  0.5, 0.0,
-  -2, 0.5
+  0.5, -2,
+  0, 0.5
 ), nrow = 2, byrow = TRUE)
 
+# eigen(theta_2d)
+
 model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
-sim_2d <- simulate(model_2d, seed = 105)
+sim_2d <- simulate(model_2d)
 plot(sim_2d, main = "Coupled Trajectories", xlim = c(0, 20))
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
-![](characteristics_files/figure-html/multivariate-plot-1.svg)
+![Visualization of a time-series, showing two coupled affect dimensions
+evolving over time. A horizontal line denoting the baseline affective
+state
+\$\mu\$.](characteristics_files/figure-html/multivariate-plot-1.svg)
 
-![](characteristics_files/figure-html/multivariate-plot2-1.svg)
-
-The negative entry \\\theta\_{21}\\ means that when dimension 1 deviates
-from its attractor, it pushes dimension 2 in the same direction: if
-dimension 1 is above baseline, dimension 2 is pushed up, and vice versa.
-This creates interdependent dynamics visible in the phase portrait.
+![Phase portrait of two-dimensional Ornstein-Uhlenbeck process. The plot
+has four panels, with on the diagonal the lagged phase portrait of each
+affect dimension, and on the off-diagonal the contemporaneous scatter
+plots between pairs of
+dimensions](characteristics_files/figure-html/multivariate-plot2-1.svg)
 
 ## 5. Stability Regimes
 
@@ -294,7 +319,15 @@ plot(sim,
 )
 ```
 
-![](characteristics_files/figure-html/regimes-plot-1.svg)
+![Visualisation of the time-series of three Ornstein-Uhlenbeck
+processes, with different stability regimes. The first process (θ \> 0,
+stable) fluctuates around the attractor state \$\mu\$ in a stable way,
+with small perturbations dying down over time. The second process (θ ≈
+0, random walk) drifts without returning to its baseline, showing a more
+erratic pattern that can stray far from the attractor state \$\mu\$. The
+third process (θ \< 0, unstable) diverges from \$\mu\$, showing an
+explosive pattern where perturbations grow over
+time.](characteristics_files/figure-html/regimes-plot-1.svg)
 
 ### Multivariate
 
@@ -456,7 +489,12 @@ sim_2d <- simulate(model_2d, seed = 105)
 plot(sim_2d, main = "Shared Noise Sources", xlim = c(0, 20))
 ```
 
-![](characteristics_files/figure-html/noise-plot-1.svg)
+![Visualisation of the time-series of two Ornstein-Uhlenbeck processes
+with shared noise sources. The two trajectories show coupling in their
+fluctuations, with peaks and troughs occurring at similar time points,
+even though there is no coupling in the deterministic part of the
+process (i.e., θ is
+diagonal).](characteristics_files/figure-html/noise-plot-1.svg)
 
 ## Summary
 

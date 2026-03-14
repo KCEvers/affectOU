@@ -79,7 +79,7 @@
 
 <dt id="arg-inline">inline<a class="anchor" aria-label="anchor" href="#arg-inline"></a></dt>
 <dd><p>If TRUE, insert numeric parameter values into equations.
-If FALSE, keep symbolic notation and define parameters separately.</p></dd>
+If <code>FALSE</code>, keep symbolic notation and define parameters separately.</p></dd>
 
 
 <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
@@ -95,7 +95,7 @@ If FALSE, keep symbolic notation and define parameters separately.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Plain text equation for 1D model</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="affectOU.html">affectOU</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dX(t) = theta * (mu - X(t)) dt + gamma dW(t)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> where:</span>
@@ -106,7 +106,8 @@ If FALSE, keep symbolic notation and define parameters separately.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Inlined Latex equation for 2D model</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="affectOU.html">affectOU</a></span><span class="op">(</span>ndim <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"latex"</span>, inline <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"latex"</span>, inline <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{equation*}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> d\mathbf{X}(t) = \begin{pmatrix}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0.5 &amp; 0 \\</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0 &amp; 0.5</span>
@@ -114,29 +115,25 @@ If FALSE, keep symbolic notation and define parameters separately.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1 &amp; 0 \\</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0 &amp; 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{pmatrix} \, d\mathbf{W}(t)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{equation*}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Expression output for 1D model</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="affectOU.html">affectOU</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"expression"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $equation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Equation:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dX(t) == theta * (mu - X(t)) * dt + gamma * dW(t)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $theta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta =</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $mu</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mu =</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $gamma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gamma =</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $sigma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma =</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># R code output for 1D model</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="affectOU.html">affectOU</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"code"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/equation.html" class="external-link">equation</a></span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"code"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> theta &lt;- 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mu &lt;- 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gamma &lt;- 1</span>

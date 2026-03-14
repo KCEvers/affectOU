@@ -124,10 +124,11 @@ column \\j\\) represents the influence of dimension \\j\\ on dimension
 
 - Off-diagonal elements \\\Theta\_{ij}\\ where \\i \neq j\\: coupling
   between dimensions (how dimension \\j\\ influences dimension \\i\\).
-  If \\\Theta\_{ij} \> 0\\, dimension \\j\\ below its attractor has a
-  positive influence on dimension \\i\\ (pulls it up); if \\\Theta\_{ij}
-  \< 0\\, dimension \\j\\ below its attractor has a negative influence
-  on dimension \\i\\ (pushes it down).
+  If \\\Theta\_{ij} \> 0\\: when dimension \\j\\ is below its attractor,
+  it pulls dimension \\i\\ up; when dimension \\j\\ is above, it pushes
+  dimension \\i\\ down. If \\\Theta\_{ij} \< 0\\: when dimension \\j\\
+  is above its attractor, it pushes dimension \\i\\ up; when dimension
+  \\j\\ is below, it pulls dimension \\i\\ down.
 
 ## References
 

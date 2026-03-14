@@ -273,17 +273,38 @@ Show code
 <h2 id="multivariate-coupling">4. Multivariate Coupling<a class="anchor" aria-label="anchor" href="#multivariate-coupling"></a>
 </h2>
 <p>In multivariate models, off-diagonal elements of <span class="math inline">\(\mathbf{\Theta}\)</span> capture coupling between
-dimensions.</p>
-<p><span class="math display">\[\mathbf{\Theta} = \begin{bmatrix}
+dimensions. <span class="math inline">\(\mathbf{\Theta}\)</span> is
+multiplied by the current state <span class="math inline">\(\mathbf{X}(t)\)</span> to determine the
+deterministic drift of the system. For example, in a two-dimensional
+system without any diffusion (i.e., <span class="math inline">\(\mathbf{\Gamma} = 0\)</span>), the change in <span class="math inline">\(\mathbf{x}\)</span> is given by:</p>
+<!-- $$\mathbf{\Theta} = \begin{bmatrix}
+\theta_{11} & \theta_{12} \\
+\theta_{21} & \theta_{22}
+\end{bmatrix} = \begin{bmatrix}
+\text{self-regulation of dim 1} & \text{influence of dim 2 on dim 1} \\
+\text{influence of dim 1 on dim 2} & \text{self-regulation of dim 2}
+\end{bmatrix}$$ -->
+<p><span class="math display">\[\frac{d\mathbf{x}}{dt} = \mathbf{\Theta}
+(\mathbf{\mu} - \mathbf{x}) = \begin{bmatrix}
 \theta_{11} &amp; \theta_{12} \\
 \theta_{21} &amp; \theta_{22}
-\end{bmatrix} = \begin{bmatrix}
-\text{self-regulation of dim 1} &amp; \text{influence of dim 2 on dim 1}
-\\
-\text{influence of dim 1 on dim 2} &amp; \text{self-regulation of dim 2}
+\end{bmatrix} \begin{bmatrix} \mu_1 - x_1 \\ \mu_2 - x_2 \end{bmatrix} =
+\begin{bmatrix}
+\theta_{11} (\mu_1 - x_1) + \theta_{12} (\mu_2 - x_2) \\
+\theta_{21} (\mu_1 - x_1) + \theta_{22} (\mu_2 - x_2)
 \end{bmatrix}\]</span></p>
+<p>The change in each dimension <span class="math inline">\(i\)</span>
+is determined by both its own deviation from <span class="math inline">\(\mathbf{\mu}\)</span> and the deviation of the
+other dimension, weighted by the corresponding elements of <span class="math inline">\(\mathbf{\Theta}{i\cdot}\)</span>. This means that
+the dynamics of one dimension can influence the dynamics of the other
+dimension, creating coupled trajectories. For example, as shown below, a
+negative entry <span class="math inline">\(\theta_{12}\)</span> means
+that when dimension 2 is above its attractor, it pushes dimension 1 up,
+and when dimension 2 is below its attractor, it pushes dimension 1 down.
+This creates interdependent dynamics visible in the time-series and
+phase portrait.</p>
 <details><summary>
-Show mathematical background
+Show background on eigenvalues and eigenvectors
 </summary><p>In the drift matrix <span class="math inline">\(\mathbf{\Theta}\)</span>, the off-diagonal
 elements allow for coupling in the dynamics between the different
 dimensions of the model. This coupling is captured through the
@@ -293,40 +314,43 @@ shape the direction along which the system moves towards its attractor
 system). This is easiest shown through an example. Take a
 two-dimensional system in which:</p>
 <p><span class="math display">\[\mathbf{\Theta} = \begin{bmatrix}
-  0.5 &amp; 0.0 \\
-  -2.0 &amp; 0.5
+  0.5 &amp; -2.0 \\
+  0 &amp; 0.5
 \end{bmatrix}\]</span></p>
-<p>Importantly, one can see this through an inspection of the
-eigenvectors as well. In this case, the eigenvectors of <span class="math inline">\(\mathbf{\Theta}\)</span> are:</p>
+<!-- Importantly, one can see this through an inspection of the eigenvectors as well.  -->
+<p>In this case, the eigenvalues are <span class="math inline">\(\lambda_1 = \lambda_2 = 0.5\)</span>, and the
+eigenvectors of <span class="math inline">\(\mathbf{\Theta}\)</span>
+are:</p>
 <p><span class="math display">\[\mathbf{\Omega} \approx \begin{bmatrix}
-  0 &amp; 0 \\
-  1 &amp; 1
+  1 &amp; 1 \\
+  0 &amp; 0
 \end{bmatrix}\]</span></p>
-<p>which means that the two dimensions are closely coupled together,
-essentially falling on one dimension rather than two. This behaviour is
-similarly visible in a time-series plot (below), where both dimensions
-evolve in an almost identical way over time.</p>
+<p>Each column of <span class="math inline">\(\mathbf{\Omega}\)</span>
+represents an eigenvector, which is a direction in the state space along
+which the system moves towards its attractor. The matrix is defective,
+with only one linearly independent eigenvector. The system is
+effectively one-dimensional, with both dimensions moving together along
+the same trajectory toward the attractor. This behaviour is similarly
+visible in the time-series plot below, where both dimensions evolve in
+an almost identical way over time.</p>
 </details><details><summary>
 Show code
 </summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Dimension 1's deviations from baseline push dimension 2 in the opposite direction</span></span>
+<code class="sourceCode R"><span><span class="co"># theta_12 = -2: when dimension 2 is above its attractor, it pushes dimension 1 up;</span></span>
+<span><span class="co"># when dimension 2 is below its attractor, it pushes dimension 1 down</span></span>
 <span><span class="va">theta_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="fl">0.5</span>, <span class="fl">0.0</span>,</span>
-<span>  <span class="op">-</span><span class="fl">2</span>, <span class="fl">0.5</span></span>
+<span>  <span class="fl">0.5</span>, <span class="op">-</span><span class="fl">2</span>,</span>
+<span>  <span class="fl">0</span>, <span class="fl">0.5</span></span>
 <span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># eigen(theta_2d)</span></span>
+<span></span>
 <span><span class="va">model_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="va">theta_2d</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">sim_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model_2d</span>, seed <span class="op">=</span> <span class="fl">105</span><span class="op">)</span></span>
+<span><span class="va">sim_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model_2d</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, main <span class="op">=</span> <span class="st">"Coupled Trajectories"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, type <span class="op">=</span> <span class="st">"phase"</span>, main <span class="op">=</span> <span class="st">"Phase Portrait"</span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/multivariate-plot-1.svg" class="r-plt" alt="" width="768"></p>
-<p><img src="characteristics_files/figure-html/multivariate-plot2-1.svg" class="r-plt" alt="" width="768"></p>
-<!-- The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait. -->
-<p>The negative entry <span class="math inline">\(\theta_{21}\)</span>
-means that when dimension 1 deviates from its attractor, it pushes
-dimension 2 in the same direction: if dimension 1 is above baseline,
-dimension 2 is pushed up, and vice versa. This creates interdependent
-dynamics visible in the phase portrait.</p>
+</details><p><img src="characteristics_files/figure-html/multivariate-plot-1.svg" class="r-plt" alt="Visualization of a time-series, showing two coupled affect dimensions evolving over time. A horizontal line denoting the baseline affective state $\mu$." width="768"></p>
+<p><img src="characteristics_files/figure-html/multivariate-plot2-1.svg" class="r-plt" alt="Phase portrait of two-dimensional Ornstein-Uhlenbeck process. The plot has four panels, with on the diagonal the lagged phase portrait of each affect dimension, and on the off-diagonal the contemporaneous scatter plots between pairs of dimensions" width="768"></p>
 </div>
 <div class="section level2">
 <h2 id="stability-regimes">5. Stability Regimes<a class="anchor" aria-label="anchor" href="#stability-regimes"></a>
@@ -363,7 +387,7 @@ Show code
 <span>  main <span class="op">=</span> <span class="st">"Affect Dynamics of Different Stability Regimes"</span>,</span>
 <span>  sub <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"θ &gt; 0 (stable)"</span>, <span class="st">"θ ≈ 0 (random walk)"</span>, <span class="st">"θ &lt; 0 (unstable)"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/regimes-plot-1.svg" class="r-plt" alt="" width="768"></p>
+</details><p><img src="characteristics_files/figure-html/regimes-plot-1.svg" class="r-plt" alt="Visualisation of the time-series of three Ornstein-Uhlenbeck processes, with different stability regimes. The first process (θ &gt; 0, stable) fluctuates around the attractor state $\mu$ in a stable way, with small perturbations dying down over time. The second process (θ ≈ 0, random walk) drifts without returning to its baseline, showing a more erratic pattern that can stray far from the attractor state $\mu$. The third process (θ &lt; 0, unstable) diverges from $\mu$, showing an explosive pattern where perturbations grow over time." width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="multivariate">Multivariate<a class="anchor" aria-label="anchor" href="#multivariate"></a>
@@ -496,7 +520,7 @@ Show code
 <span><span class="va">model_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/affectOU.html">affectOU</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">0.5</span>, mu <span class="op">=</span> <span class="fl">0</span>, gamma <span class="op">=</span> <span class="va">gamma_2d</span><span class="op">)</span></span>
 <span><span class="va">sim_2d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model_2d</span>, seed <span class="op">=</span> <span class="fl">105</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sim_2d</span>, main <span class="op">=</span> <span class="st">"Shared Noise Sources"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="characteristics_files/figure-html/noise-plot-1.svg" class="r-plt" alt="" width="768"></p>
+</details><p><img src="characteristics_files/figure-html/noise-plot-1.svg" class="r-plt" alt="Visualisation of the time-series of two Ornstein-Uhlenbeck processes with shared noise sources. The two trajectories show coupling in their fluctuations, with peaks and troughs occurring at similar time points, even though there is no coupling in the deterministic part of the process (i.e., θ is diagonal)." width="768"></p>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>

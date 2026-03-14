@@ -44,7 +44,7 @@ model
 #> ── 1D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────
 #> dX(t) = θ(μ − X(t))dt + γ dW(t)
 #> 
-#> θ = 0.500, μ = 0.000, γ = 1.000, σ = |γ| = 1.000
+#> θ = 0.500, μ = 0.000, γ = 1.000, σ = γ² = 1.000
 ```
 
 Alternatively, you can specify custom parameters to represent, for
@@ -59,7 +59,7 @@ model
 #> ── 1D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────
 #> dX(t) = θ(μ − X(t))dt + γ dW(t)
 #> 
-#> θ = 1.000, μ = 1.000, γ = 0.500, σ = |γ| = 0.250
+#> θ = 1.000, μ = 1.000, γ = 0.500, σ = γ² = 0.250
 ```
 
 ### Multidimensional Models
@@ -114,7 +114,7 @@ model_2d <- update(
   model_2d,
   theta = diag(c(0.5, 0.3)), # Different regulation speeds
   mu = c(0, 1),              # Different baselines
-  sigma = diag(c(1, 0.64))   # Different noise levels
+  sigma = diag(c(1, 0.5))   # Different noise levels
 )
 
 model_2d
@@ -130,14 +130,14 @@ model_2d
 #> [2,]  0.0  0.3
 #> 
 #> Γ:
-#>      [,1] [,2]
-#> [1,]    1  0.0
-#> [2,]    0  0.8
+#>      [,1]  [,2]
+#> [1,]    1 0.000
+#> [2,]    0 0.707
 #> 
 #> Σ = ΓΓᵀ:
 #>      [,1] [,2]
-#> [1,]    1 0.00
-#> [2,]    0 0.64
+#> [1,]    1  0.0
+#> [2,]    0  0.5
 ```
 
 To create coupled dynamics, in which dimensions affect each other over
@@ -170,14 +170,14 @@ model_coupled
 #> [2,]  0.2  0.3
 #> 
 #> Γ:
-#>      [,1] [,2]
-#> [1,]    1  0.0
-#> [2,]    0  0.8
+#>      [,1]  [,2]
+#> [1,]    1 0.000
+#> [2,]    0 0.707
 #> 
 #> Σ = ΓΓᵀ:
 #>      [,1] [,2]
-#> [1,]    1 0.00
-#> [2,]    0 0.64
+#> [1,]    1  0.0
+#> [2,]    0  0.5
 ```
 
 ## Simulating Trajectories
@@ -464,7 +464,7 @@ summary(model_coupled)
 #> ── Stationary distribution ──
 #> 
 #> Mean: [0, 1]
-#> SD: [1.043, 1.167]
+#> SD: [1.04, 1.052]
 #> 
 #> ── Structure ──
 #> 
@@ -495,14 +495,14 @@ stationary(model_coupled)
 #> ── Stationary distribution of 2D Ornstein-Uhlenbeck Model ──
 #> 
 #> Mean: [0, 1]
-#> SD: [1.043, 1.167]
+#> SD: [1.04, 1.052]
 #> 
 #> 95% intervals:
-#> • Dim. 1: [-2.087, 2.087]
-#> • Dim. 2: [-1.334, 3.334]
+#> • Dim. 1: [-2.08, 2.08]
+#> • Dim. 2: [-1.103, 3.103]
 #> 
 #> Stationary correlations:
-#>   • Dims 1 & 2: -0.363
+#>   • Dims 1 & 2: -0.374
 ```
 
 ## Fitting Models to Data
@@ -553,10 +553,26 @@ offering plain text, LaTeX, R expression, or code output.
 
 ``` r
 equation(model)
-#> [1] "dX(t) = theta * (mu - X(t)) dt + gamma dW(t)\n\nwhere:\n  theta = 1\n  mu    = 1\n  gamma = 0.5\n  sigma = 0.25\n"
+#> dX(t) = theta * (mu - X(t)) dt + gamma dW(t)
+#> 
+#> where:
+#>   theta = 1
+#>   mu    = 1
+#>   gamma = 0.5
+#>   sigma = 0.25
 
 equation(model, type = "latex")
-#> [1] "dX(t) = \\theta \\left( \\mu - X(t) \\right) dt + \\gamma \\, dW(t)\n\n\\text{where:}\n\\begin{align*}\n  \\theta &= 1 \\\\\n  \\mu &= 1 \\\\\n  \\gamma &= 0.5 \\\\\n  \\sigma &= 0.25\n\\end{align*}\n"
+#> \begin{equation*}
+#> dX(t) = \theta \left( \mu - X(t) \right) dt + \gamma \, dW(t)
+#> \end{equation*}
+#> 
+#> where:
+#> \begin{align*}
+#>   \theta &= 1 \\
+#>   \mu &= 1 \\
+#>   \gamma &= 0.5 \\
+#>   \sigma &= 0.25
+#> \end{align*}
 ```
 
 By default, this function will output the general equation and define
@@ -565,7 +581,7 @@ included in the equation by setting `inline = TRUE`:
 
 ``` r
 equation(model, inline = TRUE)
-#> [1] "dX(t) = 1 * (1 - X(t)) dt + 0.5 dW(t)"
+#> dX(t) = 1 * (1 - X(t)) dt + 0.5 dW(t)
 ```
 
 ## Summary

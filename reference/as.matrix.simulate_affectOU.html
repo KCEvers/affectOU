@@ -98,24 +98,24 @@ simulations. Column names are <code>dim1</code>, <code>dim2</code>, ... when <co
 <span class="r-in"><span><span class="co"># Long format (default)</span></span></span>
 <span class="r-in"><span><span class="va">mat_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mat_long</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      time dim sim     value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.00   1   1 0.6756908</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.01   1   1 0.6225849</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.02   1   1 0.8554543</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.03   1   1 0.7873109</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.04   1   1 0.6592636</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.05   1   1 0.7403810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      time dim sim       value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.00   1   1 -0.10486312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.01   1   1 -0.17606609</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.02   1   1 -0.20910665</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.03   1   1 -0.15723218</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.04   1   1 -0.02467579</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.05   1   1  0.05265964</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Wide format</span></span></span>
 <span class="r-in"><span><span class="va">mat_wide</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">sim</span>, direction <span class="op">=</span> <span class="st">"wide"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mat_wide</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      dim1.sim1 dim2.sim1  dim1.sim2  dim2.sim2  dim1.sim3  dim2.sim3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0    0.6756908 0.5082894 -0.6098916 -0.1268938 -0.6543554 -1.0839112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.01 0.6225849 0.6375182 -0.5868591 -0.1792499 -0.6350719 -1.1266001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.02 0.8554543 0.7115427 -0.3952107 -0.2649401 -0.5623341 -0.9640450</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.03 0.7873109 0.7132281 -0.3928531 -0.1534357 -0.6168915 -0.9525534</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.04 0.6592636 0.7132079 -0.3076045  0.1061817 -0.6697355 -1.0024722</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.05 0.7403810 0.6309112 -0.3123168  0.1295897 -0.6829563 -0.9640234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        dim1.sim1  dim2.sim1 dim1.sim2 dim2.sim2  dim1.sim3 dim2.sim3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0    -0.10486312 -1.0508508 -1.350156 0.6629672 -0.2450390 0.5682976</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.01 -0.17606609 -1.0276331 -1.456984 0.7318991 -0.3020935 0.4302807</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.02 -0.20910665 -0.9549258 -1.416720 0.6672504 -0.1749767 0.3626938</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.03 -0.15723218 -0.9998786 -1.422326 0.6838972 -0.2824929 0.3768920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.04 -0.02467579 -0.7588969 -1.468205 0.8691918 -0.3291890 0.4445699</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.05  0.05265964 -0.8189686 -1.547450 0.8652275 -0.1706209 0.3849780</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -41,7 +41,7 @@ print(fitted)
 #> 
 #> ── Fitted 1D Ornstein-Uhlenbeck Model ──────────────────────────────────────────
 #> 5001 data points (dt ≈ 0.100)
-#> θ = 0.416, μ = 0.059, γ = 0.999
-#> Log-likelihood: -1228.303
+#> θ = 0.418, μ = 0.062, γ = 0.996
+#> Log-likelihood: -1215.774
 #> RMSE: 0.309
 ```

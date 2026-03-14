@@ -44,8 +44,8 @@ ou_plot_acf(
 
 - lag.max:
 
-  Maximum lag to compute. Specified in terms of saved time points. For
-  example, `lag.max = 10` corresponds to 10 time units and 100 lags with
+  Maximum lag to compute. Specified in terms of time units. For example,
+  `lag.max = 10` corresponds to 10 time units and 100 lags with
   `save_at = 0.1`.
 
 - which_dim:
@@ -54,8 +54,8 @@ ou_plot_acf(
 
 - which_sim:
 
-  Simulation index to plot (default 1). Only one simulation can be
-  plotted at a time.
+  Simulation index to plot. Defaults to 1 (also when `NULL`). Only one
+  simulation can be plotted at a time.
 
 - share_yaxis:
 
@@ -63,7 +63,7 @@ ou_plot_acf(
 
 - palette:
 
-  Color palette. Should be one
+  Color palette. Should be one of
   [`grDevices::hcl.pals()`](https://rdrr.io/r/grDevices/palettes.html).
 
 - lwd:

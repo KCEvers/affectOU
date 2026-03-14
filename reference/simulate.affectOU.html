@@ -155,18 +155,18 @@ Euler-Maruyama discretization. Handles both univariate and multivariate models.<
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Mean:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               dim1  dim2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulated   -0.064 0.186</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulated   -0.076 0.193</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Theoretical  0.000 0.000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> SD:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>              dim1  dim2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulated   0.965 0.882</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulated   0.953 0.891</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Theoretical 1.000 1.000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Covariance (simulated):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>        [,1]   [,2]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]  0.931 -0.050</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [2,] -0.050  0.778</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]  0.908 -0.054</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [2,] -0.054  0.794</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Covariance (theoretical):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
@@ -175,21 +175,21 @@ Euler-Maruyama discretization. Handles both univariate and multivariate models.<
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Correlation (simulated):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>        [,1]   [,2]</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]  1.000 -0.059</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> [2,] -0.059  1.000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]  1.000 -0.064</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [2,] -0.064  1.000</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Correlation (theoretical):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [1,]    1    0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> [2,]    0    1</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   time dim sim     value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00   1   1 -1.517386</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.01   1   1 -1.552263</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.02   1   1 -1.591592</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.03   1   1 -1.624616</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.04   1   1 -1.559744</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05   1   1 -1.654525</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   time dim sim      value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.00   1   1 -0.6940882</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.01   1   1 -0.7336170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.02   1   1 -0.7259402</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.03   1   1 -0.4052939</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.04   1   1 -0.4127906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.05   1   1 -0.2927063</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Specify initial state</span></span></span>
 <span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span>, initial_state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>

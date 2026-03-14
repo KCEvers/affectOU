@@ -43,12 +43,12 @@ print(summary(fitted))
 #> ── Coefficients ──
 #> 
 #>       Estimate    SE          95% CI
-#> theta    0.551 0.048  [0.456, 0.645]
-#> mu      -0.008 0.082 [-0.168, 0.153]
-#> gamma    1.008 0.010  [0.988, 1.028]
+#> theta    0.549 0.048  [0.455, 0.644]
+#> mu      -0.011 0.082 [-0.172, 0.150]
+#> gamma    1.010 0.010  [0.989, 1.030]
 #> 
 #> ── Goodness of fit ──
 #> 
-#> Log-likelihood: -1241.068
-#> RMSE: 0.31
+#> Log-likelihood: -1250.877
+#> RMSE: 0.311
 ```

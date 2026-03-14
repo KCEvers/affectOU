@@ -57,7 +57,7 @@ ou_plot_histogram(
 
 - palette:
 
-  Color palette. Should be one
+  Color palette. Should be one of
   [`grDevices::hcl.pals()`](https://rdrr.io/r/grDevices/palettes.html).
 
 - col_theory:

@@ -28,7 +28,7 @@ equation(
 
 - inline:
 
-  If TRUE, insert numeric parameter values into equations. If FALSE,
+  If TRUE, insert numeric parameter values into equations. If `FALSE`,
   keep symbolic notation and define parameters separately.
 
 - digits:
@@ -44,7 +44,7 @@ equation(
 ``` r
 # Plain text equation for 1D model
 model <- affectOU()
-cat(equation(model))
+equation(model)
 #> dX(t) = theta * (mu - X(t)) dt + gamma dW(t)
 #> 
 #> where:
@@ -55,7 +55,8 @@ cat(equation(model))
 
 # Inlined Latex equation for 2D model
 model <- affectOU(ndim = 2)
-cat(equation(model, type = "latex", inline = TRUE))
+equation(model, type = "latex", inline = TRUE)
+#> \begin{equation*}
 #> d\mathbf{X}(t) = \begin{pmatrix}
 #>   0.5 & 0 \\
 #>   0 & 0.5
@@ -63,29 +64,25 @@ cat(equation(model, type = "latex", inline = TRUE))
 #>   1 & 0 \\
 #>   0 & 1
 #> \end{pmatrix} \, d\mathbf{W}(t)
+#> \end{equation*}
 
 # Expression output for 1D model
 model <- affectOU()
 equation(model, type = "expression")
-#> $equation
+#> Equation:
 #> dX(t) == theta * (mu - X(t)) * dt + gamma * dW(t)
-#> 
-#> $theta
+#> theta =
 #> [1] 0.5
-#> 
-#> $mu
+#> mu =
 #> [1] 0
-#> 
-#> $gamma
+#> gamma =
 #> [1] 1
-#> 
-#> $sigma
+#> sigma =
 #> [1] 1
-#> 
 
 # R code output for 1D model
 model <- affectOU()
-cat(equation(model, type = "code"))
+equation(model, type = "code")
 #> theta <- 0.5
 #> mu <- 0
 #> gamma <- 1

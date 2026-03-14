@@ -42,7 +42,7 @@ data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 confint(fitted)
 #>              2.5%     97.5%
-#> theta  0.39396370 0.5704666
-#> mu    -0.08125462 0.2786512
-#> gamma  0.97002652 1.0097711
+#> theta  0.40084089 0.5783780
+#> mu    -0.07834214 0.2792836
+#> gamma  0.97863123 1.0187385
 ```

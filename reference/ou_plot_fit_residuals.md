@@ -26,7 +26,7 @@ ou_plot_fit_residuals(
 
 - palette:
 
-  Color palette. Should be one
+  Color palette. Should be one of
   [`grDevices::hcl.pals()`](https://rdrr.io/r/grDevices/palettes.html).
 
 - main:

@@ -28,13 +28,13 @@ ou_plot_fit_acf(
 
 - lag.max:
 
-  Maximum lag to compute. Specified in terms of saved time points. For
-  example, `lag.max = 10` corresponds to 10 time units and 100 lags with
+  Maximum lag to compute. Specified in terms of time units. For example,
+  `lag.max = 10` corresponds to 10 time units and 100 lags with
   `save_at = 0.1`.
 
 - palette:
 
-  Color palette. Should be one
+  Color palette. Should be one of
   [`grDevices::hcl.pals()`](https://rdrr.io/r/grDevices/palettes.html).
 
 - main:
