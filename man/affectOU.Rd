@@ -92,10 +92,11 @@ this and destabilise the system (see \code{\link[=summary.affectOU]{summary()}} 
 system-level stability checks).
 \item Off-diagonal elements \eqn{\Theta_{ij}} where \eqn{i \neq j}:
 coupling between dimensions (how dimension \eqn{j} influences dimension \eqn{i}).
-If \eqn{\Theta_{ij} > 0}, dimension \eqn{j} below its attractor has a
-positive influence on dimension \eqn{i} (pulls it up); if
-\eqn{\Theta_{ij} < 0}, dimension \eqn{j} below its attractor has a
-negative influence on dimension \eqn{i} (pushes it down).
+If \eqn{\Theta_{ij} > 0}: when dimension \eqn{j} is below its attractor,
+it pulls dimension \eqn{i} up; when dimension \eqn{j} is above, it pushes
+dimension \eqn{i} down. If \eqn{\Theta_{ij} < 0}: when dimension \eqn{j}
+is above its attractor, it pushes dimension \eqn{i} up; when dimension
+\eqn{j} is below, it pulls dimension \eqn{i} down.
 }
 }
 \examples{

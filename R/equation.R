@@ -7,7 +7,7 @@ generics::equation
 #' @param object An `affectOU` object
 #' @param type Output format; one of `"plain"`, `"expression"`, `"latex"`, or `"code"`
 #' @param inline If TRUE, insert numeric parameter values into equations.
-#'   If FALSE, keep symbolic notation and define parameters separately.
+#'   If `FALSE`, keep symbolic notation and define parameters separately.
 #' @param digits Number of digits for rounding numeric values
 #' @param ... Additional arguments (unused)
 #'
@@ -16,11 +16,11 @@ generics::equation
 #' @examples
 #' # Plain text equation for 1D model
 #' model <- affectOU()
-#' cat(equation(model))
+#' equation(model)
 #'
 #' # Inlined Latex equation for 2D model
 #' model <- affectOU(ndim = 2)
-#' cat(equation(model, type = "latex", inline = TRUE))
+#' equation(model, type = "latex", inline = TRUE)
 #'
 #' # Expression output for 1D model
 #' model <- affectOU()
@@ -28,7 +28,7 @@ generics::equation
 #'
 #' # R code output for 1D model
 #' model <- affectOU()
-#' cat(equation(model, type = "code"))
+#' equation(model, type = "code")
 #'
 equation.affectOU <- function(object, type = c("plain", "latex", "expression", "code"),
                               inline = FALSE, digits = 3, ...) {
@@ -40,10 +40,33 @@ equation.affectOU <- function(object, type = c("plain", "latex", "expression", "
       object[["parameters"]][[param]] <- as.numeric(object[["parameters"]][[param]])
     }
 
-    equation_ou_1d(object, type, inline, digits)
+    eq <- equation_ou_1d(object, type, inline, digits)
   } else {
-    equation_ou_nd(object, type, inline, digits)
+    eq <- equation_ou_nd(object, type, inline, digits)
   }
+
+  structure(eq, class = "equation_affectOU", type = type)
+}
+
+#' @export
+#' @method print equation_affectOU
+print.equation_affectOU <- function(x, ...) {
+  if (attr(x, "type") == "expression") {
+    if (is.list(x)) {
+      cat("Equation:\n")
+      print(x$equation)
+      params <- x[setdiff(names(x), "equation")]
+      for (nm in names(params)) {
+        cat(nm, "=\n")
+        print(params[[nm]])
+      }
+    } else {
+      print(unclass(x))
+    }
+  } else {
+    cat(x)
+  }
+  invisible(x)
 }
 
 
@@ -80,13 +103,15 @@ equation_ou_1d_plain <- function(theta, mu, gamma, sigma, inline) {
 equation_ou_1d_latex <- function(theta, mu, gamma, sigma, inline) {
   if (inline) {
     sprintf(
-      "dX(t) = %s \\left( %s - X(t) \\right) dt + %s \\, dW(t)",
+      "\\begin{equation*}\ndX(t) = %s \\left( %s - X(t) \\right) dt + %s \\, dW(t)\n\\end{equation*}",
       theta, mu, gamma
     )
   } else {
     paste0(
-      "dX(t) = \\theta \\left( \\mu - X(t) \\right) dt + \\gamma \\, dW(t)\n\n",
-      "\\text{where:}\n",
+      "\\begin{equation*}\n",
+      "dX(t) = \\theta \\left( \\mu - X(t) \\right) dt + \\gamma \\, dW(t)\n",
+      "\\end{equation*}\n\n",
+      "where:\n",
       "\\begin{align*}\n",
       sprintf("  \\theta &= %s \\\\\n", theta),
       sprintf("  \\mu &= %s \\\\\n", mu),
@@ -167,20 +192,24 @@ equation_ou_nd_plain <- function(theta, mu, gamma, sigma, inline) {
 equation_ou_nd_latex <- function(theta, mu, gamma, sigma, inline) {
   if (inline) {
     paste0(
+      "\\begin{equation*}\n",
       "d\\mathbf{X}(t) = ",
       format_matrix_latex(theta),
       " \\left( ",
       format_vector_latex(mu),
       " - \\mathbf{X}(t) \\right) dt + ",
       format_matrix_latex(gamma),
-      " \\, d\\mathbf{W}(t)\n"
+      " \\, d\\mathbf{W}(t)\n",
+      "\\end{equation*}"
     )
   } else {
     paste0(
+      "\\begin{equation*}\n",
       "d\\mathbf{X}(t) = \\mathbf{\\Theta} ",
       "\\left( \\mathbf{\\mu} - \\mathbf{X}(t) \\right) dt + ",
-      "\\mathbf{\\Gamma} \\, d\\mathbf{W}(t)\n\n",
-      "\\text{where:}\n",
+      "\\mathbf{\\Gamma} \\, d\\mathbf{W}(t)\n",
+      "\\end{equation*}\n\n",
+      "where:\n",
       "\\begin{align*}\n",
       "  \\mathbf{\\Theta} &= ", format_matrix_latex(theta), " \\\\\n",
       "  \\mathbf{\\mu} &= ", format_vector_latex(mu), " \\\\\n",

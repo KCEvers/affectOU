@@ -9,6 +9,8 @@ test_that("equation() works for 1D models with inline = TRUE", {
 
   # Plain
   expect_silent(eq_plain <- equation(model, "plain", inline = TRUE))
+  expect_s3_class(eq_plain, "equation_affectOU")
+  expect_equal(attr(eq_plain, "type"), "plain")
   expect_type(eq_plain, "character")
   expect_match(eq_plain, as.character(theta))
   expect_match(eq_plain, as.character(mu))
@@ -20,22 +22,30 @@ test_that("equation() works for 1D models with inline = TRUE", {
 
   # LaTeX
   expect_silent(eq_latex <- equation(model, "latex", inline = TRUE))
+  expect_s3_class(eq_latex, "equation_affectOU")
+  expect_equal(attr(eq_latex, "type"), "latex")
   expect_type(eq_latex, "character")
   expect_match(eq_latex, as.character(theta))
   expect_match(eq_latex, as.character(mu))
   expect_match(eq_latex, as.character(gamma))
   expect_length(eq_latex, 1)
   expect_match(eq_latex, "dW\\(t\\)")
+  expect_match(eq_latex, "begin\\{equation\\*\\}")
+  expect_match(eq_latex, "end\\{equation\\*\\}")
   # as it is inlined, should have numeric values, not symbols
   expect_no_match(eq_latex, "\\\\theta")
 
   # Expression
   expect_silent(eq_expr <- equation(model, "expression", inline = TRUE))
+  expect_s3_class(eq_expr, "equation_affectOU")
+  expect_equal(attr(eq_expr, "type"), "expression")
   expect_type(eq_expr, "language")
   expect_length(eq_expr, 3)
 
   # Code
   expect_silent(eq_code <- equation(model, "code", inline = TRUE))
+  expect_s3_class(eq_code, "equation_affectOU")
+  expect_equal(attr(eq_code, "type"), "code")
   expect_type(eq_code, "character")
   expect_match(eq_code, "<-")
   expect_match(eq_code, as.character(theta))
@@ -53,6 +63,7 @@ test_that("equation() works for 1D models with inline = FALSE", {
 
   # Plain
   expect_silent(eq_plain <- equation(model, "plain", inline = FALSE))
+  expect_s3_class(eq_plain, "equation_affectOU")
   expect_match(eq_plain, "theta")
   expect_match(eq_plain, "where:")
   expect_match(eq_plain, paste0("theta.*= ", theta))
@@ -63,15 +74,20 @@ test_that("equation() works for 1D models with inline = FALSE", {
 
   # LaTeX
   expect_silent(eq_latex <- equation(model, "latex", inline = FALSE))
+  expect_s3_class(eq_latex, "equation_affectOU")
   expect_match(eq_latex, "\\\\theta")
   expect_match(eq_latex, "\\\\mu")
   expect_match(eq_latex, "\\\\gamma")
   expect_match(eq_latex, "\\\\sigma")
-  expect_match(eq_latex, "text\\{where:\\}")
+  expect_match(eq_latex, "where:")
+  expect_no_match(eq_latex, "\\\\text\\{where:\\}")
+  expect_match(eq_latex, "begin\\{equation\\*\\}")
+  expect_match(eq_latex, "end\\{equation\\*\\}")
   expect_length(eq_latex, 1)
 
   # Expression returns a list
   expect_silent(eq_expr <- equation(model, "expression", inline = FALSE))
+  expect_s3_class(eq_expr, "equation_affectOU")
   expect_type(eq_expr, "list")
   expect_named(eq_expr, c("equation", "theta", "mu", "gamma", "sigma"))
   expect_type(eq_expr$equation, "language")
@@ -121,9 +137,12 @@ test_that("equation() works for multivariate models with inline = TRUE", {
 
   # LaTeX
   eq_latex <- equation(model, "latex", inline = TRUE)
+  expect_s3_class(eq_latex, "equation_affectOU")
   expect_match(eq_latex, "\\\\mathbf\\{X\\}")
   expect_match(eq_latex, "pmatrix")
   expect_match(eq_latex, as.character(gamma[1, 2]))
+  expect_match(eq_latex, "begin\\{equation\\*\\}")
+  expect_match(eq_latex, "end\\{equation\\*\\}")
   expect_length(eq_latex, 1)
 
   # Expression always returns list for multivariate
@@ -163,10 +182,13 @@ test_that("equation() works for multivariate models with inline = FALSE", {
 
   # LaTeX should have symbolic notation
   eq_latex <- equation(model, "latex", inline = FALSE)
+  expect_s3_class(eq_latex, "equation_affectOU")
   expect_match(eq_latex, "\\\\mathbf\\{\\\\Theta\\}")
   expect_match(eq_latex, "\\\\mathbf\\{\\\\mu\\}")
   expect_match(eq_latex, "\\\\mathbf\\{\\\\Gamma\\}")
-  expect_match(eq_latex, "text\\{where:\\}")
+  expect_match(eq_latex, "where:")
+  expect_no_match(eq_latex, "\\\\text\\{where:\\}")
+  expect_match(eq_latex, "begin\\{equation\\*\\}")
   expect_match(eq_latex, "align")
 
   # Plain output includes where-section and parameter blocks
@@ -338,6 +360,60 @@ test_that("equation() handles negative values", {
   expect_match(eq, as.character(mu))
   expect_match(eq, as.character(gamma))
 })
+
+# print.equation_affectOU ----------------------------------------------------
+
+test_that("print.equation_affectOU prints without cat() wrapper", {
+  model <- affectOU(theta = 0.5, mu = 3, gamma = 1)
+
+  eq_plain <- equation(model, "plain")
+  expect_output(print(eq_plain), "dX\\(t\\)")
+
+  eq_latex <- equation(model, "latex")
+  expect_output(print(eq_latex), "begin\\{equation\\*\\}")
+
+  eq_code <- equation(model, "code")
+  expect_output(print(eq_code), "dX <-")
+})
+
+test_that("print.equation_affectOU returns invisibly", {
+  model <- affectOU()
+  eq <- equation(model)
+  result <- withVisible(print(eq))
+  expect_false(result$visible)
+  expect_s3_class(result$value, "equation_affectOU")
+})
+
+test_that("print.equation_affectOU handles expression list", {
+  model <- affectOU(theta = 0.5, mu = 3, gamma = 1)
+
+  eq_expr <- equation(model, "expression", inline = FALSE)
+  expect_output(print(eq_expr), "Equation:")
+  expect_output(print(eq_expr), "theta")
+  expect_output(print(eq_expr), "mu")
+  expect_output(print(eq_expr), "gamma")
+  expect_output(print(eq_expr), "sigma")
+})
+
+test_that("print.equation_affectOU handles inline expression (call)", {
+  model <- affectOU()
+  eq_expr <- equation(model, "expression", inline = TRUE)
+  expect_output(print(eq_expr), "dX")
+})
+
+test_that("print.equation_affectOU works for multivariate", {
+  model <- affectOU(ndim = 2)
+
+  eq_plain <- equation(model, "plain")
+  expect_output(print(eq_plain), "Theta")
+
+  eq_latex <- equation(model, "latex")
+  expect_output(print(eq_latex), "begin\\{equation\\*\\}")
+
+  eq_expr <- equation(model, "expression")
+  expect_output(print(eq_expr), "Equation:")
+})
+
 
 test_that("equation() handles large matrices", {
   ndim <- 5

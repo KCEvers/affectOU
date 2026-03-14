@@ -300,3 +300,4 @@ classify_dynamics <- function(theta, eigenvalues, ndim, tol = 1e-10) {
     system = system
   )
 }
+

@@ -87,10 +87,21 @@ plot(sim, main = "Ornstein-Uhlenbeck Affect Dynamics",
           mar = c(2, 2, 0.5, 2))
 ```
 
-```{r proposal_paper, echo = FALSE, include=FALSE, fig.show='hide', fig.height=4, fig.width=7}
-plot(sim, main = "", mar = c(2, 2, 0, 2))
-```
+```{r proposal_paper, echo = FALSE, include=FALSE, fig.show='hide', fig.height=4, fig.width=6}
+library(extrafont)
 
+# # Import fonts once
+# font_import()
+# # Look at available fonts
+# fonts()
+
+# Register fonts for PDF output
+loadfonts(device = "pdf", quiet = TRUE)
+
+plot(sim, main = "", mar = c(0, 0, 0, 0), xlim = c(0, 30), cex.lab = 1.3,
+#  xaxt = "n", yaxt = "n", 
+family = "Georgia", col.grid = "white", col.axis = "white")
+```
 
 ```{r plot, results='hide', fig.show='hide'}
 plot(sim)

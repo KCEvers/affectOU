@@ -86,7 +86,7 @@ model_2d <- update(
   model_2d,
   theta = diag(c(0.5, 0.3)), # Different regulation speeds
   mu = c(0, 1),              # Different baselines
-  sigma = diag(c(1, 0.64))   # Different noise levels
+  sigma = diag(c(1, 0.5))   # Different noise levels
 )
 
 model_2d

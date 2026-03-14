@@ -3,14 +3,14 @@
 #' @param which_dim Dimension indices to plot (NULL for all)
 #' @param which_sim Simulation indices to plot (NULL for all)
 #' @param by_dim Logical; plot each dimension in separate panel?
-#' @param palette Color palette. Should be one [grDevices::hcl.pals()].
+#' @param palette Color palette. Should be one of [grDevices::hcl.pals()].
 #' @param alpha Alpha transparency for colors (0 = transparent, 1 = opaque)
 #' @param lwd Line width
 #' @param share_xaxis Logical; use same x-axis limits for all panels?
 #' @param share_yaxis Logical; use same y-axis limits for all panels?
 #' @param freq Logical; plot frequency instead of density?
 #' @param breaks Number of histogram breaks
-#' @param lag.max Maximum lag to compute. Specified in terms of saved time points. For example, `lag.max = 10` corresponds to 10 time units and 100 lags with `save_at = 0.1`.
+#' @param lag.max Maximum lag to compute. Specified in terms of time units. For example, `lag.max = 10` corresponds to 10 time units and 100 lags with `save_at = 0.1`.
 #' @param main Main title
 #' @param sub Subtitle for panels
 #' @param xlab X-axis label
@@ -595,7 +595,7 @@ ou_plot_histogram <- function(x,
 #'
 #' @inheritParams plot_parameters
 #' @inheritParams plot.simulate_affectOU
-#' @param which_sim Simulation index to plot (default 1). Only one simulation can be plotted at a time.
+#' @param which_sim Simulation index to plot. Defaults to 1 (also when `NULL`). Only one simulation can be plotted at a time.
 #' @param col_theory Color for theoretical ACF/CCF line
 #'
 #' @return `NULL` (invisibly), called for side effects only.
@@ -1083,7 +1083,7 @@ ou_plot_phase <- function(x,
 #'
 #' @inheritParams simulate.affectOU
 #' @inheritParams affectOU
-#' @inheritParams plot_acf
+#' @inheritParams ou_plot_acf
 #' @param sigma_inf Stationary covariance matrix
 #' @param i Dimension index
 #'
@@ -1119,7 +1119,7 @@ compute_theoretical_acf <- function(theta, sigma_inf, i, lags) {
 #'
 #' @inheritParams simulate.affectOU
 #' @inheritParams affectOU
-#' @inheritParams plot_acf
+#' @inheritParams ou_plot_acf
 #' @param sigma_inf Stationary covariance matrix
 #' @param i First dimension
 #' @param j Second dimension

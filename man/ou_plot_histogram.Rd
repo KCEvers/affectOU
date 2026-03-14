@@ -38,7 +38,7 @@ ou_plot_histogram(
 
 \item{by_dim}{Logical; plot each dimension in separate panel?}
 
-\item{palette}{Color palette. Should be one \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
+\item{palette}{Color palette. Should be one of \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
 
 \item{col_theory}{Color for theoretical distribution line (if stationary)}
 

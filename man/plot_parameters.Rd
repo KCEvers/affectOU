@@ -10,7 +10,7 @@
 
 \item{by_dim}{Logical; plot each dimension in separate panel?}
 
-\item{palette}{Color palette. Should be one \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
+\item{palette}{Color palette. Should be one of \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
 
 \item{alpha}{Alpha transparency for colors (0 = transparent, 1 = opaque)}
 
@@ -24,7 +24,7 @@
 
 \item{breaks}{Number of histogram breaks}
 
-\item{lag.max}{Maximum lag to compute. Specified in terms of saved time points. For example, \code{lag.max = 10} corresponds to 10 time units and 100 lags with \code{save_at = 0.1}.}
+\item{lag.max}{Maximum lag to compute. Specified in terms of time units. For example, \code{lag.max = 10} corresponds to 10 time units and 100 lags with \code{save_at = 0.1}.}
 
 \item{main}{Main title}
 

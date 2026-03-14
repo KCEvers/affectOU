@@ -31,15 +31,15 @@ ou_plot_acf(
 \arguments{
 \item{x}{A \code{simulate_affectOU} model object produced by \code{\link[=simulate.affectOU]{simulate.affectOU()}}}
 
-\item{lag.max}{Maximum lag to compute. Specified in terms of saved time points. For example, \code{lag.max = 10} corresponds to 10 time units and 100 lags with \code{save_at = 0.1}.}
+\item{lag.max}{Maximum lag to compute. Specified in terms of time units. For example, \code{lag.max = 10} corresponds to 10 time units and 100 lags with \code{save_at = 0.1}.}
 
 \item{which_dim}{Dimension indices to plot (NULL for all)}
 
-\item{which_sim}{Simulation index to plot (default 1). Only one simulation can be plotted at a time.}
+\item{which_sim}{Simulation index to plot. Defaults to 1 (also when \code{NULL}). Only one simulation can be plotted at a time.}
 
 \item{share_yaxis}{Logical; use same y-axis limits for all panels?}
 
-\item{palette}{Color palette. Should be one \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
+\item{palette}{Color palette. Should be one of \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
 
 \item{lwd}{Line width}
 
