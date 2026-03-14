@@ -26,7 +26,10 @@ showing correlated noise pairs}
 }
 }
 \description{
-Summarize the dynamics and stationary distribution of an Ornstein-Uhlenbeck affect model. In the case of multi-dimensional models, additional information about coupling and noise structure is provided. For more details, see \code{\link[=stability.affectOU]{stability()}}, and
+Summarize the dynamics and stationary distribution of an Ornstein-Uhlenbeck
+affect model. In the case of multi-dimensional models, additional information
+about coupling and noise structure is provided. For more details, see
+\code{\link[=stability.affectOU]{stability()}} and
 \code{\link[=stationary.affectOU]{stationary()}}.
 }
 \examples{

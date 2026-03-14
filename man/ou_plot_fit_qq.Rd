@@ -33,7 +33,9 @@ ou_plot_fit_qq(
 NULL (invisibly), called for side effects only.
 }
 \description{
-Visualize a normal Q-Q plot of the residuals to assess their distributional properties. Ideally, residuals should lie approximately along the reference line, indicating normality.
+Visualize a normal Q-Q plot of the residuals to assess their distributional
+properties. Ideally, residuals should lie approximately along the reference
+line, indicating normality.
 }
 \examples{
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)

@@ -7,7 +7,9 @@
 affectOU(ndim = 1, theta = 0.5, mu = 0, sigma = 1, gamma = t(chol(sigma)))
 }
 \arguments{
-\item{ndim}{Dimensionality of the affect process. Defaults to 1 (univariate). Only needs to be specified if it cannot be inferred from the dimensions of the other parameters.}
+\item{ndim}{Dimensionality of the affect process. Defaults to 1 (univariate).
+Only needs to be specified if it cannot be inferred from the dimensions of
+the other parameters.}
 
 \item{theta}{Attractor strength (rate of return to baseline).
 For 1D: positive scalar. For multidimensional: square matrix.}
@@ -33,7 +35,8 @@ Cholesky factorisation.}
 }
 \value{
 An object of class \code{\link{affectOU}}, representing a univariate or multivariate
-Ornstein–Uhlenbeck affect regulation model. The object is a list with the following components:
+Ornstein–Uhlenbeck affect regulation model. The object is a list with the
+following components:
 
 \describe{
 
@@ -61,23 +64,29 @@ Integer.
 }
 }
 \description{
-Create a model object representing an Ornstein-Uhlenbeck (OU) process for affect dynamics. Both unidimensional and multidimensional models are supported.
+Create a model object representing an Ornstein-Uhlenbeck (OU) process for
+affect dynamics. Both unidimensional and multidimensional models are supported.
 }
 \details{
-The OU is a continuous-time stochastic differential equation model:
-\deqn{dX(t) = \theta(\mu - X(t))dt + \gamma dW(t)}
-for the 1D case, or
-\deqn{dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)}
-for the multidimensional case.
+The OU is a continuous-time stochastic differential equation model that, in
+its multivariate variant, can be written down as follows:
+
+\deqn{d\mathbf{X}(t) = \mathbf{\Theta} (\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} d\mathbf{W}(t)}
+
+which can be simplified in the one-dimensional case to:
+
+\deqn{dX(t) = \theta (\mu - X(t))dt + \gamma dW(t)}
 
 where:
 \itemize{
-\item \eqn{X(t)}: affect state at time \eqn{t}
-\item \eqn{\theta / \Theta} (theta): attractor strength or regulation speed (scalar or matrix)
-\item \eqn{\mu} (mu): attractor location or set point (scalar or vector)
-\item \eqn{\gamma / \Gamma} (gamma): lower-triangular diffusion coefficient (Cholesky factor) that multiplies dW(t)
-\item \eqn{\sigma / \Sigma} (sigma): noise covariance matrix, computed as \eqn{\Sigma = \Gamma\Gamma'}. This is the recommended way to specify noise for most users
-\item \eqn{dW(t)}: increments of a Wiener process (Brownian motion)
+\item \eqn{\mathbf{X}(t)} represents the affective state at time \eqn{t};
+\item \eqn{\mathbf{\Theta}} (theta) represents the drift matrix, governing the
+rate at which affect returns to its baseline;
+\item \eqn{\mathbf{\mu}} (mu) represents the location of the baseline or attractor;
+\item \eqn{\mathbf{\Gamma}} (gamma) is a lower-triangular matrix governing the
+size of the stochastic diffusion;
+\item \eqn{\mathbf{W}(t)} represents the Wiener process, adding randomness to the
+system.
 }
 
 In the multidimensional case, the element \eqn{\Theta_{ij}} (row \eqn{i},

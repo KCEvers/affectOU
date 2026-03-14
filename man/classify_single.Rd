@@ -15,6 +15,8 @@ classify_single(theta_val, tol)
 A character string indicating the dynamics type
 }
 \description{
-For a single dimension, classifies the dynamics as "stable node", "random walk", or "unstable node" based on the value of theta compared to a tolerance.
+For a single dimension, classifies the dynamics as "stable node",
+"random walk", or "unstable node" based on the value of theta compared to a
+tolerance.
 }
 \keyword{internal}
