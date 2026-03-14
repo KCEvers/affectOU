@@ -188,7 +188,7 @@ plot(sim,
 ```{r reactivity-plot, echo = FALSE, fig.height = 5}
 plot(sim,
   by_dim = FALSE,
-  sub = c("Low Reactivity (σ = 0.09)", "High Reactivity (σ = 2.25)"),
+  sub = c("High Reactivity (σ = 2.25)", "Low Reactivity (σ = 0.09)"),
   main = "Effect of Reactivity on Fluctuation Magnitude", ylim = c(-4, 4)
 )
 ```
@@ -231,14 +231,17 @@ $$\mathbf{\Theta} = \begin{bmatrix}
 \end{bmatrix}$$
 
 
-Importantly, one can see this through an inspection of the eigenvectors as well. In this case, the eigenvectors of $\mathbf{\Theta}$ are:
+<!-- Importantly, one can see this through an inspection of the eigenvectors as well.  -->
+
+In this case, the eigenvalues are $\lambda_1 = \lambda_2 = 0.5$, and the eigenvectors of $\mathbf{\Theta}$ are:
 
 $$\mathbf{\Omega} \approx \begin{bmatrix}
   1 & 1 \\
   0 & 0
 \end{bmatrix}$$
 
-which means that the two dimensions are closely coupled together, essentially falling on one dimension rather than two. This behaviour is similarly visible in a time-series plot (below), where both dimensions evolve in an almost identical way over time. 
+
+Each column of $\mathbf{\Omega}$ represents an eigenvector, which is a direction in the state space along which the system moves towards its attractor. The matrix is defective, with only one linearly independent eigenvector. The system is effectively one-dimensional, with both dimensions moving together along the same trajectory toward the attractor. This behaviour is similarly visible in the time-series plot below, where both dimensions evolve in an almost identical way over time. 
 
 
 
@@ -247,13 +250,15 @@ which means that the two dimensions are closely coupled together, essentially fa
 <details>
 <summary>Show code</summary>
 
-```{r multivariate, results="hide", fig.show='hide'}
+```{r multivariate, results = 'hide', fig.show='hide'}
 # theta_12 = -2: when dimension 2 is above its attractor, it pushes dimension 1 up;
 # when dimension 2 is below its attractor, it pushes dimension 1 down
 theta_2d <- matrix(c(
   0.5, -2,
   0, 0.5
 ), nrow = 2, byrow = TRUE)
+
+# eigen(theta_2d)
 
 model_2d <- affectOU(theta = theta_2d, mu = 0, gamma = 1)
 sim_2d <- simulate(model_2d)
@@ -264,14 +269,15 @@ plot(sim_2d, type = "phase", main = "Phase Portrait")
 </details>
 
 ```{r multivariate-plot, echo = FALSE, fig.height = 5}
+#| fig.alt = "Visualization of a time-series, showing two coupled affect dimensions evolving over time. A horizontal line denoting the baseline affective state $\\mu$."
 plot(sim_2d, main = "Coupled Trajectories", xlim = c(0, 20))
 ```
 
 ```{r multivariate-plot2, echo = FALSE, fig.height = 7}
+#| fig.alt = "Phase portrait of two-dimensional Ornstein-Uhlenbeck process. The plot has four panels, with on the diagonal the lagged phase portrait of each affect dimension, and on the off-diagonal the contemporaneous scatter plots between pairs of dimensions"
 plot(sim_2d, type = "phase", main = "Phase Portrait")
 ```
 
-<!-- The positive entry $\theta_{21}$ means that when dimension 1 deviates from its attractor, it pushes dimension 2 in the opposite direction: if dimension 1 is above baseline, dimension 2 is pushed down, and vice versa. This creates interdependent dynamics visible in the phase portrait. -->
 
 
 
@@ -303,6 +309,7 @@ plot(sim,
 </details>
 
 ```{r regimes-plot, echo = FALSE, fig.height = 5}
+#| fig.alt = "Visualisation of the time-series of three Ornstein-Uhlenbeck processes, with different stability regimes. The first process (θ > 0, stable) fluctuates around the attractor state $\\mu$ in a stable way, with small perturbations dying down over time. The second process (θ ≈ 0, random walk) drifts without returning to its baseline, showing a more erratic pattern that can stray far from the attractor state $\\mu$. The third process (θ < 0, unstable) diverges from $\\mu$, showing an explosive pattern where perturbations grow over time."
 plot(sim,
   ylim = c(-10, 10), by_dim = FALSE,
   main = "Affect Dynamics of Different Stability Regimes",
@@ -449,6 +456,7 @@ plot(sim_2d, main = "Shared Noise Sources", xlim = c(0, 20))
 </details>
 
 ```{r noise-plot, echo = FALSE, fig.height = 5}
+#| fig.alt = "Visualisation of the time-series of two Ornstein-Uhlenbeck processes with shared noise sources. The two trajectories show coupling in their fluctuations, with peaks and troughs occurring at similar time points, even though there is no coupling in the deterministic part of the process (i.e., θ is diagonal)."
 plot(sim_2d, main = "Shared Noise Sources", xlim = c(0, 20))
 ```
 

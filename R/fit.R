@@ -420,7 +420,7 @@ fit_ou_mle <- function(data, times, start) {
   # Apply delta method for transformed parameters
   se_theta <- if (is.na(se[1])) NA_real_ else se[1] * theta
   se_mu <- se[2]
-  se_sigma <- if (is.na(se[3])) NA_real_ else se[3] * gamma
+  se_gamma <- if (is.na(se[3])) NA_real_ else se[3] * gamma
 
   # Compute fitted values (conditional expectations)
   fitted <- numeric(n)
@@ -431,7 +431,7 @@ fit_ou_mle <- function(data, times, start) {
 
   list(
     parameters = list(theta = theta, mu = mu, gamma = gamma),
-    se = list(theta = se_theta, mu = se_mu, gamma = se_sigma),
+    se = list(theta = se_theta, mu = se_mu, gamma = se_gamma),
     fitted_values = fitted,
     log_likelihood = -opt_result$value,
     convergence = opt_result$convergence,

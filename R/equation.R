@@ -277,23 +277,3 @@ format_matrix_code <- function(m) {
 format_vector_code <- function(v) {
   sprintf("c(%s)", paste(v, collapse = ", "))
 }
-
-#' Explore method for affectOU
-#' 
-#' @export
-#' @method explore affectOU
-#' @param x An `affectOU` object
-#' @param ... Additional arguments (unused)
-explore.affectOU <- function(x, ...) {
-
-  print('test1')
-}
-
-#' Explore
-#' 
-#' @export
-#' @param x An `affectOU` object
-#' @param ... Additional arguments (unused)
-explore <- function(x, ...) {
-  UseMethod("explore")
-}
