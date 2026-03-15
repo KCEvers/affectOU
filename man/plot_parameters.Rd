@@ -24,7 +24,7 @@
 
 \item{breaks}{Number of histogram breaks}
 
-\item{lag.max}{Maximum lag to compute. Specified in terms of time units. For example, \code{lag.max = 10} corresponds to 10 time units and 100 lags with \code{save_at = 0.1}.}
+\item{lag.max}{Maximum lag to compute. Specified in terms of saved time units. For example, \code{lag.max = 10} with \code{save_at = 0.1} corresponds to a lag of 10 time units and 10/0.1=100 time points.}
 
 \item{main}{Main title}
 

@@ -16,7 +16,7 @@ A character string indicating the dynamics type
 }
 \description{
 For a single dimension, classifies the dynamics as "stable node",
-"random walk", or "unstable node" based on the value of theta compared to a
+"random walk", or "unstable node" based on the value of theta compared to a numerical
 tolerance.
 }
 \keyword{internal}

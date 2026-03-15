@@ -89,24 +89,17 @@ size of the stochastic diffusion;
 system.
 }
 
-In the multidimensional case, the element \eqn{\Theta_{ij}} (row \eqn{i},
-column \eqn{j}) represents the influence of dimension \eqn{j} on dimension
-\eqn{i}'s drift. Specifically, the drift for dimension \eqn{i} is
-\eqn{\sum_j \Theta_{ij}(\mu_j - X_j)}:
-\itemize{
-\item Diagonal elements \eqn{\Theta_{ii}}: self-regulation (how fast dimension
-\eqn{i} returns to its own attractor \eqn{\mu_i}). Positive values are
-necessary for self-regulation, but strong coupling between dimensions can override
-this and destabilise the system (see \code{\link[=summary.affectOU]{summary()}} for
-system-level stability checks).
-\item Off-diagonal elements \eqn{\Theta_{ij}} where \eqn{i \neq j}:
-coupling between dimensions (how dimension \eqn{j} influences dimension \eqn{i}).
-If \eqn{\Theta_{ij} > 0}: when dimension \eqn{j} is below its attractor,
-it pulls dimension \eqn{i} up; when dimension \eqn{j} is above, it pushes
-dimension \eqn{i} down. If \eqn{\Theta_{ij} < 0}: when dimension \eqn{j}
-is above its attractor, it pushes dimension \eqn{i} up; when dimension
-\eqn{j} is below, it pulls dimension \eqn{i} down.
-}
+Using the matrix \eqn{\mathbf{\Gamma}}, one can derive the stationary
+covariance matrix \eqn{\mathbf{\Sigma}} for the system through using
+\eqn{\mathbf{\Gamma}} as the basis for the Cholesky decomposition and solving
+the Lyapunov equation, namely:
+
+\deqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma} - \mathbf{\Sigma} \mathbf{\Theta}^T}
+
+In the multidimensional case, the off-diagonal elements of the drift matrix
+\eqn{\mathbf{\Theta}} determine the temporal coupling between the different
+variables contained in \eqn{\mathbf{X}}, specifying how these variables
+co-evolve over time.
 }
 \examples{
 # 1D model
