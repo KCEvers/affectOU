@@ -18,7 +18,7 @@ ou_plot_fit_acf(
 \arguments{
 \item{fit}{A \code{fit_affectOU} object}
 
-\item{lag.max}{Maximum lag to compute. Specified in terms of time units. For example, \code{lag.max = 10} corresponds to 10 time units and 100 lags with \code{save_at = 0.1}.}
+\item{lag.max}{Maximum lag to compute. Specified in terms of saved time units. For example, \code{lag.max = 10} with \code{save_at = 0.1} corresponds to a lag of 10 time units and 10/0.1=100 time points.}
 
 \item{palette}{Color palette. Should be one of \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
 
@@ -36,7 +36,10 @@ ou_plot_fit_acf(
 NULL (invisibly), called for side effects only.
 }
 \description{
-Assess remaining autocorrelation in the residuals of the fitted model by plotting the autocorrelation function (ACF). Ideally, there should be no significant autocorrelation remaining, indicating that the model has adequately captured the temporal dependencies in the data.
+Assess remaining autocorrelation in the residuals of the fitted model by
+plotting the autocorrelation function (ACF). Ideally, there should be no
+significant autocorrelation remaining, indicating that the model has
+adequately captured the temporal dependencies in the data.
 }
 \examples{
 model <- affectOU(theta = 0.5, mu = 0, gamma = 1)

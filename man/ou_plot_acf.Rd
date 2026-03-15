@@ -31,7 +31,7 @@ ou_plot_acf(
 \arguments{
 \item{x}{A \code{simulate_affectOU} model object produced by \code{\link[=simulate.affectOU]{simulate.affectOU()}}}
 
-\item{lag.max}{Maximum lag to compute. Specified in terms of time units. For example, \code{lag.max = 10} corresponds to 10 time units and 100 lags with \code{save_at = 0.1}.}
+\item{lag.max}{Maximum lag to compute. Specified in terms of saved time units. For example, \code{lag.max = 10} with \code{save_at = 0.1} corresponds to a lag of 10 time units and 10/0.1=100 time points.}
 
 \item{which_dim}{Dimension indices to plot (NULL for all)}
 
@@ -55,7 +55,9 @@ ou_plot_acf(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"},
+\code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"},
+\code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }

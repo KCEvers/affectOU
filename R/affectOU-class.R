@@ -2,45 +2,48 @@
 
 #' Create Ornstein-Uhlenbeck affect model
 #'
-#' Create a model object representing an Ornstein-Uhlenbeck (OU) process for affect dynamics. Both unidimensional and multidimensional models are supported.
+#' Create a model object representing an Ornstein-Uhlenbeck (OU) process for 
+#' affect dynamics. Both unidimensional and multidimensional models are supported.
 #'
-#' The OU is a continuous-time stochastic differential equation model:
-#' \deqn{dX(t) = \theta(\mu - X(t))dt + \gamma dW(t)}
-#' for the 1D case, or
-#' \deqn{dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)}
-#' for the multidimensional case.
+#' The OU is a continuous-time stochastic differential equation model that, in 
+#' its multivariate variant, can be written down as follows:
+#' 
+#' \deqn{d\mathbf{X}(t) = \mathbf{\Theta} (\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} d\mathbf{W}(t)}
+#' 
+#' which can be simplified in the one-dimensional case to:
+#' 
+#' \deqn{dX(t) = \theta (\mu - X(t))dt + \gamma dW(t)}
 #'
 #' where:
-#' - \eqn{X(t)}: affect state at time \eqn{t}
-#' - \eqn{\theta / \Theta} (theta): attractor strength or regulation speed (scalar or matrix)
-#' - \eqn{\mu} (mu): attractor location or set point (scalar or vector)
-#' - \eqn{\gamma / \Gamma} (gamma): lower-triangular diffusion coefficient (Cholesky factor) that multiplies dW(t)
-#' - \eqn{\sigma / \Sigma} (sigma): noise covariance matrix, computed as \eqn{\Sigma = \Gamma\Gamma'}. This is the recommended way to specify noise for most users
-#' - \eqn{dW(t)}: increments of a Wiener process (Brownian motion)
+#' - \eqn{\mathbf{X}(t)} represents the affective state at time \eqn{t};
+#' - \eqn{\mathbf{\Theta}} (theta) represents the drift matrix, governing the 
+#' rate at which affect returns to its baseline;
+#' - \eqn{\mathbf{\mu}} (mu) represents the location of the baseline or attractor;
+#' - \eqn{\mathbf{\Gamma}} (gamma) is a lower-triangular matrix governing the 
+#' size of the stochastic diffusion;
+#' - \eqn{\mathbf{W}(t)} represents the Wiener process, adding randomness to the 
+#' system.
+#' 
+#' Using the matrix \eqn{\mathbf{\Gamma}}, one can derive the stationary 
+#' covariance matrix \eqn{\mathbf{\Sigma}} for the system through using 
+#' \eqn{\mathbf{\Gamma}} as the basis for the Cholesky decomposition and solving 
+#' the Lyapunov equation, namely:
+#' 
+#' \deqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma} - \mathbf{\Sigma} \mathbf{\Theta}^T}
 #'
-#' In the multidimensional case, the element \eqn{\Theta_{ij}} (row \eqn{i},
-#' column \eqn{j}) represents the influence of dimension \eqn{j} on dimension
-#' \eqn{i}'s drift. Specifically, the drift for dimension \eqn{i} is
-#' \eqn{\sum_j \Theta_{ij}(\mu_j - X_j)}:
-#' - Diagonal elements \eqn{\Theta_{ii}}: self-regulation (how fast dimension
-#'   \eqn{i} returns to its own attractor \eqn{\mu_i}). Positive values are
-#'   necessary for self-regulation, but strong coupling between dimensions can override
-#'   this and destabilise the system (see [`summary()`][summary.affectOU()] for
-#'   system-level stability checks).
-#' - Off-diagonal elements \eqn{\Theta_{ij}} where \eqn{i \neq j}:
-#'   coupling between dimensions (how dimension \eqn{j} influences dimension \eqn{i}).
-#'   If \eqn{\Theta_{ij} > 0}: when dimension \eqn{j} is below its attractor,
-#'   it pulls dimension \eqn{i} up; when dimension \eqn{j} is above, it pushes
-#'   dimension \eqn{i} down. If \eqn{\Theta_{ij} < 0}: when dimension \eqn{j}
-#'   is above its attractor, it pushes dimension \eqn{i} up; when dimension
-#'   \eqn{j} is below, it pulls dimension \eqn{i} down.
+#' In the multidimensional case, the off-diagonal elements of the drift matrix
+#' \eqn{\mathbf{\Theta}} determine the temporal coupling between the different
+#' variables contained in \eqn{\mathbf{X}}, specifying how these variables 
+#' co-evolve over time.
 #'
 #' @references
 #' Oravecz, Z., Tuerlinckx, F., & Vandekerckhove, J. (2011).
 #' A hierarchical latent stochastic differential equation model for
 #' affective dynamics. Psychological Methods, 16(4), 468-490.
 #'
-#' @param ndim Dimensionality of the affect process. Defaults to 1 (univariate). Only needs to be specified if it cannot be inferred from the dimensions of the other parameters.
+#' @param ndim Dimensionality of the affect process. Defaults to 1 (univariate). 
+#' Only needs to be specified if it cannot be inferred from the dimensions of 
+#' the other parameters.
 #' @param theta Attractor strength (rate of return to baseline).
 #'   For 1D: positive scalar. For multidimensional: square matrix.
 #' @param mu Attractor location (baseline affect or set point).
@@ -62,7 +65,8 @@
 #'
 #' @return
 #' An object of class [`affectOU`], representing a univariate or multivariate
-#' Ornstein–Uhlenbeck affect regulation model. The object is a list with the following components:
+#' Ornstein–Uhlenbeck affect regulation model. The object is a list with the 
+#' following components:
 #'
 #' \describe{
 #'

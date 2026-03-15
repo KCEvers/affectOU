@@ -63,7 +63,9 @@ ou_plot_time(
 
 \item{ylab}{Y-axis label}
 
-\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"}, \code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
+\item{legend_position}{Position of legend (one of \code{"bottomright"}, \code{"bottom"},
+\code{"bottomleft"}, \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"},
+\code{"center"}, \code{"none"}). Set to \code{"none"} to hide legend.}
 
 \item{...}{Additional graphical parameters}
 }
@@ -72,8 +74,9 @@ ou_plot_time(
 }
 \description{
 Visualise the time series trajectories of affect dimensions from an OU
-affect simulation. Each dimension can be plotted in a separate panel by setting
-\code{by_dim = TRUE}. Specific dimensions or simulations can be plotted with \code{which_dim} and \code{which_sim}, respectively.
+affect simulation. Each dimension can be plotted in a separate panel by
+setting \code{by_dim = TRUE}. Specific dimensions or simulations can be plotted
+with \code{which_dim} and \code{which_sim}, respectively.
 }
 \section{Attractor Line}{
 

@@ -35,11 +35,16 @@ Classify the dynamics and stability of an Ornstein-Uhlenbeck model
 based on eigenvalue analysis of the drift matrix \eqn{\Theta}.
 }
 \details{
-Note that although typically, a system is stable if all its eigenvalues have negative real parts, due to the parameterization of the OU process, stability is determined by \emph{positive} real parts:
+Note that although typically, a system is stable if all its eigenvalues have
+negative real parts, due to the parameterization of the OU process, stability
+is determined by \emph{positive} real parts:
 
 \deqn{dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)}
 
-As \eqn{\Theta} is multiplied by the negative of the state variable, positive eigenvalues indicate that deviations from the attractor decay over time, leading to a stable system. Conversely, negative eigenvalues indicate that deviations grow over time, leading to an unstable system.
+As \eqn{\Theta} is multiplied by the negative of the state variable, positive
+eigenvalues indicate that deviations from the attractor decay over time,
+leading to a stable system. Conversely, negative eigenvalues indicate that
+deviations grow over time, leading to an unstable system.
 }
 \section{Stability via eigenvalues}{
 

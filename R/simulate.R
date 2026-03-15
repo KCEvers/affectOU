@@ -6,10 +6,14 @@
 #' @param object An `affectOU` model object.
 #' @param nsim Number of replications to simulate.
 #' @param seed Random seed for reproducibility.
-#' @param initial_state Optional initial state vector. If `NULL`, defaults to a draw from the stationary distribution (if stable) or the attractor location `mu` (if non-stable).
-#' @param dt Time step for Euler-Maruyama discretization (smaller = more accurate).
+#' @param initial_state Optional initial state vector. If `NULL`, defaults to a 
+#'   draw from the stationary distribution (if stable) or the attractor location 
+#'   `mu` (if non-stable).
+#' @param dt Time step for Euler-Maruyama discretization (smaller = more 
+#'   accurate).
 #' @param stop Total simulation time.
-#' @param save_at Time interval at which to save simulated data; used to linearly interpolate results. Useful for reducing output size.
+#' @param save_at Time interval at which to save simulated data; used to 
+#'   linearly interpolate results. Useful for reducing output size.
 #' @param ... Additional arguments (unused).
 #'
 #' @importFrom stats simulate

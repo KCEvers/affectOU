@@ -10,12 +10,14 @@
 #' @param share_yaxis Logical; use same y-axis limits for all panels?
 #' @param freq Logical; plot frequency instead of density?
 #' @param breaks Number of histogram breaks
-#' @param lag.max Maximum lag to compute. Specified in terms of time units. For example, `lag.max = 10` corresponds to 10 time units and 100 lags with `save_at = 0.1`.
+#' @param lag.max Maximum lag to compute. Specified in terms of saved time units. For example, `lag.max = 10` with `save_at = 0.1` corresponds to a lag of 10 time units and 10/0.1=100 time points.
 #' @param main Main title
 #' @param sub Subtitle for panels
 #' @param xlab X-axis label
 #' @param ylab Y-axis label
-#' @param legend_position Position of legend (one of `"bottomright"`, `"bottom"`, `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`, `"right"`, `"center"`, `"none"`). Set to `"none"` to hide legend.
+#' @param legend_position Position of legend (one of `"bottomright"`, `"bottom"`, 
+#' `"bottomleft"`, `"left"`, `"topleft"`, `"top"`, `"topright"`, `"right"`, 
+#' `"center"`, `"none"`). Set to `"none"` to hide legend.
 #' @param ... Additional graphical parameters
 #'
 #' @name plot_parameters
@@ -25,7 +27,8 @@ NULL
 
 #' Plot simulation
 #'
-#' Visualise an Ornstein-Uhlenbeck affect simulation using different types of plots. See specific plotting functions for allowed arguments and details.
+#' Visualise an Ornstein-Uhlenbeck affect simulation using different types of 
+#' plots. See specific plotting functions for allowed arguments and details.
 #'
 #' Available plot types:
 #' - `"time"`: Time series trajectories of affect dimensions produced by [ou_plot_time()].
@@ -80,8 +83,9 @@ plot.simulate_affectOU <- function(x,
 #' Plot simulation trajectory
 #'
 #' Visualise the time series trajectories of affect dimensions from an OU
-#' affect simulation. Each dimension can be plotted in a separate panel by setting
-#' `by_dim = TRUE`. Specific dimensions or simulations can be plotted with `which_dim` and `which_sim`, respectively.
+#' affect simulation. Each dimension can be plotted in a separate panel by 
+#' setting `by_dim = TRUE`. Specific dimensions or simulations can be plotted 
+#' with `which_dim` and `which_sim`, respectively.
 #'
 #' @section Attractor Line:
 #' The horizontal dashed line shows the attractor level \eqn{\mu}. Trajectories
@@ -305,17 +309,23 @@ ou_plot_time <- function(x,
 #'
 #' Visualise the distribution of affect values from an OU affect simulation
 #' using histograms for each dimension. In case of multiple simulations, the
-#' histograms aggregate data across all simulations for each dimension. Different dimensions can be plotted in separate panels by setting `by_dim = TRUE`. Specific dimensions or simulations can be plotted with `which_dim` and `which_sim`, respectively.
+#' histograms aggregate data across all simulations for each dimension. Different 
+#' dimensions can be plotted in separate panels by setting `by_dim = TRUE`. 
+#' Specific dimensions or simulations can be plotted with `which_dim` and 
+#' `which_sim`, respectively.
 #'
 #' @section Stationary Distribution:
-#' When the system is stable (\eqn{\theta > 0}), the stationary distribution
-#' is normal with mean \eqn{\mu} and variance \eqn{\gamma^2 / (2\theta)}. The
-#' theoretical density curve is overlaid on the histogram when the system is
+#' When the system is stable, the stationary distribution of the multivariate
+#' OU is normal with mean \eqn{\mathbf{\mu}} and covariance matrix 
+#' \eqn{\mathbf{\Sigma}_\infty} derived as the solution of the Lyapunov 
+#' equation \eqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma}_\infty - \mathbf{\Sigma}_\infty \mathbf{\Theta}^T}. 
+#' The theoretical density curve is overlaid on the histogram when the system is
 #' stationary.
 #'
 #' Different parameter combinations can yield the same stationary variance but
 #' produce different dynamics. For example, doubling both \eqn{\theta} and
-#' \eqn{\gamma} keeps the stationary SD constant but changes the half-life.
+#' \eqn{\gamma} keeps the stationary covariances constant but changes the half-
+#' life.
 #'
 #' @inheritParams plot_parameters
 #' @inheritParams plot.simulate_affectOU
@@ -833,8 +843,8 @@ ou_plot_acf <- function(x,
 #' The off-diagonal panels plot \eqn{X_i(t)} against \eqn{X_j(t)} at the same
 #' time point, showing the joint distribution of dimensions \eqn{i} and
 #' \eqn{j}. When the system is stable, the conditional expectation based on
-#' the stationary covariance \eqn{\Gamma_\infty} is:
-#' \deqn{E[X_j \mid X_i = x] = \mu_j + \frac{\Gamma_{\infty,ij}}{\Gamma_{\infty,ii}}(x - \mu_i)}
+#' the stationary covariance \eqn{\Sigma_\infty} is:
+#' \deqn{E[X_j \mid X_i = x] = \mu_j + \frac{\Sigma_{\infty,ij}}{\Sigma_{\infty,ii}}(x - \mu_i)}
 #'
 #' This is a regression line through \eqn{(\mu_i, \mu_j)} with slope determined
 #' by the stationary covariance structure. The theoretical line is only drawn

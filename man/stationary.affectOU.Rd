@@ -51,8 +51,8 @@ the same long-run spread but very different dynamics (see examples).
 
 For multivariate models, the stationary covariance matrix
 \eqn{\Sigma_\infty} solves the Lyapunov equation:
-\deqn{\Theta \Sigma_\infty + \Sigma_\infty \Theta^\top = \Sigma}
-where \eqn{\Sigma = \Gamma\Gamma^\top} is the noise covariance.
+\deqn{\Theta \Sigma_\infty + \Sigma_\infty \Theta^\top = \Gamma \Gamma^T}
+
 Off-diagonal elements in \eqn{\Theta} (coupling between dimensions) can induce
 correlation at equilibrium even when the noise is independent.
 }
