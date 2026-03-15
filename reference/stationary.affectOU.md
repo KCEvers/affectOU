@@ -70,10 +70,10 @@ but very different dynamics (see examples).
 
 For multivariate models, the stationary covariance matrix
 \\\Sigma\_\infty\\ solves the Lyapunov equation: \$\$\Theta
-\Sigma\_\infty + \Sigma\_\infty \Theta^\top = \Sigma\$\$ where \\\Sigma
-= \Gamma\Gamma^\top\\ is the noise covariance. Off-diagonal elements in
-\\\Theta\\ (coupling between dimensions) can induce correlation at
-equilibrium even when the noise is independent.
+\Sigma\_\infty + \Sigma\_\infty \Theta^\top = \Gamma \Gamma^T\$\$
+
+Off-diagonal elements in \\\Theta\\ (coupling between dimensions) can
+induce correlation at equilibrium even when the noise is independent.
 
 ## Formula reference
 

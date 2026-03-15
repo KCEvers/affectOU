@@ -4,7 +4,7 @@ Summarize the dynamics and stationary distribution of an
 Ornstein-Uhlenbeck affect model. In the case of multi-dimensional
 models, additional information about coupling and noise structure is
 provided. For more details, see
-[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md),
+[`stability()`](https://kcevers.github.io/affectOU/reference/stability.affectOU.md)
 and
 [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md).
 

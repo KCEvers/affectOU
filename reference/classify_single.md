@@ -2,7 +2,7 @@
 
 For a single dimension, classifies the dynamics as "stable node",
 "random walk", or "unstable node" based on the value of theta compared
-to a tolerance.
+to a numerical tolerance.
 
 ## Usage
 

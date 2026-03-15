@@ -106,9 +106,14 @@ classification (<code>NULL</code> for 1D)</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Note that although typically, a system is stable if all its eigenvalues have negative real parts, due to the parameterization of the OU process, stability is determined by <em>positive</em> real parts:</p>
+    <p>Note that although typically, a system is stable if all its eigenvalues have
+negative real parts, due to the parameterization of the OU process, stability
+is determined by <em>positive</em> real parts:</p>
 <p>$$dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)$$</p>
-<p>As \(\Theta\) is multiplied by the negative of the state variable, positive eigenvalues indicate that deviations from the attractor decay over time, leading to a stable system. Conversely, negative eigenvalues indicate that deviations grow over time, leading to an unstable system.</p>
+<p>As \(\Theta\) is multiplied by the negative of the state variable, positive
+eigenvalues indicate that deviations from the attractor decay over time,
+leading to a stable system. Conversely, negative eigenvalues indicate that
+deviations grow over time, leading to an unstable system.</p>
     </div>
     <div class="section level2">
     <h2 id="stability-via-eigenvalues">Stability via eigenvalues<a class="anchor" aria-label="anchor" href="#stability-via-eigenvalues"></a></h2>

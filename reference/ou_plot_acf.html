@@ -104,7 +104,7 @@ from the model parameters.</p>
 
 
 <dt id="arg-lag-max">lag.max<a class="anchor" aria-label="anchor" href="#arg-lag-max"></a></dt>
-<dd><p>Maximum lag to compute. Specified in terms of time units. For example, <code>lag.max = 10</code> corresponds to 10 time units and 100 lags with <code>save_at = 0.1</code>.</p></dd>
+<dd><p>Maximum lag to compute. Specified in terms of saved time units. For example, <code>lag.max = 10</code> with <code>save_at = 0.1</code> corresponds to a lag of 10 time units and 10/0.1=100 time points.</p></dd>
 
 
 <dt id="arg-which-dim">which_dim<a class="anchor" aria-label="anchor" href="#arg-which-dim"></a></dt>
@@ -152,7 +152,9 @@ from the model parameters.</p>
 
 
 <dt id="arg-legend-position">legend_position<a class="anchor" aria-label="anchor" href="#arg-legend-position"></a></dt>
-<dd><p>Position of legend (one of <code>"bottomright"</code>, <code>"bottom"</code>, <code>"bottomleft"</code>, <code>"left"</code>, <code>"topleft"</code>, <code>"top"</code>, <code>"topright"</code>, <code>"right"</code>, <code>"center"</code>, <code>"none"</code>). Set to <code>"none"</code> to hide legend.</p></dd>
+<dd><p>Position of legend (one of <code>"bottomright"</code>, <code>"bottom"</code>,
+<code>"bottomleft"</code>, <code>"left"</code>, <code>"topleft"</code>, <code>"top"</code>, <code>"topright"</code>, <code>"right"</code>,
+<code>"center"</code>, <code>"none"</code>). Set to <code>"none"</code> to hide legend.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

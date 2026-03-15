@@ -5,7 +5,9 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Create Ornstein-Uhlenbeck affect model — affectOU"><meta name="description" content="Create a model object representing an Ornstein-Uhlenbeck (OU) process for affect dynamics. Both unidimensional and multidimensional models are supported."><meta property="og:description" content="Create a model object representing an Ornstein-Uhlenbeck (OU) process for affect dynamics. Both unidimensional and multidimensional models are supported."></head><body>
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Create Ornstein-Uhlenbeck affect model — affectOU"><meta name="description" content="Create a model object representing an Ornstein-Uhlenbeck (OU) process for
+affect dynamics. Both unidimensional and multidimensional models are supported."><meta property="og:description" content="Create a model object representing an Ornstein-Uhlenbeck (OU) process for
+affect dynamics. Both unidimensional and multidimensional models are supported."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -50,7 +52,8 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Create a model object representing an Ornstein-Uhlenbeck (OU) process for affect dynamics. Both unidimensional and multidimensional models are supported.</p>
+    <p>Create a model object representing an Ornstein-Uhlenbeck (OU) process for
+affect dynamics. Both unidimensional and multidimensional models are supported.</p>
     </div>
 
     <div class="section level2">
@@ -63,7 +66,9 @@
 
 
 <dl><dt id="arg-ndim">ndim<a class="anchor" aria-label="anchor" href="#arg-ndim"></a></dt>
-<dd><p>Dimensionality of the affect process. Defaults to 1 (univariate). Only needs to be specified if it cannot be inferred from the dimensions of the other parameters.</p></dd>
+<dd><p>Dimensionality of the affect process. Defaults to 1 (univariate).
+Only needs to be specified if it cannot be inferred from the dimensions of
+the other parameters.</p></dd>
 
 
 <dt id="arg-theta">theta<a class="anchor" aria-label="anchor" href="#arg-theta"></a></dt>
@@ -99,7 +104,8 @@ Cholesky factorisation.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of class <code>affectOU</code>, representing a univariate or multivariate
-Ornstein–Uhlenbeck affect regulation model. The object is a list with the following components:</p>
+Ornstein–Uhlenbeck affect regulation model. The object is a list with the
+following components:</p>
 <dl><dt><code>parameters</code></dt>
 <dd><p>A named list of model parameters:</p><dl><dt><code>theta</code></dt>
 <dd><p>Numeric matrix.</p></dd>
@@ -132,33 +138,29 @@ construction: <code>is_stable</code> (logical), <code>mean</code> (numeric vecto
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The OU is a continuous-time stochastic differential equation model:
-$$dX(t) = \theta(\mu - X(t))dt + \gamma dW(t)$$
-for the 1D case, or
-$$dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)$$
-for the multidimensional case.</p>
-<p>where:</p><ul><li><p>\(X(t)\): affect state at time \(t\)</p></li>
-<li><p>\(\theta / \Theta\) (theta): attractor strength or regulation speed (scalar or matrix)</p></li>
-<li><p>\(\mu\) (mu): attractor location or set point (scalar or vector)</p></li>
-<li><p>\(\gamma / \Gamma\) (gamma): lower-triangular diffusion coefficient (Cholesky factor) that multiplies dW(t)</p></li>
-<li><p>\(\sigma / \Sigma\) (sigma): noise covariance matrix, computed as \(\Sigma = \Gamma\Gamma'\). This is the recommended way to specify noise for most users</p></li>
-<li><p>\(dW(t)\): increments of a Wiener process (Brownian motion)</p></li>
-</ul><p>In the multidimensional case, the element \(\Theta_{ij}\) (row \(i\),
-column \(j\)) represents the influence of dimension \(j\) on dimension
-\(i\)'s drift. Specifically, the drift for dimension \(i\) is
-\(\sum_j \Theta_{ij}(\mu_j - X_j)\):</p><ul><li><p>Diagonal elements \(\Theta_{ii}\): self-regulation (how fast dimension
-\(i\) returns to its own attractor \(\mu_i\)). Positive values are
-necessary for self-regulation, but strong coupling between dimensions can override
-this and destabilise the system (see <code><a href="summary.affectOU.html">summary()</a></code> for
-system-level stability checks).</p></li>
-<li><p>Off-diagonal elements \(\Theta_{ij}\) where \(i \neq j\):
-coupling between dimensions (how dimension \(j\) influences dimension \(i\)).
-If \(\Theta_{ij} &gt; 0\): when dimension \(j\) is below its attractor,
-it pulls dimension \(i\) up; when dimension \(j\) is above, it pushes
-dimension \(i\) down. If \(\Theta_{ij} &lt; 0\): when dimension \(j\)
-is above its attractor, it pushes dimension \(i\) up; when dimension
-\(j\) is below, it pulls dimension \(i\) down.</p></li>
-</ul></div>
+    <p>The OU is a continuous-time stochastic differential equation model that, in
+its multivariate variant, can be written down as follows:</p>
+<p>$$d\mathbf{X}(t) = \mathbf{\Theta} (\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} d\mathbf{W}(t)$$</p>
+<p>which can be simplified in the one-dimensional case to:</p>
+<p>$$dX(t) = \theta (\mu - X(t))dt + \gamma dW(t)$$</p>
+<p>where:</p><ul><li><p>\(\mathbf{X}(t)\) represents the affective state at time \(t\);</p></li>
+<li><p>\(\mathbf{\Theta}\) (theta) represents the drift matrix, governing the
+rate at which affect returns to its baseline;</p></li>
+<li><p>\(\mathbf{\mu}\) (mu) represents the location of the baseline or attractor;</p></li>
+<li><p>\(\mathbf{\Gamma}\) (gamma) is a lower-triangular matrix governing the
+size of the stochastic diffusion;</p></li>
+<li><p>\(\mathbf{W}(t)\) represents the Wiener process, adding randomness to the
+system.</p></li>
+</ul><p>Using the matrix \(\mathbf{\Gamma}\), one can derive the stationary
+covariance matrix \(\mathbf{\Sigma}\) for the system through using
+\(\mathbf{\Gamma}\) as the basis for the Cholesky decomposition and solving
+the Lyapunov equation, namely:</p>
+<p>$$\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma} - \mathbf{\Sigma} \mathbf{\Theta}^T$$</p>
+<p>In the multidimensional case, the off-diagonal elements of the drift matrix
+\(\mathbf{\Theta}\) determine the temporal coupling between the different
+variables contained in \(\mathbf{X}\), specifying how these variables
+co-evolve over time.</p>
+    </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Oravecz, Z., Tuerlinckx, F., &amp; Vandekerckhove, J. (2011).

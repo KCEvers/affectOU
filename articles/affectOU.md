@@ -65,13 +65,14 @@ model
 ### Multidimensional Models
 
 The OU framework extends naturally to multiple affect dimensions (e.g.,
-valence and arousal). For a d-dimensional process, the OU looks like:
+valence and arousal, positive and negative affect). For a d-dimensional
+process, the OU looks like:
 
 \\d\mathbf{X}(t) = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt +
 \mathbf{\Gamma} \\ d\mathbf{W}(t)\\
 
-For multivariate models, the noise variance \\\Sigma\\ is defined as
-\\\Sigma = \Gamma \Gamma^\top\\.
+For multivariate models, the noise covariance matrix \\\Sigma\\ is
+defined as \\\Sigma = \Gamma \Gamma^\top\\.
 
 By default,
 [`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md)
@@ -190,22 +191,25 @@ function:
 sim <- simulate(model)
 ```
 
-Though the OU is a continous-time process, it can be simulated through
-discretization. In the package, we use Euler-Maruyama discretization,
-which is a common numerical approach for simulating stochastic
-differential equations. For the OU, it amounts to updating the state
-\\\mathbf{X}\\ after a discrete time-step \\\Delta t\\ according to the
-following equation:
+Though the OU is a continuous-time process, simulation requires
+evaluating it at discrete time points – either via exact sampling from
+the known transition distribution or via numerical discretization
+methods such as Euler-Maruyama approximation, which is a common
+numerical approach for simulating stochastic differential equations. In
+the package, we use the latter. For the OU, it amounts to updating the
+state \\\mathbf{X}\\ after a discrete time-step \\\Delta t\\ according
+to the following equation:
 
 \\\begin{equation} \begin{split} \mathbf{X}\_{t + \Delta t} &=
 \mathbf{X}\_t + \mathbf{\Theta} (\mathbf{\mu} - \mathbf{X}\_t) \Delta
-t + \mathbf{\Gamma} \sqrt{\Delta t} \mathbf{\epsilon}\_t \\
-\mathbf{\epsilon}\_t &\sim N(\mathbf{0}, \mathbf{I}) \end{split}
+t + \mathbf{\Gamma} \mathbf{\epsilon}\_t \sqrt{\Delta t} \\
+\mathbf{\epsilon}\_t &\sim N(\mathbf{0}, \mathbf{I}\_d) \end{split}
 \end{equation}\\
 
-where \\\mathbf{I}\\ is the identity matrix (i.e., a matrix with 1s on
-the diagonal and 0s elsewhere) and \\\Delta t\\ is sufficiently small
-(e.g., \\\Delta t = 0.01\\) to ensure sensible results.
+where \\\mathbf{I}\_d\\ is the \\d \times d\\ identity matrix (i.e., a
+matrix with 1s on the diagonal and 0s elsewhere) and where \\\Delta t\\
+is sufficiently small to ensure sensible results (e.g., \\\Delta t =
+0.01\\).
 
 Simulations can be customized to fit one’s needs, specifically by
 changing the arguments:
@@ -327,8 +331,8 @@ respectively) and using the default colors of the package (using the
   next time point \\t + \Delta t\\. The dashed line denotes the
   theoretical relationship between affect at time \\t\\ and \\t + \Delta
   t\\ implied by the OU model, which is a linear relationship with slope
-  \\e^{-\theta \Delta t}\\ and intercept \\\mu (1 - e^{-\theta \Delta
-  t})\\.
+  \\e^{-\mathbf{\Theta} \Delta t}\\ and intercept \\(1 -
+  e^{-\mathbf{\Theta} \Delta t} \mathbf{\mu})\\.
 
 ### Multiple Dimensions
 

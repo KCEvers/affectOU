@@ -89,12 +89,14 @@
 
 <dt id="arg-gamma">gamma<a class="anchor" aria-label="anchor" href="#arg-gamma"></a></dt>
 <dd><p>Optional. New diffusion coefficient (scalar or lower triangular
-matrix). Only <code>gamma</code> or <code>sigma</code> can be specified, not both. If <code>sigma</code> is provided, <code>gamma</code> is computed via Cholesky decomposition.</p></dd>
+matrix). Only <code>gamma</code> or <code>sigma</code> can be specified, not both. If <code>sigma</code> is
+provided, <code>gamma</code> is computed via Cholesky decomposition.</p></dd>
 
 
 <dt id="arg-sigma">sigma<a class="anchor" aria-label="anchor" href="#arg-sigma"></a></dt>
 <dd><p>Optional. New noise covariance (scalar or positive semi-definite
-matrix). Only <code>gamma</code> or <code>sigma</code> can be specified, not both. If <code>gamma</code> is provided, <code>sigma</code> is computed as <code>gamma %*% t(gamma)</code>.</p></dd>
+matrix). Only <code>gamma</code> or <code>sigma</code> can be specified, not both. If <code>gamma</code> is
+provided, <code>sigma</code> is computed as <code>gamma %*% t(gamma)</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

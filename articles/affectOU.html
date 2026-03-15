@@ -139,12 +139,12 @@ perturbations (<span class="math inline">\(\sigma = 0.25\)</span>):</p>
 <h3 id="multidimensional-models">Multidimensional Models<a class="anchor" aria-label="anchor" href="#multidimensional-models"></a>
 </h3>
 <p>The OU framework extends naturally to multiple affect dimensions
-(e.g., valence and arousal). For a d-dimensional process, the OU looks
-like:</p>
+(e.g., valence and arousal, positive and negative affect). For a
+d-dimensional process, the OU looks like:</p>
 <p><span class="math display">\[d\mathbf{X}(t) =
 \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}(t))dt + \mathbf{\Gamma} \,
 d\mathbf{W}(t)\]</span></p>
-<p>For multivariate models, the noise variance <span class="math inline">\(\Sigma\)</span> is defined as <span class="math inline">\(\Sigma = \Gamma \Gamma^\top\)</span>.</p>
+<p>For multivariate models, the noise covariance matrix <span class="math inline">\(\Sigma\)</span> is defined as <span class="math inline">\(\Sigma = \Gamma \Gamma^\top\)</span>.</p>
 <p>By default, <code><a href="../reference/affectOU.html">affectOU()</a></code> creates a model with uncoupled
 dynamics (diagonal <span class="math inline">\(\mathbf{\Theta}\)</span>
 and <span class="math inline">\(\mathbf{\Sigma}\)</span>) and identical
@@ -251,26 +251,27 @@ dimension has a stronger influence on the second than vice versa:</p>
 function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
-<p>Though the OU is a continous-time process, it can be simulated
-through discretization. In the package, we use Euler-Maruyama
-discretization, which is a common numerical approach for simulating
-stochastic differential equations. For the OU, it amounts to updating
-the state <span class="math inline">\(\mathbf{X}\)</span> after a
-discrete time-step <span class="math inline">\(\Delta t\)</span>
-according to the following equation:</p>
+<p>Though the OU is a continuous-time process, simulation requires
+evaluating it at discrete time points – either via exact sampling from
+the known transition distribution or via numerical discretization
+methods such as Euler-Maruyama approximation, which is a common
+numerical approach for simulating stochastic differential equations. In
+the package, we use the latter. For the OU, it amounts to updating the
+state <span class="math inline">\(\mathbf{X}\)</span> after a discrete
+time-step <span class="math inline">\(\Delta t\)</span> according to the
+following equation:</p>
 <p><span class="math display">\[\begin{equation}
 \begin{split}
   \mathbf{X}_{t + \Delta t} &amp;= \mathbf{X}_t + \mathbf{\Theta}
-(\mathbf{\mu} - \mathbf{X}_t) \Delta t + \mathbf{\Gamma} \sqrt{\Delta t}
-\mathbf{\epsilon}_t \\
-  \mathbf{\epsilon}_t &amp;\sim N(\mathbf{0}, \mathbf{I})
+(\mathbf{\mu} - \mathbf{X}_t) \Delta t + \mathbf{\Gamma}
+\mathbf{\epsilon}_t \sqrt{\Delta t} \\
+  \mathbf{\epsilon}_t &amp;\sim N(\mathbf{0}, \mathbf{I}_d)
 \end{split}
 \end{equation}\]</span></p>
-<p>where <span class="math inline">\(\mathbf{I}\)</span> is the identity
-matrix (i.e., a matrix with 1s on the diagonal and 0s elsewhere) and
-<span class="math inline">\(\Delta t\)</span> is sufficiently small
-(e.g., <span class="math inline">\(\Delta t = 0.01\)</span>) to ensure
-sensible results.</p>
+<p>where <span class="math inline">\(\mathbf{I}_d\)</span> is the <span class="math inline">\(d \times d\)</span> identity matrix (i.e., a
+matrix with 1s on the diagonal and 0s elsewhere) and where <span class="math inline">\(\Delta t\)</span> is sufficiently small to ensure
+sensible results (e.g., <span class="math inline">\(\Delta t =
+0.01\)</span>).</p>
 <p>Simulations can be customized to fit one’s needs, specifically by
 changing the arguments:</p>
 <ul>
@@ -351,9 +352,9 @@ Shows how affect at time <span class="math inline">\(t\)</span> relates
 to the value of affect at the next time point <span class="math inline">\(t + \Delta t\)</span>. The dashed line denotes the
 theoretical relationship between affect at time <span class="math inline">\(t\)</span> and <span class="math inline">\(t +
 \Delta t\)</span> implied by the OU model, which is a linear
-relationship with slope <span class="math inline">\(e^{-\theta \Delta
-t}\)</span> and intercept <span class="math inline">\(\mu (1 -
-e^{-\theta \Delta t})\)</span>.</p></li>
+relationship with slope <span class="math inline">\(e^{-\mathbf{\Theta}
+\Delta t}\)</span> and intercept <span class="math inline">\((1 -
+e^{-\mathbf{\Theta} \Delta t} \mathbf{\mu})\)</span>.</p></li>
 </ul>
 </div>
 <div class="section level3">

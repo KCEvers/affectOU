@@ -87,48 +87,44 @@ the following components:
 
 ## Details
 
-The OU is a continuous-time stochastic differential equation model:
-\$\$dX(t) = \theta(\mu - X(t))dt + \gamma dW(t)\$\$ for the 1D case, or
-\$\$dX(t) = \Theta(\mu - X(t))dt + \Gamma dW(t)\$\$ for the
-multidimensional case.
+The OU is a continuous-time stochastic differential equation model that,
+in its multivariate variant, can be written down as follows:
+
+\$\$d\mathbf{X}(t) = \mathbf{\Theta} (\mathbf{\mu} - \mathbf{X}(t))dt +
+\mathbf{\Gamma} d\mathbf{W}(t)\$\$
+
+which can be simplified in the one-dimensional case to:
+
+\$\$dX(t) = \theta (\mu - X(t))dt + \gamma dW(t)\$\$
 
 where:
 
-- \\X(t)\\: affect state at time \\t\\
+- \\\mathbf{X}(t)\\ represents the affective state at time \\t\\;
 
-- \\\theta / \Theta\\ (theta): attractor strength or regulation speed
-  (scalar or matrix)
+- \\\mathbf{\Theta}\\ (theta) represents the drift matrix, governing the
+  rate at which affect returns to its baseline;
 
-- \\\mu\\ (mu): attractor location or set point (scalar or vector)
+- \\\mathbf{\mu}\\ (mu) represents the location of the baseline or
+  attractor;
 
-- \\\gamma / \Gamma\\ (gamma): lower-triangular diffusion coefficient
-  (Cholesky factor) that multiplies dW(t)
+- \\\mathbf{\Gamma}\\ (gamma) is a lower-triangular matrix governing the
+  size of the stochastic diffusion;
 
-- \\\sigma / \Sigma\\ (sigma): noise covariance matrix, computed as
-  \\\Sigma = \Gamma\Gamma'\\. This is the recommended way to specify
-  noise for most users
+- \\\mathbf{W}(t)\\ represents the Wiener process, adding randomness to
+  the system.
 
-- \\dW(t)\\: increments of a Wiener process (Brownian motion)
+Using the matrix \\\mathbf{\Gamma}\\, one can derive the stationary
+covariance matrix \\\mathbf{\Sigma}\\ for the system through using
+\\\mathbf{\Gamma}\\ as the basis for the Cholesky decomposition and
+solving the Lyapunov equation, namely:
 
-In the multidimensional case, the element \\\Theta\_{ij}\\ (row \\i\\,
-column \\j\\) represents the influence of dimension \\j\\ on dimension
-\\i\\'s drift. Specifically, the drift for dimension \\i\\ is \\\sum_j
-\Theta\_{ij}(\mu_j - X_j)\\:
+\$\$\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta}
+\mathbf{\Sigma} - \mathbf{\Sigma} \mathbf{\Theta}^T\$\$
 
-- Diagonal elements \\\Theta\_{ii}\\: self-regulation (how fast
-  dimension \\i\\ returns to its own attractor \\\mu_i\\). Positive
-  values are necessary for self-regulation, but strong coupling between
-  dimensions can override this and destabilise the system (see
-  [`summary()`](https://kcevers.github.io/affectOU/reference/summary.affectOU.md)
-  for system-level stability checks).
-
-- Off-diagonal elements \\\Theta\_{ij}\\ where \\i \neq j\\: coupling
-  between dimensions (how dimension \\j\\ influences dimension \\i\\).
-  If \\\Theta\_{ij} \> 0\\: when dimension \\j\\ is below its attractor,
-  it pulls dimension \\i\\ up; when dimension \\j\\ is above, it pushes
-  dimension \\i\\ down. If \\\Theta\_{ij} \< 0\\: when dimension \\j\\
-  is above its attractor, it pushes dimension \\i\\ up; when dimension
-  \\j\\ is below, it pulls dimension \\i\\ down.
+In the multidimensional case, the off-diagonal elements of the drift
+matrix \\\mathbf{\Theta}\\ determine the temporal coupling between the
+different variables contained in \\\mathbf{X}\\, specifying how these
+variables co-evolve over time.
 
 ## References
 

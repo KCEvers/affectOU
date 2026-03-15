@@ -151,7 +151,9 @@ between pairs of dimensions.</p>
 
 
 <dt id="arg-legend-position">legend_position<a class="anchor" aria-label="anchor" href="#arg-legend-position"></a></dt>
-<dd><p>Position of legend (one of <code>"bottomright"</code>, <code>"bottom"</code>, <code>"bottomleft"</code>, <code>"left"</code>, <code>"topleft"</code>, <code>"top"</code>, <code>"topright"</code>, <code>"right"</code>, <code>"center"</code>, <code>"none"</code>). Set to <code>"none"</code> to hide legend.</p></dd>
+<dd><p>Position of legend (one of <code>"bottomright"</code>, <code>"bottom"</code>,
+<code>"bottomleft"</code>, <code>"left"</code>, <code>"topleft"</code>, <code>"top"</code>, <code>"topright"</code>, <code>"right"</code>,
+<code>"center"</code>, <code>"none"</code>). Set to <code>"none"</code> to hide legend.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -185,8 +187,8 @@ system is stable.</p>
 <p>The off-diagonal panels plot \(X_i(t)\) against \(X_j(t)\) at the same
 time point, showing the joint distribution of dimensions \(i\) and
 \(j\). When the system is stable, the conditional expectation based on
-the stationary covariance \(\Gamma_\infty\) is:
-$$E[X_j \mid X_i = x] = \mu_j + \frac{\Gamma_{\infty,ij}}{\Gamma_{\infty,ii}}(x - \mu_i)$$</p>
+the stationary covariance \(\Sigma_\infty\) is:
+$$E[X_j \mid X_i = x] = \mu_j + \frac{\Sigma_{\infty,ij}}{\Sigma_{\infty,ii}}(x - \mu_i)$$</p>
 <p>This is a regression line through \((\mu_i, \mu_j)\) with slope determined
 by the stationary covariance structure. The theoretical line is only drawn
 when the system is stable.</p>

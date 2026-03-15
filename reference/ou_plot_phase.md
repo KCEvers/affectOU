@@ -123,8 +123,8 @@ are expected to increase. The star marks the attractor point \\(\mu_i,
 The off-diagonal panels plot \\X_i(t)\\ against \\X_j(t)\\ at the same
 time point, showing the joint distribution of dimensions \\i\\ and
 \\j\\. When the system is stable, the conditional expectation based on
-the stationary covariance \\\Gamma\_\infty\\ is: \$\$E\[X_j \mid X_i =
-x\] = \mu_j + \frac{\Gamma\_{\infty,ij}}{\Gamma\_{\infty,ii}}(x -
+the stationary covariance \\\Sigma\_\infty\\ is: \$\$E\[X_j \mid X_i =
+x\] = \mu_j + \frac{\Sigma\_{\infty,ij}}{\Sigma\_{\infty,ii}}(x -
 \mu_i)\$\$
 
 This is a regression line through \\(\mu_i, \mu_j)\\ with slope

@@ -116,15 +116,18 @@ ou_plot_histogram(
 
 ## Stationary Distribution
 
-When the system is stable (\\\theta \> 0\\), the stationary distribution
-is normal with mean \\\mu\\ and variance \\\gamma^2 / (2\theta)\\. The
-theoretical density curve is overlaid on the histogram when the system
-is stationary.
+When the system is stable, the stationary distribution of the
+multivariate OU is normal with mean \\\mathbf{\mu}\\ and covariance
+matrix \\\mathbf{\Sigma}\_\infty\\ derived as the solution of the
+Lyapunov equation \\\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta}
+\mathbf{\Sigma}\_\infty - \mathbf{\Sigma}\_\infty \mathbf{\Theta}^T\\.
+The theoretical density curve is overlaid on the histogram when the
+system is stationary.
 
 Different parameter combinations can yield the same stationary variance
 but produce different dynamics. For example, doubling both \\\theta\\
-and \\\gamma\\ keeps the stationary SD constant but changes the
-half-life.
+and \\\gamma\\ keeps the stationary covariances constant but changes the
+half- life.
 
 ## Examples
 

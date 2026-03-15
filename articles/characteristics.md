@@ -23,10 +23,10 @@ random perturbations.
 The first main feature of the OU as a model of affect dynamics concerns
 the tendency to return to its mean. For stable systems (see later
 sections), when affect is perturbed, it returns toward its baseline
-\\\mathbf{\mu}\\ at a rate determined by \\\mathbf{\Theta}\\. In
-unidimensional systems, \\\theta\\ can simply be interpreted as the
-speed of emotional regulation, where low \\\theta\\ represents emotional
-inertia.
+\\\mathbf{\mu}\\ at a rate determined by the eigenvalues of
+\\\mathbf{\Theta}\\. In unidimensional systems, \\\theta\\ can simply be
+interpreted as the speed of emotional regulation, where low \\\theta\\
+represents emotional inertia.
 
 Show mathematical background
 
@@ -65,8 +65,8 @@ This property is shown below, in which we simulate two independent OU
 processes only differing in \\\theta\\. The process with higher
 \\\theta\\ (red) stays closer to its attractor (horizontal line,
 \\\mu\\) than the process with lower \\\theta\\ (green), which strays
-further away. In emotion terms, the second process displays greater
-affective inertia than the second process.
+further away. In emotion terms, the former process displays lower
+affective inertia than the latter..
 
 Show code
 
@@ -104,35 +104,78 @@ state.](characteristics_files/figure-html/mean-reversion-plot-1.svg)
 
 After affect is perturbed, it takes time to return to its baseline. The
 speed of this return is determined by \\\mathbf{\Theta}\\, which
-characterizes how long the effect of perturbations persists. This
-persistence can be quantified through the relaxation time \\\tau\\,
-which is the time it takes for deviations from the attractor \\\mu\\ to
-shrink to \\1/e \approx 36.8\\\\. Effects decay exponentially: at two
-\\\tau\\, about 13.5% remains; at three \\\tau\\, about 5%. \\\tau\\ is
-also known as the characteristic time scale, and can alternatively be
-defined as the half-life \\t\_{1/2} = \ln 2 \cdot \tau\\, at which a
-deviation from \\\mu\\ shrinks to 50%.
+characterizes how long the effect of perturbations persists. The rate of
+decay \\\tau\\ – sometimes referred to as the relaxation time – can be
+computed through the solution of the OU, specifically:
+
+\\\begin{equation} \mathbf{y}\_{\Delta t} = \mathbf{\mu} +
+e^{-\mathbf{\Theta} \Delta t} (\mathbf{y}\_0 - \mathbf{\mu})
+\end{equation}\\
+
+We can then define the relaxation time \\\tau\\ as the time \\\Delta t\\
+after which the initial condition \\\mathbf{y}\_0\\ relaxed towards the
+attractor \\\mathbf{\mu}\\, retaining only a particular percentage of
+its original value. For example, for unidimensional OUs, setting the
+relaxation time \\\tau = \theta^{-1}\\ leads to the deviation of initial
+condition from the attractor (\\\mathbf{y}\_0 - \mathbf{\mu}\\) to
+shrink to \\e^{-1} \approx 0.37 = 37\\\\ of its original value.
 
 Show mathematical background
 
-The relaxation time is straightforward to compute for unidimensional
-OUs, as \\\tau = 1/\theta\\. At time \\\tau\\, the deterministic drift
-reduces to \\e^{-\theta \tau} y(0) = e^{-1} y(0) \approx 0.368\\ y(0)\\,
-meaning the system has returned to about 36.8% of its initial
-displacement. The same logic extends to uncoupled multivariate OUs,
-where each variable \\i\\ has its own relaxation time \\\tau_i =
-1/\theta\_{ii}\\, and the deterministic drift for each variable reduces
-to \\e^{-1} y_i(0) \approx 0.368\\ y_i(0)\\ at time \\\tau_i\\.
-Equivalently, we may use the eigenvalues of \\\mathbf{\Theta}\\, as in
-the case of diagonal \\\mathbf{\Theta}\\, the eigenvalues are simply the
-diagonal elements of \\\mathbf{\Theta}\\. In this case, the relaxation
-time for each eigenvalue \\\lambda_i\\ is \\\tau_i = 1/\lambda_i\\.
+Note that through this set of equations, we can alternatively define the
+half-life \\\tau = t\_{.50} = \ln(2) \mathbf{\Theta^{-1}}\\ as the time
+after which a deviation from \\\mathbf{\mu}\\ shrinks to 50%.
 
-However, this same principle does not apply to coupled multivariate OUs.
-Coupling between variables means that the relaxation of one variable can
-affect the relaxation of others. In this case, the relaxation time is
-not simply determined by the diagonal elements of \\\mathbf{\Theta}\\ or
-its eigenvalues, but rather by the full dynamics of the system.
+The relaxation time is straightforward to compute for unidimensional
+OUs. To derive this, we can use the solution of the OU, which is given
+by:
+
+\\\begin{equation} y\_{\Delta t} = \mu + e^{-\theta \Delta t} (y_0 -
+\mu) \end{equation}\\
+
+where \\y\_{\Delta t}\\ represents the value of the variable after a
+time step \\\Delta t\\, \\y_0\\ represents the initial condition,
+\\\theta\\ is the drift parameter, and \\\mu\\ is the attractor. Now, we
+are interested in finding out to what degree the initial deviation from
+the attractor determines the value of \\y\_{\Delta t}\\ after a
+particular time \\\tau\\ has passed. In other words, in this solution,
+we are only interested in the last part of the solution scaling the
+initial deviation from the attractor:
+
+\\\begin{equation} e^{-\theta \Delta t} (y_0 - \mu) \end{equation}\\
+
+If we denote the relaxation percentage with \\r \in \[0, 1\]\\, then we
+can compute the corresponding relaxation time \\\tau\\ as follows:
+
+\\\begin{equation} \begin{split} e^{-\theta \tau} &= r \\ -\theta \tau
+&= \ln(r) \\ \tau &= -\ln(r) \theta^{-1} \end{split} \end{equation}\\
+
+Exemplifying this equation with a unidimensional OU with drift
+coefficient \\\theta = 2\\, we can compute its half-time \\\tau =
+t\_{0.5}\\ as \\\tau = -\ln(0.5) 2^{-1} = -\frac{\ln(0.5)}{2} \approx
+0.35\\.
+
+The same logic extends to multivariate OUs, where if we assume the
+exponential and the logarithm of the drift matrix \\\mathbf{\Theta}\\
+exist, and if we assume a \\d \times d\\ matrix of relaxation
+percentages \\R\\ for which the logarithm exists, then the corresponding
+relaxation times \\\tau\\ can be computed as:
+
+\\\begin{equation} \begin{split} e^{-\mathbf{\Theta} \tau} &= R \\
+-\mathbf{\Theta} \tau &= \ln(R) \\ \tau &= -\mathbf{\Theta}^{-1} \ln(R)
+\end{split} \end{equation}\\
+
+Note that, in this case, \\\tau\\ is a \\d \times d\\ matrix containing
+the relaxation times for each dimension separately. One may use the same
+interpretation of relaxation times as before in cases where the
+variables captured by the OU are independent (i.e., when
+\\\mathbf{\Theta}\\ is diagonal), in which case \\\tau\\ would be a
+diagonal matrix containing the relaxation times per dimension
+separately. However, this same principle does not apply to coupled
+multivariate OUs. Coupling between variables means that the relaxation
+of one variable can affect the relaxation of others. In this case, the
+relaxation time of one variable cannot be interpreted separately from
+the relaxation times of the other variables.
 
 ``` r
 model <- affectOU(theta = 0.5, mu = 0, sigma = 1)
@@ -154,9 +197,16 @@ persistence and higher autocorrelation.
 
 ## 3. Reactivity
 
-The noise covariance \\\sigma\\ (or \\\mathbf{\Sigma}\\ in the
-multivariate case) controls how affect responds to random perturbations,
-i.e., emotional reactivity to environmental fluctuations.
+The noise covariance \\\mathbf{\Sigma}\\ determines the stochastic part
+of affect, and is often interpreted as affective reactivity to
+environmental fluctuations. Within
+[`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md),
+you can either specify the covariance matrix \\\mathbf{\Sigma}\\ or the
+diffusion matrix \\\mathbf{\Gamma}\\, where \\\mathbf{\Gamma}\\ must be
+a lower triangular matrix. The noise covariance \\\mathbf{\Sigma}\\ is
+the more intuitive parameter to specify when defining the reactivity of
+the system, as it directly captures the variance and covariance of the
+noise across dimensions.
 
 Show mathematical background
 
@@ -164,7 +214,7 @@ In our implementation of the OU, the noise term is defined as
 \\\mathbf{\Gamma} \\ d\mathbf{W}(t)\\, where \\\mathbf{\Gamma}\\ is the
 diffusion matrix and \\d\mathbf{W}(t)\\ is a vector of independent
 Wiener processes. This means that the noise covariance
-\\\mathbf{\Sigma}\\ is not directly specified but rather derived from
+\\\mathbf{\Sigma}\\ is not directly specified but is rather derived from
 \\\mathbf{\Gamma}\\.
 
 The noise covariance \\\mathbf{\Sigma}\\ is related to the diffusion
@@ -173,24 +223,19 @@ matrix \\\mathbf{\Gamma}\\ through:
 \\\begin{equation} \mathbf{\Sigma} = \mathbf{\Gamma} \mathbf{\Gamma}^T
 \end{equation}\\
 
-We derive \\\mathbf{\Gamma}\\ from \\\mathbf{\Sigma}\\ using a Cholesky
-decomposition, which results in a lower triangular matrix. This ensures
-that we may convert between \\\mathbf{\Sigma}\\ and \\\mathbf{\Gamma}\\
-without loss of generality, meaning that any positive semi-definite
-covariance matrix \\\mathbf{\Sigma}\\ can be represented through
-\\\mathbf{\Gamma}\\. With
-[`affectOU()`](https://kcevers.github.io/affectOU/reference/affectOU.md),
-you can either specify \\\mathbf{\Sigma}\\ or \\\mathbf{\Gamma}\\, where
-\\\mathbf{\Gamma}\\ must be a lower triangular matrix. The noise
-covariance \\\mathbf{\Sigma}\\ is the more intuitive parameter to
-specify when defining the reactivity of the system, as it directly
-captures the variance and covariance of the noise across dimensions.
+This equality is known as the Cholesky decomposition, requiring the
+diffusion matrix \\\mathbf{\Gamma}\\ to be a lower triangular matrix.
+This restriction ensures that we may convert between \\\mathbf{\Sigma}\\
+and \\\mathbf{\Gamma}\\ without loss of generality, meaning that any
+positive semi-definite covariance matrix \\\mathbf{\Sigma}\\ can be
+represented through \\\mathbf{\Gamma}\\.
 
-In the figure shown below, the two processes are subject to the same
-perturbations, but the process with higher \\\sigma\\ (red) shows larger
-fluctuations around the attractor than the process with lower \\\sigma\\
-(green). In emotion terms, the second process is more emotionally
-reactive to environmental fluctuations than the first process.
+In the figure shown below, we visualize how two processes that are
+subject to the same perturbations may show larger fluctuations based on
+their value of the variance \\\sigma\\, where higher \\\sigma\\ leads to
+greater fluctuations around the attractor. In emotion terms, the former
+process is more emotionally reactive to environmental fluctuations than
+the latter.
 
 Show code
 
@@ -211,11 +256,22 @@ plot(sim,
 ## 4. Multivariate Coupling
 
 In multivariate models, off-diagonal elements of \\\mathbf{\Theta}\\
-capture coupling between dimensions. \\\mathbf{\Theta}\\ is multiplied
-by the current state \\\mathbf{X}(t)\\ to determine the deterministic
-drift of the system. For example, in a two-dimensional system without
-any diffusion (i.e., \\\mathbf{\Gamma} = 0\\), the change in
-\\\mathbf{x}\\ is given by:
+allow for coupling between dimensions, meaning that the dynamics of two
+variables can be interlinked. For example, we can create a coupled
+two-dimensional system with:
+
+\<!– \\\mathbf{\Theta} = \begin{bmatrix} \theta\_{11} & \theta\_{12} \\
+\theta\_{21} & \theta\_{22} \end{bmatrix} = \begin{bmatrix} 0.5 & 0.0 \\
+-2.0 & 0.5 \end{bmatrix}\\
+
+The following figure illustrates the resulting coupled dynamics.
+
+Show background on eigenvalues and eigenvectors
+
+\\\mathbf{\Theta}\\ is multiplied by the current state \\\mathbf{X}(t)\\
+to determine the deterministic drift of the system. For example, in a
+two-dimensional system without any diffusion (i.e., \\\mathbf{\Gamma} =
+0\\), the change in \\\mathbf{x}\\ is given by:
 
 \\\frac{d\mathbf{x}}{dt} = \mathbf{\Theta} (\mathbf{\mu} - \mathbf{x}) =
 \begin{bmatrix} \theta\_{11} & \theta\_{12} \\ \theta\_{21} &
@@ -232,24 +288,13 @@ dimension can influence the dynamics of the other dimension, creating
 coupled trajectories. For example, as shown below, a negative entry
 \\\theta\_{12}\\ means that when dimension 2 is above its attractor, it
 pushes dimension 1 up, and when dimension 2 is below its attractor, it
-pushes dimension 1 down. This creates interdependent dynamics visible in
-the time-series and phase portrait.
+pushes dimension 1 down.
 
-Show background on eigenvalues and eigenvectors
-
-In the drift matrix \\\mathbf{\Theta}\\, the off-diagonal elements allow
-for coupling in the dynamics between the different dimensions of the
-model. This coupling is captured through the eigenvectors
-\\\mathbf{\Omega}\\, which shape the direction along which the system
-moves towards its attractor \\\mathbf{\mu}\\ (in case of a stable
-system). This is easiest shown through an example. Take a
-two-dimensional system in which:
-
-\\\mathbf{\Theta} = \begin{bmatrix} 0.5 & -2.0 \\ 0 & 0.5
-\end{bmatrix}\\
-
-In this case, the eigenvalues are \\\lambda_1 = \lambda_2 = 0.5\\, and
-the eigenvectors of \\\mathbf{\Theta}\\ are:
+Interdimensional coupling can also be analyzed using an
+eigendecomposition. The eigenvectors \\\mathbf{\Omega}\\ shape the
+direction along which the system moves towards its attractor
+\\\mathbf{\mu}\\ (in case of a stable system). The eigenvectors of
+\\\mathbf{\Theta}\\ are:
 
 \\\mathbf{\Omega} \approx \begin{bmatrix} 1 & 1 \\ 0 & 0 \end{bmatrix}\\
 
@@ -293,10 +338,16 @@ dimensions](characteristics_files/figure-html/multivariate-plot2-1.svg)
 
 ## 5. Stability Regimes
 
+Stability refers to the long-run qualitative behaviour of the system.
+For the OU process, stability concerns whether the system will be
+regulated towards the attractor \\\mathbf{\mu}\\ and, if so, in what
+way. This behaviour depends largely on the drift matrix
+\\\mathbf{\Theta}\\.
+
 ### Univariate
 
-The sign of \\\theta\\ determines the qualitative behaviour of the
-system. Three regimes can be distinguished:
+In the univariate case, the sign of \\\theta\\ determines the
+qualitative behaviour of the system. Three regimes can be distinguished:
 
 - **\\\theta \> 0\\**: Stable, mean-reverting around \\\mu\\;
 - **\\\theta \approx 0\\**: Random walk without clear attractor, meaning
@@ -341,7 +392,7 @@ For multiple dimensions, stability depends on the eigenvalues of
   will display damped linear oscillations around the attractor
   \\\mathbf{\mu}\\ for all variables, representing cyclical affect
   patterns;
-- **Eigenvalue with zero or negative real part**: In this case, the OU
+- **Eigenvalue with zero or negative real parts**: In this case, the OU
   is non-stationary, meaning that affect will diverge over time – either
   drifting monotonically or oscillating with growing amplitude,
   depending on whether the eigenvalues are real or complex. This type of
