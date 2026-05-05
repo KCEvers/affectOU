@@ -79,14 +79,14 @@ induce correlation at equilibrium even when the noise is independent.
 
 Key theoretical quantities for the 1D case:
 
-|                     |                                          |                                   |
-|---------------------|------------------------------------------|-----------------------------------|
-| **Quantity**        | **Formula**                              | **Interpretation**                |
-| Stationary mean     | \\\mu\\                                  | Long-run center                   |
-| Stationary variance | \\\gamma^2 / (2\theta)\\                 | Long-run spread                   |
-| Half-life           | \\\log(2) / \theta\\                     | Persistence of perturbations      |
-| ACF at lag \\\tau\\ | \\e^{-\theta\tau}\\                      | Predictability over time          |
-| Conditional mean    | \\\mu + (x - \mu) e^{-\theta \Delta t}\\ | Expected next value given current |
+|  |  |  |
+|----|----|----|
+| **Quantity** | **Formula** | **Interpretation** |
+| Stationary mean | \\\mu\\ | Long-run center |
+| Stationary variance | \\\gamma^2 / (2\theta)\\ | Long-run spread |
+| Half-life | \\\log(2) / \theta\\ | Persistence of perturbations |
+| ACF at lag \\\tau\\ | \\e^{-\theta\tau}\\ | Predictability over time |
+| Conditional mean | \\\mu + (x - \mu) e^{-\theta \Delta t}\\ | Expected next value given current |
 
 Stationary properties depend on both \\\gamma\\ and \\\theta\\; temporal
 dynamics depend mainly on \\\theta\\. Two processes can share stationary

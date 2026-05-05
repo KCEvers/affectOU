@@ -29,6 +29,7 @@ Packages: A Tutorial in R” (forthcoming).
 [GitHub](https://github.com/KCEvers/affectOU) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("KCEvers/affectOU")
 ```
@@ -37,6 +38,7 @@ Once installed, one can use the package through calling the
 [`library()`](https://rdrr.io/r/base/library.html) function.
 
 ``` r
+
 library(affectOU)
 ```
 
@@ -49,10 +51,12 @@ For example, the following creates a two-dimensional model with default
 parameter values:
 
 ``` r
+
 model <- affectOU(ndim = 2)
 ```
 
 ``` r
+
 print(model)
 #> 
 #> ── 2D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────
@@ -77,6 +81,7 @@ print(model)
 ```
 
 ``` r
+
 summary(model)
 #> 
 #> ── 2D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────
@@ -102,10 +107,12 @@ and visualised over time with
 [`plot()`](https://kcevers.github.io/affectOU/reference/plot.simulate_affectOU.html).
 
 ``` r
+
 sim <- simulate(model)
 ```
 
 ``` r
+
 plot(sim)
 ```
 

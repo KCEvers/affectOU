@@ -71,6 +71,7 @@ affective inertia than the latter..
 Show code
 
 ``` r
+
 # For simplicity and ease of visualisation, we specify both processes in the same model. 
 # However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(
@@ -178,12 +179,14 @@ relaxation time of one variable cannot be interpreted separately from
 the relaxation times of the other variables.
 
 ``` r
+
 model <- affectOU(theta = 0.5, mu = 0, sigma = 1)
 ```
 
 Show code
 
 ``` r
+
 # Simulate with more time points for accurate ACF
 sim <- simulate(model, stop = 10000, dt = 0.01, save_at = 0.01)
 plot(sim, type = "acf", lag.max = 10)
@@ -240,6 +243,7 @@ the latter.
 Show code
 
 ``` r
+
 # For simplicity and ease of visualisation, we specify both processes in the same model. 
 # However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(theta = 0.5, mu = 0, sigma = diag(c(2.25, 0.09)))
@@ -310,6 +314,7 @@ time.
 Show code
 
 ``` r
+
 # theta_12 = -2: when dimension 2 is above its attractor, it pushes dimension 1 up;
 # when dimension 2 is below its attractor, it pushes dimension 1 down
 theta_2d <- matrix(c(
@@ -357,6 +362,7 @@ qualitative behaviour of the system. Three regimes can be distinguished:
 Show code
 
 ``` r
+
 # For simplicity and ease of visualisation, we specify all processes in the same model.
 # However, as they are uncoupled, they will evolve independently over time. 
 model <- affectOU(theta = diag(c(0.5, 0.01, -0.3)))
@@ -405,6 +411,7 @@ eigenvalues.
 Show code
 
 ``` r
+
 # Real eigenvalues: Smooth decay
 theta_real <- matrix(
   c(0.2, 0.1, 0.1, 0.2), 
@@ -425,6 +432,7 @@ eigen(theta_complex)$values
 ```
 
 ``` r
+
 # Define the two models
 model_real <- affectOU(
   theta = theta_real,
@@ -481,6 +489,7 @@ for example the case in the following figure:
 Show code
 
 ``` r
+
 # Both complex and real eigenvalues: Combination of smooth and oscillatory 
 # dynamics
 theta <- matrix(
@@ -493,6 +502,7 @@ eigen(theta)$values
 ```
 
 ``` r
+
 # Define the the model
 model <- affectOU(
   theta = theta,
@@ -528,6 +538,7 @@ there is no coupling in the deterministic part of the process (i.e.,
 Show code
 
 ``` r
+
 # Shared noise sources (same fluctuation drives both dims), no drift coupling
 gamma_2d <- matrix(c(
   1, 0,
@@ -549,11 +560,11 @@ diagonal).](characteristics_files/figure-html/noise-plot-1.svg)
 
 ## Summary
 
-| Feature              | Parameter                                    | Effect                                   |
-|----------------------|----------------------------------------------|------------------------------------------|
-| Mean reversion       | \\\mathbf{\Theta}\\                          | Rate and direction of return to baseline |
-| Relaxation time      | \\\mathbf{\Theta}\\                          | Perturbation persistence                 |
-| Reactivity           | \\\mathbf{\Sigma}\\                          | Magnitude of response to perturbations   |
-| Dimensional Coupling | Eigenvectors of \\\mathbf{\Theta}\\          | Coupled dynamics                         |
-| Stability            | Eigenvalues of \\\mathbf{\Theta}\\           | Stationary vs divergent                  |
-| Noise coupling       | Off-diagonal elements of \\\mathbf{\Sigma}\\ | Shared noise sources across dimensions   |
+| Feature | Parameter | Effect |
+|----|----|----|
+| Mean reversion | \\\mathbf{\Theta}\\ | Rate and direction of return to baseline |
+| Relaxation time | \\\mathbf{\Theta}\\ | Perturbation persistence |
+| Reactivity | \\\mathbf{\Sigma}\\ | Magnitude of response to perturbations |
+| Dimensional Coupling | Eigenvectors of \\\mathbf{\Theta}\\ | Coupled dynamics |
+| Stability | Eigenvalues of \\\mathbf{\Theta}\\ | Stationary vs divergent |
+| Noise coupling | Off-diagonal elements of \\\mathbf{\Sigma}\\ | Shared noise sources across dimensions |

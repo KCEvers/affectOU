@@ -38,6 +38,7 @@ You can create a simple one-dimensional model with default parameters by
 calling the `affectOU` constructor:
 
 ``` r
+
 model <- affectOU()
 model
 #> 
@@ -53,6 +54,7 @@ positive baseline (\\\mu = 1\\), and smaller amount of random
 perturbations (\\\sigma = 0.25\\):
 
 ``` r
+
 model <- affectOU(theta = 1, mu = 1, sigma = 0.25)
 model
 #> 
@@ -81,6 +83,7 @@ and \\\mathbf{\Sigma}\\) and identical parameters across dimensions. For
 example, for a two-dimensional model, we get:
 
 ``` r
+
 model_2d <- affectOU(ndim = 2)
 model_2d
 #> 
@@ -111,6 +114,7 @@ function can be used to modify an existing model without recreating it
 from scratch:
 
 ``` r
+
 model_2d <- update(
   model_2d,
   theta = diag(c(0.5, 0.3)), # Different regulation speeds
@@ -147,6 +151,7 @@ example, the following creates a model in which the first dimension has
 a stronger influence on the second than vice versa:
 
 ``` r
+
 theta_coupled <- c(
   0.5, 0.1,
   0.2, 0.3
@@ -188,6 +193,7 @@ You can simulate data from the specified model through the
 function:
 
 ``` r
+
 sim <- simulate(model)
 ```
 
@@ -223,6 +229,7 @@ changing the arguments:
 - `seed`: Seed to use for sampling random perturbations.
 
 ``` r
+
 sim <- simulate(
   model,
   nsim = 1, 
@@ -254,6 +261,7 @@ provides the `plot` function with several different types of plots to
 visualize the simulated data, namely:
 
 ``` r
+
 # Time series trajectory (default)
 plot(sim)
 
@@ -341,6 +349,7 @@ as before. Here, we set `by_dim = TRUE` to show each dimension in a
 separate subplot:
 
 ``` r
+
 # Create an affectOU model with two dimensions
 model_2D <- affectOU(ndim = 2)
 
@@ -365,6 +374,7 @@ following code generates three independent simulations from the same
 model:
 
 ``` r
+
 sim <- simulate(model, nsim = 3)
 plot(sim, type = "time")
 ```
@@ -378,11 +388,13 @@ other.](affectOU_files/figure-html/simulate-multiple-1.svg)
 Simulated data can be extracted in different formats:
 
 ``` r
+
 # Directly from the simulation object
 data <- sim$data # 3D array (time × dimension × simulation)
 ```
 
 ``` r
+
 # Using head() or tail()
 head(sim, n = 3)
 #>   time dim sim    value
@@ -392,6 +404,7 @@ head(sim, n = 3)
 ```
 
 ``` r
+
 # As a list of data frames (one per simulation)
 sim_list <- as.list(sim)
 head(sim_list[[1]], n = 3)
@@ -402,6 +415,7 @@ head(sim_list[[1]], n = 3)
 ```
 
 ``` r
+
 # As a data frame (long or wide format)
 sim_df <- as.data.frame(sim)
 head(sim_df, n = 3)
@@ -412,6 +426,7 @@ head(sim_df, n = 3)
 ```
 
 ``` r
+
 # As a 3D array (time × dimension × simulation)
 sim_array <- as.array(sim)
 dim(sim_array)
@@ -419,6 +434,7 @@ dim(sim_array)
 ```
 
 ``` r
+
 # As a matrix (time × dimension)
 sim_matrix <- as.matrix(sim)
 head(sim_matrix, n = 3)
@@ -439,6 +455,7 @@ the stationary distribution (i.e., long-run means and (co)variances)
 implied by the model parameters:
 
 ``` r
+
 summary(model)
 #> 
 #> ── 1D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────
@@ -457,6 +474,7 @@ For multidimensional models, the model summary also includes coupling
 indicators:
 
 ``` r
+
 summary(model_coupled)
 #> 
 #> ── 2D Ornstein-Uhlenbeck Model ─────────────────────────────────────────────────
@@ -482,6 +500,7 @@ and
 [`stationary()`](https://kcevers.github.io/affectOU/reference/stationary.affectOU.md):
 
 ``` r
+
 stability(model_coupled)
 #> 
 #> ── Stability analysis of 2D Ornstein-Uhlenbeck Model ──
@@ -494,6 +513,7 @@ stability(model_coupled)
 ```
 
 ``` r
+
 stationary(model_coupled)
 #> 
 #> ── Stationary distribution of 2D Ornstein-Uhlenbeck Model ──
@@ -516,6 +536,7 @@ estimates OU parameters from univariate time series using maximum
 likelihood:
 
 ``` r
+
 # Generate data from known parameters
 true_model <- affectOU(theta = 0.5, mu = 0, sigma = 1)
 sim <- simulate(true_model, dt = 0.01, stop = 500, save_at = 0.1)
@@ -535,6 +556,7 @@ fitted
 ```
 
 ``` r
+
 # Residuals over time
 plot(fitted, type = "residuals")
 ```
@@ -556,6 +578,7 @@ function which renders the model’s equation in multiple formats,
 offering plain text, LaTeX, R expression, or code output.
 
 ``` r
+
 equation(model)
 #> dX(t) = theta * (mu - X(t)) dt + gamma dW(t)
 #> 
@@ -584,6 +607,7 @@ the parameter values below. The parameter values can also directly be
 included in the equation by setting `inline = TRUE`:
 
 ``` r
+
 equation(model, inline = TRUE)
 #> dX(t) = 1 * (1 - X(t)) dt + 0.5 dW(t)
 ```

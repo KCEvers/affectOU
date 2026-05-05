@@ -1,10 +1,10 @@
-pandoc: 3.1.11
+pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   affectOU: affectOU.html
   characteristics: characteristics.html
-last_built: 2026-03-15T21:18Z
+last_built: 2026-05-05T10:59Z
 urls:
   reference: https://kcevers.github.io/affectOU/reference
   article: https://kcevers.github.io/affectOU/articles
