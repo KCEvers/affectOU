@@ -11,7 +11,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/KCEvers/affectOU/blob/v1.0.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/KCEvers/affectOU/blob/main/DESCRIPTION)
 
 Evers K, Vanhasbroeck N (2026). *affectOU: Simulate Affect Dynamics with
 Ornstein-Uhlenbeck Processes*. R package version 1.0.0,
