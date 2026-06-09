@@ -1,4 +1,4 @@
-# affectOU (development version)
+# affectOU 1.0.1
 
 # affectOU 1.0.0
 
