@@ -4,7 +4,8 @@
 # affectOU: Ornstein-Uhlenbeck Model for Affect Dynamics
 
 <!-- badges: start -->
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20037784.svg)](https://doi.org/10.5281/zenodo.20037784)
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20037783.svg)](https://doi.org/10.5281/zenodo.20037783)
 [![Codecov test
 coverage](https://codecov.io/gh/KCEvers/affectOU/graph/badge.svg)](https://app.codecov.io/gh/KCEvers/affectOU)
 [![R-CMD-check](https://github.com/KCEvers/affectOU/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KCEvers/affectOU/actions/workflows/R-CMD-check.yaml)
@@ -106,6 +107,7 @@ summary(model)
 #> 
 #> Coupling: none
 #> Noise: independent
+#> ℹ Use `stability()` and `stationary()` for more details.
 ```
 
 The model can then be simulated with

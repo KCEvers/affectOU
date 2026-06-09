@@ -2,7 +2,7 @@
 title: "Affect characteristics implied by the OU process"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Affect characteristics implied by the OU Process}
+  %\VignetteIndexEntry{Affect characteristics implied by the OU process}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -18,8 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-#| echo = FALSE
+```{r setup, message = FALSE, warning = FALSE}
 library(affectOU)
 ```
 

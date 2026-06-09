@@ -4,7 +4,7 @@
 \alias{print.summary_simulate_affectOU}
 \title{Print summary of simulation results}
 \usage{
-\method{print}{summary_simulate_affectOU}(x, digits = 3, max_dim = 20, ...)
+\method{print}{summary_simulate_affectOU}(x, digits = 3, max_dim = 10, ...)
 }
 \arguments{
 \item{x}{An object of class \code{summary_simulate_affectOU}}

@@ -29,7 +29,7 @@ dim.affectOU <- function(x) {
 #' @examples
 #' model <- affectOU(ndim = 2)
 #' print(model)
-print.affectOU <- function(x, digits = 3, max_dim = 20, ...) {
+print.affectOU <- function(x, digits = 3, max_dim = 10, ...) {
   ndim <- x[["ndim"]]
   theta <- x[["parameters"]][["theta"]]
   mu <- x[["parameters"]][["mu"]]
@@ -414,6 +414,8 @@ print.summary_affectOU <- function(x, digits = 3, max_dim = 20, ...) {
     }
     cli::cli_text("Noise: {noise_text}")
   }
+
+  cli::cli_inform(c("i"= "Use {.fn stability} and {.fn stationary} for more details."))
 
   invisible(x)
 }

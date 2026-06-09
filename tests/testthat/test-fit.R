@@ -254,6 +254,63 @@ test_that("fit.affectOU handles constant data (1D)", {
 })
 
 
+# Affine equivariance / internal standardization -----------------------------
+
+test_that("fit.affectOU is affine-equivariant in the data (1D)", {
+  model <- affectOU(theta = 0.8, mu = -15, gamma = 8.5)
+  sim <- simulate(model, stop = 500, dt = .01, save_at = .01, nsim = 1, seed = 42)
+  data <- as.data.frame(sim)
+
+  a <- 100
+  b <- 50
+
+  fit_orig <- fit(model, data = data$value, times = data$time)
+  fit_aff <- fit(model, data = a * data$value + b, times = data$time)
+
+  p0 <- fit_orig[["parameters"]]
+  p1 <- fit_aff[["parameters"]]
+
+  # theta invariant; mu -> a*mu + b; gamma -> a*gamma
+  expect_equal(p1[["theta"]], p0[["theta"]], tolerance = 1e-4)
+  expect_equal(p1[["mu"]], a * p0[["mu"]] + b, tolerance = 1e-4)
+  expect_equal(p1[["gamma"]], a * p0[["gamma"]], tolerance = 1e-4)
+
+  # Fitted values transform the same way
+  expect_equal(
+    fit_aff[["fitted_values"]],
+    a * fit_orig[["fitted_values"]] + b,
+    tolerance = 1e-4
+  )
+
+  # Standard errors of mu and gamma scale by a; theta SE invariant
+  se0 <- fit_orig[["se"]]
+  se1 <- fit_aff[["se"]]
+  expect_equal(se1[["theta"]], se0[["theta"]], tolerance = 1e-3)
+  expect_equal(se1[["mu"]], a * se0[["mu"]], tolerance = 1e-3)
+  expect_equal(se1[["gamma"]], a * se0[["gamma"]], tolerance = 1e-3)
+})
+
+test_that("fit.affectOU log-likelihood includes the Jacobian under rescaling (1D)", {
+  model <- affectOU(theta = 0.8, mu = -15, gamma = 8.5)
+  sim <- simulate(model, stop = 500, dt = .01, save_at = .01, nsim = 1, seed = 42)
+  data <- as.data.frame(sim)
+
+  a <- 100
+  b <- 50
+
+  fit_orig <- fit(model, data = data$value, times = data$time)
+  fit_aff <- fit(model, data = a * data$value + b, times = data$time)
+
+  n <- fit_orig[["nobs"]]
+  # ll on a*y + b equals ll on y minus (n - 1) * log(a) (n - 1 conditional densities)
+  expect_equal(
+    logLik(fit_aff),
+    logLik(fit_orig) - (n - 1) * log(a),
+    tolerance = 1e-3
+  )
+})
+
+
 # coef.fit_affectOU -----------------------------------------------------------
 
 test_that("coef.fit_affectOU returns a named numeric vector", {

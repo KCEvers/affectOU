@@ -276,6 +276,11 @@ add_panel_legend <- function(position = "topright",
                              xlim, ylim,
                              panel_row = 1, panel_col = 1,
                              inset = c(0.02, 0.02), bg = "white", ...) {
+  # "none" hides the legend
+  if (identical(position, "none")) {
+    return(invisible(NULL))
+  }
+
   old_par <- par(no.readonly = TRUE)
   on.exit(par(old_par), add = TRUE)
 

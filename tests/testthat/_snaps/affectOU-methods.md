@@ -228,6 +228,7 @@
       
       Mean: 0
       SD: 1
+      i Use `stability()` and `stationary()` for more details.
 
 # print.summary_affectOU snapshot (1D) [ansi]
 
@@ -245,6 +246,7 @@
       
       Mean: 0
       SD: 1
+      [1m[22m[36mi[39m Use `stability()` and `stationary()` for more details.
 
 # print.summary_affectOU snapshot (2D) [plain]
 
@@ -267,6 +269,7 @@
       
       Coupling: none
       Noise: independent
+      i Use `stability()` and `stationary()` for more details.
 
 # print.summary_affectOU snapshot (2D) [ansi]
 
@@ -289,6 +292,7 @@
       
       Coupling: none
       Noise: independent
+      [1m[22m[36mi[39m Use `stability()` and `stationary()` for more details.
 
 # print.summary_affectOU snapshot (coupled) [plain]
 
@@ -311,6 +315,7 @@
       
       Coupling: Dim 1 → Dim 2 (+), Dim 2 → Dim 1 (+)
       Noise: independent
+      i Use `stability()` and `stationary()` for more details.
 
 # print.summary_affectOU snapshot (coupled) [ansi]
 
@@ -333,6 +338,7 @@
       
       Coupling: Dim 1 → Dim 2 (+), Dim 2 → Dim 1 (+)
       Noise: independent
+      [1m[22m[36mi[39m Use `stability()` and `stationary()` for more details.
 
 # print.summary_affectOU snapshot (unstable) [plain]
 
@@ -349,6 +355,7 @@
       -- Stationary distribution --
       
       Does not exist (system is not stable).
+      i Use `stability()` and `stationary()` for more details.
 
 # print.summary_affectOU snapshot (unstable) [ansi]
 
@@ -365,4 +372,5 @@
       -- [1m[1mStationary distribution[1m[22m --
       
       Does not exist (system is not stable).
+      [1m[22m[36mi[39m Use `stability()` and `stationary()` for more details.
 

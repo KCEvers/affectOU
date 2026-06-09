@@ -25,8 +25,7 @@ This vignette walks through the package's core functionality: simulating the OU 
 
 <!-- ## Setup -->
 
-```{r setup}
-#| echo = FALSE
+```{r setup, message = FALSE, warning = FALSE}
 library(affectOU)
 ```
 
