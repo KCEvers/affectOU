@@ -49,4 +49,5 @@ print(summary_model)
 #> 
 #> Coupling: none
 #> Noise: independent
+#> ℹ Use `stability()` and `stationary()` for more details.
 ```

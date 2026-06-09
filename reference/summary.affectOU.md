@@ -83,6 +83,7 @@ summary(model)
 #> 
 #> Mean: 0
 #> SD: 1
+#> ℹ Use `stability()` and `stationary()` for more details.
 
 # --- Accessing summary components ---
 s <- summary(model)
@@ -111,4 +112,5 @@ summary(model_2d)
 #> 
 #> Coupling: Dim 1 → Dim 2 (+)
 #> Noise: independent
+#> ℹ Use `stability()` and `stationary()` for more details.
 ```

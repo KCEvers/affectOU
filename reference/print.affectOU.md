@@ -6,7 +6,7 @@ Print affect OU model
 
 ``` r
 # S3 method for class 'affectOU'
-print(x, digits = 3, max_dim = 20, ...)
+print(x, digits = 3, max_dim = 10, ...)
 ```
 
 ## Arguments

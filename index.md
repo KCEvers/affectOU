@@ -99,6 +99,7 @@ summary(model)
 #> 
 #> Coupling: none
 #> Noise: independent
+#> ℹ Use `stability()` and `stationary()` for more details.
 ```
 
 The model can then be simulated with

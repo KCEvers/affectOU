@@ -167,6 +167,7 @@ summary(model_1d)
 #> 
 #> Mean: 0
 #> SD: 1
+#> ℹ Use `stability()` and `stationary()` for more details.
 coef(model_1d)
 #> $theta
 #> [1] 0.5
@@ -203,6 +204,7 @@ summary(model_2d)
 #> 
 #> Coupling: none
 #> Noise: independent
+#> ℹ Use `stability()` and `stationary()` for more details.
 
 # Simulate trajectory
 sim <- simulate(model_2d, stop = 100, save_at = 0.1)
@@ -237,6 +239,7 @@ summary(model_3d)
 #> Coupling: Dim 1 → Dim 2 (+), Dim 2 → Dim 1 (+), Dim 2 → Dim 3 (+), Dim 3 → Dim
 #> 2 (+)
 #> Noise: independent
+#> ℹ Use `stability()` and `stationary()` for more details.
 
 # Simulate trajectory
 sim_3d <- simulate(model_3d, stop = 100, save_at = 0.1)

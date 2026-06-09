@@ -1,5 +1,10 @@
 # Affect characteristics implied by the OU process
 
+``` r
+
+library(affectOU)
+```
+
 Modelling affect with the Ornstein-Uhlenbeck (OU) process implies affect
 dynamics are characterized by several distinct features. This vignette
 demonstrates each feature visually. For further mathematical definitions

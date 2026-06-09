@@ -13,6 +13,11 @@ process](https://kcevers.github.io/affectOU/articles/characteristics.md)
 for visual demonstrations of the model’s qualitative behaviours and
 their psychological interpretations.
 
+``` r
+
+library(affectOU)
+```
+
 ## Creating a Model
 
 ### One-Dimensional Model
@@ -468,6 +473,7 @@ summary(model)
 #> 
 #> Mean: 1
 #> SD: 0.354
+#> ℹ Use `stability()` and `stationary()` for more details.
 ```
 
 For multidimensional models, the model summary also includes coupling
@@ -492,6 +498,7 @@ summary(model_coupled)
 #> 
 #> Coupling: Dim 1 → Dim 2 (+), Dim 2 → Dim 1 (+)
 #> Noise: independent
+#> ℹ Use `stability()` and `stationary()` for more details.
 ```
 
 More detail is provided by
