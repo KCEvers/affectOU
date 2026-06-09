@@ -32,8 +32,6 @@ The aim of `affectOU` is to provide tools for simulating the Ornstein-Uhlenbeck 
 
 `affectOU` primarily serves as a demonstration of a packaged computational model, as detailed in Evers & Vanhasbroeck (2026), “Sharing Computational Models as Reproducible and User-Friendly Packages: A Tutorial in R” (forthcoming).
 
-
-
 ## Installation
 
 `affectOU` can be installed from [GitHub](https://github.com/KCEvers/affectOU) with:
