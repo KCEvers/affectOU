@@ -4,7 +4,7 @@
 \alias{print.affectOU}
 \title{Print affect OU model}
 \usage{
-\method{print}{affectOU}(x, digits = 3, max_dim = 20, ...)
+\method{print}{affectOU}(x, digits = 3, max_dim = 10, ...)
 }
 \arguments{
 \item{x}{An object of class \code{\link[=affectOU]{affectOU}}.}

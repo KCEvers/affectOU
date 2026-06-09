@@ -273,7 +273,21 @@ fit_ou_mle <- function(data, times, start) {
   n <- length(data)
   dt <- diff(times)
 
-  # Negative log-likelihood
+  # Standardize the data internally for numerical stability ------------------
+  # The OU likelihood is affine-equivariant in the data: under y -> a*y + b,
+  # theta is invariant, mu -> a*mu + b, and gamma -> a*gamma. Fitting on the
+  # standardized series z = (data - center) / scale keeps mu near 0 and gamma
+  # near O(1), which conditions the optimizer well regardless of the original
+  # data scale. All estimates are back-transformed to the original scale below.
+  center <- mean(data)
+  scale <- stats::sd(data)
+  if (!is.finite(scale) || scale == 0) {
+    # Constant (or near-degenerate) data: fall back to the raw scale.
+    scale <- 1
+  }
+  z <- (data - center) / scale
+
+  # Negative log-likelihood (on the standardized series z)
   neg_log_lik <- function(params) {
     theta <- exp(params[1])
     mu <- params[2]
@@ -292,7 +306,7 @@ fit_ou_mle <- function(data, times, start) {
 
     # Conditional distribution parameters
     exp_theta_dt <- exp(-theta * dt)
-    cond_mean <- mu + (data[-n] - mu) * exp_theta_dt
+    cond_mean <- mu + (z[-n] - mu) * exp_theta_dt
 
     # Variance calculation with numerical stability
     # Var = (gamma^2 / (2*theta)) * (1 - exp(-2*theta*dt))
@@ -312,7 +326,7 @@ fit_ou_mle <- function(data, times, start) {
     }
 
     # Log-likelihood
-    ll <- sum(stats::dnorm(data[-1],
+    ll <- sum(stats::dnorm(z[-1],
       mean = cond_mean, sd = sqrt(cond_var),
       log = TRUE
     ))
@@ -324,15 +338,17 @@ fit_ou_mle <- function(data, times, start) {
     -ll
   }
 
-  # Estimate starting values using method of moments / empirical estimates
+  # Estimate starting values using method of moments / empirical estimates.
+  # All heuristics operate on the standardized series z, so the starting
+  # values are already on the scale the optimizer works in.
   if (is.null(start)) {
-    # Estimate mu from the mean of the data
-    mu_start <- mean(data)
+    # Estimate mu from the mean of the standardized data (~ 0)
+    mu_start <- mean(z)
 
     # Estimate theta from lag-1 autocorrelation
     # For OU: rho(dt) = exp(-theta * dt), so theta = -log(rho) / dt
     mean_dt <- mean(dt)
-    centered <- data - mu_start
+    centered <- z - mu_start
     autocov_0 <- mean(centered^2)
     autocov_1 <- sum(centered[-n] * centered[-1]) / n
     rho <- autocov_1 / autocov_0
@@ -352,11 +368,12 @@ fit_ou_mle <- function(data, times, start) {
       log(gamma_start)
     )
   } else {
-    # Ensure order of start is correct
+    # User-supplied start is on the original data scale; map it to the
+    # standardized scale (theta invariant, mu and gamma rescaled).
     start <- c(
       log(start["theta"]),
-      start["mu"],
-      log(start["gamma"])
+      (start["mu"] - center) / scale,
+      log(start["gamma"] / scale)
     )
   }
 
@@ -398,12 +415,12 @@ fit_ou_mle <- function(data, times, start) {
     }
   }
 
-  # Extract parameters
-  theta <- exp(opt_result$par[1])
-  mu <- opt_result$par[2]
-  gamma <- exp(opt_result$par[3])
+  # Extract parameters on the standardized scale
+  theta_z <- exp(opt_result$par[1])
+  mu_z <- opt_result$par[2]
+  gamma_z <- exp(opt_result$par[3])
 
-  # Standard errors via delta method
+  # Standard errors via delta method (still on the standardized scale)
   # If optimizing log(theta), then SE(theta) = theta * SE(log(theta))
   se <- tryCatch(
     {
@@ -417,28 +434,47 @@ fit_ou_mle <- function(data, times, start) {
     error = function(e) rep(NA_real_, 3)
   )
 
-  # Apply delta method for transformed parameters
-  se_theta <- if (is.na(se[1])) NA_real_ else se[1] * theta
-  se_mu <- se[2]
-  se_gamma <- if (is.na(se[3])) NA_real_ else se[3] * gamma
+  # Apply delta method for transformed parameters (standardized scale)
+  se_theta_z <- if (is.na(se[1])) NA_real_ else se[1] * theta_z
+  se_mu_z <- se[2]
+  se_gamma_z <- if (is.na(se[3])) NA_real_ else se[3] * gamma_z
 
-  # Compute fitted values (conditional expectations)
+  # Back-transform estimates to the original data scale.
+  # Under y = scale * z + center: theta invariant, mu -> scale*mu + center,
+  # gamma -> scale*gamma (and the same linear factor applies to their SEs).
+  theta <- theta_z
+  mu <- scale * mu_z + center
+  gamma <- scale * gamma_z
+
+  se_theta <- se_theta_z
+  se_mu <- if (is.na(se_mu_z)) NA_real_ else scale * se_mu_z
+  se_gamma <- if (is.na(se_gamma_z)) NA_real_ else scale * se_gamma_z
+
+  # Compute fitted values (conditional expectations) on the original scale.
+  # The recursion is affine-equivariant, so using back-transformed parameters
+  # on the raw data yields the original-scale fitted values directly.
   fitted <- numeric(n)
   fitted[1] <- data[1]
   for (i in 2:n) {
     fitted[i] <- mu + (data[i - 1] - mu) * exp(-theta * dt[i - 1])
   }
 
+  # Report the log-likelihood of the original data. The optimizer maximized the
+  # likelihood of z; the change of variables y = scale*z + center contributes a
+  # Jacobian of -log(scale) per conditional density (n - 1 of them).
+  log_likelihood <- -opt_result$value - (n - 1) * log(scale)
+
   list(
     parameters = list(theta = theta, mu = mu, gamma = gamma),
     se = list(theta = se_theta, mu = se_mu, gamma = se_gamma),
     fitted_values = fitted,
-    log_likelihood = -opt_result$value,
+    log_likelihood = log_likelihood,
     convergence = opt_result$convergence,
+    # Report starting values on the original data scale for transparency.
     start = list(
       theta = exp(start[1]),
-      mu = start[2],
-      gamma = exp(start[3])
+      mu = scale * start[2] + center,
+      gamma = scale * exp(start[3])
     )
   )
 }

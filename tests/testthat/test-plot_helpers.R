@@ -415,3 +415,35 @@ test_that("apply_par sets graphical parameters", {
   expect_equal(par("mar"), P$mar)
   expect_equal(par("family"), P$family)
 })
+
+
+# ==============================================================================
+# Test: add_panel_legend
+# ==============================================================================
+
+test_that("add_panel_legend hides legend when position is 'none'", {
+  withr::local_pdf(NULL)
+  plot.new()
+
+  # Should not error and should draw nothing (returns NULL invisibly)
+  expect_no_error(
+    result <- add_panel_legend(
+      position = "none",
+      xlim = c(0, 1), ylim = c(0, 1),
+      legend = "Test", col = "black", lty = 1
+    )
+  )
+  expect_null(result)
+})
+
+test_that("ou_plot functions accept legend_position = 'none'", {
+  withr::local_pdf(NULL)
+
+  model <- affectOU(ndim = 2)
+  sim <- simulate(model, dt = 0.1, nsim = 3, seed = 1)
+
+  expect_no_error(ou_plot_time(sim, legend_position = "none"))
+  expect_no_error(ou_plot_histogram(sim, legend_position = "none"))
+  expect_no_error(ou_plot_acf(sim, legend_position = "none"))
+  expect_no_error(ou_plot_phase(sim, legend_position = "none"))
+})

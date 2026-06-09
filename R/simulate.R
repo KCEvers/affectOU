@@ -808,7 +808,7 @@ summary.simulate_affectOU <- function(object, burnin = 0, ...) {
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, nsim = 3)
 #' print(summary(sim))
-print.summary_simulate_affectOU <- function(x, digits = 3, max_dim = 20, ...) {
+print.summary_simulate_affectOU <- function(x, digits = 3, max_dim = 10, ...) {
   ndim <- x[["ndim"]]
   nsim <- x[["nsim"]]
 
