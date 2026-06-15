@@ -1,6 +1,6 @@
 Package: affectOU
 Title: Simulate Affect Dynamics with Ornstein-Uhlenbeck Processes
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Kyra Caitlin", "Evers", , "kyra.c.evers@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-6890-3482")),
@@ -25,8 +25,8 @@ Description: Simulate a multivariate Ornstein-Uhlenbeck (OU) process to
     & Sheeber (2010) <doi:10.1177/0956797610372634>; Kuppens, Oravecz &
     Tuerlinckx (2010) <doi:10.1037/a0020962>.
 License: MIT + file LICENSE
-URL: https://github.com/KCEvers/affectOU, https://kcevers.github.io/affectOU/
-BugReports: https://github.com/KCEvers/affectOU/issues
+URL: https://github.com/kcevers/affectOU, https://kcevers.github.io/affectOU/
+BugReports: https://github.com/kcevers/affectOU/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
