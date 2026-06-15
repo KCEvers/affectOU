@@ -10,9 +10,9 @@ Simulate a multivariate Ornstein-Uhlenbeck (OU) process to model psychological a
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/KCEvers/affectOU}
+  \item \url{https://github.com/kcevers/affectOU}
   \item \url{https://kcevers.github.io/affectOU/}
-  \item Report bugs at \url{https://github.com/KCEvers/affectOU/issues}
+  \item Report bugs at \url{https://github.com/kcevers/affectOU/issues}
 }
 
 }

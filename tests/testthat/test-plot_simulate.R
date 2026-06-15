@@ -476,6 +476,14 @@ test_that("ou_plot_acf selects single simulation with which_sim", {
   vdiffr::expect_doppelganger(filename, f)
 })
 
+test_that("ou_plot_acf handles non-stationary simulations", {
+  withr::local_pdf(NULL)
+
+  sim <- suppressWarnings(quick_sim(model = affectOU(theta = -0.5)))
+
+  expect_silent(plot(sim, type = "acf"))
+})
+
 
 
 # ==============================================================================

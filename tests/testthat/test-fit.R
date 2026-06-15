@@ -127,6 +127,11 @@ test_that("fit.affectOU computes log-likelihood (1D)", {
 
   expect_false(is.null(fitted_model[["log_likelihood"]]))
   expect_true(is.numeric(fitted_model[["log_likelihood"]]))
+
+  ll <- logLik(fitted_model)
+  expect_s3_class(ll, "logLik")
+  expect_equal(attr(ll, "df"), 3)
+  expect_equal(attr(ll, "nobs"), fitted_model[["nobs"]])
 })
 
 test_that("fit.affectOU warns when times not provided (1D)", {
@@ -145,6 +150,28 @@ test_that("fit.affectOU requires matching data and times lengths (1D)", {
   expect_error(
     fit(model, data = rnorm(100), times = seq(0, 50, by = 1)),
     "`data` and `times` must have the same length"
+  )
+})
+
+test_that("fit.affectOU validates observation times", {
+  model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
+  data <- rnorm(4)
+
+  expect_error(
+    fit(model, data = data, times = rep("a", 4)),
+    "`times` must be a numeric vector"
+  )
+  expect_error(
+    fit(model, data = data, times = c(0, 1, Inf, 2)),
+    "`times` contains non-finite values"
+  )
+  expect_error(
+    fit(model, data = data, times = c(0, 1, 1, 2)),
+    "`times` must be strictly increasing"
+  )
+  expect_error(
+    fit(model, data = data, times = c(0, 1, 0.5, 2)),
+    "`times` must be strictly increasing"
   )
 })
 
@@ -432,6 +459,14 @@ test_that("summary.fit_affectOU level argument propagates to CI columns", {
   s90 <- summary(fit_obj, level = 0.90)
   expect_equal(s90$level, 0.90)
   expect_equal(names(s90$coefficients)[3:4], c("5%", "95%"))
+})
+
+test_that("summary.fit_affectOU validates level", {
+  fit_obj <- quick_fit()
+
+  expect_error(summary(fit_obj, level = 1.5), "between 0 and 1")
+  expect_error(summary(fit_obj, level = 0), "between 0 and 1")
+  expect_error(summary(fit_obj, level = "a"), "single numeric value")
 })
 
 

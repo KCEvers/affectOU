@@ -138,7 +138,7 @@ simulate.affectOU <- function(object,
         x0_fixed <- stat[["mean"]]
         draw_x0 <- function() x0_fixed
       } else {
-        L <- t(chol(stat[["cov"]]))
+        L <- cholesky_psd(stat[["cov"]], name = "stationary covariance")
         draw_x0 <- function() stat[["mean"]] + L %*% stats::rnorm(ndim)
       }
     }
@@ -149,8 +149,15 @@ simulate.affectOU <- function(object,
 
   # Time vectors
   times <- seq(0, stop, by = dt)
+  if (tail(times, 1L) < stop) {
+    times <- c(times, stop)
+  }
   times_output <- seq(0, stop, by = save_at)
-  n_steps <- length(times) - 1
+  if (tail(times_output, 1L) < stop) {
+    times_output <- c(times_output, stop)
+  }
+  dt_steps <- diff(times)
+  n_steps <- length(dt_steps)
 
   # Pre-allocate 3D array: time x ndim x nsim
   simulations <- array(NA_real_, dim = c(n_steps + 1, ndim, nsim))
@@ -163,26 +170,26 @@ simulate.affectOU <- function(object,
 
     # Pre-compute noise for efficiency
     if (ndim == 1) {
-      dW <- sqrt(dt) * stats::rnorm(n_steps)
+      dW <- sqrt(dt_steps) * stats::rnorm(n_steps)
     } else {
-      dW <- matrix(sqrt(dt) * stats::rnorm(n_steps * ndim),
+      dW <- sweep(matrix(stats::rnorm(n_steps * ndim),
         nrow = n_steps,
         ncol = ndim,
         byrow = TRUE
-      )
+      ), 1, sqrt(dt_steps), `*`)
     }
 
     if (ndim == 1) {
       # Univariate case (scalar operations)
       for (i in seq_len(n_steps)) {
-        drift <- theta * (mu - x[i, 1]) * dt
+        drift <- theta * (mu - x[i, 1]) * dt_steps[i]
         diffusion <- gamma * dW[i]
         x[i + 1, 1] <- x[i, 1] + drift + diffusion
       }
     } else {
       # Multivariate case (matrix operations)
       for (i in seq_len(n_steps)) {
-        drift <- theta %*% (mu - x[i, ]) * dt
+        drift <- theta %*% (mu - x[i, ]) * dt_steps[i]
         diffusion <- gamma %*% dW[i, ]
         x[i + 1, ] <- x[i, ] + drift + diffusion
       }
@@ -192,7 +199,7 @@ simulate.affectOU <- function(object,
   }
 
   # Linearly interpolate to save_at times if needed
-  if (save_at != dt) {
+  if (!isTRUE(all.equal(save_at, dt))) {
     simulations_interp <- array(NA_real_, dim = c(length(times_output), ndim, nsim))
 
     for (sim_idx in seq_len(nsim)) {
@@ -730,9 +737,8 @@ summary.simulate_affectOU <- function(object, burnin = 0, ...) {
   data_filtered <- data[keep_idx, , , drop = FALSE]
   n_timepoints <- sum(keep_idx)
 
-  # Compute per-dimension statistics pooled across simulations
-  # Reshape to (n_timepoints * nsim) x ndim matrix for pooled statistics
-  data_pooled <- matrix(data_filtered, nrow = n_timepoints * nsim, ncol = ndim)
+  # Compute per-dimension statistics pooled across simulations.
+  data_pooled <- matrix(aperm(data_filtered, c(1, 3, 2)), ncol = ndim)
 
   sim_mean <- colMeans(data_pooled)
   sim_sd <- apply(data_pooled, 2, stats::sd)
@@ -831,7 +837,7 @@ print.summary_simulate_affectOU <- function(x, digits = 3, max_dim = 10, ...) {
     sprintf("0 \u2192 %.*f", digits, x[["stop"]])
   }
 
-  cli::cli_text("Time: {time_range}")
+  cli::cli_text(paste0("Time: ", time_range))
   cli::cli_text("Time points: {x$n_timepoints}; dt: {round(x$dt, digits)}; save_at: {round(x$save_at, digits)}")
 
   if (!is.null(x[["seed"]])) {

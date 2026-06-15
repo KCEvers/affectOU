@@ -94,6 +94,16 @@ fit.affectOU <- function(object,
     cli::cli_abort("{.arg data} and {.arg times} must have the same length.")
   }
 
+  if (!is.numeric(times) || !is.vector(times)) {
+    cli::cli_abort("{.arg times} must be a numeric vector.")
+  }
+  if (any(!is.finite(times))) {
+    cli::cli_abort("{.arg times} contains non-finite values.")
+  }
+  if (any(diff(times) <= 0)) {
+    cli::cli_abort("{.arg times} must be strictly increasing.")
+  }
+
   if (!is.null(start)) {
     if (!is.numeric(start) || !is.vector(start)) {
       cli::cli_abort("{.arg start} must be a numeric vector.")
@@ -484,7 +494,7 @@ fit_ou_mle <- function(data, times, start) {
 #'
 #' @param object An object of class [`fit_affectOU`][fit.affectOU()].
 #' @param ... Additional arguments (unused).
-#' @return Numeric log-likelihood value.
+#' @return An object of class `logLik` with `df` and `nobs` attributes.
 #' @export
 #' @concept fit
 #'
@@ -497,7 +507,12 @@ fit_ou_mle <- function(data, times, start) {
 #' fitted <- fit(model, data = data$value, times = data$time)
 #' logLik(fitted)
 logLik.fit_affectOU <- function(object, ...) {
-  object[["log_likelihood"]]
+  structure(
+    object[["log_likelihood"]],
+    df = length(object[["parameters"]]),
+    nobs = object[["nobs"]],
+    class = "logLik"
+  )
 }
 
 
@@ -603,6 +618,14 @@ confint.fit_affectOU <- function(object, parm, level = 0.95, ...) {
 #' fitted <- fit(model, data = data$value, times = data$time)
 #' summary(fitted)
 summary.fit_affectOU <- function(object, level = 0.95, ...) {
+  if (!is.numeric(level) || length(level) != 1 || !is.finite(level)) {
+    cli::cli_abort("{.arg level} must be a single numeric value.")
+  }
+
+  if (level <= 0 || level >= 1) {
+    cli::cli_abort("{.arg level} must be between 0 and 1.")
+  }
+
   params <- unlist(object$parameters)
   se <- unlist(object$se)
 

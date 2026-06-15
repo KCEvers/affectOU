@@ -275,6 +275,23 @@ test_that("affectOU data structure consistency across nsim (1D)", {
   expect_equal(dim(sim1[["data"]])[1:2], dim(sim2[["data"]])[1:2])
 })
 
+test_that("simulate.affectOU includes stop without NA when time grids do not align", {
+  model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
+  sim <- simulate(model, stop = 1, dt = 0.3, save_at = 0.5, seed = 1)
+
+  expect_equal(sim[["times"]], c(0, 0.5, 1))
+  expect_false(anyNA(sim[["data"]]))
+})
+
+test_that("simulate.affectOU draws initial states from rank-deficient stationary covariance", {
+  model <- affectOU(ndim = 2, gamma = diag(c(1, 0)))
+
+  expect_silent(
+    sim <- simulate(model, stop = 1, dt = 0.1, save_at = 0.1, seed = 123)
+  )
+  expect_false(anyNA(sim[["data"]]))
+})
+
 
 # as.array -------------------------------------------------------------------
 
@@ -588,6 +605,33 @@ test_that("summary.simulate_affectOU computes reasonable statistics", {
 
   # Sample SD should be close to theoretical SD
   expect_equal(s$statistics$sd, s$theoretical$sd, tolerance = 0.1)
+})
+
+test_that("summary.simulate_affectOU pools multivariate statistics by dimension", {
+  model <- affectOU(ndim = 2, gamma = 0)
+  data <- array(NA_real_, dim = c(2, 2, 2))
+  data[, 1, 1] <- c(1, 1)
+  data[, 2, 1] <- c(10, 10)
+  data[, 1, 2] <- c(2, 2)
+  data[, 2, 2] <- c(20, 20)
+  sim <- new_simulate_affectOU(
+    model = model,
+    data = data,
+    times = c(0, 1),
+    nsim = 2,
+    dt = 1,
+    stop = 1,
+    save_at = 1,
+    seed = NULL
+  )
+
+  s <- summary(sim)
+
+  expect_equal(s$statistics$mean, c(1.5, 15))
+  expect_equal(
+    s$statistics$sd,
+    c(stats::sd(c(1, 1, 2, 2)), stats::sd(c(10, 10, 20, 20)))
+  )
 })
 
 test_that("print.summary_simulate_affectOU returns invisibly", {

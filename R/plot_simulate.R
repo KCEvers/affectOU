@@ -206,7 +206,6 @@ ou_plot_time <- function(x,
 
   # Plot each dimension
   for (i in seq_len(ndim)) {
-    dim_name <- which_dim[i]
     dim_data <- data[, i, ]
 
     if (by_dim) {
@@ -318,7 +317,7 @@ ou_plot_time <- function(x,
 #' When the system is stable, the stationary distribution of the multivariate
 #' OU is normal with mean \eqn{\mathbf{\mu}} and covariance matrix 
 #' \eqn{\mathbf{\Sigma}_\infty} derived as the solution of the Lyapunov 
-#' equation \eqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma}_\infty - \mathbf{\Sigma}_\infty \mathbf{\Theta}^T}. 
+#' equation \eqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma}_\infty + \mathbf{\Sigma}_\infty \mathbf{\Theta}^T}. 
 #' The theoretical density curve is overlaid on the histogram when the system is
 #' stationary.
 #'
@@ -414,8 +413,6 @@ ou_plot_histogram <- function(x,
 
   # Unpack sim object
   data <- x[["data"]]
-  times <- x[["times"]]
-  mu <- x[["model"]][["parameters"]][["mu"]]
   ndim <- x[["model"]][["ndim"]]
   nsim <- x[["nsim"]]
 
@@ -486,7 +483,6 @@ ou_plot_histogram <- function(x,
 
   # Plot each dimension
   for (i in seq_len(ndim)) {
-    dim_name <- which_dim[i]
     h <- list(x = X[[i]], y = Y[[i]])
 
     if (by_dim) {
@@ -681,12 +677,8 @@ ou_plot_acf <- function(x,
 
   # Unpack sim object
   data <- x[["data"]]
-  times <- x[["times"]]
-  dt <- x[["dt"]]
   save_at <- x[["save_at"]]
-  mu <- x[["model"]][["parameters"]][["mu"]]
   theta <- x[["model"]][["parameters"]][["theta"]]
-  gamma <- x[["model"]][["parameters"]][["gamma"]]
   sigma <- x[["model"]][["parameters"]][["sigma"]]
   ndim <- x[["model"]][["ndim"]]
   nsim <- x[["nsim"]]
@@ -732,9 +724,11 @@ ou_plot_acf <- function(x,
         Y[[k]] <- replace_na(as.numeric(result[["acf"]]))
 
         # Theoretical ACF (positive lags only)
-        acf_theo <- compute_theoretical_acf(theta, sigma_inf, i, lags_theo_acf)
-        X_theo[[k]] <- acf_theo[["lags"]]
-        Y_theo[[k]] <- replace_na(acf_theo[["acf"]])
+        if (is_stable) {
+          acf_theo <- compute_theoretical_acf(theta, sigma_inf, i, lags_theo_acf)
+          X_theo[[k]] <- acf_theo[["lags"]]
+          Y_theo[[k]] <- replace_na(acf_theo[["acf"]])
+        }
       } else {
         # CCF (negative and positive lags)
         temp_j <- as.vector(data[, j, , drop = FALSE])
@@ -743,9 +737,11 @@ ou_plot_acf <- function(x,
         Y[[k]] <- replace_na(as.numeric(result[["acf"]]))
 
         # Theoretical CCF (negative and positive lags)
-        ccf_theo <- compute_theoretical_ccf(theta, sigma_inf, i, j, lags_theo_ccf)
-        X_theo[[k]] <- ccf_theo[["lags"]]
-        Y_theo[[k]] <- replace_na(ccf_theo[["ccf"]])
+        if (is_stable) {
+          ccf_theo <- compute_theoretical_ccf(theta, sigma_inf, i, j, lags_theo_ccf)
+          X_theo[[k]] <- ccf_theo[["lags"]]
+          Y_theo[[k]] <- replace_na(ccf_theo[["ccf"]])
+        }
       }
     }
   }
@@ -787,8 +783,10 @@ ou_plot_acf <- function(x,
         lwd = P[["lwd"]]
       )
 
-      # Plot theoretical ACF/CCF
-      lines(X_theo[[k]], Y_theo[[k]], col = col_theory, lwd = 2, lty = 2)
+      # Plot theoretical ACF/CCF when a stationary distribution exists
+      if (!is.null(X_theo[[k]]) && !is.null(Y_theo[[k]])) {
+        lines(X_theo[[k]], Y_theo[[k]], col = col_theory, lwd = 2, lty = 2)
+      }
     }
   }
 
@@ -799,18 +797,20 @@ ou_plot_acf <- function(x,
     ylab = P[["ylab"]]
   )
 
-  # Add legend for theoretical line inside top-right panel
-  legend_text <- "Theoretical"
-  add_panel_legend(
-    position = P[["legend_position"]],
-    xlim = xlims[[ndim]],
-    ylim = ylims[[ndim]],
-    panel_row = 1,
-    panel_col = ndim,
-    legend = legend_text,
-    col = col_theory,
-    lty = 2, lwd = 2, bty = "o", bg = "white"
-  )
+  if (any(vapply(X_theo, Negate(is.null), logical(1)))) {
+    # Add legend for theoretical line inside top-right panel
+    legend_text <- "Theoretical"
+    add_panel_legend(
+      position = P[["legend_position"]],
+      xlim = xlims[[ndim]],
+      ylim = ylims[[ndim]],
+      panel_row = 1,
+      panel_col = ndim,
+      legend = legend_text,
+      col = col_theory,
+      lty = 2, lwd = 2, bty = "o", bg = "white"
+    )
+  }
 
   invisible(NULL)
 }
@@ -917,8 +917,6 @@ ou_plot_phase <- function(x,
 
   # Unpack sim object
   data <- x[["data"]]
-  times <- x[["times"]]
-  dt <- x[["dt"]]
   save_at <- x[["save_at"]]
   mu <- x[["model"]][["parameters"]][["mu"]]
   theta <- x[["model"]][["parameters"]][["theta"]]
