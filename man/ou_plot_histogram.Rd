@@ -82,7 +82,7 @@ Specific dimensions or simulations can be plotted with \code{which_dim} and
 When the system is stable, the stationary distribution of the multivariate
 OU is normal with mean \eqn{\mathbf{\mu}} and covariance matrix
 \eqn{\mathbf{\Sigma}_\infty} derived as the solution of the Lyapunov
-equation \eqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma}_\infty - \mathbf{\Sigma}_\infty \mathbf{\Theta}^T}.
+equation \eqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma}_\infty + \mathbf{\Sigma}_\infty \mathbf{\Theta}^T}.
 The theoretical density curve is overlaid on the histogram when the system is
 stationary.
 

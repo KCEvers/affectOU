@@ -454,3 +454,26 @@ test_that("sigma to gamma round-trip produces same sigma", {
   # Recovered gamma should be lower triangular
   expect_true(all(abs(m2$parameters$gamma[upper.tri(m2$parameters$gamma)]) < 1e-10))
 })
+
+test_that("singular positive semi-definite sigma is accepted", {
+  sigma <- matrix(c(1, 1, 1, 1), nrow = 2)
+  model <- affectOU(ndim = 2, sigma = sigma)
+
+  expect_equal(model$parameters$sigma, sigma)
+  expect_true(is_lower_triangular(model$parameters$gamma))
+  expect_equal(
+    model$parameters$gamma %*% t(model$parameters$gamma),
+    sigma,
+    tolerance = 1e-10
+  )
+  expect_working_model(model)
+})
+
+test_that("sigma must be symmetric", {
+  sigma <- matrix(c(1, 0.5, 0, 1), nrow = 2)
+
+  expect_error(
+    affectOU(ndim = 2, sigma = sigma),
+    "`sigma` must be symmetric"
+  )
+})

@@ -29,7 +29,7 @@
 #' \eqn{\mathbf{\Gamma}} as the basis for the Cholesky decomposition and solving 
 #' the Lyapunov equation, namely:
 #' 
-#' \deqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma} - \mathbf{\Sigma} \mathbf{\Theta}^T}
+#' \deqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma} + \mathbf{\Sigma} \mathbf{\Theta}^T}
 #'
 #' In the multidimensional case, the off-diagonal elements of the drift matrix
 #' \eqn{\mathbf{\Theta}} determine the temporal coupling between the different
@@ -82,7 +82,8 @@
 #'
 #'   \item{`stationary`}{
 #'     A named list with the stationary distribution properties, precomputed at
-#'     construction: `is_stable` (logical), `mean` (numeric vector, always `mu`),
+#'     construction: `is_stable` (logical), `mean` (numeric vector or `NULL`
+#'     if unstable),
 #'     `sd` (numeric vector or `NULL` if unstable), `cov` (matrix or `NULL`),
 #'     `cor` (matrix or `NULL`), `ndim` (integer).
 #'   }
@@ -495,6 +496,8 @@ coerce_to_vector <- function(x, ndim, name) {
 #' Compute gamma from sigma via Cholesky decomposition
 #' @noRd
 compute_gamma_from_sigma <- function(sigma, ndim) {
+  check_sigma_values(sigma, ndim)
+
   # For 1D, more helpful error message
   if (ndim == 1) {
     if (sigma[1, 1] < 0) {
@@ -513,20 +516,59 @@ compute_gamma_from_sigma <- function(sigma, ndim) {
     return(matrix(0, nrow = ndim, ncol = ndim))
   }
 
-  # For multi-D, use Cholesky
-  chol_result <- tryCatch(
-    chol(sigma),
-    error = function(e) {
-      cli::cli_abort(
-        c("{.arg sigma} must be positive semi-definite.",
-          "i" = "Cholesky decomposition failed: {e$message}"
-        )
-      )
-    }
-  )
+  cholesky_psd(sigma, name = "sigma")
+}
 
-  # Return lower triangular (t(chol()) gives upper, so transpose)
-  t(chol_result)
+
+#' Lower-triangular factor for positive semi-definite matrices
+#' @noRd
+cholesky_psd <- function(sigma, name = "sigma", tol = 1e-10) {
+  n <- nrow(sigma)
+  L <- matrix(0, nrow = n, ncol = n)
+
+  for (j in seq_len(n)) {
+    previous <- if (j > 1L) seq_len(j - 1L) else integer(0)
+    previous_sum <- if (length(previous) > 0L) sum(L[j, previous]^2) else 0
+    diag_value <- sigma[j, j] - previous_sum
+
+    if (diag_value < -tol) {
+      cli::cli_abort("{name} must be positive semi-definite.")
+    }
+
+    if (diag_value <= tol) {
+      L[j, j] <- 0
+
+      if (j < n) {
+        for (i in seq.int(j + 1L, n)) {
+          previous_cross <- if (length(previous) > 0L) {
+            sum(L[i, previous] * L[j, previous])
+          } else {
+            0
+          }
+          off_value <- sigma[i, j] - previous_cross
+          if (abs(off_value) > sqrt(tol)) {
+            cli::cli_abort("{name} must be positive semi-definite.")
+          }
+        }
+      }
+    } else {
+      L[j, j] <- sqrt(diag_value)
+
+      if (j < n) {
+        for (i in seq.int(j + 1L, n)) {
+          previous_cross <- if (length(previous) > 0L) {
+            sum(L[i, previous] * L[j, previous])
+          } else {
+            0
+          }
+          L[i, j] <- (sigma[i, j] - previous_cross) / L[j, j]
+        }
+      }
+    }
+  }
+
+  L[abs(L) < tol] <- 0
+  L
 }
 
 
@@ -542,7 +584,12 @@ is_lower_triangular <- function(x, tol = sqrt(.Machine$double.eps)) {
 #' Check sigma is positive semi-definite
 #' @noRd
 check_sigma_values <- function(sigma, ndim, tol = 1e-10) {
-  eig <- eigen(sigma, symmetric = TRUE, only.values = TRUE)$values
+  if (!isTRUE(isSymmetric(sigma, tol = tol))) {
+    cli::cli_abort("{.arg sigma} must be symmetric.")
+  }
+
+  sigma_sym <- (sigma + t(sigma)) / 2
+  eig <- eigen(sigma_sym, symmetric = TRUE, only.values = TRUE)$values
   if (any(eig < -tol)) {
     if (ndim == 1) {
       cli::cli_abort("{.arg sigma} must be non-negative.")

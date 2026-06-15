@@ -7,8 +7,8 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20037783.svg)](https://doi.org/10.5281/zenodo.20037783)
 [![Codecov test
-coverage](https://codecov.io/gh/KCEvers/affectOU/graph/badge.svg)](https://app.codecov.io/gh/KCEvers/affectOU)
-[![R-CMD-check](https://github.com/KCEvers/affectOU/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KCEvers/affectOU/actions/workflows/R-CMD-check.yaml)
+coverage](https://codecov.io/gh/kcevers/affectOU/graph/badge.svg)](https://app.codecov.io/gh/kcevers/affectOU)
+[![R-CMD-check](https://github.com/kcevers/affectOU/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kcevers/affectOU/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The aim of `affectOU` is to provide tools for simulating the
@@ -37,11 +37,11 @@ Packages: A Tutorial in R” (forthcoming).
 ## Installation
 
 `affectOU` can be installed from
-[GitHub](https://github.com/KCEvers/affectOU) with:
+[GitHub](https://github.com/kcevers/affectOU) with:
 
 ``` r
 # install.packages("pak")
-pak::pak("KCEvers/affectOU")
+pak::pak("kcevers/affectOU")
 ```
 
 Once installed, one can use the package through calling the `library()`

@@ -52,7 +52,8 @@ A named list of model parameters:
 
 \item{\code{stationary}}{
 A named list with the stationary distribution properties, precomputed at
-construction: \code{is_stable} (logical), \code{mean} (numeric vector, always \code{mu}),
+construction: \code{is_stable} (logical), \code{mean} (numeric vector or \code{NULL}
+if unstable),
 \code{sd} (numeric vector or \code{NULL} if unstable), \code{cov} (matrix or \code{NULL}),
 \code{cor} (matrix or \code{NULL}), \code{ndim} (integer).
 }
@@ -94,7 +95,7 @@ covariance matrix \eqn{\mathbf{\Sigma}} for the system through using
 \eqn{\mathbf{\Gamma}} as the basis for the Cholesky decomposition and solving
 the Lyapunov equation, namely:
 
-\deqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma} - \mathbf{\Sigma} \mathbf{\Theta}^T}
+\deqn{\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta} \mathbf{\Sigma} + \mathbf{\Sigma} \mathbf{\Theta}^T}
 
 In the multidimensional case, the off-diagonal elements of the drift matrix
 \eqn{\mathbf{\Theta}} determine the temporal coupling between the different

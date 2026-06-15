@@ -12,7 +12,7 @@
 \item{...}{Additional arguments (unused).}
 }
 \value{
-Numeric log-likelihood value.
+An object of class \code{logLik} with \code{df} and \code{nobs} attributes.
 }
 \description{
 Extract log-likelihood from fitted OU affect model

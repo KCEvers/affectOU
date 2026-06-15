@@ -168,18 +168,18 @@
       
       Mean:
                    dim1   dim2
-      Simulated   0.673 -0.113
+      Simulated   1.217 -0.658
       Theoretical 1.000 -1.000
       
       SD:
                    dim1  dim2
-      Simulated   1.182 1.535
+      Simulated   0.894 1.227
       Theoretical 1.000 1.291
       
       Covariance (simulated):
-             [,1]   [,2]
-      [1,]  1.396 -0.657
-      [2,] -0.657  2.358
+            [,1]  [,2]
+      [1,] 0.800 0.045
+      [2,] 0.045 1.505
       
       Covariance (theoretical):
            [,1]  [,2]
@@ -187,9 +187,9 @@
       [2,]    0 1.667
       
       Correlation (simulated):
-             [,1]   [,2]
-      [1,]  1.000 -0.362
-      [2,] -0.362  1.000
+            [,1]  [,2]
+      [1,] 1.000 0.041
+      [2,] 0.041 1.000
       
       Correlation (theoretical):
            [,1] [,2]
@@ -214,18 +214,18 @@
       
       Mean:
                    dim1   dim2
-      Simulated   0.673 -0.113
+      Simulated   1.217 -0.658
       Theoretical 1.000 -1.000
       
       SD:
                    dim1  dim2
-      Simulated   1.182 1.535
+      Simulated   0.894 1.227
       Theoretical 1.000 1.291
       
       Covariance (simulated):
-             [,1]   [,2]
-      [1,]  1.396 -0.657
-      [2,] -0.657  2.358
+            [,1]  [,2]
+      [1,] 0.800 0.045
+      [2,] 0.045 1.505
       
       Covariance (theoretical):
            [,1]  [,2]
@@ -233,9 +233,9 @@
       [2,]    0 1.667
       
       Correlation (simulated):
-             [,1]   [,2]
-      [1,]  1.000 -0.362
-      [2,] -0.362  1.000
+            [,1]  [,2]
+      [1,] 1.000 0.041
+      [2,] 0.041 1.000
       
       Correlation (theoretical):
            [,1] [,2]
