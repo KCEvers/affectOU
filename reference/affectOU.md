@@ -77,9 +77,9 @@ the following components:
 - `stationary`:
 
   A named list with the stationary distribution properties, precomputed
-  at construction: `is_stable` (logical), `mean` (numeric vector, always
-  `mu`), `sd` (numeric vector or `NULL` if unstable), `cov` (matrix or
-  `NULL`), `cor` (matrix or `NULL`), `ndim` (integer).
+  at construction: `is_stable` (logical), `mean` (numeric vector or
+  `NULL` if unstable), `sd` (numeric vector or `NULL` if unstable),
+  `cov` (matrix or `NULL`), `cor` (matrix or `NULL`), `ndim` (integer).
 
 - `ndim`:
 
@@ -119,7 +119,7 @@ covariance matrix \\\mathbf{\Sigma}\\ for the system through using
 solving the Lyapunov equation, namely:
 
 \$\$\mathbf{\Gamma} \mathbf{\Gamma}^T = \mathbf{\Theta}
-\mathbf{\Sigma} - \mathbf{\Sigma} \mathbf{\Theta}^T\$\$
+\mathbf{\Sigma} + \mathbf{\Sigma} \mathbf{\Theta}^T\$\$
 
 In the multidimensional case, the off-diagonal elements of the drift
 matrix \\\mathbf{\Theta}\\ determine the temporal coupling between the

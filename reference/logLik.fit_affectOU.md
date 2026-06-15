@@ -22,7 +22,7 @@ logLik(object, ...)
 
 ## Value
 
-Numeric log-likelihood value.
+An object of class `logLik` with `df` and `nobs` attributes.
 
 ## Examples
 
@@ -32,5 +32,5 @@ sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
 data <- as.data.frame(sim)
 fitted <- fit(model, data = data$value, times = data$time)
 logLik(fitted)
-#> [1] -1190.814
+#> 'log Lik.' -1190.814 (df=3)
 ```

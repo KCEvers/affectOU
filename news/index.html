@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">affectOU</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/KCEvers/affectOU/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/kcevers/affectOU/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
@@ -46,9 +46,25 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/KCEvers/affectOU/blob/v1.0.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/kcevers/affectOU/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.2" id="affectou-102">affectOU 1.0.2<a class="anchor" aria-label="anchor" href="#affectou-102"></a></h2>
+<ul><li>Fixed <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> for multivariate simulations so means, standard deviations, covariances, and correlations are pooled by dimension correctly when multiple simulations are summarized.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> now always includes the requested <code>stop</code> time without returning <code>NA</code> values when <code>dt</code> and <code>save_at</code> do not divide the total simulation time exactly.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> now works for stable multivariate models with singular stationary covariance matrices, such as models with a dimension that has no stochastic noise.</li>
+<li>
+<code><a href="../reference/affectOU.html">affectOU()</a></code> now accepts singular positive semi-definite <code>sigma</code> matrices and gives a clear error for non-symmetric <code>sigma</code> matrices.</li>
+<li>
+<code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> now gives a clear error when <code>times</code> are non-finite, duplicated, or not strictly increasing.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik()</a></code> for fitted models now returns a standard <code>logLik</code> object with degrees of freedom and number of observations attached.</li>
+<li>ACF plots for non-stationary simulations no longer show a theoretical stationary line.</li>
+<li>Corrected documentation for the multivariate stationary covariance equation and the <code>simpaper</code> example equation.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.1" id="affectou-101">affectOU 1.0.1<a class="anchor" aria-label="anchor" href="#affectou-101"></a></h2>
 <ul><li>

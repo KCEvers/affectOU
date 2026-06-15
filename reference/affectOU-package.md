@@ -25,11 +25,11 @@ Oravecz, Tuerlinckx & Vandekerckhove (2009)
 
 Useful links:
 
-- <https://github.com/KCEvers/affectOU>
+- <https://github.com/kcevers/affectOU>
 
 - <https://kcevers.github.io/affectOU/>
 
-- Report bugs at <https://github.com/KCEvers/affectOU/issues>
+- Report bugs at <https://github.com/kcevers/affectOU/issues>
 
 ## Author
 

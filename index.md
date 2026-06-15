@@ -26,12 +26,12 @@ Packages: A Tutorial in R” (forthcoming).
 ## Installation
 
 `affectOU` can be installed from
-[GitHub](https://github.com/KCEvers/affectOU) with:
+[GitHub](https://github.com/kcevers/affectOU) with:
 
 ``` r
 
 # install.packages("pak")
-pak::pak("KCEvers/affectOU")
+pak::pak("kcevers/affectOU")
 ```
 
 Once installed, one can use the package through calling the

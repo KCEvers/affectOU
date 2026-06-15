@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">affectOU</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/KCEvers/affectOU/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/kcevers/affectOU/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch"><li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
@@ -46,7 +46,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Simulation in Evers &amp; Vanhasbroeck (2026)</h1>
-      <small class="dont-index">Source: <a href="https://github.com/KCEvers/affectOU/blob/v1.0.1/R/simpaper.R" class="external-link"><code>R/simpaper.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/kcevers/affectOU/blob/main/R/simpaper.R" class="external-link"><code>R/simpaper.R</code></a></small>
       <div class="d-none name"><code>simpaper.Rd</code></div>
     </div>
 
@@ -66,7 +66,7 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The process is defined by the stochastic differential equation:
-$$d\mathbf{X}_t = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}_t)dt + \mathbf{\Gamma}^{1/2}d\mathbf{W}_t$$</p>
+$$d\mathbf{X}_t = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}_t)dt + \mathbf{\Gamma}d\mathbf{W}_t$$</p>
 <p>where:</p><ul><li><p>\(\mathbf{\Theta} = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}\) is the drift matrix</p></li>
 <li><p>\(\mathbf{\mu} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\) is the equilibrium mean vector</p></li>
 <li><p>\(\mathbf{\Gamma} = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}\) is the diffusion matrix</p></li>

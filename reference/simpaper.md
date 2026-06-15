@@ -20,7 +20,7 @@ process.
 
 The process is defined by the stochastic differential equation:
 \$\$d\mathbf{X}\_t = \mathbf{\Theta}(\mathbf{\mu} - \mathbf{X}\_t)dt +
-\mathbf{\Gamma}^{1/2}d\mathbf{W}\_t\$\$
+\mathbf{\Gamma}d\mathbf{W}\_t\$\$
 
 where:
 

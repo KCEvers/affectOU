@@ -114,18 +114,18 @@ summary(sim)
 #> 
 #> Mean:
 #>               dim1  dim2
-#> Simulated   -0.076 0.193
+#> Simulated   -0.099 0.217
 #> Theoretical  0.000 0.000
 #> 
 #> SD:
 #>              dim1  dim2
-#> Simulated   0.953 0.891
+#> Simulated   0.873 0.963
 #> Theoretical 1.000 1.000
 #> 
 #> Covariance (simulated):
-#>        [,1]   [,2]
-#> [1,]  0.908 -0.054
-#> [2,] -0.054  0.794
+#>       [,1]  [,2]
+#> [1,] 0.762 0.033
+#> [2,] 0.033 0.927
 #> 
 #> Covariance (theoretical):
 #>      [,1] [,2]
@@ -133,9 +133,9 @@ summary(sim)
 #> [2,]    0    1
 #> 
 #> Correlation (simulated):
-#>        [,1]   [,2]
-#> [1,]  1.000 -0.064
-#> [2,] -0.064  1.000
+#>      [,1] [,2]
+#> [1,] 1.00 0.04
+#> [2,] 0.04 1.00
 #> 
 #> Correlation (theoretical):
 #>      [,1] [,2]

@@ -160,18 +160,18 @@ summary(sim, burnin = 20)
 #> 
 #> Mean:
 #>              dim1   dim2
-#> Simulated   0.422 -0.132
+#> Simulated   1.138 -0.848
 #> Theoretical 1.000 -1.000
 #> 
 #> SD:
-#>             dim1  dim2
-#> Simulated   1.41 1.434
-#> Theoretical 1.00 1.291
+#>              dim1  dim2
+#> Simulated   0.909 1.182
+#> Theoretical 1.000 1.291
 #> 
 #> Covariance (simulated):
-#>        [,1]   [,2]
-#> [1,]  1.987 -0.903
-#> [2,] -0.903  2.055
+#>       [,1]  [,2]
+#> [1,] 0.827 0.085
+#> [2,] 0.085 1.398
 #> 
 #> Covariance (theoretical):
 #>      [,1]  [,2]
@@ -179,9 +179,9 @@ summary(sim, burnin = 20)
 #> [2,]    0 1.667
 #> 
 #> Correlation (simulated):
-#>        [,1]   [,2]
-#> [1,]  1.000 -0.447
-#> [2,] -0.447  1.000
+#>       [,1]  [,2]
+#> [1,] 1.000 0.079
+#> [2,] 0.079 1.000
 #> 
 #> Correlation (theoretical):
 #>      [,1] [,2]
