@@ -48,6 +48,7 @@ NULL
 #' * [ou_plot_acf()] — empirical vs. theoretical autocorrelation
 #' * [ou_plot_phase()] — phase portrait with mean reversion line
 #' @export
+#' @aliases plot
 #' @concept plot_simulate
 #'
 #' @examples

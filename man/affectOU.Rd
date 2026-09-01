@@ -14,7 +14,7 @@ the other parameters.}
 \item{theta}{Attractor strength (rate of return to baseline).
 For 1D: positive scalar. For multidimensional: square matrix.}
 
-\item{mu}{Attractor location (baseline affect or set point).
+\item{mu}{Attractor location (i.e., baseline affect or "home base" of the system).
 For 1D: scalar. For multidimensional: vector.
 For non-stationary models: when \eqn{\theta < 0}, the process is pushed
 away from \eqn{\mu} rather than toward it; when \eqn{\theta \approx 0},

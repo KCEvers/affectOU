@@ -46,6 +46,7 @@ generics::fit
 #'
 #' @export
 #' @concept fit
+#' @aliases fit
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 1000, dt = 0.01, save_at = 0.01)
@@ -496,6 +497,7 @@ fit_ou_mle <- function(data, times, start) {
 #' @param ... Additional arguments (unused).
 #' @return An object of class `logLik` with `df` and `nobs` attributes.
 #' @export
+#' @aliases logLik
 #' @concept fit
 #'
 #' @importFrom stats logLik
@@ -524,6 +526,7 @@ logLik.fit_affectOU <- function(object, ...) {
 #'
 #' @export
 #' @concept fit
+#' @aliases coef
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -545,6 +548,7 @@ coef.fit_affectOU <- function(object, ...) {
 #'
 #' @export
 #' @concept fit
+#' @aliases confint
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -611,6 +615,7 @@ confint.fit_affectOU <- function(object, parm, level = 0.95, ...) {
 #'
 #' @export
 #' @concept fit
+#' @aliases summary
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)
@@ -665,6 +670,7 @@ summary.fit_affectOU <- function(object, level = 0.95, ...) {
 #' @return Returns `x` invisibly.
 #' @export
 #' @concept fit
+#' @aliases print
 #' @method print summary_fit_affectOU
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
@@ -719,6 +725,7 @@ print.summary_fit_affectOU <- function(x, digits = 3, ...) {
 #'
 #' @export
 #' @concept fit
+#' @aliases print
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)

@@ -6,11 +6,10 @@
 #' @param object An `affectOU` model object.
 #' @param nsim Number of replications to simulate.
 #' @param seed Random seed for reproducibility.
-#' @param initial_state Optional initial state vector. If `NULL`, defaults to a 
-#'   draw from the stationary distribution (if stable) or the attractor location 
-#'   `mu` (if non-stable).
-#' @param dt Time step for Euler-Maruyama discretization (smaller = more 
-#'   accurate).
+#' @param initial_state State of system at start of the simulation (optional).If `NULL`, defaults to a 
+#'   draw from the stationary distribution (for stable systems) or the attractor location 
+#'   `mu` (for non-stable systems).
+#' @param dt Time step for Euler-Maruyama discretization (smaller = more accurate).
 #' @param stop Total simulation time.
 #' @param save_at Time interval at which to save simulated data; used to 
 #'   linearly interpolate results. Useful for reducing output size.
@@ -31,6 +30,7 @@
 #'
 #' @export
 #' @concept simulate
+#' @aliases simulate
 #' @examples
 #' model <- affectOU(ndim = 2)
 #' sim <- simulate(model, nsim = 2)

@@ -14,6 +14,7 @@
 #'
 #' @export
 #' @concept fit
+#' @aliases plot
 #' @examples
 #' model <- affectOU(theta = 0.5, mu = 0, gamma = 1)
 #' sim <- simulate(model, stop = 500, dt = 0.01, save_at = 0.1)

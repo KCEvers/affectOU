@@ -303,7 +303,7 @@ fitted
 plot(fitted, type = "residuals")
 ```
 
-See [`plot()`](../reference/plot.fit.affectOU.html) for more details on available diagnostics and their interpretations.
+See [`plot()`](../reference/plot.fit_affectOU.html) for more details on available diagnostics and their interpretations.
 
 ## Extract Equation
 

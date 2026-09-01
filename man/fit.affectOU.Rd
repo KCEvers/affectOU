@@ -7,7 +7,7 @@
 \method{fit}{affectOU}(object, data, times = NULL, method = "mle", start = NULL, ...)
 }
 \arguments{
-\item{object}{An object of class \code{\link[=affectOU]{affectOU}}.}
+\item{object}{An object of class \code{\link{affectOU}}.}
 
 \item{data}{Numeric vector of observed affect values.}
 

@@ -2,6 +2,7 @@
 % Please edit documentation in R/simulate.R
 \name{simulate.affectOU}
 \alias{simulate.affectOU}
+\alias{simulate}
 \title{Simulate from Ornstein-Uhlenbeck process}
 \usage{
 \method{simulate}{affectOU}(
@@ -22,12 +23,11 @@
 
 \item{seed}{Random seed for reproducibility.}
 
-\item{initial_state}{Optional initial state vector. If \code{NULL}, defaults to a
-draw from the stationary distribution (if stable) or the attractor location
-\code{mu} (if non-stable).}
+\item{initial_state}{State of system at start of the simulation (optional).If \code{NULL}, defaults to a
+draw from the stationary distribution (for stable systems) or the attractor location
+\code{mu} (for non-stable systems).}
 
-\item{dt}{Time step for Euler-Maruyama discretization (smaller = more
-accurate).}
+\item{dt}{Time step for Euler-Maruyama discretization (smaller = more accurate).}
 
 \item{stop}{Total simulation time.}
 

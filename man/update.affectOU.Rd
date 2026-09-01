@@ -15,7 +15,7 @@
 )
 }
 \arguments{
-\item{object}{An object of class \code{\link[=affectOU]{affectOU}}.}
+\item{object}{An object of class \code{\link{affectOU}}.}
 
 \item{ndim}{Optional. New dimensionality of the affect process.}
 

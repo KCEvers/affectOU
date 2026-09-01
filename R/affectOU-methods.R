@@ -11,6 +11,7 @@ plot.affectOU <- function(x, ...) {
 #' @return Integer, the dimensionality of the process.
 #' @export
 #' @concept config
+#' @aliases dim
 #' @examples
 #' model <- affectOU()
 #' dim(model)
@@ -26,6 +27,7 @@ dim.affectOU <- function(x) {
 #' @param ... Additional arguments (unused).
 #' @export
 #' @concept config
+#' @aliases print
 #' @examples
 #' model <- affectOU(ndim = 2)
 #' print(model)
@@ -94,6 +96,7 @@ print.affectOU <- function(x, digits = 3, max_dim = 10, ...) {
 #'
 #' @export
 #' @concept config
+#' @aliases coef
 #' @importFrom stats coef
 #' @seealso Model parameters are explained in [affectOU()] and can be modified using [`update()`][update.affectOU()].
 #' @examples
@@ -133,6 +136,7 @@ coef.affectOU <- function(object, ...) {
 #' @return Updated [affectOU] object
 #' @importFrom stats update
 #' @export
+#' @aliases update
 #' @concept config
 #'
 #' @examples
@@ -273,6 +277,7 @@ extract_noise_structure <- function(sigma, tol = 1e-10) {
 #'   `vignette("characteristics")` for applied interpretation of stability regimes
 #'
 #' @export
+#' @aliases summary
 #' @concept config
 #'
 #' @examples
@@ -313,6 +318,7 @@ summary.affectOU <- function(object, ...) {
 #' @param ... Additional arguments (unused)
 #' @export
 #' @concept config
+#' @aliases print
 #' @method print summary_affectOU
 #' @examples
 #' model <- affectOU(ndim = 2)

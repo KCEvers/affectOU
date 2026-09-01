@@ -7,7 +7,7 @@
 \method{coef}{affectOU}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{\link[=affectOU]{affectOU}}.}
+\item{object}{An object of class \code{\link{affectOU}}.}
 
 \item{...}{Additional arguments (unused).}
 }

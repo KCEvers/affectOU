@@ -46,22 +46,22 @@
 #' the other parameters.
 #' @param theta Attractor strength (rate of return to baseline).
 #'   For 1D: positive scalar. For multidimensional: square matrix.
-#' @param mu Attractor location (baseline affect or set point).
+#'   When `theta < 0`, the model is non-stationary: the process is pushed
+#'   away from `mu` rather than toward it; when `theta \approx 0`,
+#'   the model is a random walk and `mu` has no meaningful influence on the trajectory.
+#' @param mu Attractor location (i.e., baseline affect or "home base" of the system).
 #'   For 1D: scalar. For multidimensional: vector.
-#'   For non-stationary models: when \eqn{\theta < 0}, the process is pushed
-#'   away from \eqn{\mu} rather than toward it; when \eqn{\theta \approx 0},
-#'   \eqn{\mu} has no meaningful influence on the trajectory.
 #' @param gamma Diffusion coefficient (multiplies \eqn{dW(t)} in the SDE).
 #'   For 1D: positive scalar. For multidimensional: lower triangular matrix
-#'   (the Cholesky factor of \eqn{\Sigma}). Specifying both `gamma` and
-#'   `sigma` is an error. Most users should prefer specifying `sigma` directly;
+#'   (the Cholesky factor of \eqn{\Sigma}). Specify either `gamma` or
+#'   `sigma`. Most users should prefer specifying `sigma` directly;
 #'   `gamma` is available for advanced users who want explicit control over the
 #'   Cholesky factorisation.
 #' @param sigma Noise covariance matrix (\eqn{\Sigma = \Gamma\Gamma^\top}).
 #'   For 1D: positive scalar (variance). For multidimensional: positive
 #'   semi-definite matrix. Off-diagonal elements represent correlated noise
 #'   between dimensions. This is the recommended way to specify noise
-#'   structure. Specifying both `gamma` and `sigma` is an error.
+#'   structure. Specify either `gamma` or `sigma`.
 #'
 #' @return
 #' An object of class [`affectOU`], representing a univariate or multivariate

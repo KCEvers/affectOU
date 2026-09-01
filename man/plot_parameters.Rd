@@ -10,7 +10,7 @@
 
 \item{by_dim}{Logical; plot each dimension in separate panel?}
 
-\item{palette}{Color palette. Should be one of \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
+\item{palette}{Color palette. Should be one of \code{\link[grDevices:hcl.pals]{grDevices::hcl.pals()}}.}
 
 \item{alpha}{Alpha transparency for colors (0 = transparent, 1 = opaque)}
 

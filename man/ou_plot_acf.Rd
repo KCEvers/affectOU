@@ -39,7 +39,7 @@ ou_plot_acf(
 
 \item{share_yaxis}{Logical; use same y-axis limits for all panels?}
 
-\item{palette}{Color palette. Should be one of \code{\link[grDevices:palettes]{grDevices::hcl.pals()}}.}
+\item{palette}{Color palette. Should be one of \code{\link[grDevices:hcl.pals]{grDevices::hcl.pals()}}.}
 
 \item{lwd}{Line width}
 
