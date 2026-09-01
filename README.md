@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20037783.svg)](https://doi.org/10.5281/zenodo.20037783)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20702594.svg)](https://doi.org/10.5281/zenodo.20702594)
 [![Codecov test
 coverage](https://codecov.io/gh/kcevers/affectOU/graph/badge.svg)](https://app.codecov.io/gh/kcevers/affectOU)
 [![R-CMD-check](https://github.com/kcevers/affectOU/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kcevers/affectOU/actions/workflows/R-CMD-check.yaml)
